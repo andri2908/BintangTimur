@@ -17,7 +17,7 @@ namespace RoyalPetz_ADMIN
         private MySqlCommand myTransCommand;
         public bool connectToLive = true;
 
-        private string myConnectionString = "server=127.0.0.1;uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS;";
+        private string myConnectionString = "server=127.0.0.1;uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS_BINTANGTIMUR;";
 
         private MySqlConnection transConnection;
 

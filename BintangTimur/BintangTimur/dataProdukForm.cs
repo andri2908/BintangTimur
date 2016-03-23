@@ -117,7 +117,9 @@ namespace RoyalPetz_ADMIN
                     dataProdukGridView.Columns["ID"].Visible = false;
                     dataProdukGridView.Columns["PRODUK ID"].Width = 200;
                     dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
-                    dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
+                    dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;
+
+                    dataProdukGridView.Columns["PRODUK ID"].Visible = false;
                 }
             }
         }

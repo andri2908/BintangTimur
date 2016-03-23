@@ -22,9 +22,12 @@ namespace RoyalPetz_ADMIN
 
         private int originModuleID = 0;
         private int selectedInternalProductID = 0;
-        private string productID = "";
+        private string selectedProductID = "";
         private int selectedUnitID;
         private List<int> currentSelectedKategoriID = new List<int>();
+        private List<string> detailQty = new List<string>();
+        private bool isLoading = false;
+        private string previousInput = "";
         
         private string stokAwalText = "";
         private string limitStokText = "";
@@ -56,6 +59,77 @@ namespace RoyalPetz_ADMIN
             parentForm = thisParentForm;
         }
 
+        private void calculateTotal()
+        {
+            double totalQty = 0;
+
+            //for (int i = 0; i < detailLokasiDataGridView.Rows.Count; i++)
+            //{
+            //    totalQty = totalQty + Convert.ToDouble(detailLokasiDataGridView.Rows[i].Cells["locationQty"].Value);
+            //}
+            for (int i = 0; i < detailQty.Count; i++)
+                totalQty = totalQty + Convert.ToDouble(detailQty[i]);
+
+            stokAwalTextBox.Text = totalQty.ToString();
+        }
+
+        private void detailLokasiDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if ((detailLokasiDataGridView.CurrentCell.ColumnIndex == 2)
+                && e.Control is TextBox)
+            {
+                TextBox textBox = e.Control as TextBox;
+                textBox.TextChanged += TextBox_TextChanged;
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            int rowSelectedIndex = 0;
+           
+            if (isLoading)
+                return;
+
+            DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
+
+            rowSelectedIndex = detailLokasiDataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = detailLokasiDataGridView.Rows[rowSelectedIndex];
+
+            previousInput = "";
+            if (detailQty.Count < rowSelectedIndex + 1)
+            {
+                if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (dataGridViewTextBoxEditingControl.Text.Length > 0))
+                {
+                    detailQty.Add(dataGridViewTextBoxEditingControl.Text);
+                }
+                else
+                {
+                    dataGridViewTextBoxEditingControl.Text = previousInput;
+                }
+            }
+            else
+            {
+                if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (dataGridViewTextBoxEditingControl.Text.Length > 0))
+                {
+                    detailQty[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
+                }
+                else
+                {
+                    dataGridViewTextBoxEditingControl.Text = detailQty[rowSelectedIndex];
+                }
+            }
+
+            try
+            {
+                calculateTotal();
+            }
+            catch (Exception ex)
+            {
+                //dataGridViewTextBoxEditingControl.Text = previousInput;
+            }
+        }
 
         public void setSelectedUnitID(int unitID)
         {
@@ -161,8 +235,9 @@ namespace RoyalPetz_ADMIN
                 {
                     while (rdr.Read())
                     {
-                        kodeProdukTextBox.Text = rdr.GetString("PRODUCT_ID");
-                        barcodeTextBox.Text = rdr.GetString("PRODUCT_BARCODE");
+                        //kodeProdukTextBox.Text = rdr.GetString("PRODUCT_ID");
+                        //barcodeTextBox.Text = rdr.GetString("PRODUCT_BARCODE");
+                        selectedProductID = rdr.GetString("PRODUCT_ID");
                         namaProdukTextBox.Text = rdr.GetString("PRODUCT_NAME");
                         produkDescTextBox.Text = rdr.GetString("PRODUCT_DESCRIPTION");
                         hppTextBox.Text = rdr.GetString("PRODUCT_BASE_PRICE");
@@ -175,8 +250,8 @@ namespace RoyalPetz_ADMIN
 
                         productShelves = rdr.GetString("PRODUCT_SHELVES");
 
-                        noRakBarisTextBox.Text = productShelves.Substring(0, 2);
-                        noRakKolomTextBox.Text = productShelves.Substring(2); 
+                        //noRakBarisTextBox.Text = productShelves.Substring(0, 2);
+                        //noRakKolomTextBox.Text = productShelves.Substring(2); 
 
                         selectedUnitID = rdr.GetInt32("UNIT_ID");
                         if (rdr.GetString("PRODUCT_ACTIVE").Equals("1"))
@@ -209,17 +284,51 @@ namespace RoyalPetz_ADMIN
             }
         }
 
+        private void loadProductLocationData()
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+
+            string sqlCommand;
+
+            if (originModuleID == globalConstants.NEW_PRODUK)
+            {
+                sqlCommand = "SELECT ID, LOCATION_NAME , 0 AS 'JUMLAH' FROM MASTER_LOCATION";
+
+            }
+            else
+            {
+                sqlCommand = "SELECT M.ID, LOCATION_NAME, PRODUCT_LOCATION_QTY AS 'JUMLAH' FROM MASTER_LOCATION M, PRODUCT_LOCATION P " +
+                                    "WHERE P.LOCATION_ID = M.ID AND P.PRODUCT_ID = '" + selectedProductID + "'";
+            }
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                detailLokasiDataGridView.Rows.Clear();
+                if (rdr.HasRows)
+                {
+                    //dt.Load(rdr);
+
+                    while (rdr.Read())
+                    {
+                        detailQty.Add(rdr.GetString("JUMLAH"));
+                        detailLokasiDataGridView.Rows.Add(rdr.GetString("ID"), rdr.GetString("LOCATION_NAME"), rdr.GetString("JUMLAH"));
+                    }                    
+                }
+            }
+        }
+
         private void loadProductCategoryData()
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
 
-            if (kodeProdukTextBox.Text.Equals(""))
-                return;
+            //if (kodeProdukTextBox.Text.Equals(""))
+            //    return;
 
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT * FROM PRODUCT_CATEGORY WHERE PRODUCT_ID =  " + kodeProdukTextBox.Text))
+            using (rdr = DS.getData("SELECT * FROM PRODUCT_CATEGORY WHERE PRODUCT_ID =  '" + selectedProductID+"'"))
             {
                 if (rdr.HasRows)
                 {
@@ -348,10 +457,15 @@ namespace RoyalPetz_ADMIN
 
         private string getProdukID()
         {
-            if (originModuleID == globalConstants.NEW_PRODUK)
-                return "TMPPRD001";
-            else
-                return kodeProdukTextBox.Text;
+            string productID = "";
+            //if (originModuleID == globalConstants.NEW_PRODUK)
+            //    return "TMPPRD001";
+            //else
+            //    return kodeProdukTextBox.Text;
+
+            productID = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(PRODUCT_ID), 0) FROM MASTER_PRODUCT")) + 1).ToString();
+
+            return productID;
         }
 
         private bool saveDataTransaction()
@@ -360,13 +474,17 @@ namespace RoyalPetz_ADMIN
             string sqlCommand = "";
             string noRakBaris = "";
             string noRakKolom = "";
+            //string produkBarcode = "";
             MySqlException internalEX = null;
 
             //string produkID = getProdukID();
-            productID = kodeProdukTextBox.Text.Trim();
-            string produkBarcode = barcodeTextBox.Text;
-            if (produkBarcode.Equals(""))
-                produkBarcode = " ";
+            //productID = kodeProdukTextBox.Text.Trim();
+            //string produkBarcode = barcodeTextBox.Text;
+            //if (produkBarcode.Equals(""))
+            //    produkBarcode = " ";
+
+            if (originModuleID != globalConstants.EDIT_PRODUK)
+                selectedProductID = getProdukID();
 
             string produkName = namaProdukTextBox.Text.Trim();
 
@@ -391,8 +509,8 @@ namespace RoyalPetz_ADMIN
             if (limitStock.Equals(""))
                 produkBrand = "0";
 
-            noRakBaris = noRakBarisTextBox.Text;
-            noRakKolom= noRakKolomTextBox.Text;
+            //noRakBaris = noRakBarisTextBox.Text;
+            //noRakKolom= noRakKolomTextBox.Text;
             
             while (noRakBaris.Length < 2)
                 noRakBaris = "-" + noRakBaris;
@@ -416,7 +534,7 @@ namespace RoyalPetz_ADMIN
 
             string produkPhoto = " ";
             if (!selectedPhoto.Equals(""))
-                produkPhoto = productID + ".jpg";
+                produkPhoto = selectedProductID + ".jpg";
 
             DS.beginTransaction();
 
@@ -429,7 +547,7 @@ namespace RoyalPetz_ADMIN
                     case globalConstants.EDIT_PRODUK:
                             // UPDATE MASTER_PRODUK TABLE
                             sqlCommand = "UPDATE MASTER_PRODUCT SET " +
-                                                "PRODUCT_BARCODE = '" + produkBarcode + "', " +
+            //                                    "PRODUCT_BARCODE = '" + produkBarcode + "', " +
                                                 "PRODUCT_NAME =  '" + produkName + "', " +
                                                 "PRODUCT_DESCRIPTION =  '" + produkDesc + "', " +
                                                 "PRODUCT_BASE_PRICE = " + produkHargaPokok + ", " +
@@ -444,7 +562,7 @@ namespace RoyalPetz_ADMIN
                                                 "PRODUCT_ACTIVE = " + produkStatus + ", " +
                                                 "PRODUCT_BRAND = '" + produkBrand + "', " +
                                                 "PRODUCT_IS_SERVICE = " + produkSvc + " " +
-                                                "WHERE PRODUCT_ID = '" + productID + "'";
+                                                "WHERE PRODUCT_ID = '" + selectedProductID + "'";
 
 
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -452,14 +570,22 @@ namespace RoyalPetz_ADMIN
 
                             // UPDATE PRODUCT_CATEGORY TABLE
                             // delete the content first, and insert the new data based on the currentSelectedKategoryID LIST
-                            sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + productID + "'";
+                            sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + selectedProductID + "'";
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // SAVE TO PRODUCT_CATEGORY TABLE
                             for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                             {
-                                sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + productID + "', " + currentSelectedKategoriID[i] + ")";
+                                sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
+
+                            // UPDATE PRODUCT LOCATION TABLE
+                            for (int j = 0; j < detailQty.Count;j++)
+                            {
+                                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = " + Convert.ToDouble(detailQty[j]) + " WHERE LOCATION_ID = " + detailLokasiDataGridView.Rows[j].Cells["ID"].Value.ToString() + " AND PRODUCT_ID = '" + selectedProductID + "'";
                                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                     throw internalEX;
                             }
@@ -468,9 +594,9 @@ namespace RoyalPetz_ADMIN
                     default: // NEW PRODUK
                         // SAVE TO MASTER_PRODUK TABLE
                         sqlCommand = "INSERT INTO MASTER_PRODUCT " +
-                                            "(PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE) " +
+                                            "(PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE) " +
                                             "VALUES " +
-                                            "('" + productID + "', '" + produkBarcode + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
+                                            "('" + selectedProductID + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
@@ -478,12 +604,19 @@ namespace RoyalPetz_ADMIN
                         // SAVE TO PRODUCT_CATEGORY TABLE
                         for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                         {
-                            sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + productID + "', " + currentSelectedKategoriID[i] + ")";
+                            sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
+
+                        // SAVE TO PRODUCT_LOCATION_TABLE
+                        for (int j = 0; j < detailQty.Count; j++)
+                        {
+                            sqlCommand = "INSERT INTO PRODUCT_LOCATION (LOCATION_ID, PRODUCT_ID, PRODUCT_LOCATION_QTY) VALUES (" + detailLokasiDataGridView.Rows[j].Cells["ID"].Value.ToString() + ", '" + selectedProductID + "', " + Convert.ToDouble(detailQty[j]) + ")";
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
                         break;
-                    
                 }
 
                 //DS.executeNonQueryCommand(sqlCommand);
@@ -559,12 +692,13 @@ namespace RoyalPetz_ADMIN
                 gUtil.showSuccess(options);
                 if (originModuleID == globalConstants.STOK_PECAH_BARANG)
                 {
-                    internalProductID = getInternalProductID(productID);
+                    internalProductID = getInternalProductID(selectedProductID);
                     parentForm.setNewSelectedProductID(internalProductID);
 
                     this.Close();
                 }
                 gUtil.ResetAllControls(this);
+                detailLokasiDataGridView.Rows.Clear();
             }
         }
 
@@ -572,10 +706,10 @@ namespace RoyalPetz_ADMIN
         {
             bool result = false;
 
-            if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '"+kodeProdukTextBox.Text.Trim()+"'").ToString().Equals("0"))
-            {
-                result = true;
-            }
+            //if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '"+kodeProdukTextBox.Text.Trim()+"'").ToString().Equals("0"))
+            //{
+            //    result = true;
+            //}
 
             return result;
         }
@@ -584,10 +718,10 @@ namespace RoyalPetz_ADMIN
         {
             bool result = false;
 
-            if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_BARCODE = '" + barcodeTextBox.Text.Trim() + "'").ToString().Equals("0"))
-            {
-                result = true;
-            }
+            //if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_BARCODE = '" + barcodeTextBox.Text.Trim() + "'").ToString().Equals("0"))
+            //{
+            //    result = true;
+            //}
 
             return result;
         }
@@ -602,12 +736,40 @@ namespace RoyalPetz_ADMIN
 
         private void kodeProdukTextBox_TextChanged(object sender, EventArgs e)
         {
-            string temp = kodeProdukTextBox.Text.Trim();
-            kodeProdukTextBox.Text = temp;
+//            string temp = kodeProdukTextBox.Text.Trim();
+//            kodeProdukTextBox.Text = temp;
         }
 
         private void dataProdukDetailForm_Load(object sender, EventArgs e)
         {
+            detailLokasiDataGridView.EditingControlShowing += detailLokasiDataGridView_EditingControlShowing;
+
+            errorLabel.Text = "";
+
+            isLoading = true;
+
+            loadProdukData();
+
+            loadProductLocationData();
+
+            loadUnitIDInformation();
+
+            loadProductCategoryData();
+
+            loadKategoriIDInformation();
+
+            isLoading = false;
+
+            switch (originModuleID)
+            {
+                case globalConstants.NEW_PRODUK:
+                    options = gUtil.INS;
+                    break;
+                case globalConstants.EDIT_PRODUK:
+                    options = gUtil.UPD;
+                    break;
+            }
+        
             gUtil.reArrangeTabOrder(this);            
         }
 
@@ -622,29 +784,12 @@ namespace RoyalPetz_ADMIN
         private void resetbutton_Click(object sender, EventArgs e)
         {
             gUtil.ResetAllControls(this);
+            errorLabel.Text = "";
+            detailLokasiDataGridView.Rows.Clear();
         }
 
         private void dataProdukDetailForm_Activated(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
-
-            loadProdukData();
-
-            loadUnitIDInformation();
-
-            loadProductCategoryData();
-
-            loadKategoriIDInformation();
-
-            switch (originModuleID)
-            {
-                case globalConstants.NEW_PRODUK:
-                    options = gUtil.INS;
-                    break;
-                case globalConstants.EDIT_PRODUK:
-                    options = gUtil.UPD;
-                    break;
-            }
         }
     }
 }
