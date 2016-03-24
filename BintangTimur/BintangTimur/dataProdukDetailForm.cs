@@ -698,6 +698,8 @@ namespace RoyalPetz_ADMIN
                     this.Close();
                 }
                 gUtil.ResetAllControls(this);
+                panelImage.BackgroundImage = null;
+                errorLabel.Text = "";
                 detailLokasiDataGridView.Rows.Clear();
             }
         }
@@ -784,6 +786,7 @@ namespace RoyalPetz_ADMIN
         private void resetbutton_Click(object sender, EventArgs e)
         {
             gUtil.ResetAllControls(this);
+            panelImage.BackgroundImage = null;
             errorLabel.Text = "";
             detailLokasiDataGridView.Rows.Clear();
         }
