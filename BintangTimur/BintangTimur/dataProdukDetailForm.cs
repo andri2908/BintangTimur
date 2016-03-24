@@ -24,6 +24,7 @@ namespace RoyalPetz_ADMIN
         private int selectedInternalProductID = 0;
         private string selectedProductID = "";
         private int selectedUnitID;
+        private string photoFileName = "";
         private List<int> currentSelectedKategoriID = new List<int>();
         private List<string> detailQty = new List<string>();
         private bool isLoading = false;
@@ -151,12 +152,6 @@ namespace RoyalPetz_ADMIN
 
         private bool checkRegEx(string textToCheck)
         {
-            //string regExValue = "";
-
-            //regExValue = @"^[0-9]*\.?\d{0,2}$";
-            //Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
-            //Match m = r.Match(textToCheck);
-
             if (gUtil.matchRegEx(textToCheck, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
                 return true;
 
@@ -274,6 +269,7 @@ namespace RoyalPetz_ADMIN
                                 panelImage.BackgroundImage = Image.FromFile("PRODUCT_PHOTO/" + fileName);
 
                                 selectedPhoto = "PRODUCT_PHOTO/" + fileName;
+                                photoFileName = fileName;
                             }
                             catch (Exception ex)
                             {
@@ -349,7 +345,7 @@ namespace RoyalPetz_ADMIN
             if (selectedUnitID == 0)
                 return;
 
-            sqlCommand = "SELECT UNIT_NAME FROM MASTER_UNIT WHERE UNIT_ID = " + selectedUnitID;
+            sqlCommand = "SELECT IFNULL(UNIT_NAME, '') FROM MASTER_UNIT WHERE UNIT_ID = " + selectedUnitID;
             unitName = DS.getDataSingleValue(sqlCommand).ToString();
 
             unitTextBox.Text = unitName;
@@ -366,7 +362,7 @@ namespace RoyalPetz_ADMIN
 
             for (int i = 0;i<currentSelectedKategoriID.Count;i++)
             {
-                sqlCommand = "SELECT CATEGORY_NAME FROM MASTER_CATEGORY WHERE CATEGORY_ID = " + currentSelectedKategoriID[i];
+                sqlCommand = "SELECT IFNULL(CATEGORY_NAME, '') FROM MASTER_CATEGORY WHERE CATEGORY_ID = " + currentSelectedKategoriID[i];
 
                 if (!kategoriName.Equals(""))
                     kategoriName = kategoriName + ", ";
@@ -388,6 +384,7 @@ namespace RoyalPetz_ADMIN
         private void button1_Click(object sender, EventArgs e)
         {
             string fileName = "";
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -397,7 +394,6 @@ namespace RoyalPetz_ADMIN
                     panelImage.BackgroundImage = Image.FromFile(fileName);
 
                     selectedPhoto = openFileDialog1.FileName;
-                    //System.IO.File.Copy(openFileDialog1.FileName, "bg.jpg");
                 }
                 catch (Exception ex)
                 {
@@ -422,27 +418,27 @@ namespace RoyalPetz_ADMIN
                 return false;
             }
 
-            if (Convert.ToInt32(hppTextBox.Text) == 0)
+            if (hppTextBox.Text.Length <= 0 || Convert.ToInt32(hppTextBox.Text) == 0)
             {
-                errorLabel.Text = "HARGA POKOK TIDAK BOLEH 0";
+                errorLabel.Text = "HARGA POKOK TIDAK BOLEH 0 / KOSONG";
                 return false;
             }
 
-            if (Convert.ToInt32(hargaEcerTextBox.Text) == 0)
+            if (hargaEcerTextBox.Text.Length <= 0 || Convert.ToInt32(hargaEcerTextBox.Text) == 0)
             {
-                errorLabel.Text = "HARGA ECER TIDAK BOLEH 0";
+                errorLabel.Text = "HARGA ECER TIDAK BOLEH 0 / KOSONG";
                 return false;
             }
 
-            if (Convert.ToInt32(hargaGrosirTextBox.Text) == 0)
+            if (hargaGrosirTextBox.Text.Length <= 0 || Convert.ToInt32(hargaGrosirTextBox.Text) == 0)
             {
-                errorLabel.Text = "HARGA GROSIR TIDAK BOLEH 0";
+                errorLabel.Text = "HARGA PARTAI TIDAK BOLEH 0 / KOSONG";
                 return false;
             }
 
-            if (Convert.ToInt32(hargaPartaiTextBox.Text) == 0)
+            if (hargaPartaiTextBox.Text.Length <= 0 || Convert.ToInt32(hargaPartaiTextBox.Text) == 0)
             {
-                errorLabel.Text = "HARGA PARTAI TIDAK BOLEH 0";
+                errorLabel.Text = "HARGA GROSIR TIDAK BOLEH 0 / KOSONG";
                 return false;
             }
 
@@ -503,11 +499,11 @@ namespace RoyalPetz_ADMIN
 
             string produkQty = stokAwalTextBox.Text;
             if (produkQty.Equals(""))
-                produkBrand = "0";
+                produkQty = "0";
 
             string limitStock = limitStokTextBox.Text;
             if (limitStock.Equals(""))
-                produkBrand = "0";
+                limitStock = "0";
 
             //noRakBaris = noRakBarisTextBox.Text;
             //noRakKolom= noRakKolomTextBox.Text;
@@ -621,6 +617,22 @@ namespace RoyalPetz_ADMIN
 
                 //DS.executeNonQueryCommand(sqlCommand);
 
+                if (!selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals("") && result == true)
+                {
+                    panelImage.BackgroundImage = null;
+                    System.IO.File.Copy(selectedPhoto, "PRODUCT_PHOTO/" + produkPhoto + "_temp");
+
+                    if (System.IO.File.Exists("PRODUCT_PHOTO/" + produkPhoto))
+                    {
+                        System.GC.Collect();
+                        System.GC.WaitForPendingFinalizers();
+                        System.IO.File.Delete("PRODUCT_PHOTO/" + produkPhoto);
+                    }
+
+                    System.IO.File.Move("PRODUCT_PHOTO/" + produkPhoto + "_temp", "PRODUCT_PHOTO/" + produkPhoto);
+                    panelImage.BackgroundImage = Image.FromFile("PRODUCT_PHOTO/" + produkPhoto);
+                }
+
                 DS.commit();
                 result = true;
             }
@@ -643,20 +655,7 @@ namespace RoyalPetz_ADMIN
             }
             finally
             {
-                if ( !selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals("") && result == true)
-                {
-                    panelImage.BackgroundImage = null;
-                    if (System.IO.File.Exists("PRODUCT_PHOTO/" + produkPhoto))
-                    {
-                        System.GC.Collect();
-                        System.GC.WaitForPendingFinalizers();
-                        System.IO.File.Delete("PRODUCT_PHOTO/" + produkPhoto);
-                    }
-
-                    System.IO.File.Copy(selectedPhoto, "PRODUCT_PHOTO/" + produkPhoto);
-                    panelImage.BackgroundImage = Image.FromFile("PRODUCT_PHOTO/" + produkPhoto);
-                }
-
+               
                 DS.mySqlClose();
             }
 
@@ -698,9 +697,19 @@ namespace RoyalPetz_ADMIN
                     this.Close();
                 }
                 gUtil.ResetAllControls(this);
+                stokAwalTextBox.Text = "0";
+                limitStokTextBox.Text = "0";
+                hppTextBox.Text = "0";
+                hargaEcerTextBox.Text = "0";
+                hargaGrosirTextBox.Text = "0";
+                hargaPartaiTextBox.Text = "0";
+
+                selectedPhoto = "";
                 panelImage.BackgroundImage = null;
                 errorLabel.Text = "";
                 detailLokasiDataGridView.Rows.Clear();
+                originModuleID = globalConstants.NEW_PRODUK;
+                options = gUtil.INS;
             }
         }
 
@@ -742,6 +751,26 @@ namespace RoyalPetz_ADMIN
 //            kodeProdukTextBox.Text = temp;
         }
 
+        private void resetbutton_Click(object sender, EventArgs e)
+        {
+            gUtil.ResetAllControls(this);
+
+            stokAwalTextBox.Text = "0";
+            limitStokTextBox.Text = "0";
+            hppTextBox.Text = "0";
+            hargaEcerTextBox.Text = "0";
+            hargaGrosirTextBox.Text = "0";
+            hargaPartaiTextBox.Text = "0";
+
+            selectedPhoto = "";
+            panelImage.BackgroundImage = null;
+            errorLabel.Text = "";
+            detailLokasiDataGridView.Rows.Clear();
+            currentSelectedKategoriID.Clear();
+            originModuleID = globalConstants.NEW_PRODUK;
+            options = gUtil.INS;
+        }
+
         private void dataProdukDetailForm_Load(object sender, EventArgs e)
         {
             detailLokasiDataGridView.EditingControlShowing += detailLokasiDataGridView_EditingControlShowing;
@@ -781,14 +810,6 @@ namespace RoyalPetz_ADMIN
                 errorLabel.Text = "BARCODE SUDAH ADA";
             else
                 errorLabel.Text = "";
-        }
-
-        private void resetbutton_Click(object sender, EventArgs e)
-        {
-            gUtil.ResetAllControls(this);
-            panelImage.BackgroundImage = null;
-            errorLabel.Text = "";
-            detailLokasiDataGridView.Rows.Clear();
         }
 
         private void dataProdukDetailForm_Activated(object sender, EventArgs e)
