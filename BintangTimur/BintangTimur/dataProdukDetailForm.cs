@@ -459,7 +459,7 @@ namespace RoyalPetz_ADMIN
             //else
             //    return kodeProdukTextBox.Text;
 
-            productID = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(PRODUCT_ID), 0) FROM MASTER_PRODUCT")) + 1).ToString();
+            productID = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(CONVERT(PRODUCT_ID, UNSIGNED INTEGER)), 0) FROM MASTER_PRODUCT")) + 1).ToString();
 
             return productID;
         }
@@ -707,7 +707,10 @@ namespace RoyalPetz_ADMIN
                 selectedPhoto = "";
                 panelImage.BackgroundImage = null;
                 errorLabel.Text = "";
-                detailLokasiDataGridView.Rows.Clear();
+
+                detailLokasiDataGridView.Rows[0].Cells["locationQty"].Value = 0;
+                detailLokasiDataGridView.Rows[1].Cells["locationQty"].Value = 0;
+
                 originModuleID = globalConstants.NEW_PRODUK;
                 options = gUtil.INS;
             }
