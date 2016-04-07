@@ -617,7 +617,7 @@ namespace RoyalPetz_ADMIN
 
                 //DS.executeNonQueryCommand(sqlCommand);
 
-                if (!selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals("") && result == true)
+                if (!selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals(""))// && result == true)
                 {
                     panelImage.BackgroundImage = null;
                     System.IO.File.Copy(selectedPhoto, "PRODUCT_PHOTO/" + produkPhoto + "_temp");
