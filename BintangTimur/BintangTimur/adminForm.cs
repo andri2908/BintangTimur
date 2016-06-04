@@ -396,8 +396,9 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem67_Click(object sender, EventArgs e)
         {
-//            dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.REPRINT_PERMINTAAN_BARANG);
-//            displayedForm.ShowDialog(this);
+            dataPOForm displayedForm = new dataPOForm(globalConstants.REPRINT_PURCHASE_ORDER);
+            displayedForm.ShowDialog(this);
+            //            dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.REPRINT_PERMINTAAN_BARANG);
         }
 
         private void toolStripMenuItem52_Click(object sender, EventArgs e)
@@ -704,12 +705,12 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem74_DropDownClosed(object sender, EventArgs e)
         {
-            toolStripMenuItem74.ForeColor = Color.FloralWhite;
+            MAINMENU_TaxModule.ForeColor = Color.FloralWhite;
         }
 
         private void toolStripMenuItem74_DropDownOpened(object sender, EventArgs e)
         {
-            toolStripMenuItem74.ForeColor = Color.Black;
+            MAINMENU_TaxModule.ForeColor = Color.Black;
         }
 
         private void informasiToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
@@ -882,7 +883,7 @@ namespace RoyalPetz_ADMIN
             setAccessibility(globalConstants.MENU_PEMBAYARAN_HUTANG_SUPPLIER, SHORTCUT_hutang);
             // SUB MENU PENGATURAN LIMIT PAJAK
             setAccessibility(globalConstants.MENU_PENGATURAN_LIMIT_PAJAK, MENU_pengaturanLimitPajak);
-
+            setAccessibility(globalConstants.MENU_TAX_MODULE, MAINMENU_TaxModule);
         }
 
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
@@ -996,7 +997,7 @@ namespace RoyalPetz_ADMIN
 
         private void MENU_penerimaanBarang_Click(object sender, EventArgs e)
         {
-            penerimaanBarangForm displayedForm = new penerimaanBarangForm();
+            dataPenerimaanBarangForm displayedForm = new dataPenerimaanBarangForm();
             displayedForm.ShowDialog(this);
         }
 
@@ -1094,6 +1095,119 @@ namespace RoyalPetz_ADMIN
         private void penjualanKasirPerShiftToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReportCashierLogSearchForm displayedForm = new ReportCashierLogSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void hutangLewatJatuhTempoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sqlCommandx = "";
+            sqlCommandx = "SELECT D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', DATE(D.DEBT_DUE_DATE) AS 'JATUHTEMPO', " +
+                            "ABS(DATEDIFF(NOW(), D.DEBT_DUE_DATE)) AS 'TERLAMBAT' " +
+                            "FROM DEBT D " +
+                            "WHERE D.DEBT_PAID = 0 AND DATEDIFF(NOW(), D.DEBT_DUE_DATE)> 0";
+            DS.writeXML(sqlCommandx, globalConstants.DebtUnpaidXML);
+            ReportDebtUnpaidForm displayedForm = new ReportDebtUnpaidForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void analisaUmurHutangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sqlCommandx = "";
+            sqlCommandx = "SELECT D.PURCHASE_INVOICE AS 'INVOICE', D.DEBT_NOMINAL AS 'TOTAL', D.DEBT_DUE_DATE AS 'JATUHTEMPO', " +
+                            "DATEDIFF(NOW(), D.DEBT_DUE_DATE) AS 'WAKTU' " +
+                            "FROM DEBT D WHERE " +
+                            "D.DEBT_PAID = 0 AND DATEDIFF(NOW(), D.DEBT_DUE_DATE)< 0";
+            DS.writeXML(sqlCommandx, globalConstants.DebtDueXML);
+            ReportDebtDueForm displayedForm = new ReportDebtDueForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void analisaUmurPiutangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sqlCommandx = "";
+            sqlCommandx = "SELECT C.SALES_INVOICE AS 'INVOICE', C.CREDIT_NOMINAL AS 'TOTAL', C.CREDIT_DUE_DATE AS 'JATUHTEMPO', " +
+                            "DATEDIFF(NOW(), C.CREDIT_DUE_DATE) AS 'WAKTU' FROM CREDIT C " +
+                            "WHERE C.SALES_INVOICE IS NOT NULL AND C.CREDIT_PAID = 0 AND DATEDIFF(NOW(), C.CREDIT_DUE_DATE)< 0";
+            DS.writeXML(sqlCommandx, globalConstants.CreditDueXML);
+            ReportCreditDueForm displayedForm = new ReportCreditDueForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void piutangLewatJatuhTempoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sqlCommandx = "";
+            sqlCommandx = "SELECT C.SALES_INVOICE AS 'INVOICE', C.CREDIT_NOMINAL AS 'TOTAL', C.CREDIT_DUE_DATE AS 'JATUHTEMPO', " +
+                            "ABS(DATEDIFF(NOW(), C.CREDIT_DUE_DATE)) AS 'TERLAMBAT' " +
+                            "FROM CREDIT C " +
+                            "WHERE C.SALES_INVOICE IS NOT NULL AND C.CREDIT_PAID = 0 AND DATEDIFF(NOW(), C.CREDIT_DUE_DATE)> 0";
+            DS.writeXML(sqlCommandx, globalConstants.CreditUnpaidXML);
+            ReportCreditUnpaidForm displayedForm = new ReportCreditUnpaidForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void stokDibawahLimitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sqlCommandx = "";
+            sqlCommandx = "SELECT P.PRODUCT_ID AS 'ID', P.PRODUCT_NAME AS 'NAMA PRODUK', P.PRODUCT_DESCRIPTION AS 'DESKRIPSI', P.PRODUCT_BRAND AS 'MERK', " +
+                            "P.PRODUCT_SHELVES AS 'NOMOR RAK', P.PRODUCT_STOCK_QTY AS 'STOK', P.PRODUCT_LIMIT_STOCK AS 'LIMIT STOK', U.UNIT_NAME AS 'SATUAN' " +
+                            "FROM MASTER_PRODUCT P, MASTER_UNIT U " +
+                            "WHERE P.UNIT_ID = U.UNIT_ID AND P.PRODUCT_IS_SERVICE = 0 AND P.PRODUCT_ACTIVE = 1 AND P.PRODUCT_STOCK_QTY <= P.PRODUCT_LIMIT_STOCK";
+            DS.writeXML(sqlCommandx, globalConstants.ProductStockLimitXML);
+            //ReportCreditUnpaidForm displayedForm = new ReportCreditUnpaidForm();
+            //displayedForm.ShowDialog(this);
+        }
+
+        private void deviasiAdjustmentStokToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void pembelianToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void penjualanToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void permintaanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void mutasiBarangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem28_Click(object sender, EventArgs e)
+        {
+            cashierForm displayedForm = new cashierForm(globalConstants.DUMMY_TRANSACTION_TAX, true);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_DETAILED, true);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_SUMMARY, true);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_PRODUCT, true);
             displayedForm.ShowDialog(this);
         }
     }

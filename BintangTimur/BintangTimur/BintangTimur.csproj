@@ -72,6 +72,12 @@
     <Compile Include="cashierForm.designer.cs">
       <DependentUpon>cashierForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="cashierHelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cashierHelpForm.Designer.cs">
+      <DependentUpon>cashierHelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="cashierLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,12 @@
     </Compile>
     <Compile Include="dataNomorAkun.Designer.cs">
       <DependentUpon>dataNomorAkun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataPenerimaanBarangForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataPenerimaanBarangForm.Designer.cs">
+      <DependentUpon>dataPenerimaanBarangForm.cs</DependentUpon>
     </Compile>
     <Compile Include="dataPermintaanForm.cs">
       <SubType>Form</SubType>
@@ -189,24 +201,6 @@
     <Compile Include="dataReturPermintaanForm.Designer.cs">
       <DependentUpon>dataReturPermintaanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="dataReturPenjualanStokAdjustmentForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataReturPenjualanStokAdjustmentForm.Designer.cs">
-      <DependentUpon>dataReturPenjualanStokAdjustmentForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="dataSalesDetailForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataSalesDetailForm.Designer.cs">
-      <DependentUpon>dataSalesDetailForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="dataSalesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataSalesForm.Designer.cs">
-      <DependentUpon>dataSalesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="dataSatuanDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,18 +274,6 @@
     <Compile Include="importDataCSVForm.Designer.cs">
       <DependentUpon>importDataCSVForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="importDataMutasiForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="importDataMutasiForm.Designer.cs">
-      <DependentUpon>importDataMutasiForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IPPusatForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IPPusatForm.Designer.cs">
-      <DependentUpon>IPPusatForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="konversiSatuanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,6 +322,18 @@
     <Compile Include="penerimaanBarangForm.Designer.cs">
       <DependentUpon>penerimaanBarangForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="penerimaanBarangPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>penerimaanBarangPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="penerimaanBarangPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="penerimaanBarangPrintOutForm.Designer.cs">
+      <DependentUpon>penerimaanBarangPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="pengaturanKategoriProdukForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,12 +351,6 @@
     </Compile>
     <Compile Include="pengaturanLimitPajakForm.Designer.cs">
       <DependentUpon>pengaturanLimitPajakForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="pengaturanPotonganHargaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="pengaturanPotonganHargaForm.Designer.cs">
-      <DependentUpon>pengaturanPotonganHargaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="pengaturanProdukForm.cs">
       <SubType>Form</SubType>
@@ -414,6 +402,18 @@
     <Compile Include="purchaseOrderDetailForm.Designer.cs">
       <DependentUpon>purchaseOrderDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="purchaseOrderPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>purchaseOrderPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="purchaseOrderPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="purchaseOrderPrintOutForm.Designer.cs">
+      <DependentUpon>purchaseOrderPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportAccount.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -437,6 +437,12 @@
     </Compile>
     <Compile Include="ReportBranchForm.Designer.cs">
       <DependentUpon>ReportBranchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportCashierLog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportCashierLog.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportCashierLogForm.cs">
       <SubType>Form</SubType>
@@ -462,6 +468,30 @@
     <Compile Include="ReportCategoryForm.Designer.cs">
       <DependentUpon>ReportCategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportCreditDue.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportCreditDue.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportCreditDueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportCreditDueForm.Designer.cs">
+      <DependentUpon>ReportCreditDueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportCreditUnpaid.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportCreditUnpaid.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportCreditUnpaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportCreditUnpaidForm.Designer.cs">
+      <DependentUpon>ReportCreditUnpaidForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportCustomer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -473,6 +503,30 @@
     </Compile>
     <Compile Include="ReportCustomerForm.Designer.cs">
       <DependentUpon>ReportCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDebtDue.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDebtDue.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportDebtDueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportDebtDueForm.Designer.cs">
+      <DependentUpon>ReportDebtDueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDebtUnpaid.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDebtUnpaid.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportDebtUnpaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportDebtUnpaidForm.Designer.cs">
+      <DependentUpon>ReportDebtUnpaidForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReportGroupUser.cs">
       <AutoGen>True</AutoGen>
@@ -605,6 +659,12 @@
     </Compile>
     <Compile Include="ReportSalesSummarySearchForm.Designer.cs">
       <DependentUpon>ReportSalesSummarySearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportStockInOutSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportStockInOutSearchForm.Designer.cs">
+      <DependentUpon>ReportStockInOutSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReportSupplier.cs">
       <AutoGen>True</AutoGen>
@@ -783,6 +843,9 @@
     <EmbeddedResource Include="cashierForm.resx">
       <DependentUpon>cashierForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cashierHelpForm.resx">
+      <DependentUpon>cashierHelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cashierLoginForm.resx">
       <DependentUpon>cashierLoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -797,6 +860,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dataNomorAkunDetailForm.resx">
       <DependentUpon>dataNomorAkunDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataPenerimaanBarangForm.resx">
+      <DependentUpon>dataPenerimaanBarangForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataPermintaanForm.resx">
       <DependentUpon>dataPermintaanForm.cs</DependentUpon>
@@ -843,15 +909,6 @@
     <EmbeddedResource Include="dataReturPermintaanForm.resx">
       <DependentUpon>dataReturPermintaanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dataReturPenjualanStokAdjustmentForm.resx">
-      <DependentUpon>dataReturPenjualanStokAdjustmentForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="dataSalesDetailForm.resx">
-      <DependentUpon>dataSalesDetailForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="dataSalesForm.resx">
-      <DependentUpon>dataSalesForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="dataSatuanDetailForm.resx">
       <DependentUpon>dataSatuanDetailForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -885,12 +942,6 @@
     <EmbeddedResource Include="importDataCSVForm.resx">
       <DependentUpon>importDataCSVForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="importDataMutasiForm.resx">
-      <DependentUpon>importDataMutasiForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IPPusatForm.resx">
-      <DependentUpon>IPPusatForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="konversiSatuanForm.resx">
       <DependentUpon>konversiSatuanForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -915,14 +966,18 @@
     <EmbeddedResource Include="penerimaanBarangForm.resx">
       <DependentUpon>penerimaanBarangForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="penerimaanBarangPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>penerimaanBarangPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="penerimaanBarangPrintOutForm.resx">
+      <DependentUpon>penerimaanBarangPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pengaturanKategoriProdukForm.resx">
       <DependentUpon>pengaturanKategoriProdukForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pengaturanLimitPajakForm.resx">
       <DependentUpon>pengaturanLimitPajakForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pengaturanPotonganHargaForm.resx">
-      <DependentUpon>pengaturanPotonganHargaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pengaturanProdukForm.resx">
       <DependentUpon>pengaturanProdukForm.cs</DependentUpon>
@@ -958,6 +1013,13 @@
     <EmbeddedResource Include="purchaseOrderDetailForm.resx">
       <DependentUpon>purchaseOrderDetailForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="purchaseOrderPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>purchaseOrderPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="purchaseOrderPrintOutForm.resx">
+      <DependentUpon>purchaseOrderPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportAccount.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportAccount.cs</LastGenOutput>
@@ -972,6 +1034,10 @@
     <EmbeddedResource Include="ReportBranchForm.resx">
       <DependentUpon>ReportBranchForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportCashierLog.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportCashierLog.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportCashierLogForm.resx">
       <DependentUpon>ReportCashierLogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -985,12 +1051,40 @@
     <EmbeddedResource Include="ReportCategoryForm.resx">
       <DependentUpon>ReportCategoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportCreditDue.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportCreditDue.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportCreditDueForm.resx">
+      <DependentUpon>ReportCreditDueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportCreditUnpaid.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportCreditUnpaid.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportCreditUnpaidForm.resx">
+      <DependentUpon>ReportCreditUnpaidForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportCustomer.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportCustomer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportCustomerForm.resx">
       <DependentUpon>ReportCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDebtDue.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportDebtDue.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDebtDueForm.resx">
+      <DependentUpon>ReportDebtDueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDebtUnpaid.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportDebtUnpaid.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDebtUnpaidForm.resx">
+      <DependentUpon>ReportDebtUnpaidForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportGroupUser.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1067,6 +1161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportSalesSummarySearchForm.resx">
       <DependentUpon>ReportSalesSummarySearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportStockInOutSearchForm.resx">
+      <DependentUpon>ReportStockInOutSearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportSupplier.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

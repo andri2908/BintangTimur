@@ -470,7 +470,7 @@ namespace RoyalPetz_ADMIN
 
             try
             { 
-                sqlCommand = "INSERT INTO CASHIER_CHANGE_LOG (USER_ID, MODULE_ID, CHANGE_ID, CHANGE_DATETIME, CHANGE_DESCRIPTION) VALUES (" + getUserID() + ", " +moduleID + ", " + changeID + ", STR_TO_DATE('" + dateTimeNow + "', '%d-%m-%Y %H:%i'), '" + changeDescription + "')";
+                sqlCommand = "INSERT INTO USER_CHANGE_LOG (USER_ID, MODULE_ID, CHANGE_ID, CHANGE_DATETIME, CHANGE_DESCRIPTION) VALUES (" + getUserID() + ", " +moduleID + ", " + changeID + ", STR_TO_DATE('" + dateTimeNow + "', '%d-%m-%Y %H:%i'), '" + changeDescription + "')";
                 DS.executeNonQueryCommand(sqlCommand);
 
                 DS.commit();
@@ -509,10 +509,13 @@ namespace RoyalPetz_ADMIN
 
         public void renameLogFile()
         {
+            if (!Directory.Exists(Application.StartupPath + "\\LOG_FILE"))
+                Directory.CreateDirectory(Application.StartupPath + "\\LOG_FILE");
+
             string oldPath = Application.StartupPath + "\\" + logFileName;
             string dateTimeValue = String.Format(culture, "{0:ddMMyyyyHHmm}", DateTime.Now);
-            string newPath = Application.StartupPath + "\\logFile_" + dateTimeValue + ".log";
-            if (File.Exists(Application.StartupPath + "\\" + logFileName))
+            string newPath = Application.StartupPath + "\\LOG_FILE\\logFile_" + dateTimeValue + ".log";
+            if (File.Exists(oldPath))
                 File.Move(oldPath, newPath);
         }
     }
