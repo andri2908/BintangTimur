@@ -59,7 +59,7 @@ namespace RoyalPetz_ADMIN
                         invoiceDateTextBox.Text = String.Format(culture, "{0:dd MMM yyyy}", salesDate);
                         globalTotalValue = rdr.GetDouble("SALES_TOTAL");
                     }
-                }
+               }
             }
         }
 
@@ -67,7 +67,8 @@ namespace RoyalPetz_ADMIN
         {
             string result = "";
 
-            result = DS.getDataSingleValue("SELECT CUSTOMER_FULL_NAME FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedCustomerID).ToString();
+            if (selectedCustomerID != 0)
+                result = DS.getDataSingleValue("SELECT IFNULL(CUSTOMER_FULL_NAME, ' ') FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedCustomerID).ToString();
 
             return result;
         }
@@ -77,6 +78,15 @@ namespace RoyalPetz_ADMIN
             int result = 0;
 
             result = Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(CREDIT_ID, 0) FROM CREDIT WHERE SALES_INVOICE = '"+selectedSOInvoice+"'"));
+
+            return result;
+        }
+
+        private int getBranchID()
+        {
+            int result;
+
+            result = Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(BRANCH_ID, 0) FROM SYS_CONFIG WHERE ID = 2"));
 
             return result;
         }
@@ -110,7 +120,7 @@ namespace RoyalPetz_ADMIN
             DataTable dt = new DataTable();
             string sqlCommand = "";
 
-            sqlCommand = "SELECT PAYMENT_INVALID, PAYMENT_ID, PM_NAME AS 'TIPE', IF(PAYMENT_CONFIRMED = 1, 'Y', 'N') AS STATUS, DATE_FORMAT(PAYMENT_DATE, '%d-%M-%Y') AS 'TANGGAL', PAYMENT_NOMINAL AS 'NOMINAL', PAYMENT_DESCRIPTION AS 'DESKRIPSI' FROM PAYMENT_CREDIT PC, PAYMENT_METHOD PM WHERE PC.PM_ID = PM.PM_ID AND CREDIT_ID = " + selectedCreditID;
+            sqlCommand = "SELECT PAYMENT_INVALID, PAYMENT_ID, PM_NAME AS 'TIPE', IF(PAYMENT_CONFIRMED = 1, 'Y', 'N') AS STATUS, DATE_FORMAT(PAYMENT_DUE_DATE, '%d-%M-%Y') AS 'TANGGAL PEMBAYARAN', PAYMENT_NOMINAL AS 'NOMINAL', PAYMENT_DESCRIPTION AS 'DESKRIPSI' FROM PAYMENT_CREDIT PC, PAYMENT_METHOD PM WHERE PC.PM_ID = PM.PM_ID AND CREDIT_ID = " + selectedCreditID;
             using (rdr = DS.getData(sqlCommand))
             {
                 detailPaymentInfoDataGrid.DataSource = null;
@@ -121,9 +131,15 @@ namespace RoyalPetz_ADMIN
 
                     detailPaymentInfoDataGrid.Columns["PAYMENT_INVALID"].Visible = false;
                     detailPaymentInfoDataGrid.Columns["PAYMENT_ID"].Visible= false;
-                    detailPaymentInfoDataGrid.Columns["TANGGAL"].Width = 200;
+                    detailPaymentInfoDataGrid.Columns["TANGGAL PEMBAYARAN"].Width = 200;
                     detailPaymentInfoDataGrid.Columns["NOMINAL"].Width = 200;                    
                     detailPaymentInfoDataGrid.Columns["DESKRIPSI"].Width = 300;
+
+                    for (int i = 0; i < detailPaymentInfoDataGrid.Rows.Count; i++)
+                    {
+                        if (detailPaymentInfoDataGrid.Rows[i].Cells["STATUS"].Value.ToString().Equals("N") && detailPaymentInfoDataGrid.Rows[i].Cells["PAYMENT_INVALID"].Value.ToString().Equals("0"))
+                            detailPaymentInfoDataGrid.Rows[i].DefaultCellStyle.BackColor = Color.LightBlue;
+                    }
                 }
             }
         }
@@ -151,20 +167,31 @@ namespace RoyalPetz_ADMIN
         private void calculateTotalCredit(bool globalCalculation = false)
         {
             double totalPayment = 0;
+            int creditPaid = 0;
+
+            creditPaid = Convert.ToInt32(DS.getDataSingleValue("SELECT CREDIT_PAID FROM CREDIT WHERE SALES_INVOICE = '" + selectedSOInvoice + "'"));
+
+            if (creditPaid == 0)
+            { 
+                if (globalCalculation)
+                {
+                    globalTotalValue = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_TOTAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedSOInvoice+"'"));
+                }
             
-            if (globalCalculation)
-            {
-                globalTotalValue = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_TOTAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedSOInvoice+"'"));
+                totalPayment = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS PAYMENT FROM PAYMENT_CREDIT WHERE PAYMENT_INVALID = 0 AND CREDIT_ID = " + selectedCreditID));
+
+                globalTotalValue = globalTotalValue - totalPayment;
             }
-            
-            totalPayment = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) AS PAYMENT FROM PAYMENT_CREDIT WHERE PAYMENT_INVALID = 0 AND CREDIT_ID = " + selectedCreditID));
+            else
+            {
+                globalTotalValue = 0;
+            }
 
-            globalTotalValue = globalTotalValue - totalPayment;
-
-            totalLabel.Text = globalTotalValue.ToString("C", culture);
+            totalLabel.Text = globalTotalValue.ToString("C2", culture);
 
             if (globalTotalValue <= 0)
                 saveButton.Enabled = false;
+            
         }
 
         private bool dataValidated()
@@ -192,7 +219,10 @@ namespace RoyalPetz_ADMIN
             int paymentMethod = 0;
             string paymentDateTime = "";
             DateTime selectedPaymentDate;
+            string paymentDueDateTime = "";
+            DateTime selectedPaymentDueDate;
             double paymentNominal = 0;
+            int branchID = 0;
 
             string paymentDescription = "";
             int paymentConfirmed = 0;
@@ -203,13 +233,38 @@ namespace RoyalPetz_ADMIN
             paymentDateTime = String.Format(culture, "{0:dd-MM-yyyy}", selectedPaymentDate);
             paymentNominal = Convert.ToDouble(paymentMaskedTextBox.Text);
             paymentMethod = paymentCombo.SelectedIndex + 1;
-            paymentDescription = descriptionTextBox.Text;
+            paymentDescription = MySqlHelper.EscapeString(descriptionTextBox.Text);
 
             if (paymentNominal > globalTotalValue)
                 paymentNominal = globalTotalValue;
 
-            if (paymentMethod == 1)
+            if (paymentMethod <= 3) //1, 2, 3
+            {
+                // TUNAI, KARTU KREDIT, KARTU DEBIT
                 paymentConfirmed = 1;
+                paymentDueDateTime = paymentDateTime;
+
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "PAYMENT CREDIT BY CASH");
+            }
+            else if (paymentMethod == 4)
+            {
+                // TRANSFER
+                paymentDueDateTime = paymentDateTime;
+
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "PAYMENT CREDIT BY TRANSFER");
+            }
+            else if (paymentMethod > 4) // 5, 6
+            {
+                // CEK, BG
+                selectedPaymentDueDate = cairDTPicker.Value;
+                paymentDueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", selectedPaymentDueDate);
+
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "PAYMENT CREDIT BY CHEQUE OR BG");
+            }
+
+            branchID = getBranchID();
+
+            gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "BRANCH ID [" + branchID + "]");
 
             DS.beginTransaction();
 
@@ -218,25 +273,40 @@ namespace RoyalPetz_ADMIN
                 DS.mySqlConnect();
 
                 // SAVE HEADER TABLE
-                sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED) VALUES " +
-                                    "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + paymentNominal + ", '" + paymentDescription + "', " + paymentConfirmed + ")";
+                sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE) VALUES " +
+                                    "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
 
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(paymentNominal) + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
-                if (paymentMethod == 1 && paymentNominal == globalTotalValue)
+                if (paymentMethod <= 3 && paymentNominal == globalTotalValue)
                 {
                     //  PAYMENT BY CASH AND FULLY PAID
 
                     // UPDATE CREDIT TABLE
                     sqlCommand = "UPDATE CREDIT SET CREDIT_PAID = 1 WHERE CREDIT_ID = " + selectedCreditID;
 
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "UPDATE CREDIT SET TO FULLY PAID [" + selectedCreditID + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
                     // UPDATE SALES HEADER TABLE
                     sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1 WHERE SALES_INVOICE = '" + selectedSOInvoice + "'";
 
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "UPDATE SALES HEADER SET TO FULLY PAID [" + selectedSOInvoice + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+
+                if (paymentMethod == 1)
+                {
+                    // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
+                    // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
+                    sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, BRANCH_ID, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
+                                                   "VALUES (1, STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y')" + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", " + branchID + ", 'PEMBAYARAN PIUTANG " + selectedSOInvoice + "', '" + gutil.getUserID() + "', 1)";
+
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "CASH TRANSACTION, INSERT INTO DAILY JOURNAL [" + gutil.validateDecimalNumericInput(paymentNominal) + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
@@ -246,6 +316,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -281,13 +352,17 @@ namespace RoyalPetz_ADMIN
         
         private void saveButton_Click(object sender, EventArgs e)
         {
+            gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "ATTEMPT TO SAVE PAYMENT CREDIT");
+
             if (saveData())
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "PAYMENT CREDIT DATA SAVED");
+                gutil.saveUserChangeLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, globalConstants.CHANGE_LOG_PAYMENT_CREDIT, "PEMBAYARAN PIUTANG [" + invoiceNoTextBox.Text + "]");
                 gutil.showSuccess(gutil.INS);
 
                 if (isPaymentExceed)
                 {
-                    MessageBox.Show("UANG KEMBALI SEBESAR " + (Convert.ToDouble(paymentMaskedTextBox.Text) - globalTotalValue).ToString("C", culture));
+                    MessageBox.Show("UANG KEMBALI SEBESAR " + (Convert.ToDouble(paymentMaskedTextBox.Text) - globalTotalValue).ToString("C2", culture));
                 }
 
                 loadDataDetailPayment();
@@ -305,6 +380,11 @@ namespace RoyalPetz_ADMIN
             bool result = false;
             string sqlCommand;
             MySqlException internalEX = null;
+            DateTime selectedPaymentDate;
+            string paymentDateTime;
+
+            selectedPaymentDate = paymentDateTimePicker.Value;
+            paymentDateTime = String.Format(culture, "{0:dd-MM-yyyy}", selectedPaymentDate);
 
             DS.beginTransaction();
 
@@ -313,7 +393,7 @@ namespace RoyalPetz_ADMIN
                 DS.mySqlConnect();
 
                 // SAVE HEADER TABLE
-                sqlCommand = "UPDATE PAYMENT_CREDIT SET PAYMENT_CONFIRMED = 1 WHERE PAYMENT_ID = " + paymentID;
+                sqlCommand = "UPDATE PAYMENT_CREDIT SET PAYMENT_CONFIRMED = 1, PAYMENT_CONFIRMED_DATE = STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y') WHERE PAYMENT_ID = " + paymentID;
             
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
@@ -548,7 +628,11 @@ namespace RoyalPetz_ADMIN
                         loadDataDetailPayment();
                     }
                 }
-                selectedRow.DefaultCellStyle.BackColor = Color.White;
+
+                if (detailPaymentInfoDataGrid.Rows[rowSelectedIndex].Cells["STATUS"].Value.ToString().Equals("Y"))
+                    detailPaymentInfoDataGrid.Rows[rowSelectedIndex].DefaultCellStyle.BackColor = Color.White;
+                else
+                    detailPaymentInfoDataGrid.Rows[rowSelectedIndex].DefaultCellStyle.BackColor = Color.LightBlue;
             }
         }
 
@@ -580,13 +664,17 @@ namespace RoyalPetz_ADMIN
                 }
             }
 
-            selectedRow.DefaultCellStyle.BackColor = Color.White;
+            if (detailPaymentInfoDataGrid.Rows[rowSelectedIndex].Cells["STATUS"].Value.ToString().Equals("Y"))
+                detailPaymentInfoDataGrid.Rows[rowSelectedIndex].DefaultCellStyle.BackColor = Color.White;
+            else
+                detailPaymentInfoDataGrid.Rows[rowSelectedIndex].DefaultCellStyle.BackColor = Color.LightBlue;
         }
         
         private void pembayaranPiutangForm_Load(object sender, EventArgs e)
         {
             errorLabel.Text = "";
             paymentDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+            cairDTPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             fillInPaymentMethod();
 
             isLoading = true;
@@ -630,6 +718,27 @@ namespace RoyalPetz_ADMIN
             }
         }
 
-        
+        private void paymentCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (paymentCombo.SelectedIndex > 3)
+            {
+                labelCair.Visible = true;
+                cairDTPicker.Visible = true;
+                cairDTPicker.Value = DateTime.Now;
+            }
+            else
+            {
+                labelCair.Visible = false;
+                cairDTPicker.Visible = false;
+            }
+        }
+
+        private void paymentMaskedTextBox_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                paymentMaskedTextBox.SelectAll();
+            });
+        }
     }
 }

@@ -168,50 +168,215 @@ namespace RoyalPetz_ADMIN
 
         private void stokAwalTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString = "";
+
+            if (isLoading)
+                return;
+            
+            isLoading = true;
+            if (stokAwalTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                stokAwalText = "0";
+                stokAwalTextBox.Text = "0";
+
+                stokAwalTextBox.SelectionStart = stokAwalTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (stokAwalTextBox.Text.IndexOf('0') == 0 && stokAwalTextBox.Text.Length > 1 && stokAwalTextBox.Text.IndexOf("0.") < 0 )
+            {
+                tempString = stokAwalTextBox.Text;
+                stokAwalTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(stokAwalTextBox.Text))
                 stokAwalText = stokAwalTextBox.Text;
             else
                 stokAwalTextBox.Text = stokAwalText;
+
+            stokAwalTextBox.SelectionStart = stokAwalTextBox.Text.Length;
+
+            isLoading = false;
         }
 
         private void limitStokTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString;
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (limitStokTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                limitStokText = "0";
+                limitStokTextBox.Text = "0";
+
+                limitStokTextBox.SelectionStart = limitStokTextBox.Text.Length;
+
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (limitStokTextBox.Text.IndexOf('0') == 0 && limitStokTextBox.Text.Length > 1 && limitStokTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = limitStokTextBox.Text;
+                limitStokTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(limitStokTextBox.Text))
                 limitStokText = limitStokTextBox.Text;
             else
                 limitStokTextBox.Text = limitStokText;
+
+            limitStokTextBox.SelectionStart = limitStokTextBox.Text.Length;
+
+            isLoading = false;
         }
 
         private void hppTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString;
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (hppTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                hppValueText = "0";
+                hppTextBox.Text = "0";
+
+                hppTextBox.SelectionStart = hppTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (hppTextBox.Text.IndexOf('0') == 0 && hppTextBox.Text.Length > 1 && hppTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = hppTextBox.Text;
+                hppTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(hppTextBox.Text))
                 hppValueText = hppTextBox.Text;
             else
                 hppTextBox.Text = hppValueText;
+
+            hppTextBox.SelectionStart = hppTextBox.Text.Length;
+            isLoading = false;
         }
 
         private void hargaEcerTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString;
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (hargaEcerTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                hargaEcerValueText = "0";
+                hargaEcerTextBox.Text = "0";
+
+                hargaEcerTextBox.SelectionStart = hargaEcerTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (hargaEcerTextBox.Text.IndexOf('0') == 0 && hargaEcerTextBox.Text.Length > 1 && hargaEcerTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = hargaEcerTextBox.Text;
+                hargaEcerTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(hargaEcerTextBox.Text))
                 hargaEcerValueText = hargaEcerTextBox.Text;
             else
                 hargaEcerTextBox.Text = hargaEcerValueText;
+
+            hargaEcerTextBox.SelectionStart = hargaEcerTextBox.Text.Length;
+            isLoading = false;
         }
 
         private void hargaPartaiTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString;
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (hargaPartaiTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                hargaPartaiText = "0";
+                hargaPartaiTextBox.Text = "0";
+
+                hargaPartaiTextBox.SelectionStart = hargaPartaiTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (hargaPartaiTextBox.Text.IndexOf('0') == 0 && hargaPartaiTextBox.Text.Length > 1 && hargaPartaiTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = hargaPartaiTextBox.Text;
+                hargaPartaiTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(hargaPartaiTextBox.Text))
                 hargaPartaiText = hargaPartaiTextBox.Text;
             else
                 hargaPartaiTextBox.Text = hargaPartaiText;
+
+            hargaPartaiTextBox.SelectionStart = hargaPartaiTextBox.Text.Length;
+            isLoading = false;
         }
 
         private void hargaGrosirTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString;
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (hargaGrosirTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                hargaGrosirValueText = "0";
+                hargaGrosirTextBox.Text = "0";
+
+                hargaGrosirTextBox.SelectionStart = hargaGrosirTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (hargaGrosirTextBox.Text.IndexOf('0') == 0 && hargaGrosirTextBox.Text.Length > 1 && hargaGrosirTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = hargaGrosirTextBox.Text;
+                hargaGrosirTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (checkRegEx(hargaGrosirTextBox.Text))
                 hargaGrosirValueText = hargaGrosirTextBox.Text;
             else
                 hargaGrosirTextBox.Text = hargaGrosirValueText;
+
+            hargaGrosirTextBox.SelectionStart = hargaGrosirTextBox.Text.Length;
+            isLoading = false;
         }
 
         private void loadProdukData()
@@ -487,6 +652,8 @@ namespace RoyalPetz_ADMIN
             string produkDesc = produkDescTextBox.Text.Trim();
             if (produkDesc.Equals(""))
                 produkDesc = " ";
+            else
+                produkDesc = MySqlHelper.EscapeString(produkDesc);
 
             string produkHargaPokok = hppTextBox.Text;
             string produkHargaEcer = hargaEcerTextBox.Text;
@@ -496,6 +663,8 @@ namespace RoyalPetz_ADMIN
             string produkBrand = merkTextBox.Text.Trim();
             if (produkBrand.Equals(""))
                 produkBrand = " ";
+            else
+                produkBrand = MySqlHelper.EscapeString(produkBrand);
 
             string produkQty = stokAwalTextBox.Text;
             if (produkQty.Equals(""))
@@ -560,17 +729,22 @@ namespace RoyalPetz_ADMIN
                                                 "PRODUCT_IS_SERVICE = " + produkSvc + " " +
                                                 "WHERE PRODUCT_ID = '" + selectedProductID + "'";
 
-
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE CURRENT PRODUCT DATA [" + selectedProductID + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // UPDATE PRODUCT_CATEGORY TABLE
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE PRODUCT CATEGORY FOR [" + selectedProductID + "]");
+
                             // delete the content first, and insert the new data based on the currentSelectedKategoryID LIST
                             sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + selectedProductID + "'";
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // SAVE TO PRODUCT_CATEGORY TABLE
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
+
                             for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                             {
                                 sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
@@ -594,10 +768,14 @@ namespace RoyalPetz_ADMIN
                                             "VALUES " +
                                             "('" + selectedProductID + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
 
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT NEW PRODUCT [" + selectedProductID + "]");
+
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
 
                         // SAVE TO PRODUCT_CATEGORY TABLE
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
+
                         for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                         {
                             sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
@@ -613,17 +791,23 @@ namespace RoyalPetz_ADMIN
                                 throw internalEX;
                         }
                         break;
+                    
                 }
 
                 //DS.executeNonQueryCommand(sqlCommand);
 
                 if (!selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals(""))// && result == true)
                 {
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "SET PRODUCT IMAGE [" + selectedPhoto + "]");
+
                     panelImage.BackgroundImage = null;
                     System.IO.File.Copy(selectedPhoto, "PRODUCT_PHOTO/" + produkPhoto + "_temp");
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "COPY SELECTED IMAGE TO PRODUCT_PHOTO FOLDER");
 
                     if (System.IO.File.Exists("PRODUCT_PHOTO/" + produkPhoto))
                     {
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT IMAGE [" + selectedProductID + "]");
+
                         System.GC.Collect();
                         System.GC.WaitForPendingFinalizers();
                         System.IO.File.Delete("PRODUCT_PHOTO/" + produkPhoto);
@@ -631,6 +815,8 @@ namespace RoyalPetz_ADMIN
 
                     System.IO.File.Move("PRODUCT_PHOTO/" + produkPhoto + "_temp", "PRODUCT_PHOTO/" + produkPhoto);
                     panelImage.BackgroundImage = Image.FromFile("PRODUCT_PHOTO/" + produkPhoto);
+
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "RENAME AND SET NEW PRODUCT IMAGE");
                 }
 
                 DS.commit();
@@ -638,6 +824,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "EXCEPTION THROWN [" + e.Message+ "]");
                 try
                 {
                     DS.rollBack();
@@ -664,9 +851,19 @@ namespace RoyalPetz_ADMIN
 
         private bool saveData()
         {
+            bool result = false; 
             if (dataValidated())
             {
-                return saveDataTransaction();
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+                result = saveDataTransaction();
+
+                pleaseWait.Close();
+
+                return result;
             }
 
             return false;
@@ -687,8 +884,8 @@ namespace RoyalPetz_ADMIN
             int internalProductID;
             if (saveData())
             {
-                //MessageBox.Show("SUCCESS");
                 gUtil.showSuccess(options);
+
                 if (originModuleID == globalConstants.STOK_PECAH_BARANG)
                 {
                     internalProductID = getInternalProductID(selectedProductID);
@@ -696,7 +893,22 @@ namespace RoyalPetz_ADMIN
 
                     this.Close();
                 }
+
+                switch (originModuleID)
+                {
+                    case globalConstants.NEW_PRODUK:
+                        gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_INSERT, "INSERT NEW PRODUK [" + namaProdukTextBox.Text + "]");
+                        break;
+                    case globalConstants.EDIT_PRODUK:
+                        if (nonAktifCheckbox.Checked == true)
+                            gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PRODUK [" + namaProdukTextBox.Text + "] STATUS PRODUK NON-AKTIF");
+                        else
+                            gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PRODUK [" + namaProdukTextBox.Text + "] STATUS PRODUK AKTIF");
+                        break;
+                }
+
                 gUtil.ResetAllControls(this);
+
                 stokAwalTextBox.Text = "0";
                 limitStokTextBox.Text = "0";
                 hppTextBox.Text = "0";
@@ -706,6 +918,7 @@ namespace RoyalPetz_ADMIN
 
                 selectedPhoto = "";
                 panelImage.BackgroundImage = null;
+                
                 errorLabel.Text = "";
 
                 detailLokasiDataGridView.Rows[0].Cells["locationQty"].Value = 0;
@@ -776,6 +989,8 @@ namespace RoyalPetz_ADMIN
 
         private void dataProdukDetailForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
+            Button[] arrButton = new Button[2];
             detailLokasiDataGridView.EditingControlShowing += detailLokasiDataGridView_EditingControlShowing;
 
             errorLabel.Text = "";
@@ -797,13 +1012,38 @@ namespace RoyalPetz_ADMIN
             switch (originModuleID)
             {
                 case globalConstants.NEW_PRODUK:
+                case globalConstants.STOK_PECAH_BARANG:
                     options = gUtil.INS;
+                    //kodeProdukTextBox.Enabled = true;
                     break;
                 case globalConstants.EDIT_PRODUK:
                     options = gUtil.UPD;
+                    //kodeProdukTextBox.Enabled = false;
                     break;
             }
-        
+            isLoading = false;
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_TAMBAH_PRODUK, gUtil.getUserGroupID());
+
+            if (originModuleID == globalConstants.NEW_PRODUK)
+            {
+                if (userAccessOption != 2 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+            else if (originModuleID == globalConstants.EDIT_PRODUK)
+            {
+                if (userAccessOption != 4 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+
+            arrButton[0] = saveButton;
+            arrButton[1] = resetbutton;
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+
             gUtil.reArrangeTabOrder(this);            
         }
 
@@ -817,6 +1057,18 @@ namespace RoyalPetz_ADMIN
 
         private void dataProdukDetailForm_Activated(object sender, EventArgs e)
         {
+        }
+
+        private void namaProdukTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (namaProdukTextBox.Text.IndexOf('\'') >= 0)
+                namaProdukTextBox.Text = namaProdukTextBox.Text.Remove(namaProdukTextBox.Text.IndexOf('\''), 1);
+        }
+
+        private void produkDescTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (produkDescTextBox.Text.IndexOf('\'') >= 0)
+                produkDescTextBox.Text = produkDescTextBox.Text.Remove(produkDescTextBox.Text.IndexOf('\''), 1);
         }
     }
 }

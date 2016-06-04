@@ -83,7 +83,7 @@ namespace RoyalPetz_ADMIN
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (!namaProdukTextBox.Text.Equals(""))
+            //if (!namaProdukTextBox.Text.Equals(""))
             {
                 loadProdukData();
             }
@@ -94,13 +94,17 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand;
+            string namaProductParam = "";
+            string kodeProductParam = "";
 
             DS.mySqlConnect();
 
-            if (namaProdukTextBox.Text.Equals(""))
-                return;
+            //if (namaProdukTextBox.Text.Equals(""))
+            //    return;
+            namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
+            kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
 
-            sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProdukTextBox.Text + "%'";
+            sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
             
             if (originModuleID == globalConstants.STOK_PECAH_BARANG)
             {
@@ -117,9 +121,7 @@ namespace RoyalPetz_ADMIN
                     dataProdukGridView.Columns["ID"].Visible = false;
                     dataProdukGridView.Columns["PRODUK ID"].Width = 200;
                     dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
-                    dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;
-
-                    dataProdukGridView.Columns["PRODUK ID"].Visible = false;
+                    dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
                 }
             }
         }
@@ -127,14 +129,13 @@ namespace RoyalPetz_ADMIN
         private void tagProdukDataGridView_DoubleClick(object sender, EventArgs e)
         {
             if (dataProdukGridView.Rows.Count <= 0)
-                return;
+                    return;
 
             int selectedrowindex = dataProdukGridView.SelectedCells[0].RowIndex;
-
             DataGridViewRow selectedRow = dataProdukGridView.Rows[selectedrowindex];
             selectedProductID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
-
             displaySpecificForm();
+            
         }
 
         private void tagProdukDataGridView_KeyPress(object sender, KeyPressEventArgs e)
@@ -187,7 +188,20 @@ namespace RoyalPetz_ADMIN
 
         private void dataProdukForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
             gutil.reArrangeTabOrder(this);
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_TAMBAH_PRODUK, gutil.getUserGroupID());
+
+            if (userAccessOption == 2 || userAccessOption == 6)
+                newButton.Visible = true;
+            else
+                newButton.Visible = false;
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            loadProdukData();
         }
     }
 }

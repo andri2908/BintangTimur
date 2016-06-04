@@ -44,20 +44,21 @@ namespace RoyalPetz_ADMIN
                 loadBranchData(namaBranchTextbox.Text);
         }
 
-        private void loadBranchData(string branchName)
+        private void loadBranchData(string branchNameParam)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand;
+            string branchName = MySqlHelper.EscapeString(branchNameParam);
 
             DS.mySqlConnect();
             if (cabangnonactiveoption.Checked)
             {
-                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', CONCAT(trim(substring(branch_ip4,1,3)),'.',trim(substring(branch_ip4,4,3)),'.',trim(substring(branch_ip4,7,3)),'.', trim(substring(branch_ip4,10))) AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_NAME LIKE '%" + branchName + "%'";
+                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_NAME LIKE '%" + branchName + "%'";
             }
             else
             {
-                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', CONCAT(trim(substring(branch_ip4,1,3)),'.',trim(substring(branch_ip4,4,3)),'.',trim(substring(branch_ip4,7,3)),'.', trim(substring(branch_ip4,10))) AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1 AND BRANCH_NAME LIKE '%" + branchName + "%'";
+                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1 AND BRANCH_NAME LIKE '%" + branchName + "%'";
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -95,7 +96,7 @@ namespace RoyalPetz_ADMIN
 
             if (originModuleID == globalConstants.DATA_PIUTANG_MUTASI)
             {
-                pembayaranPiutangLumpSumForm dataPiutangMutasi = new pembayaranPiutangLumpSumForm(originModuleID, selectedBranchID);
+                pembayaranLumpSumForm dataPiutangMutasi = new pembayaranLumpSumForm(originModuleID, selectedBranchID);
                 dataPiutangMutasi.ShowDialog(this);
             }
             else
@@ -115,7 +116,15 @@ namespace RoyalPetz_ADMIN
 
         private void dataCabangForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
             gutil.reArrangeTabOrder(this);
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_MANAJEMEN_CABANG, gutil.getUserGroupID());
+
+            if (userAccessOption == 2 || userAccessOption == 6)
+                newButton.Visible = true;
+            else
+                newButton.Visible = false;
         }
 
         private void dataCabangGridView_KeyDown(object sender, KeyEventArgs e)
@@ -129,15 +138,22 @@ namespace RoyalPetz_ADMIN
 
                 if (originModuleID == globalConstants.DATA_PIUTANG_MUTASI)
                 {
-                    pembayaranPiutangLumpSumForm dataPiutangMutasi = new pembayaranPiutangLumpSumForm(originModuleID , selectedBranchID);
+                    gutil.saveSystemDebugLog(0, "CREATE PEMBAYARAN PIUTANG MUTASI, BRANCH ID [" + selectedBranchID + "]");
+                    pembayaranLumpSumForm dataPiutangMutasi = new pembayaranLumpSumForm(originModuleID , selectedBranchID);
                     dataPiutangMutasi.ShowDialog(this);
                 }
                 else
                 {
+                    gutil.saveSystemDebugLog(0, "CREATE DATA BRANCH DETAIL, BRANCH ID [" + selectedBranchID + "]");
                     dataCabangDetailForm displayedForm = new dataCabangDetailForm(globalConstants.EDIT_BRANCH, selectedBranchID);
                     displayedForm.ShowDialog(this);
                 }
             }
+        }
+
+        private void dataCabangGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -25,16 +25,20 @@ namespace RoyalPetz_ADMIN
             InitializeComponent();
 
             selectedUserID = userID;
+            gutil.saveSystemDebugLog(0, "CREATE CHANGE PASSWORD FORM UID[" + selectedUserID + "]");
         }
 
         private bool validateOldPassword()
         {
             string oldPassword = oldPasswordTextBox.Text;
+            oldPassword = MySqlHelper.EscapeString(oldPassword);
             int result;
 
             result = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_USER WHERE ID = " + selectedUserID + " AND USER_PASSWORD = '" + oldPassword + "'"));
             if (result != 0)
                 return true;
+
+            gutil.saveSystemDebugLog(0, "VALIDATE OLD PASSWORD FAILED ["+oldPassword+"]");
 
             return false;
         }
@@ -59,6 +63,12 @@ namespace RoyalPetz_ADMIN
                 return false;
             }
 
+            if (!gutil.matchRegEx(newPasswordTextBox.Text, globalUtilities.REGEX_ALPHANUMERIC_ONLY))
+            {
+                errorLabel.Text = "PASSWORD HARUS ALPHANUMERIC";
+                return false;
+            }
+
             if (!newPasswordTextBox.Text.Equals(newPassword2TextBox.Text))
             {
                 errorLabel.Text = "NEW PASSWORD DAN RE-TYPE PASSWORD HARUS SAMA";
@@ -74,6 +84,8 @@ namespace RoyalPetz_ADMIN
             string sqlCommand = "";
 
             string newPassword = newPasswordTextBox.Text;
+            //newPassword = MySqlHelper.EscapeString(newPassword);
+
             MySqlException internalEX = null;
 
             DS.beginTransaction();
@@ -83,6 +95,7 @@ namespace RoyalPetz_ADMIN
                 DS.mySqlConnect();
 
                 sqlCommand = "UPDATE MASTER_USER SET USER_PASSWORD = '"+newPassword+"' WHERE ID = " + selectedUserID;
+                gutil.saveSystemDebugLog(0, "UPDATE NEW PASSWORD [" + newPassword + "]");
 
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
@@ -129,6 +142,7 @@ namespace RoyalPetz_ADMIN
         {
             if (saveData())
             {
+                gutil.saveUserChangeLog(0, globalConstants.CHANGE_LOG_UPDATE, "USER CHANGE PASSWORD");
                 gutil.showSuccess(gutil.UPD);
                 gutil.ResetAllControls(this);                
             }
@@ -136,6 +150,12 @@ namespace RoyalPetz_ADMIN
 
         private void changePasswordForm_Load(object sender, EventArgs e)
         {
+            Button[] arrButton = new Button[2];
+
+            arrButton[0] = loginButton;
+            arrButton[1] = button1;
+            gutil.reArrangeButtonPosition(arrButton, 187, this.Width);
+
             gutil.reArrangeTabOrder(this);
         }
 
@@ -143,6 +163,7 @@ namespace RoyalPetz_ADMIN
         {
             gutil.ResetAllControls(this);
         }
+
         private void changePasswordForm_Activated(object sender, EventArgs e)
         {
             errorLabel.Text = "";

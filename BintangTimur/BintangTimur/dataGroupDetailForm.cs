@@ -77,6 +77,12 @@ namespace RoyalPetz_ADMIN
 
         private void dataGroupDetailForm_Load(object sender, EventArgs e)
         {
+            Button[] arrButton = new Button[2];
+
+            arrButton[0] = saveButton;
+            arrButton[1] = button1;
+            gutil.reArrangeButtonPosition(arrButton, 184, this.Width);
+
             gutil.reArrangeTabOrder(this);
         }
 
@@ -107,14 +113,20 @@ namespace RoyalPetz_ADMIN
             string sqlCommand = "";
             MySqlException internalEX = null;
 
-            string groupName = namaGroupTextBox.Text.Trim();
-            string groupDesc = deskripsiTextBox.Text.Trim();
+            string groupName = MySqlHelper.EscapeString(namaGroupTextBox.Text.Trim());
+            string groupDesc = MySqlHelper.EscapeString(deskripsiTextBox.Text.Trim());
             byte groupStatus= 0;
+            byte groupCashier = 0;
 
             if (nonAktifCheckbox.Checked)
                 groupStatus = 0;
             else
                 groupStatus = 1;
+
+            if (cashierCheckBox.Checked)
+                groupCashier = 1;
+            else
+                groupCashier = 0;
 
             DS.beginTransaction();
 
@@ -126,10 +138,10 @@ namespace RoyalPetz_ADMIN
                 {
                     case globalConstants.NEW_GROUP_USER:
                     case globalConstants.PENGATURAN_GRUP_AKSES:
-                        sqlCommand = "INSERT INTO MASTER_GROUP (GROUP_USER_NAME, GROUP_USER_DESCRIPTION, GROUP_USER_ACTIVE) VALUES ('" + groupName + "', '" + groupDesc + "', " + groupStatus + ")";
+                        sqlCommand = "INSERT INTO MASTER_GROUP (GROUP_USER_NAME, GROUP_USER_DESCRIPTION, GROUP_USER_ACTIVE, GROUP_IS_CASHIER) VALUES ('" + groupName + "', '" + groupDesc + "', " + groupStatus + ", " + groupCashier + ")";
                         break;
                     case globalConstants.EDIT_GROUP_USER:
-                        sqlCommand = "UPDATE MASTER_GROUP SET GROUP_USER_NAME = '" + groupName + "', GROUP_USER_DESCRIPTION = '" + groupDesc + "', GROUP_USER_ACTIVE = " + groupStatus + " WHERE GROUP_ID = "+selectedGroupID;
+                        sqlCommand = "UPDATE MASTER_GROUP SET GROUP_USER_NAME = '" + groupName + "', GROUP_USER_DESCRIPTION = '" + groupDesc + "', GROUP_USER_ACTIVE = " + groupStatus + ", GROUP_IS_CASHIER = " + groupCashier + " WHERE GROUP_ID = " + selectedGroupID;
                         break;
                 }
 
@@ -174,6 +186,19 @@ namespace RoyalPetz_ADMIN
         {           
             if (saveData())
             {
+                switch (originModuleID)
+                {
+                    case globalConstants.NEW_GROUP_USER:
+                        gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_INSERT, "ADD NEW GROUP USER ["+namaGroupTextBox.Text+"]");
+                        break;
+                    case globalConstants.EDIT_GROUP_USER:
+                        if (nonAktifCheckbox.Checked)
+                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE GROUP USER [" + namaGroupTextBox.Text + "] GROUP STATUS NON-AKTIF");
+                        else
+                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE GROUP USER [" + namaGroupTextBox.Text + "] GROUP STATUS AKTIF");
+                        break;
+                }
+
                 if (originModuleID != globalConstants.PENGATURAN_GRUP_AKSES)
                 { 
                     gutil.showSuccess(options);

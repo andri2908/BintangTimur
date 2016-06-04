@@ -49,12 +49,9 @@
             this.createPOButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.noMutasiTextBox = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.PMDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
             this.totalApproved = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.totalApprovedLabel = new System.Windows.Forms.Label();
@@ -69,8 +66,9 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.errorLabel = new System.Windows.Forms.Label();
-            this.productIDHiddenCombo = new System.Windows.Forms.ComboBox();
             this.rejectButton = new System.Windows.Forms.Button();
+            this.exportButton = new System.Windows.Forms.Button();
+            this.acceptedButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.detailRequestOrderDataGridView)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -95,7 +93,9 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.detailRequestOrderDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.detailRequestOrderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.detailRequestOrderDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.detailRequestOrderDataGridView.Location = new System.Drawing.Point(0, 308);
+            this.detailRequestOrderDataGridView.MultiSelect = false;
             this.detailRequestOrderDataGridView.Name = "detailRequestOrderDataGridView";
             this.detailRequestOrderDataGridView.RowHeadersVisible = false;
             this.detailRequestOrderDataGridView.Size = new System.Drawing.Size(894, 297);
@@ -113,6 +113,7 @@
             this.label2.Size = new System.Drawing.Size(179, 18);
             this.label2.TabIndex = 7;
             this.label2.Text = "ASAL PERMINTAAN";
+            this.label2.Visible = false;
             // 
             // label6
             // 
@@ -193,7 +194,7 @@
             // 
             this.approveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.approveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.approveButton.Location = new System.Drawing.Point(32, 614);
+            this.approveButton.Location = new System.Drawing.Point(30, 612);
             this.approveButton.Name = "approveButton";
             this.approveButton.Size = new System.Drawing.Size(271, 37);
             this.approveButton.TabIndex = 41;
@@ -212,6 +213,7 @@
             this.label8.Size = new System.Drawing.Size(11, 18);
             this.label8.TabIndex = 26;
             this.label8.Text = ":";
+            this.label8.Visible = false;
             // 
             // label1
             // 
@@ -287,11 +289,11 @@
             // 
             this.createPOButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.createPOButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createPOButton.Location = new System.Drawing.Point(330, 614);
+            this.createPOButton.Location = new System.Drawing.Point(330, 568);
             this.createPOButton.Name = "createPOButton";
             this.createPOButton.Size = new System.Drawing.Size(248, 37);
             this.createPOButton.TabIndex = 38;
-            this.createPOButton.Text = "APPROVE SEBAGAI PO";
+            this.createPOButton.Text = "IMPORT SEBAGAI PO";
             this.createPOButton.UseVisualStyleBackColor = true;
             this.createPOButton.Click += new System.EventHandler(this.createPOButton_Click);
             // 
@@ -303,9 +305,9 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label3.Location = new System.Drawing.Point(3, 162);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(206, 18);
+            this.label3.Size = new System.Drawing.Size(179, 18);
             this.label3.TabIndex = 8;
-            this.label3.Text = "TUJUAN PERMINTAAN";
+            this.label3.Text = "ASAL PERMINTAAN";
             // 
             // tableLayoutPanel1
             // 
@@ -315,8 +317,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.92126F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.024747F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.05399F));
+            this.tableLayoutPanel1.Controls.Add(this.label15, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel7, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.totalApproved, 2, 6);
             this.tableLayoutPanel1.Controls.Add(this.label13, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.totalApprovedLabel, 0, 6);
@@ -348,6 +350,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(888, 269);
             this.tableLayoutPanel1.TabIndex = 36;
             // 
+            // label15
+            // 
+            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label15.Location = new System.Drawing.Point(3, 10);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(169, 18);
+            this.label15.TabIndex = 25;
+            this.label15.Text = "TANGGAL MUTASI";
+            // 
             // tableLayoutPanel7
             // 
             this.tableLayoutPanel7.ColumnCount = 5;
@@ -356,10 +370,7 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 183F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
-            this.tableLayoutPanel7.Controls.Add(this.noMutasiTextBox, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label15, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label16, 3, 0);
-            this.tableLayoutPanel7.Controls.Add(this.PMDateTimePicker, 4, 0);
+            this.tableLayoutPanel7.Controls.Add(this.PMDateTimePicker, 0, 0);
             this.tableLayoutPanel7.Location = new System.Drawing.Point(285, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
@@ -367,61 +378,14 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(600, 32);
             this.tableLayoutPanel7.TabIndex = 49;
             // 
-            // noMutasiTextBox
-            // 
-            this.noMutasiTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.noMutasiTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noMutasiTextBox.Location = new System.Drawing.Point(3, 3);
-            this.noMutasiTextBox.MaxLength = 30;
-            this.noMutasiTextBox.Name = "noMutasiTextBox";
-            this.noMutasiTextBox.Size = new System.Drawing.Size(179, 27);
-            this.noMutasiTextBox.TabIndex = 16;
-            this.noMutasiTextBox.TextChanged += new System.EventHandler(this.noMutasiTextBox_TextChanged);
-            // 
-            // label15
-            // 
-            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label15.Location = new System.Drawing.Point(225, 7);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(169, 18);
-            this.label15.TabIndex = 25;
-            this.label15.Text = "TANGGAL MUTASI";
-            // 
-            // label16
-            // 
-            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label16.Location = new System.Drawing.Point(408, 7);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(13, 18);
-            this.label16.TabIndex = 26;
-            this.label16.Text = ":";
-            // 
             // PMDateTimePicker
             // 
             this.PMDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PMDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PMDateTimePicker.Location = new System.Drawing.Point(427, 3);
+            this.PMDateTimePicker.Location = new System.Drawing.Point(3, 3);
             this.PMDateTimePicker.Name = "PMDateTimePicker";
             this.PMDateTimePicker.Size = new System.Drawing.Size(149, 27);
             this.PMDateTimePicker.TabIndex = 27;
-            // 
-            // label11
-            // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label11.Location = new System.Drawing.Point(3, 10);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 18);
-            this.label11.TabIndex = 47;
-            this.label11.Text = "NO MUTASI";
             // 
             // totalApproved
             // 
@@ -525,6 +489,7 @@
             this.branchFromCombo.Name = "branchFromCombo";
             this.branchFromCombo.Size = new System.Drawing.Size(321, 26);
             this.branchFromCombo.TabIndex = 0;
+            this.branchFromCombo.Visible = false;
             this.branchFromCombo.SelectedIndexChanged += new System.EventHandler(this.branchFromCombo_SelectedIndexChanged);
             // 
             // totalLabel
@@ -585,16 +550,6 @@
             this.errorLabel.TabIndex = 36;
             this.errorLabel.Text = "   ";
             // 
-            // productIDHiddenCombo
-            // 
-            this.productIDHiddenCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productIDHiddenCombo.FormattingEnabled = true;
-            this.productIDHiddenCombo.Location = new System.Drawing.Point(571, 387);
-            this.productIDHiddenCombo.Name = "productIDHiddenCombo";
-            this.productIDHiddenCombo.Size = new System.Drawing.Size(256, 26);
-            this.productIDHiddenCombo.TabIndex = 44;
-            this.productIDHiddenCombo.Visible = false;
-            // 
             // rejectButton
             // 
             this.rejectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -605,6 +560,31 @@
             this.rejectButton.TabIndex = 45;
             this.rejectButton.Text = "REJECT PERMINTAAN";
             this.rejectButton.UseVisualStyleBackColor = true;
+            this.rejectButton.Click += new System.EventHandler(this.rejectButton_Click);
+            // 
+            // exportButton
+            // 
+            this.exportButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.exportButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportButton.Location = new System.Drawing.Point(330, 614);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(248, 37);
+            this.exportButton.TabIndex = 46;
+            this.exportButton.Text = "EXPORT DATA MUTASI";
+            this.exportButton.UseVisualStyleBackColor = true;
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
+            // 
+            // acceptedButton
+            // 
+            this.acceptedButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.acceptedButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.acceptedButton.Location = new System.Drawing.Point(607, 568);
+            this.acceptedButton.Name = "acceptedButton";
+            this.acceptedButton.Size = new System.Drawing.Size(248, 37);
+            this.acceptedButton.TabIndex = 47;
+            this.acceptedButton.Text = "MUTASI DITERIMA";
+            this.acceptedButton.UseVisualStyleBackColor = true;
+            this.acceptedButton.Click += new System.EventHandler(this.acceptedButton_Click);
             // 
             // dataMutasiBarangDetailForm
             // 
@@ -612,13 +592,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(896, 661);
+            this.Controls.Add(this.acceptedButton);
             this.Controls.Add(this.rejectButton);
-            this.Controls.Add(this.productIDHiddenCombo);
-            this.Controls.Add(this.approveButton);
-            this.Controls.Add(this.createPOButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.createPOButton);
+            this.Controls.Add(this.approveButton);
             this.Controls.Add(this.detailRequestOrderDataGridView);
+            this.Controls.Add(this.exportButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "dataMutasiBarangDetailForm";
@@ -635,7 +616,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -676,17 +656,15 @@
         private System.Windows.Forms.DateTimePicker ROExpiredDateTimePicker;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.TextBox noMutasiTextBox;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DateTimePicker PMDateTimePicker;
         private System.Windows.Forms.ComboBox branchToCombo;
         private System.Windows.Forms.ComboBox branchFromCombo;
         private System.Windows.Forms.ComboBox branchToComboHidden;
         private System.Windows.Forms.ComboBox branchFromComboHidden;
-        private System.Windows.Forms.ComboBox productIDHiddenCombo;
         private System.Windows.Forms.Button rejectButton;
+        private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.Button acceptedButton;
     }
 }

@@ -116,6 +116,18 @@ namespace RoyalPetz_ADMIN
                 return false;
             }
 
+            if (!gutil.matchRegEx(userNameTextBox.Text, globalUtilities.REGEX_ALPHANUMERIC_ONLY))
+            {
+                errorLabel.Text = "USERNAME HARUS ALPHA NUMERIC";
+                return false;
+            }
+
+            if (!gutil.matchRegEx(passwordTextBox.Text, globalUtilities.REGEX_ALPHANUMERIC_ONLY))
+            {
+                errorLabel.Text = "PASSWORD HARUS ALPHA NUMERIC";
+                return false;
+            }
+
             if (selectedGroupID == 0)
             {
                 errorLabel.Text = "USER HARUS TERMASUK DI DALAM SALAH SATU GRUP";
@@ -138,9 +150,9 @@ namespace RoyalPetz_ADMIN
             MySqlException internalEX = null;
 
             string userName = userNameTextBox.Text.Trim();
-            string userFullName = userFullNameTextBox.Text.Trim();
+            string userFullName = MySqlHelper.EscapeString(userFullNameTextBox.Text.Trim());
             string password = passwordTextBox.Text.Trim();
-            string userPhone = userPhoneTextBox.Text.Trim();
+            string userPhone = MySqlHelper.EscapeString(userPhoneTextBox.Text.Trim());
             byte userStatus = 0;
 
             if (nonAktifCheckbox.Checked)
@@ -216,8 +228,22 @@ namespace RoyalPetz_ADMIN
         {
             if (saveData())
             {
+                switch (originModuleID)
+                {
+                    case globalConstants.NEW_USER:
+                        gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_INSERT, "ADD NEW USER [" + userNameTextBox.Text + "]");
+                        break;
+                    case globalConstants.EDIT_USER:
+                        if (nonAktifCheckbox.Checked == true)
+                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE NEW USER [" + userNameTextBox.Text + "] USER STATUS = AKTIF");
+                        else
+                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE NEW USER [" + userNameTextBox.Text + "] USER STATUS = NON AKTIF");
+                        break;
+                }
+
                 gutil.showSuccess(options);
                 gutil.ResetAllControls(this);
+                errorLabel.Text = "";
                 originModuleID = globalConstants.NEW_USER;
                 options = gutil.INS;
             }
@@ -242,8 +268,33 @@ namespace RoyalPetz_ADMIN
 
         private void dataUserDetailForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption;
+            Button[] arrButton = new Button[2];
+
             errorLabel.Text = "";
+
+            arrButton[0] = saveButton;
+            arrButton[1] = resetbutton;
+            gutil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+
             gutil.reArrangeTabOrder(this);
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_MANAJEMEN_USER, gutil.getUserGroupID());
+
+            if (originModuleID == globalConstants.NEW_USER)
+            {
+                if (userAccessOption != 2 && userAccessOption != 6)
+                {
+                    gutil.setReadOnlyAllControls(this);
+                }
+            }
+            else if (originModuleID == globalConstants.EDIT_USER)
+            {
+                if (userAccessOption != 4 && userAccessOption != 6)
+                {
+                    gutil.setReadOnlyAllControls(this);
+                }
+            }
         }
 
         private void resetbutton_Click(object sender, EventArgs e)
@@ -251,6 +302,7 @@ namespace RoyalPetz_ADMIN
             originModuleID = globalConstants.NEW_USER;
             options = gutil.INS;
             gutil.ResetAllControls(this);
+            errorLabel.Text = "";
         }
     }
 }

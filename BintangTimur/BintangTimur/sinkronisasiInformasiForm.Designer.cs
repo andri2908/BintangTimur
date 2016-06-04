@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(sinkronisasiInformasiForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.fileNameTextbox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.importFromFileButton = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +64,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.dataGridView1);
             this.tabPage2.Controls.Add(this.fileNameTextbox);
             this.tabPage2.Controls.Add(this.searchButton);
             this.tabPage2.Controls.Add(this.importFromFileButton);
@@ -73,6 +76,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "FROM FILE";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(169, 156);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 34;
+            this.dataGridView1.Visible = false;
             // 
             // fileNameTextbox
             // 
@@ -106,6 +119,7 @@
             this.importFromFileButton.TabIndex = 31;
             this.importFromFileButton.Text = "IMPORT FROM FILE";
             this.importFromFileButton.UseVisualStyleBackColor = true;
+            this.importFromFileButton.Click += new System.EventHandler(this.importFromFileButton_Click);
             // 
             // label2
             // 
@@ -140,6 +154,7 @@
             this.importFromServerButton.TabIndex = 21;
             this.importFromServerButton.Text = "IMPORT FROM SERVER";
             this.importFromServerButton.UseVisualStyleBackColor = true;
+            this.importFromServerButton.Click += new System.EventHandler(this.importFromServerButton_Click);
             // 
             // tabPage3
             // 
@@ -196,6 +211,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -217,5 +233,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button exportDataButton;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

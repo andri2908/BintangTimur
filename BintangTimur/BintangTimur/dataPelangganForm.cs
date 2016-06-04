@@ -29,11 +29,23 @@ namespace RoyalPetz_ADMIN
 
         public dataPelangganForm(int moduleID)
         {
+            int userAccessOption = 0;
+
             InitializeComponent();
 
             originModuleID = moduleID;
 
-            if (originModuleID == globalConstants.CASHIER_MODULE)
+            if (originModuleID != globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
+                unknownCustomerButton.Visible = false;
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PELANGGAN, gutil.getUserGroupID());
+
+            if (userAccessOption == 2 || userAccessOption == 6)
+                newButton.Visible = true;
+            else
+                newButton.Visible = false;
+
+            if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT || originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
                 newButton.Visible = false;
         }
 
@@ -45,7 +57,11 @@ namespace RoyalPetz_ADMIN
             parentForm = originForm;
 
             if (originModuleID == globalConstants.CASHIER_MODULE)
+            { 
                 newButton.Visible = false;
+                unknownCustomerButton.Visible = false;
+                pelanggangnonactiveoption.Visible = false;
+            }
         }
 
         private void newButton_Click(object sender, EventArgs e)
@@ -59,18 +75,21 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand;
+            string namaPelangganParam = "";
 
             DS.mySqlConnect();
 
             if (namaPelangganTextbox.Text.Equals(""))
                 return;
 
+            namaPelangganParam = MySqlHelper.EscapeString(namaPelangganTextbox.Text);
+
             if (pelanggangnonactiveoption.Checked == true)
             {
-                sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_FULL_NAME LIKE '%" + namaPelangganTextbox.Text + "%'";
+                sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_FULL_NAME LIKE '%" + namaPelangganParam + "%'";
             }
             else {
-                sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_ACTIVE = 1 AND CUSTOMER_FULL_NAME LIKE '%" + namaPelangganTextbox.Text + "%'";
+                sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_ACTIVE = 1 AND CUSTOMER_FULL_NAME LIKE '%" + namaPelangganParam + "%'";
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -126,6 +145,11 @@ namespace RoyalPetz_ADMIN
                 dataReturPenjualanForm displayedReturForm = new dataReturPenjualanForm(originModuleID, "", selectedCustomerID);
                 displayedReturForm.ShowDialog(this);
             }
+            else if (originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
+            {
+                pembayaranLumpSumForm pembayaranForm = new pembayaranLumpSumForm(originModuleID, selectedCustomerID);
+                pembayaranForm.ShowDialog(this);
+            }
             else
             {
                 dataPelangganDetailForm displayedForm = new dataPelangganDetailForm(globalConstants.EDIT_CUSTOMER, selectedCustomerID);
@@ -171,12 +195,23 @@ namespace RoyalPetz_ADMIN
                     dataReturPenjualanForm displayDataReturPenjualan = new dataReturPenjualanForm(originModuleID, "", selectedCustomerID);
                     displayDataReturPenjualan.ShowDialog(this);
                 }
+                else if (originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
+                {
+                    pembayaranLumpSumForm pembayaranForm = new pembayaranLumpSumForm(originModuleID, selectedCustomerID);
+                    pembayaranForm.ShowDialog(this);
+                }
                 else 
                 {
                     dataPelangganDetailForm displayedForm = new dataPelangganDetailForm(globalConstants.EDIT_CUSTOMER, selectedCustomerID);
                     displayedForm.ShowDialog(this);
                 }
             }
+        }
+
+        private void unknownCustomerButton_Click(object sender, EventArgs e)
+        {
+            dataReturPenjualanForm displayedReturForm = new dataReturPenjualanForm(originModuleID, "", 0);
+            displayedReturForm.ShowDialog(this);
         }
     }
 }

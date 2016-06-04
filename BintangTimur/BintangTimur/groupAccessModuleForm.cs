@@ -154,9 +154,14 @@ namespace RoyalPetz_ADMIN
 
         private void groupAccessModuleForm_Load(object sender, EventArgs e)
         {
-            //loadGroupUserInformation();
-            //loadUserAccessInformation();
-            //fillInDummyData();
+            Button[] arrButton = new Button[2];
+
+            loadGroupUserInformation();
+            loadUserAccessInformation();
+
+            arrButton[0] = saveButton;
+            arrButton[1] = newGroupButton;
+            gutil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gutil.reArrangeTabOrder(this);
         }
@@ -227,7 +232,7 @@ namespace RoyalPetz_ADMIN
                 else
                 {
                     // EDIT MODE
-                    sqlCommand = "UPDATE USER_ACCESS_MANAGEMENT SET USER_ACCESS_OPTION = " + userAccessValue + " WHERE GROUP_ID = " + selectedGroupID + " AND MODULE_ID = " + moduleIdValue + ")";
+                    sqlCommand = "UPDATE USER_ACCESS_MANAGEMENT SET USER_ACCESS_OPTION = " + userAccessValue + " WHERE GROUP_ID = " + selectedGroupID + " AND MODULE_ID = " + moduleIdValue;
 
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
@@ -267,16 +272,22 @@ namespace RoyalPetz_ADMIN
             if (saveData())
             {
                 //MessageBox.Show("SUCCESS");
+
+                gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE GROUP ACCESS VALUE");
                 gutil.showSuccess(gutil.UPD);
-                gutil.ResetAllControls(this);
+                MessageBox.Show("RE-LOGIN UNTUK MENGAKTIFKAN HAK AKSES YANG BARU", "INFORMASI",MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void groupAccessModuleForm_Activated(object sender, EventArgs e)
         {
             //if need something
-            loadGroupUserInformation();
-            loadUserAccessInformation();
+        }
+
+        private void checkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i=0;i<groupAccessDataGridView.Rows.Count;i++)
+                groupAccessDataGridView.Rows[i].Cells["hakAkses"].Value = checkAll.Checked;
         }
     }
 }

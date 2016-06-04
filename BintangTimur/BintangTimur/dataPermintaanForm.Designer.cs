@@ -48,7 +48,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.showExpiredCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.showApprovedROCheckbox = new System.Windows.Forms.CheckBox();
             this.importButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataRequestOrderGridView)).BeginInit();
@@ -71,6 +70,7 @@
             this.dataRequestOrderGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataRequestOrderGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataRequestOrderGridView.Location = new System.Drawing.Point(0, 211);
+            this.dataRequestOrderGridView.MultiSelect = false;
             this.dataRequestOrderGridView.Name = "dataRequestOrderGridView";
             this.dataRequestOrderGridView.RowHeadersVisible = false;
             this.dataRequestOrderGridView.Size = new System.Drawing.Size(921, 427);
@@ -82,7 +82,7 @@
             // displayButton
             // 
             this.displayButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayButton.Location = new System.Drawing.Point(351, 168);
+            this.displayButton.Location = new System.Drawing.Point(157, 168);
             this.displayButton.Name = "displayButton";
             this.displayButton.Size = new System.Drawing.Size(95, 37);
             this.displayButton.TabIndex = 34;
@@ -122,22 +122,30 @@
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 39;
             this.label3.Text = "Asal Permintaan";
+            this.label3.Visible = false;
             // 
             // branchFromCombo
             // 
+            this.branchFromCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.branchFromCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.branchFromCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.branchFromCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.branchFromCombo.FormattingEnabled = true;
             this.branchFromCombo.Location = new System.Drawing.Point(195, 75);
             this.branchFromCombo.Name = "branchFromCombo";
             this.branchFromCombo.Size = new System.Drawing.Size(311, 26);
             this.branchFromCombo.TabIndex = 40;
+            this.branchFromCombo.Visible = false;
             this.branchFromCombo.SelectedIndexChanged += new System.EventHandler(this.branchFromCombo_SelectedIndexChanged);
             // 
             // branchToCombo
             // 
+            this.branchToCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.branchToCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.branchToCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.branchToCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.branchToCombo.FormattingEnabled = true;
-            this.branchToCombo.Location = new System.Drawing.Point(195, 107);
+            this.branchToCombo.Location = new System.Drawing.Point(195, 110);
             this.branchToCombo.Name = "branchToCombo";
             this.branchToCombo.Size = new System.Drawing.Size(311, 26);
             this.branchToCombo.TabIndex = 42;
@@ -151,9 +159,9 @@
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
             this.label4.Location = new System.Drawing.Point(3, 114);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(177, 18);
+            this.label4.Size = new System.Drawing.Size(151, 18);
             this.label4.TabIndex = 41;
-            this.label4.Text = "Tujuan Permintaan";
+            this.label4.Text = "Asal Permintaan";
             // 
             // RODtPicker_2
             // 
@@ -179,7 +187,7 @@
             // newButton
             // 
             this.newButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newButton.Location = new System.Drawing.Point(459, 168);
+            this.newButton.Location = new System.Drawing.Point(269, 168);
             this.newButton.Name = "newButton";
             this.newButton.Size = new System.Drawing.Size(227, 37);
             this.newButton.TabIndex = 46;
@@ -236,7 +244,6 @@
             this.tableLayoutPanel1.Controls.Add(this.showExpiredCheckBox, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.showAllCheckBox, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.showApprovedROCheckbox, 2, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 20);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -297,23 +304,10 @@
             this.label1.TabIndex = 35;
             this.label1.Text = "No Permintaan";
             // 
-            // showApprovedROCheckbox
-            // 
-            this.showApprovedROCheckbox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.showApprovedROCheckbox.AutoSize = true;
-            this.showApprovedROCheckbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.showApprovedROCheckbox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.showApprovedROCheckbox.Location = new System.Drawing.Point(555, 77);
-            this.showApprovedROCheckbox.Name = "showApprovedROCheckbox";
-            this.showApprovedROCheckbox.Size = new System.Drawing.Size(198, 22);
-            this.showApprovedROCheckbox.TabIndex = 49;
-            this.showApprovedROCheckbox.Text = "Show Approved RO";
-            this.showApprovedROCheckbox.UseVisualStyleBackColor = true;
-            // 
             // importButton
             // 
             this.importButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importButton.Location = new System.Drawing.Point(459, 168);
+            this.importButton.Location = new System.Drawing.Point(520, 168);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(265, 37);
             this.importButton.TabIndex = 51;
@@ -376,7 +370,6 @@
         private System.Windows.Forms.TextBox noROInvoiceTextBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.CheckBox showExpiredCheckBox;
-        private System.Windows.Forms.CheckBox showApprovedROCheckbox;
         private System.Windows.Forms.Button importButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }

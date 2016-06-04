@@ -53,7 +53,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.totalLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
-            this.productComboHidden = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -88,6 +87,7 @@
             // noReturTextBox
             // 
             this.noReturTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.noReturTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.noReturTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noReturTextBox.Location = new System.Drawing.Point(3, 4);
             this.noReturTextBox.Name = "noReturTextBox";
@@ -101,7 +101,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label11.Location = new System.Drawing.Point(235, 8);
+            this.label11.Location = new System.Drawing.Point(230, 8);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(171, 18);
             this.label11.TabIndex = 20;
@@ -137,7 +137,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.38756F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.61244F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 199F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 204F));
             this.tableLayoutPanel6.Controls.Add(this.rsDateTimePicker, 3, 0);
             this.tableLayoutPanel6.Controls.Add(this.noReturTextBox, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label11, 2, 0);
@@ -153,7 +153,7 @@
             this.rsDateTimePicker.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rsDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rsDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.rsDateTimePicker.Location = new System.Drawing.Point(427, 4);
+            this.rsDateTimePicker.Location = new System.Drawing.Point(422, 4);
             this.rsDateTimePicker.Name = "rsDateTimePicker";
             this.rsDateTimePicker.Size = new System.Drawing.Size(173, 27);
             this.rsDateTimePicker.TabIndex = 55;
@@ -253,11 +253,13 @@
             this.detailReturDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.detailReturDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.detailReturDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.detailReturDataGridView.Location = new System.Drawing.Point(3, 231);
+            this.detailReturDataGridView.Location = new System.Drawing.Point(2, 231);
+            this.detailReturDataGridView.MultiSelect = false;
             this.detailReturDataGridView.Name = "detailReturDataGridView";
             this.detailReturDataGridView.RowHeadersVisible = false;
             this.detailReturDataGridView.Size = new System.Drawing.Size(888, 379);
             this.detailReturDataGridView.TabIndex = 51;
+            this.detailReturDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellEnter);
             this.detailReturDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailReturDataGridView_RowsAdded);
             this.detailReturDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.detailReturDataGridView_KeyDown);
             // 
@@ -366,24 +368,12 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // productComboHidden
-            // 
-            this.productComboHidden.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.productComboHidden.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productComboHidden.FormattingEnabled = true;
-            this.productComboHidden.Location = new System.Drawing.Point(621, 382);
-            this.productComboHidden.Name = "productComboHidden";
-            this.productComboHidden.Size = new System.Drawing.Size(267, 26);
-            this.productComboHidden.TabIndex = 53;
-            this.productComboHidden.Visible = false;
-            // 
             // dataReturPenjualanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(894, 661);
-            this.Controls.Add(this.productComboHidden);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.detailReturDataGridView);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -433,7 +423,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.DateTimePicker rsDateTimePicker;
-        private System.Windows.Forms.ComboBox productComboHidden;
         private System.Windows.Forms.Label errorLabel;
     }
 }

@@ -52,12 +52,14 @@
             this.kategoriProdukDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.kategoriProdukDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.kategoriProdukDataGridView.Location = new System.Drawing.Point(0, 74);
+            this.kategoriProdukDataGridView.MultiSelect = false;
             this.kategoriProdukDataGridView.Name = "kategoriProdukDataGridView";
             this.kategoriProdukDataGridView.ReadOnly = true;
             this.kategoriProdukDataGridView.RowHeadersVisible = false;
             this.kategoriProdukDataGridView.Size = new System.Drawing.Size(669, 474);
             this.kategoriProdukDataGridView.TabIndex = 0;
             this.kategoriProdukDataGridView.DoubleClick += new System.EventHandler(this.tagProdukDataGridView_DoubleClick);
+            this.kategoriProdukDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.kategoriProdukDataGridView_KeyDown);
             // 
             // categoryNameTextBox
             // 

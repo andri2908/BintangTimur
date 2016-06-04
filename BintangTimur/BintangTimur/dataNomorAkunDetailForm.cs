@@ -41,6 +41,30 @@ namespace RoyalPetz_ADMIN
 
         private void dataNomorAkunDetailForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
+            Button[] arrButton = new Button[2];
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PENGATURAN_NO_AKUN, gUtil.getUserGroupID());
+
+            if (originModuleID == globalConstants.NEW_AKUN)
+            {
+                if (userAccessOption != 2 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+            else if (originModuleID == globalConstants.EDIT_AKUN)
+            {
+                if (userAccessOption != 4 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+
+            arrButton[0] = saveButton;
+            arrButton[1] = ResetButton;
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+
             gUtil.reArrangeTabOrder(this);
         }
 
@@ -118,6 +142,8 @@ namespace RoyalPetz_ADMIN
         private void ResetButton_Click(object sender, EventArgs e)
         {
             gUtil.ResetAllControls(this);
+            originModuleID = globalConstants.NEW_AKUN;
+            options = gUtil.INS;
         }
 
         private bool dataValidated()
@@ -125,6 +151,12 @@ namespace RoyalPetz_ADMIN
             if (kodeTextbox.Text.Trim().Equals(""))
             {
                 errorLabel.Text = "KODE AKUN TIDAK BOLEH KOSONG. ";
+                return false;
+            }
+
+            if (!gUtil.matchRegEx(kodeTextbox.Text.Trim(), globalUtilities.REGEX_ALPHANUMERIC_ONLY))
+            {
+                errorLabel.Text = "KODE AKUN HARUS ALPHA NUMERIC";
                 return false;
             }
 
@@ -144,7 +176,7 @@ namespace RoyalPetz_ADMIN
             MySqlException internalEX = null;
 
             string kodeakun = kodeTextbox.Text.Trim();
-            string deskripsiakun = DeskripsiTextbox.Text.Trim();
+            string deskripsiakun = MySqlHelper.EscapeString(DeskripsiTextbox.Text.Trim());
             int tipeakun = Int32.Parse(TipeComboBox.SelectedValue.ToString());
             int nonactive = 1;
             if (NonactiveCheckbox.Checked == true)
@@ -163,6 +195,7 @@ namespace RoyalPetz_ADMIN
                     case globalConstants.NEW_AKUN:
                         sqlCommand = "INSERT INTO MASTER_ACCOUNT (ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_TYPE_ID, ACCOUNT_ACTIVE) " +
                                             "VALUES ('" + kodeakun + "', '" + deskripsiakun + "', '" + tipeakun + "', " + nonactive + ")";
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NO_AKUN, "INSERT DATA TO MASTER ACCOUNT [" + kodeakun + "]");
                         break;
                     case globalConstants.EDIT_AKUN:
                         sqlCommand = "UPDATE MASTER_ACCOUNT SET " +
@@ -171,6 +204,7 @@ namespace RoyalPetz_ADMIN
                                             "ACCOUNT_TYPE_ID = '" + tipeakun + "', " +
                                             "ACCOUNT_ACTIVE = '" + nonactive + "' " +
                                             "WHERE ID = '" + selectedAccountID + "'";
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NO_AKUN, "UPDATE DATA ON MASTER ACCOUNT [" + selectedAccountID + "]");
                         break;
                 }
 
@@ -182,6 +216,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NO_AKUN, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -217,10 +252,24 @@ namespace RoyalPetz_ADMIN
         private void saveButton_Click(object sender, EventArgs e)
         {
             //save data
+            gUtil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NO_AKUN, "ATTEMPT TO SAVE DATA");
             if (saveData())
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NO_AKUN, "DATA SAVED");
+                if (originModuleID == globalConstants.NEW_AKUN)
+                    gUtil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_NO_AKUN, globalConstants.CHANGE_LOG_INSERT, "NEW NOMOR AKUN [" + kodeTextbox.Text + "]");
+                else
+                {
+                    if (NonactiveCheckbox.Checked == true)
+                        gUtil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_NO_AKUN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE NOMOR AKUN [" + kodeTextbox.Text + "] STATUS NON-AKTIF");
+                    else
+                        gUtil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_NO_AKUN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE NOMOR AKUN [" + kodeTextbox.Text + "] STATUS AKTIF");
+                }
+
                 gUtil.showSuccess(options);
                 gUtil.ResetAllControls(this);
+                originModuleID = globalConstants.NEW_AKUN;
+                options = gUtil.INS;
             }
         }
 

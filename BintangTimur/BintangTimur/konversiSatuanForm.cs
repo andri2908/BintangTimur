@@ -25,7 +25,8 @@ namespace RoyalPetz_ADMIN
         private string previousInput = "";
 
         private int currentMode = NEW_CONVERSION;
-
+        private bool isLoading = false;
+        
         private globalUtilities gUtil = new globalUtilities();
 
         Data_Access DS = new Data_Access();
@@ -170,10 +171,11 @@ namespace RoyalPetz_ADMIN
                 {
                     case NEW_CONVERSION:
                         sqlCommand = "INSERT INTO UNIT_CONVERT (CONVERT_UNIT_ID_1, CONVERT_UNIT_ID_2, CONVERT_MULTIPLIER) VALUES (" + selectedUnit1_ID + ", " + selectedUnit2_ID + ", " + unitConversion + ")";
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "ADD NEW UNIT CONVERT [" + selectedUnit1_ID + "/" + selectedUnit2_ID + "/" + unitConversion + "]");
                         break;
                     case EDIT_CONVERSION:
                         sqlCommand = "UPDATE UNIT_CONVERT SET CONVERT_MULTIPLIER = " + unitConversion + " WHERE CONVERT_UNIT_ID_1 = " + selectedUnit1_ID + " AND CONVERT_UNIT_ID_2 = "+selectedUnit2_ID;
-                        break;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "UPDATE UNIT CONVERT [" + selectedUnit1_ID + "/" + selectedUnit2_ID + "/" + unitConversion + "]"); break;
                 }
 
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -184,6 +186,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -219,6 +222,7 @@ namespace RoyalPetz_ADMIN
         {
             if (saveData())
             {
+                gUtil.saveUserChangeLog(globalConstants.MENU_SATUAN, globalConstants.CHANGE_LOG_UPDATE, "SET KONVERSI SATUAN [" + unit1Combo.Text + " = " + convertValueTextBox.Text + " " + unit2Combo.Text + "]");
                 //MessageBox.Show("SUCCESS");
                 gUtil.showSuccess(gUtil.UPD);
                 displayCurrentSavedConversion(selectedUnit1_ID);
@@ -240,13 +244,30 @@ namespace RoyalPetz_ADMIN
 
         private void convertValueTextBox_TextChanged(object sender, EventArgs e)
         {
-            //string regExValue = "";
+            string tempString = "";
 
-            //regExValue = @"^[0-9]*\.?\d{0,2}$";
-            //Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
-            //Match m = r.Match(convertValueTextBox.Text);
+            if (isLoading)
+                return;
 
-            //if (m.Success)
+            isLoading = true;
+            if (convertValueTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                previousInput = "0";
+                convertValueTextBox.Text = "0";
+
+                convertValueTextBox.SelectionStart = convertValueTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (convertValueTextBox.Text.IndexOf('0') == 0 && convertValueTextBox.Text.Length > 1 && convertValueTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = convertValueTextBox.Text;
+                convertValueTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if (gUtil.matchRegEx(convertValueTextBox.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
             {
                 previousInput = convertValueTextBox.Text;
@@ -256,6 +277,9 @@ namespace RoyalPetz_ADMIN
                 convertValueTextBox.Text = previousInput;
             }
 
+            convertValueTextBox.SelectionStart = convertValueTextBox.Text.Length;
+
+            isLoading = false;
         }
 
         private void konversiSatuanForm_Activated(object sender, EventArgs e)

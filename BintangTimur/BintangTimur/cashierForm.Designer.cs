@@ -33,6 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -40,11 +41,10 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.pelangganTextBox = new System.Windows.Forms.TextBox();
-            this.sizeComboBox = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.printoutCheckBox = new System.Windows.Forms.CheckBox();
             this.paymentComboBox = new System.Windows.Forms.ComboBox();
             this.labelCaraBayar = new System.Windows.Forms.Label();
@@ -54,9 +54,9 @@
             this.customerComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.bayarTextBox = new System.Windows.Forms.MaskedTextBox();
             this.discJualMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.uangKembaliTextBox = new System.Windows.Forms.TextBox();
             this.totalAfterDiscTextBox = new System.Windows.Forms.TextBox();
             this.totalPenjualanTextBox = new System.Windows.Forms.TextBox();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -75,7 +75,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.dateTimeStampLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.productComboHidden = new System.Windows.Forms.ComboBox();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
@@ -104,9 +105,8 @@
             this.titleLabel.ForeColor = System.Drawing.Color.FloralWhite;
             this.titleLabel.Location = new System.Drawing.Point(4, 5);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(975, 46);
+            this.titleLabel.Size = new System.Drawing.Size(0, 46);
             this.titleLabel.TabIndex = 1;
-            this.titleLabel.Text = "\"ROYALE PETZ\" A Royale Shop For Your Pets";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // panel4
@@ -196,11 +196,10 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.ChangePrinterButton);
             this.panel5.Controls.Add(this.errorLabel);
             this.panel5.Controls.Add(this.tempoMaskedTextBox);
             this.panel5.Controls.Add(this.pelangganTextBox);
-            this.panel5.Controls.Add(this.sizeComboBox);
-            this.panel5.Controls.Add(this.label7);
             this.panel5.Controls.Add(this.printoutCheckBox);
             this.panel5.Controls.Add(this.paymentComboBox);
             this.panel5.Controls.Add(this.labelCaraBayar);
@@ -216,6 +215,18 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 162);
             this.panel5.TabIndex = 9;
+            // 
+            // ChangePrinterButton
+            // 
+            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
+            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 68);
+            this.ChangePrinterButton.Name = "ChangePrinterButton";
+            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
+            this.ChangePrinterButton.TabIndex = 37;
+            this.ChangePrinterButton.Text = "SET PRINTER";
+            this.ChangePrinterButton.UseVisualStyleBackColor = true;
+            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
             // 
             // errorLabel
             // 
@@ -241,6 +252,7 @@
             this.tempoMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tempoMaskedTextBox.ValidatingType = typeof(int);
             this.tempoMaskedTextBox.Visible = false;
+            this.tempoMaskedTextBox.Enter += new System.EventHandler(this.tempoMaskedTextBox_Enter);
             // 
             // pelangganTextBox
             // 
@@ -251,30 +263,6 @@
             this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
             this.pelangganTextBox.TabIndex = 17;
             // 
-            // sizeComboBox
-            // 
-            this.sizeComboBox.FormattingEnabled = true;
-            this.sizeComboBox.Items.AddRange(new object[] {
-            "Kecil",
-            "Sedang",
-            "Kwarto"});
-            this.sizeComboBox.Location = new System.Drawing.Point(342, 70);
-            this.sizeComboBox.Name = "sizeComboBox";
-            this.sizeComboBox.Size = new System.Drawing.Size(126, 26);
-            this.sizeComboBox.TabIndex = 11;
-            this.sizeComboBox.Text = "Kecil";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label7.Location = new System.Drawing.Point(340, 43);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(101, 18);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Size Kertas";
-            // 
             // printoutCheckBox
             // 
             this.printoutCheckBox.AutoSize = true;
@@ -284,7 +272,7 @@
             this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
             this.printoutCheckBox.Location = new System.Drawing.Point(11, 110);
             this.printoutCheckBox.Name = "printoutCheckBox";
-            this.printoutCheckBox.Size = new System.Drawing.Size(236, 22);
+            this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
             this.printoutCheckBox.TabIndex = 8;
             this.printoutCheckBox.Text = "Tanpa Cetak &Struk - Nota";
             this.printoutCheckBox.UseVisualStyleBackColor = true;
@@ -301,6 +289,7 @@
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
             this.paymentComboBox.Text = "Cash";
+            this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
             // 
             // labelCaraBayar
             // 
@@ -332,7 +321,7 @@
             this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
             this.cashRadioButton.Location = new System.Drawing.Point(154, 41);
             this.cashRadioButton.Name = "cashRadioButton";
-            this.cashRadioButton.Size = new System.Drawing.Size(71, 22);
+            this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
             this.cashRadioButton.TabIndex = 4;
             this.cashRadioButton.TabStop = true;
             this.cashRadioButton.Text = "Tuna&i";
@@ -380,9 +369,9 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.bayarTextBox);
             this.panel6.Controls.Add(this.discJualMaskedTextBox);
-            this.panel6.Controls.Add(this.textBox5);
-            this.panel6.Controls.Add(this.textBox4);
+            this.panel6.Controls.Add(this.uangKembaliTextBox);
             this.panel6.Controls.Add(this.totalAfterDiscTextBox);
             this.panel6.Controls.Add(this.totalPenjualanTextBox);
             this.panel6.Controls.Add(this.panel8);
@@ -397,6 +386,18 @@
             this.panel6.Size = new System.Drawing.Size(370, 161);
             this.panel6.TabIndex = 0;
             // 
+            // bayarTextBox
+            // 
+            this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bayarTextBox.Location = new System.Drawing.Point(186, 102);
+            this.bayarTextBox.Mask = "000000000000000";
+            this.bayarTextBox.Name = "bayarTextBox";
+            this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
+            this.bayarTextBox.TabIndex = 18;
+            this.bayarTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.bayarTextBox.TextChanged += new System.EventHandler(this.bayarTextBox_TextChanged);
+            this.bayarTextBox.Enter += new System.EventHandler(this.bayarTextBox_Enter);
+            // 
             // discJualMaskedTextBox
             // 
             this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -407,27 +408,19 @@
             this.discJualMaskedTextBox.TabIndex = 17;
             this.discJualMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.discJualMaskedTextBox.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
+            this.discJualMaskedTextBox.Enter += new System.EventHandler(this.discJualMaskedTextBox_Enter);
             this.discJualMaskedTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.discJualMaskedTextBox_Validating);
             // 
-            // textBox5
+            // uangKembaliTextBox
             // 
-            this.textBox5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(186, 131);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(181, 27);
-            this.textBox5.TabIndex = 16;
-            this.textBox5.Text = "0";
-            this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(186, 103);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(181, 27);
-            this.textBox4.TabIndex = 15;
-            this.textBox4.Text = "0";
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.uangKembaliTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uangKembaliTextBox.Location = new System.Drawing.Point(186, 131);
+            this.uangKembaliTextBox.Name = "uangKembaliTextBox";
+            this.uangKembaliTextBox.ReadOnly = true;
+            this.uangKembaliTextBox.Size = new System.Drawing.Size(181, 27);
+            this.uangKembaliTextBox.TabIndex = 16;
+            this.uangKembaliTextBox.Text = "0";
+            this.uangKembaliTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // totalAfterDiscTextBox
             // 
@@ -589,7 +582,7 @@
             this.userStatusLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userStatusLabel.ForeColor = System.Drawing.Color.FloralWhite;
             this.userStatusLabel.Name = "userStatusLabel";
-            this.userStatusLabel.Size = new System.Drawing.Size(105, 17);
+            this.userStatusLabel.Size = new System.Drawing.Size(104, 17);
             this.userStatusLabel.Text = "Welcome, JOKO";
             // 
             // statusShiftLabel
@@ -604,7 +597,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(691, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(692, 17);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
@@ -620,14 +613,20 @@
             this.timer1.Interval = 60000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // productComboHidden
+            // printDocument1
             // 
-            this.productComboHidden.FormattingEnabled = true;
-            this.productComboHidden.Location = new System.Drawing.Point(570, 223);
-            this.productComboHidden.Name = "productComboHidden";
-            this.productComboHidden.Size = new System.Drawing.Size(121, 21);
-            this.productComboHidden.TabIndex = 13;
-            this.productComboHidden.Visible = false;
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
             // 
             // cashierForm
             // 
@@ -635,7 +634,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(985, 661);
-            this.Controls.Add(this.productComboHidden);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.totalLabel);
@@ -687,8 +685,6 @@
         private System.Windows.Forms.Label labelCaraBayar;
         private System.Windows.Forms.ComboBox paymentComboBox;
         private System.Windows.Forms.CheckBox printoutCheckBox;
-        private System.Windows.Forms.ComboBox sizeComboBox;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label13;
@@ -696,8 +692,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox uangKembaliTextBox;
         private System.Windows.Forms.TextBox totalAfterDiscTextBox;
         private System.Windows.Forms.TextBox totalPenjualanTextBox;
         private System.Windows.Forms.Panel panel9;
@@ -709,11 +704,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel dateTimeStampLabel;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ComboBox productComboHidden;
         private System.Windows.Forms.MaskedTextBox discJualMaskedTextBox;
         private System.Windows.Forms.TextBox pelangganTextBox;
         private System.Windows.Forms.MaskedTextBox tempoMaskedTextBox;
         private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.MaskedTextBox bayarTextBox;
+        private System.Windows.Forms.Button ChangePrinterButton;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
 }
 

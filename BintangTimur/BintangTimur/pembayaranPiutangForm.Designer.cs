@@ -33,6 +33,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.invoiceNoTextBox = new System.Windows.Forms.TextBox();
             this.detailPaymentInfoDataGrid = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.confirmBayar = new System.Windows.Forms.ToolStripMenuItem();
+            this.invalidPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.paymentMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -46,8 +49,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.cairDTPicker = new System.Windows.Forms.DateTimePicker();
             this.paymentCombo = new System.Windows.Forms.ComboBox();
+            this.labelCair = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.pelangganNameTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -63,17 +69,15 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.confirmBayar = new System.Windows.Forms.ToolStripMenuItem();
-            this.invalidPayment = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.detailPaymentInfoDataGrid)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detailSalesOrderDataGridView)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // invoiceNoTextBox
@@ -110,6 +114,29 @@
             this.detailPaymentInfoDataGrid.TabIndex = 62;
             this.detailPaymentInfoDataGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.detailPaymentInfoDataGrid_KeyDown);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.confirmBayar,
+            this.invalidPayment});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(188, 48);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // confirmBayar
+            // 
+            this.confirmBayar.Name = "confirmBayar";
+            this.confirmBayar.Size = new System.Drawing.Size(187, 22);
+            this.confirmBayar.Text = "Confirm Pembayaran";
+            this.confirmBayar.Click += new System.EventHandler(this.confirmBayar_Click);
+            // 
+            // invalidPayment
+            // 
+            this.invalidPayment.Name = "invalidPayment";
+            this.invalidPayment.Size = new System.Drawing.Size(187, 22);
+            this.invalidPayment.Text = "Pembayaran Invalid";
+            this.invalidPayment.Click += new System.EventHandler(this.invalidPayment_Click);
+            // 
             // label13
             // 
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -125,6 +152,7 @@
             // descriptionTextBox
             // 
             this.descriptionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.descriptionTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.descriptionTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionTextBox.Location = new System.Drawing.Point(261, 235);
             this.descriptionTextBox.Name = "descriptionTextBox";
@@ -143,6 +171,7 @@
             this.paymentMaskedTextBox.Text = "0";
             this.paymentMaskedTextBox.ValidatingType = typeof(int);
             this.paymentMaskedTextBox.TextChanged += new System.EventHandler(this.paymentMaskedTextBox_TextChanged);
+            this.paymentMaskedTextBox.Enter += new System.EventHandler(this.paymentMaskedTextBox_Enter);
             // 
             // totalLabel
             // 
@@ -255,8 +284,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.47287F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.527132F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 630F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.label11, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.paymentCombo, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.label6, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
@@ -288,6 +317,59 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(888, 269);
             this.tableLayoutPanel1.TabIndex = 58;
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 3;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.93733F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.06267F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 266F));
+            this.tableLayoutPanel4.Controls.Add(this.cairDTPicker, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.paymentCombo, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.labelCair, 1, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(261, 155);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(624, 31);
+            this.tableLayoutPanel4.TabIndex = 68;
+            // 
+            // cairDTPicker
+            // 
+            this.cairDTPicker.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cairDTPicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cairDTPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.cairDTPicker.Location = new System.Drawing.Point(360, 3);
+            this.cairDTPicker.Name = "cairDTPicker";
+            this.cairDTPicker.Size = new System.Drawing.Size(173, 27);
+            this.cairDTPicker.TabIndex = 59;
+            this.cairDTPicker.Visible = false;
+            // 
+            // paymentCombo
+            // 
+            this.paymentCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.paymentCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.paymentCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.paymentCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentCombo.FormattingEnabled = true;
+            this.paymentCombo.Location = new System.Drawing.Point(3, 3);
+            this.paymentCombo.Name = "paymentCombo";
+            this.paymentCombo.Size = new System.Drawing.Size(229, 26);
+            this.paymentCombo.TabIndex = 63;
+            this.paymentCombo.SelectedIndexChanged += new System.EventHandler(this.paymentCombo_SelectedIndexChanged);
+            // 
+            // labelCair
+            // 
+            this.labelCair.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelCair.AutoSize = true;
+            this.labelCair.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCair.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.labelCair.Location = new System.Drawing.Point(249, 6);
+            this.labelCair.Name = "labelCair";
+            this.labelCair.Size = new System.Drawing.Size(104, 18);
+            this.labelCair.TabIndex = 58;
+            this.labelCair.Text = "TGL CAIR :";
+            this.labelCair.Visible = false;
+            // 
             // label11
             // 
             this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -300,22 +382,12 @@
             this.label11.TabIndex = 20;
             this.label11.Text = "TGL PEMBAYARAN :";
             // 
-            // paymentCombo
-            // 
-            this.paymentCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.paymentCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentCombo.FormattingEnabled = true;
-            this.paymentCombo.Location = new System.Drawing.Point(261, 158);
-            this.paymentCombo.Name = "paymentCombo";
-            this.paymentCombo.Size = new System.Drawing.Size(229, 26);
-            this.paymentCombo.TabIndex = 63;
-            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.38756F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.61244F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 203F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 222F));
             this.tableLayoutPanel3.Controls.Add(this.pelangganNameTextBox, 0, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(261, 79);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -492,29 +564,6 @@
             this.label2.TabIndex = 62;
             this.label2.Text = "DESKRIPSI";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.confirmBayar,
-            this.invalidPayment});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(188, 48);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // confirmBayar
-            // 
-            this.confirmBayar.Name = "confirmBayar";
-            this.confirmBayar.Size = new System.Drawing.Size(187, 22);
-            this.confirmBayar.Text = "Confirm Pembayaran";
-            this.confirmBayar.Click += new System.EventHandler(this.confirmBayar_Click);
-            // 
-            // invalidPayment
-            // 
-            this.invalidPayment.Name = "invalidPayment";
-            this.invalidPayment.Size = new System.Drawing.Size(187, 22);
-            this.invalidPayment.Text = "Pembayaran Invalid";
-            this.invalidPayment.Click += new System.EventHandler(this.invalidPayment_Click);
-            // 
             // pembayaranPiutangForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -535,17 +584,19 @@
             this.Activated += new System.EventHandler(this.pembayaranPiutangForm_Activated);
             this.Load += new System.EventHandler(this.pembayaranPiutangForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.detailPaymentInfoDataGrid)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detailSalesOrderDataGridView)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -587,5 +638,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem confirmBayar;
         private System.Windows.Forms.ToolStripMenuItem invalidPayment;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.DateTimePicker cairDTPicker;
+        private System.Windows.Forms.Label labelCair;
     }
 }

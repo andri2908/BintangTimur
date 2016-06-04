@@ -89,8 +89,32 @@ namespace RoyalPetz_ADMIN
 
         private void dataPelangganDetailForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption;
+            Button[] arrButton = new Button[2];
+
             dateJoinedDateTimePicked.Format = DateTimePickerFormat.Custom;
             dateJoinedDateTimePicked.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PELANGGAN, gUtil.getUserGroupID());
+
+            if (originModuleID == globalConstants.NEW_CUSTOMER)
+            {
+                if (userAccessOption != 2 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+            else if (originModuleID == globalConstants.EDIT_CUSTOMER)
+            {
+                if (userAccessOption != 4 && userAccessOption != 6)
+                {
+                    gUtil.setReadOnlyAllControls(this);
+                }
+            }
+
+            arrButton[0] = saveButton;
+            arrButton[1] = resetbutton;
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
         }
@@ -120,31 +144,43 @@ namespace RoyalPetz_ADMIN
 
             string selectedDate = dateJoinedDateTimePicked.Value.ToShortDateString();
             string custJoinedDate = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
-            string custName = custNameTextBox.Text.Trim();
+            string custName = MySqlHelper.EscapeString(custNameTextBox.Text.Trim());
 
             string custAddress1 = custAddress1TextBox.Text.Trim();
             if (custAddress1.Equals(""))
                 custAddress1 = " ";
+            else
+                custAddress1 = MySqlHelper.EscapeString(custAddress1);
 
             string custAddress2 = custAddress2TextBox.Text.Trim();
             if (custAddress2.Equals(""))
                 custAddress2 = " ";
-            
+            else
+                custAddress2 = MySqlHelper.EscapeString(custAddress2);
+
             string custAddressCity = custAddressCityTextBox.Text.Trim();
             if (custAddressCity.Equals(""))
                 custAddressCity = " ";
+            else
+                custAddressCity = MySqlHelper.EscapeString(custAddressCity);
 
             string custPhone = custTelTextBox.Text.Trim();
             if (custPhone.Equals(""))
                 custPhone = " ";
+            else
+                custPhone = MySqlHelper.EscapeString(custPhone);
 
             string custFax = custFaxTextBox.Text.Trim();
             if (custFax.Equals(""))
                 custFax = " ";
+            else
+                custFax = MySqlHelper.EscapeString(custFax);
 
             string custEmail = custEmailTextBox.Text.Trim();
             if (custEmail.Equals(""))
                 custEmail = " ";
+            else
+                custEmail = MySqlHelper.EscapeString(custEmail);
 
             string custTotalSales = custTotalSalesTextBox.Text.Trim();
             if (custTotalSales.Equals(""))
@@ -171,6 +207,7 @@ namespace RoyalPetz_ADMIN
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
                                             "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP) " +
                                             "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity+ "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', "+custStatus+", STR_TO_DATE('"+custJoinedDate+"', '%d-%m-%Y'), "+custTotalSales+", "+custGroup+")";
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
 
@@ -187,6 +224,7 @@ namespace RoyalPetz_ADMIN
                                             "CUSTOMER_TOTAL_SALES_COUNT = " + custTotalSales + ", " +
                                             "CUSTOMER_GROUP = " + custGroup + " " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;
                 }
 
@@ -198,6 +236,8 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EXCEPTION THROWN [" + e.Message+ "]");
+
                 try
                 {
                     DS.rollBack();
@@ -234,8 +274,19 @@ namespace RoyalPetz_ADMIN
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "ATTEMPT TO SAVE DATA");
             if (saveData())
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "DATA SAVED");
+                if (originModuleID == globalConstants.NEW_CUSTOMER)
+                    gUtil.saveUserChangeLog(globalConstants.MENU_PELANGGAN, globalConstants.CHANGE_LOG_INSERT, "INSERT NEW PELANGGAN [" + custNameTextBox.Text + "]");
+                else
+                {
+                    if (nonAktifCheckbox.Checked == true) 
+                        gUtil.saveUserChangeLog(globalConstants.MENU_PELANGGAN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PELANGGAN [" + custNameTextBox.Text + "] STATUS NON-AKTIF");
+                    else
+                        gUtil.saveUserChangeLog(globalConstants.MENU_PELANGGAN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PELANGGAN [" + custNameTextBox.Text + "] STATUS AKTIF");
+                }
                 gUtil.showSuccess(options);
                 gUtil.ResetAllControls(this);
             }
@@ -255,26 +306,26 @@ namespace RoyalPetz_ADMIN
 
         private void custTelTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (gUtil.matchRegEx(custTelTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
-            {
-                previousInputPhone = custTelTextBox.Text;
-            }
-            else
-            {
-                custTelTextBox.Text = previousInputPhone;
-            }
+            //if (gUtil.matchRegEx(custTelTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
+            //{
+            //    previousInputPhone = custTelTextBox.Text;
+            //}
+            //else
+            //{
+            //    custTelTextBox.Text = previousInputPhone;
+            //}
         }
 
         private void custFaxTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (gUtil.matchRegEx(custFaxTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
-            {
-                previousInputFax= custFaxTextBox.Text;
-            }
-            else
-            {
-                custFaxTextBox.Text = previousInputFax;
-            }
+            //if (gUtil.matchRegEx(custFaxTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
+            //{
+            //    previousInputFax= custFaxTextBox.Text;
+            //}
+            //else
+            //{
+            //    custFaxTextBox.Text = previousInputFax;
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)

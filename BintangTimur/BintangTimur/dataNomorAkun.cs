@@ -47,7 +47,7 @@ namespace RoyalPetz_ADMIN
             int selectedrowindex = dataAccountGridView.SelectedCells[0].RowIndex;
 
             DataGridViewRow selectedRow = dataAccountGridView.Rows[selectedrowindex];
-            selectedAccountID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+            selectedAccountID = Convert.ToInt32(selectedRow.Cells["KODE AKUN"].Value);
 
             switch (originModuleID)
             {
@@ -62,20 +62,21 @@ namespace RoyalPetz_ADMIN
             }
         }
 
-        private void loadAccountData(string accountname)
+        private void loadAccountData(string accountnameParam)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand;
+            string accountName = MySqlHelper.EscapeString(accountnameParam);
 
             DS.mySqlConnect();
             if (accountnonactiveoption.Checked)
             {
-                sqlCommand = "SELECT MASTER_ACCOUNT.ID AS 'ID', MASTER_ACCOUNT.ACCOUNT_ID AS 'KODE AKUN', MASTER_ACCOUNT.ACCOUNT_NAME AS 'DESKRIPSI', MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_NAME AS 'TIPE' FROM MASTER_ACCOUNT, MASTER_ACCOUNT_TYPE WHERE MASTER_ACCOUNT.ACCOUNT_TYPE_ID = MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_ID AND MASTER_ACCOUNT.ACCOUNT_NAME LIKE '%" + accountname + "%'";
+                sqlCommand = "SELECT MASTER_ACCOUNT.ID AS 'ID', MASTER_ACCOUNT.ACCOUNT_ID AS 'KODE AKUN', MASTER_ACCOUNT.ACCOUNT_NAME AS 'DESKRIPSI', MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_NAME AS 'TIPE' FROM MASTER_ACCOUNT, MASTER_ACCOUNT_TYPE WHERE MASTER_ACCOUNT.ACCOUNT_TYPE_ID = MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_ID AND MASTER_ACCOUNT.ACCOUNT_NAME LIKE '%" + accountName + "%'";
             }
             else
             {
-                sqlCommand = "SELECT MASTER_ACCOUNT.ID AS 'ID', MASTER_ACCOUNT.ACCOUNT_ID AS 'KODE AKUN', MASTER_ACCOUNT.ACCOUNT_NAME AS 'DESKRIPSI', MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_NAME AS 'TIPE' FROM MASTER_ACCOUNT, MASTER_ACCOUNT_TYPE WHERE MASTER_ACCOUNT.ACCOUNT_ACTIVE = 1 AND MASTER_ACCOUNT.ACCOUNT_TYPE_ID = MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_ID AND MASTER_ACCOUNT.ACCOUNT_NAME LIKE '%" + accountname + "%'";
+                sqlCommand = "SELECT MASTER_ACCOUNT.ID AS 'ID', MASTER_ACCOUNT.ACCOUNT_ID AS 'KODE AKUN', MASTER_ACCOUNT.ACCOUNT_NAME AS 'DESKRIPSI', MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_NAME AS 'TIPE' FROM MASTER_ACCOUNT, MASTER_ACCOUNT_TYPE WHERE MASTER_ACCOUNT.ACCOUNT_ACTIVE = 1 AND MASTER_ACCOUNT.ACCOUNT_TYPE_ID = MASTER_ACCOUNT_TYPE.ACCOUNT_TYPE_ID AND MASTER_ACCOUNT.ACCOUNT_NAME LIKE '%" + accountName + "%'";
             }
             
             using (rdr = DS.getData(sqlCommand))
@@ -95,7 +96,15 @@ namespace RoyalPetz_ADMIN
 
         private void dataNomorAkun_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
             gutil.reArrangeTabOrder(this);
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PENGATURAN_NO_AKUN, gutil.getUserGroupID());
+
+            if (userAccessOption == 2 || userAccessOption == 6)
+                newButton.Visible = true;
+            else
+                newButton.Visible = false;
         }
 
         private void newButton_Click(object sender, EventArgs e)
@@ -146,6 +155,18 @@ namespace RoyalPetz_ADMIN
 
             */
         }
-    
+
+        private void dataAccountGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                if (dataAccountGridView.Rows.Count > 0)
+                    displaySpecificForm();
+        }
+
+        private void dataAccountGridView_DoubleClick(object sender, EventArgs e)
+        {
+            if (dataAccountGridView.Rows.Count > 0)
+                displaySpecificForm();
+        }
     }
 }

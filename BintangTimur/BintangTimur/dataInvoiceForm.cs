@@ -41,6 +41,10 @@ namespace RoyalPetz_ADMIN
 
             int rowSelectedIndex = dataInvoiceDataGridView.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = dataInvoiceDataGridView.Rows[rowSelectedIndex];
+
+            if (selectedRow.Cells["SALES_PAID"].Value.ToString() == "1")
+                return;
+
             selectedSO = selectedRow.Cells["SALES_INVOICE"].Value.ToString();
 
             switch(originModuleID)
@@ -84,12 +88,13 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand = "";
+            string noInvoiceParam = "";
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
-                sqlCommand = "SELECT SALES_INVOICE, CUSTOMER_FULL_NAME FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
+                sqlCommand = "SELECT SALES_INVOICE, CUSTOMER_FULL_NAME, SALES_PAID FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
                                     "(H.CUSTOMER_ID = M.CUSTOMER_ID) WHERE 1 = 1 ";
             else if (originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
-                sqlCommand = "SELECT CREDIT.SALES_INVOICE, CUSTOMER_FULL_NAME FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
+                sqlCommand = "SELECT CREDIT.SALES_INVOICE, CUSTOMER_FULL_NAME, SALES_PAID FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
                                     "(H.CUSTOMER_ID = M.CUSTOMER_ID), CREDIT WHERE H.SALES_INVOICE = CREDIT.SALES_INVOICE ";
 
             if (!showAllCheckBox.Checked)
@@ -101,7 +106,8 @@ namespace RoyalPetz_ADMIN
 
                 if (noInvoiceTextBox.Text.Length > 0)
                 {
-                    sqlCommand = sqlCommand + "AND H.SALES_INVOICE like '%" + noInvoiceTextBox.Text + "%' ";
+                    noInvoiceParam = MySqlHelper.EscapeString(noInvoiceTextBox.Text);
+                    sqlCommand = sqlCommand + "AND H.SALES_INVOICE like '%" + noInvoiceParam + "%' ";
                 }
 
                 sqlCommand = sqlCommand + "AND SALES_PAID = 0";
@@ -116,6 +122,7 @@ namespace RoyalPetz_ADMIN
 
                     dataInvoiceDataGridView.Columns["SALES_INVOICE"].Width = 200;
                     dataInvoiceDataGridView.Columns["CUSTOMER_FULL_NAME"].Width = 300;
+                    //dataInvoiceDataGridView.Columns["SALES_PAID"].Visible = false;
                 }
             }
             rdr.Close();
@@ -133,7 +140,7 @@ namespace RoyalPetz_ADMIN
 
         private void pelangganCombo_Validated(object sender, EventArgs e)
         {
-            if (!pelangganCombo.Items.Contains(pelangganCombo.Text))
+            if (!pelangganCombo.Items.Contains(pelangganCombo.Text) && pelangganCombo.Text.Length > 0)
             { 
                 pelangganCombo.Focus();
                 pelangganCombo.BackColor = Color.Red;
@@ -159,6 +166,10 @@ namespace RoyalPetz_ADMIN
 
                 int rowSelectedIndex = dataInvoiceDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataInvoiceDataGridView.Rows[rowSelectedIndex];
+
+                if (selectedRow.Cells["SALES_PAID"].Value.ToString() == "1")
+                    return;
+
                 selectedSO = selectedRow.Cells["SALES_INVOICE"].Value.ToString();
 
                 switch (originModuleID)
@@ -174,6 +185,14 @@ namespace RoyalPetz_ADMIN
                         break;
                 }
             }
+        }
+
+        private void dataInvoiceForm_Activated(object sender, EventArgs e)
+        {
+            if (dataInvoiceDataGridView.Rows.Count <= 0)
+                return;
+
+            loadData();
         }
 
     }

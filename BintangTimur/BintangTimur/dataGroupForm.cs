@@ -25,16 +25,21 @@ namespace RoyalPetz_ADMIN
         public dataGroupForm()
         {
             InitializeComponent();
+            gutil.saveSystemDebugLog(0, "CREATE DATA GROUP FORM NO MODULE_ID");
+
         }
 
         public dataGroupForm(int moduleID)
         {
             InitializeComponent();
-            
+
             if (moduleID > 50)
                 newButton.Visible = false;
-            
+
             originModuleID = moduleID;
+
+            gutil.saveSystemDebugLog(0, "CREATE DATA GROUP FORM MODULE_ID ["+moduleID+"]");
+
         }
 
         public dataGroupForm(int moduleID, dataUserDetailForm parentForm)
@@ -46,6 +51,8 @@ namespace RoyalPetz_ADMIN
 
             originModuleID = moduleID;
             userDetailForm = parentForm;
+            gutil.saveSystemDebugLog(0, "CREATE DATA GROUP FORM MODULE_ID [" + moduleID + "] FROM DATA USER DETAIL FORM");
+
         }
 
         private void newButton_Click(object sender, EventArgs e)
@@ -59,15 +66,16 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
             string sqlCommand;
+            string namaGroupParam = MySqlHelper.EscapeString(namaGroupTextbox.Text);
 
             DS.mySqlConnect();
             if (groupnonactiveoption.Checked)
             {
-                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_NAME LIKE '%" + namaGroupTextbox.Text + "%'";
+                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
             }
             else
             {
-                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_ACTIVE = 1 AND GROUP_USER_NAME LIKE '%" + namaGroupTextbox.Text + "%'";
+                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_ACTIVE = 1 AND GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -89,21 +97,27 @@ namespace RoyalPetz_ADMIN
             switch (originModuleID)
             {
                 case globalConstants.TAMBAH_HAPUS_GROUP_USER:
+                    gutil.saveSystemDebugLog(0, "CREATE DATA GROUP DETAIL FORM, GROUP USER ID ["+selectedGroupID+"]");
+
                     dataGroupDetailForm displayNewGroupForm = new dataGroupDetailForm(globalConstants.EDIT_GROUP_USER, selectedGroupID);
                     displayNewGroupForm.ShowDialog(this);
                     break;
                 
                 case globalConstants.PENGATURAN_GRUP_AKSES:
+                    gutil.saveSystemDebugLog(0, "CREATE DATA GROUP ACCESS MODULE FORM, GROUP USER ID [" + selectedGroupID + "]");
+
                     groupAccessModuleForm groupAccessForm = new groupAccessModuleForm(selectedGroupID);
                     groupAccessForm.ShowDialog(this);
                     break;
 
-                case globalConstants.PENGATURAN_POTONGAN_HARGA:
-                    pengaturanPotonganHargaForm pengaturanHargaForm = new pengaturanPotonganHargaForm();
-                    pengaturanHargaForm.ShowDialog(this);
-                    break;
+                //case globalConstants.PENGATURAN_POTONGAN_HARGA:
+                //    pengaturanPotonganHargaForm pengaturanHargaForm = new pengaturanPotonganHargaForm();
+                //    pengaturanHargaForm.ShowDialog(this);
+                //    break;
 
                 case globalConstants.TAMBAH_HAPUS_USER:
+                    gutil.saveSystemDebugLog(0, "SET USER DETAIL SELECTED GROUP ID ["+selectedGroupID+"]");
+
                     userDetailForm.setSelectedGroupID(selectedGroupID);
                     this.Close();
                     break;

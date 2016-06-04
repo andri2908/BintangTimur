@@ -36,10 +36,10 @@ namespace RoyalPetz_ADMIN
             InitializeComponent();
             originModuleID = moduleID;
 
-            if (moduleID == globalConstants.CEK_DATA_MUTASI)
-                newButton.Visible = false;
-            else if (moduleID == globalConstants.PERMINTAAN_BARANG)
-                importButton.Visible = false;
+            //if (moduleID == globalConstants.CEK_DATA_MUTASI)
+            //    newButton.Visible = false;
+            //else if (moduleID == globalConstants.PERMINTAAN_BARANG)
+            //    importButton.Visible = false;
         }
         
         private void displaySpecificForm(int roID = 0)
@@ -64,23 +64,20 @@ namespace RoyalPetz_ADMIN
                     displayedForm.ShowDialog(this);
                     break;
 
+                    //case globalConstants.PEMBAYARAN_HUTANG:
+                    //    pembayaranHutangForm pembayaranForm = new pembayaranHutangForm();
+                    //    pembayaranForm.ShowDialog(this);
+                    //    break;
 
+                    //case globalConstants.PENERIMAAN_BARANG:
+                    //    penerimaanBarangForm penerimaanBarangDisplayedForm = new penerimaanBarangForm();
+                    //    penerimaanBarangDisplayedForm.ShowDialog(this);
+                    //    break;
 
-
-                case globalConstants.PEMBAYARAN_HUTANG:
-                    pembayaranHutangForm pembayaranForm = new pembayaranHutangForm();
-                    pembayaranForm.ShowDialog(this);
-                    break;
-
-                case globalConstants.PENERIMAAN_BARANG:
-                    penerimaanBarangForm penerimaanBarangDisplayedForm = new penerimaanBarangForm();
-                    penerimaanBarangDisplayedForm.ShowDialog(this);
-                    break;
-
-                default:
-                    dataReturPermintaanForm returPermintaanBarangDisplayedForm = new dataReturPermintaanForm();
-                    returPermintaanBarangDisplayedForm.ShowDialog(this);
-                    break;
+                    //default:
+                    //    dataReturPermintaanForm returPermintaanBarangDisplayedForm = new dataReturPermintaanForm();
+                    //    returPermintaanBarangDisplayedForm.ShowDialog(this);
+                    //    break;
 
             }
         }
@@ -113,41 +110,46 @@ namespace RoyalPetz_ADMIN
             DataTable dt = new DataTable();
             string sqlCommand;
             string dateFrom, dateTo;
+            string noROInvoiceParam = "";
 
             DS.mySqlConnect();
 
-            sqlCommand = "SELECT ID, RO_INVOICE AS 'NO PERMINTAAN', DATE_FORMAT(RO_DATETIME, '%d-%M-%Y')  AS 'TANGGAL PERMINTAAN', DATE_FORMAT(RO_EXPIRED, '%d-%M-%Y') AS 'TANGGAL EXPIRED', M1.BRANCH_NAME AS 'ASAL PERMINTAAN', M2.BRANCH_NAME AS 'TUJUAN PERMINTAAN', RO_TOTAL AS 'TOTAL' " +
-                                "FROM REQUEST_ORDER_HEADER LEFT OUTER JOIN MASTER_BRANCH M1 ON (RO_BRANCH_ID_FROM = M1.BRANCH_ID) " +
-                                "LEFT OUTER JOIN MASTER_BRANCH M2 ON (RO_BRANCH_ID_TO = M2.BRANCH_ID) " +
-                                "WHERE 1 = 1";
+            //sqlCommand = "SELECT ID, RO_INVOICE AS 'NO PERMINTAAN', DATE_FORMAT(RO_DATETIME, '%d-%M-%Y')  AS 'TANGGAL PERMINTAAN', DATE_FORMAT(RO_EXPIRED, '%d-%M-%Y') AS 'TANGGAL EXPIRED', M1.BRANCH_NAME AS 'ASAL PERMINTAAN', M2.BRANCH_NAME AS 'TUJUAN PERMINTAAN', RO_TOTAL AS 'TOTAL' " +
+            //                    "FROM REQUEST_ORDER_HEADER LEFT OUTER JOIN MASTER_BRANCH M1 ON (RO_BRANCH_ID_FROM = M1.BRANCH_ID) " +
+            //                    "LEFT OUTER JOIN MASTER_BRANCH M2 ON (RO_BRANCH_ID_TO = M2.BRANCH_ID) " +
+            //                    "WHERE 1 = 1";
+
+            sqlCommand = "SELECT ID, RO_INVOICE AS 'NO PERMINTAAN', DATE_FORMAT(RO_DATETIME, '%d-%M-%Y')  AS 'TANGGAL PERMINTAAN', DATE_FORMAT(RO_EXPIRED, '%d-%M-%Y') AS 'TANGGAL EXPIRED', M1.BRANCH_NAME AS 'ASAL PERMINTAAN', RO_TOTAL AS 'TOTAL' " +
+                                "FROM REQUEST_ORDER_HEADER RH, MASTER_BRANCH M1 " + //LEFT OUTER JOIN MASTER_BRANCH M1 ON (RO_BRANCH_ID_TO = M1.BRANCH_ID) " +
+                                "WHERE 1 = 1 AND RO_BRANCH_ID_TO = M1.BRANCH_ID AND RO_ACTIVE = 1";
 
             if (!showAll)
             {
-                if (showExpiredCheckBox.Checked)
+                dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(DateTime.Now));
+                if (!showExpiredCheckBox.Checked)
                 {
-                    sqlCommand = sqlCommand + " AND RO_EXPIRED > '" + DateTime.Now + "'";
+                    sqlCommand = sqlCommand + " AND DATE_FORMAT(RO_EXPIRED, '%Y%m%d') > '" + dateFrom + "'";
                 }
-
-                if (!showApprovedROCheckbox.Checked)
-                {
-                    sqlCommand = sqlCommand + " AND RO_ACTIVE = 1";
-                }
+ 
+                //if (!showApprovedROCheckbox.Checked)
+                //{
+                //    sqlCommand = sqlCommand + " AND RO_ACTIVE = 1";
+                //}
 
                 if (noROInvoiceTextBox.Text.Length > 0)
                 {
-                    sqlCommand = sqlCommand + " AND RO_INVOICE LIKE '%" + noROInvoiceTextBox.Text + "%'";
+                    noROInvoiceParam = MySqlHelper.EscapeString(noROInvoiceTextBox.Text);
+                    sqlCommand = sqlCommand + " AND RO_INVOICE LIKE '%" + noROInvoiceParam + "%'";
                 }
 
-                //dateFrom = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(RODtPicker_1.Value));
-                //dateTo = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(RODtPicker_2.Value));
                 dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(RODtPicker_1.Value));
                 dateTo= String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(RODtPicker_2.Value));
                 sqlCommand = sqlCommand + " AND DATE_FORMAT(RO_DATETIME, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(RO_DATETIME, '%Y%m%d')  <= '" + dateTo + "'";
 
-                if (branchFromCombo.Text.Length > 0 )
-                {
-                    sqlCommand = sqlCommand + " AND RO_BRANCH_ID_FROM = " + selectedBranchFromID;
-                }
+                //if (branchFromCombo.Text.Length > 0 )
+                //{
+                //    sqlCommand = sqlCommand + " AND RO_BRANCH_ID_FROM = " + selectedBranchFromID;
+                //}
 
                 if (branchToCombo.Text.Length > 0)
                 {
@@ -169,7 +171,7 @@ namespace RoyalPetz_ADMIN
                     dataRequestOrderGridView.Columns["TANGGAL PERMINTAAN"].Width = 200;
                     dataRequestOrderGridView.Columns["TANGGAL EXPIRED"].Width = 200;
                     dataRequestOrderGridView.Columns["ASAL PERMINTAAN"].Width = 200;
-                    dataRequestOrderGridView.Columns["TUJUAN PERMINTAAN"].Width = 200;
+            //        dataRequestOrderGridView.Columns["TUJUAN PERMINTAAN"].Width = 200;
                     dataRequestOrderGridView.Columns["TOTAL"].Width = 200;
                 }
 
@@ -189,11 +191,37 @@ namespace RoyalPetz_ADMIN
 
         private void dataPermintaanForm_Load(object sender, EventArgs e)
         {
+            int userAccessOption = 0;
+            Button[] arrButton = new Button[3];
+
             RODtPicker_1.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             RODtPicker_2.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
             fillInBranchCombo(branchFromCombo, branchFromHiddenCombo);
             fillInBranchCombo(branchToCombo, branchToHiddenCombo);
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_REQUEST_ORDER, gUtil.getUserGroupID());
+
+            if (userAccessOption == 2 || userAccessOption == 6)
+            {
+                newButton.Visible = true;
+                importButton.Visible = true;
+            }
+            else
+            {
+                newButton.Visible = false;
+                importButton.Visible = false;
+            }
+
+            if (originModuleID == globalConstants.CEK_DATA_MUTASI)
+            {
+                newButton.Visible = false;
+            }
+
+            arrButton[0] = displayButton;
+            arrButton[1] = newButton;
+            arrButton[2] = importButton;
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
         }
@@ -299,6 +327,10 @@ namespace RoyalPetz_ADMIN
         private void importButton_Click(object sender, EventArgs e)
         {
             string importFileName = "";
+
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Export File (.exp)|*.exp";
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -326,7 +358,7 @@ namespace RoyalPetz_ADMIN
         private void dataPermintaanForm_Activated(object sender, EventArgs e)
         {
             //if need something
-            if (noROInvoiceTextBox.Text.Length > 0)
+            if (dataRequestOrderGridView.Rows.Count > 0)
                 displayButton.PerformClick();
         }
 

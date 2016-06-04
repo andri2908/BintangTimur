@@ -30,6 +30,7 @@ namespace RoyalPetz_ADMIN
         private string previousInputActual = "";
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
+        private bool isLoading = false;
 
         public stokPecahBarangForm()
         {
@@ -61,6 +62,7 @@ namespace RoyalPetz_ADMIN
             displayForm.ShowDialog(this);
 
             loadProductName();
+            numberOfProductTextBox.Text = "0";
         }
 
         private void loadProductName()
@@ -173,8 +175,15 @@ namespace RoyalPetz_ADMIN
 
         private double getNewUnitConverterValue()
         {
+            double convertValue = 0;
             DS.mySqlConnect();
-            return Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 0) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " +currentUnitID+" AND CONVERT_UNIT_ID_2 = "+newUnitID));
+
+            if (currentUnitID != newUnitID)
+                convertValue = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 0) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+            else
+                convertValue = 1;
+
+            return convertValue;
         }
 
         private void calculateResultForNewProduct()
@@ -211,6 +220,30 @@ namespace RoyalPetz_ADMIN
 
         private void numberOfProductTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString = "";
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (numberOfProductTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                previousInput = "0";
+                numberOfProductTextBox.Text = "0";
+
+                numberOfProductTextBox.SelectionStart = numberOfProductTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (numberOfProductTextBox.Text.IndexOf('0') == 0 && numberOfProductTextBox.Text.Length > 1 && numberOfProductTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = numberOfProductTextBox.Text;
+                numberOfProductTextBox.Text = tempString.Remove(0, 1);
+            }
+            
             if (isValidQtyInput(numberOfProductTextBox.Text))
             {
                 previousInput = numberOfProductTextBox.Text;
@@ -220,10 +253,26 @@ namespace RoyalPetz_ADMIN
             {
                 numberOfProductTextBox.Text = previousInput;
             }
+
+            numberOfProductTextBox.SelectionStart = numberOfProductTextBox.Text.Length;
+
+            isLoading = false;
         }
 
         private bool dataValidated()
         {
+            if (numberOfProductTextBox.Text.Length<=0)
+            {
+                errorLabel.Text = "JUMLAH BARANG YG MAU DIPECAH TIDAK BOLEH NOL";
+                return false;
+            }
+
+            if (Convert.ToDouble(numberOfProductTextBox.Text) > currentStockQty)
+            {
+                errorLabel.Text = "JUMLAH STOK TIDAK CUKUP";
+                return false;
+            }
+
             return true;
         }
 
@@ -251,12 +300,15 @@ namespace RoyalPetz_ADMIN
                 DS.mySqlConnect();
 
                 //REDUCE CURRENT STOCK QTY
-                sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(numberOfProductTextBox.Text) + " WHERE ID = " + selectedInternalProductID;
+                sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE ID = " + selectedInternalProductID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "]");
+
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
                 //INCREASE NEW STOCK QTY
                 sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY + " + actualResult + " WHERE ID = " + newSelectedInternalProductID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "ADD QTY [" + newProductIDTextBox.Text + "] AMT [" + actualResult + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -264,7 +316,9 @@ namespace RoyalPetz_ADMIN
                 {
                     // INSERT INTO PRODUCT LOSS TABLE
                     sqlCommand = "INSERT INTO PRODUCT_LOSS (PL_DATETIME, PRODUCT_ID, PRODUCT_QTY, NEW_PRODUCT_ID, NEW_PRODUCT_QTY, TOTAL_LOSS) " +
-                                        "VALUES (STR_TO_DATE('" + pl_Date + "', '%d-%m-%Y'), " + selectedInternalProductID + ", " + Convert.ToDouble(numberOfProductTextBox.Text) + ", " + newSelectedInternalProductID + ", " + Convert.ToDouble(resultTextBox.Text) + ", " + productLoss + ")";
+                                        "VALUES (STR_TO_DATE('" + pl_Date + "', '%d-%m-%Y'), " + selectedInternalProductID + ", " + Convert.ToDouble(numberOfProductTextBox.Text) + ", " + newSelectedInternalProductID + ", " + gUtil.validateDecimalNumericInput(Convert.ToDouble(resultTextBox.Text)) + ", " + gUtil.validateDecimalNumericInput(productLoss) + ")";
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "ADD PRODUCT LOSS QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(productLoss) + "]");
+
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
@@ -274,6 +328,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -311,6 +366,8 @@ namespace RoyalPetz_ADMIN
         {
             if (saveData())
             {
+                gUtil.saveUserChangeLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "PECAH SATUAN PRODUK [" + productIDTextBox.Text + "/" + numberOfProductTextBox.Text + "] -> [" + newProductIDTextBox.Text + "/" + actualQtyTextBox.Text + "]");
+
                 //MessageBox.Show("SUCCESS");
                 gUtil.showSuccess(gUtil.UPD);
                 stockTextBox.Text = currentStockQty.ToString();
@@ -320,16 +377,43 @@ namespace RoyalPetz_ADMIN
 
         private void actualQtyTextBox_TextChanged(object sender, EventArgs e)
         {
+            string tempString = "";
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (actualQtyTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                previousInputActual = "0";
+                actualQtyTextBox.Text = "0";
+
+                actualQtyTextBox.SelectionStart = actualQtyTextBox.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (actualQtyTextBox.Text.IndexOf('0') == 0 && actualQtyTextBox.Text.Length > 1 && actualQtyTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = actualQtyTextBox.Text;
+                actualQtyTextBox.Text = tempString.Remove(0, 1);
+            }
+
             if ( (isValidQtyInput(actualQtyTextBox.Text)) 
                 && (Convert.ToDouble(actualQtyTextBox.Text) <= Convert.ToDouble(resultTextBox.Text))
                )
             {
-                previousInput = actualQtyTextBox.Text;
+                previousInputActual = actualQtyTextBox.Text;
             }
             else
             {
-                actualQtyTextBox.Text = previousInput;
+                actualQtyTextBox.Text = previousInputActual;
             }
+
+            actualQtyTextBox.SelectionStart = actualQtyTextBox.Text.Length;
+            isLoading = false;
         }
 
         private void stokPecahBarangForm_Activated(object sender, EventArgs e)

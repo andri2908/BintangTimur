@@ -15,67 +15,20 @@ namespace RoyalPetz_ADMIN
 {
     public partial class pengaturanProdukForm : Form
     {
-        private struct productPriceData
-        {
-            public string productInternalID;
-            public string hargaEcer;
-            public string hargaPartai;
-            public string hargaGrosir;
-
-            public void sethargaEcer(string value)
-            {
-                hargaEcer = value;
-            }
-
-            public void sethargaPartai(string value)
-            {
-                hargaPartai = value;
-            }
-
-            public void sethargaGrosir(string value)
-            {
-                hargaGrosir = value;
-            }
-
-        }
-
-        private struct productLimitStokData
-        {
-            public string productInternalID;
-            public string limitStok;
-
-            public void setLimitStok(string value)
-            {
-                limitStok = value;
-            }
-        }
-
-        private struct productShelvesData
-        {
-            public string productInternalID;
-            public string productKodeRak;
-            public string productBarisRak;
-
-            public void setproductKodeRak(string value)
-            {
-                productKodeRak = value;
-            }
-
-            public void setproductBarisRak(string value)
-            {
-                productBarisRak = value;
-            }
-        }
 
         private Data_Access DS = new Data_Access();
         private globalUtilities gutil = new globalUtilities();
         private int originModuleID;
-        private bool isStartEditing = false;
         private bool isLoading = false;
 
-        List<productPriceData> productPriceDataValue = new List<productPriceData>();
-        List<productLimitStokData> productLimitStokDataValue = new List<productLimitStokData>();
-        List<productShelvesData> productShelvesDataValue = new List<productShelvesData>();
+        List<string> producthargaEcer = new List<string>();
+        List<string> producthargaPartai = new List<string>();
+        List<string> producthargaGrosir = new List<string>();
+
+        List<string> productLimitStock = new List<string>();
+
+        List<string> productKodeRak = new List<string>();
+        List<string> productBarisRak = new List<string>();
 
         public pengaturanProdukForm()
         {
@@ -121,21 +74,21 @@ namespace RoyalPetz_ADMIN
             switch (originModuleID)
             {
                 case globalConstants.PENGATURAN_HARGA_JUAL:
-                    if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_ECER") 
-                        previousInput = productPriceDataValue[rowSelectedIndex].hargaEcer;
+                    if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_ECER")
+                        previousInput = producthargaEcer[rowSelectedIndex];
                     else if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_PARTAI")
-                        previousInput = productPriceDataValue[rowSelectedIndex].hargaPartai;
+                        previousInput = producthargaPartai[rowSelectedIndex];
                     else if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_GROSIR")
-                        previousInput = productPriceDataValue[rowSelectedIndex].hargaGrosir;
+                        previousInput = producthargaGrosir[rowSelectedIndex];
                     break;
 
                 case globalConstants.PENGATURAN_LIMIT_STOK:
-                    previousInput = productLimitStokDataValue[rowSelectedIndex].limitStok;
+                    previousInput = productLimitStock[rowSelectedIndex];
                     break;
 
                 case globalConstants.PENGATURAN_NOMOR_RAK:
                     if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "NOMOR_RAK")
-                        previousInput = productShelvesDataValue[rowSelectedIndex].productBarisRak;
+                        previousInput = productBarisRak[rowSelectedIndex];
                     break;
             }
 
@@ -149,23 +102,28 @@ namespace RoyalPetz_ADMIN
                 {
                     case globalConstants.PENGATURAN_HARGA_JUAL:
                         if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_ECER")
-                            productPriceDataValue[rowSelectedIndex].sethargaEcer(dataGridViewTextBoxEditingControl.Text);
+                            producthargaEcer[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         else if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_PARTAI")
-                            productPriceDataValue[rowSelectedIndex].sethargaPartai(dataGridViewTextBoxEditingControl.Text);
+                            producthargaPartai[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         else if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "HARGA_GROSIR")
-                            productPriceDataValue[rowSelectedIndex].sethargaGrosir(dataGridViewTextBoxEditingControl.Text);
+                            producthargaGrosir[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         break;
 
                     case globalConstants.PENGATURAN_LIMIT_STOK:
-                        productLimitStokDataValue[rowSelectedIndex].setLimitStok(dataGridViewTextBoxEditingControl.Text);
+                        productLimitStock[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         break;
 
                     case globalConstants.PENGATURAN_NOMOR_RAK:
                         if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "KODE_RAK")
-                            productShelvesDataValue[rowSelectedIndex].setproductKodeRak(dataGridViewTextBoxEditingControl.Text);
+                            productKodeRak[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         else if (dataProdukDataGridView.CurrentCell.OwningColumn.Name == "NOMOR_RAK")
-                            productShelvesDataValue[rowSelectedIndex].setproductBarisRak(dataGridViewTextBoxEditingControl.Text);
+                            productBarisRak[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         break;
+                }
+                if (!previousInput.Equals(dataGridViewTextBoxEditingControl.Text))
+                { 
+                    selectedRow.DefaultCellStyle.BackColor = Color.LightCoral;
+                    selectedRow.Cells["CHANGED"].Value = true;
                 }
             }
         }
@@ -174,28 +132,25 @@ namespace RoyalPetz_ADMIN
         {
             MySqlDataReader rdr;
             string sqlCommand;
-            
-            productPriceData tempValuePrice;
+            string namaProductParam = "";
 
             DS.mySqlConnect();
 
             if (namaProdukTextBox.Text.Equals(""))
                 return;
 
-            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProdukTextBox.Text + "%'";
+            namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
+            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
             {              
                 while (rdr.Read())
                 {
                     dataProdukDataGridView.Rows.Add(false, rdr.GetString("ID"), rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("PRODUCT_RETAIL_PRICE"), rdr.GetString("PRODUCT_BULK_PRICE"), rdr.GetString("PRODUCT_WHOLESALE_PRICE"));
-            
-                    tempValuePrice.productInternalID = rdr.GetString("ID");
-                    tempValuePrice.hargaEcer = rdr.GetString("PRODUCT_RETAIL_PRICE");
-                    tempValuePrice.hargaPartai = rdr.GetString("PRODUCT_BULK_PRICE");
-                    tempValuePrice.hargaGrosir = rdr.GetString("PRODUCT_WHOLESALE_PRICE");
 
-                    productPriceDataValue.Add(tempValuePrice);
+                    producthargaEcer.Add(rdr.GetString("PRODUCT_RETAIL_PRICE"));
+                    producthargaPartai.Add(rdr.GetString("PRODUCT_BULK_PRICE"));
+                    producthargaGrosir.Add(rdr.GetString("PRODUCT_WHOLESALE_PRICE"));
                 }
             }
         }
@@ -204,14 +159,16 @@ namespace RoyalPetz_ADMIN
         {
             MySqlDataReader rdr;
             string sqlCommand;
-            productLimitStokData tempValueStok;
+            string namaProductParam = "";
             
             DS.mySqlConnect();
 
             if (namaProdukTextBox.Text.Equals(""))
                 return;
 
-            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_LIMIT_STOCK FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProdukTextBox.Text + "%'";
+            namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
+
+            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_LIMIT_STOCK FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -219,10 +176,8 @@ namespace RoyalPetz_ADMIN
                 {
                     dataProdukDataGridView.Rows.Add(false, rdr.GetString("ID"), rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_LIMIT_STOCK"));
 
-                    tempValueStok.productInternalID= rdr.GetString("ID");
-                    tempValueStok.limitStok= rdr.GetString("PRODUCT_LIMIT_STOCK");
+                    productLimitStock.Add(rdr.GetString("PRODUCT_LIMIT_STOCK"));
 
-                    productLimitStokDataValue.Add(tempValueStok);
                 }
             }
         }
@@ -233,14 +188,16 @@ namespace RoyalPetz_ADMIN
             string sqlCommand;
             string kodeRak = "";
             string barisRak = "";
-            productShelvesData tempValueShelves;
+            string namaProductParam = "";
 
             DS.mySqlConnect();
 
             if (namaProdukTextBox.Text.Equals(""))
                 return;
 
-            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_SHELVES FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProdukTextBox.Text + "%'";
+            namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
+
+            sqlCommand = "SELECT ID, PRODUCT_ID, PRODUCT_NAME, PRODUCT_SHELVES FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -251,11 +208,8 @@ namespace RoyalPetz_ADMIN
 
                     dataProdukDataGridView.Rows.Add(false, rdr.GetString("ID"), rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), kodeRak, barisRak);
 
-                    tempValueShelves.productInternalID = rdr.GetString("ID");
-                    tempValueShelves.productKodeRak = kodeRak;
-                    tempValueShelves.productBarisRak= barisRak;
-
-                    productShelvesDataValue.Add(tempValueShelves);
+                    productKodeRak.Add(kodeRak);
+                    productBarisRak.Add(barisRak);
                 }            
             }
         }
@@ -274,16 +228,19 @@ namespace RoyalPetz_ADMIN
             hepColumn.Name = "HARGA_ECER";
             hepColumn.HeaderText = "HARGA JUAL ECER";
             hepColumn.Width = 250;
+            hepColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             DataGridViewTextBoxColumn hPartaiColumn = new DataGridViewTextBoxColumn();
             hPartaiColumn.Name = "HARGA_PARTAI";
             hPartaiColumn.HeaderText = "HARGA JUAL GROSIR";
             hPartaiColumn.Width = 250;
+            hPartaiColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             DataGridViewTextBoxColumn hGrosirColumn = new DataGridViewTextBoxColumn();
             hGrosirColumn.Name = "HARGA_GROSIR";
             hGrosirColumn.HeaderText = "HARGA JUAL PARTAI";
             hGrosirColumn.Width = 250;
+            hGrosirColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             dataProdukDataGridView.Columns.Add(hppColumn);
             dataProdukDataGridView.Columns.Add(hepColumn);
@@ -299,6 +256,7 @@ namespace RoyalPetz_ADMIN
             limitStokColumn.Name = "LIMIT_STOK";
             limitStokColumn.HeaderText = "LIMIT STOK";
             limitStokColumn.Width = 200;
+            limitStokColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             dataProdukDataGridView.Columns.Add(limitStokColumn);
         }
@@ -312,12 +270,14 @@ namespace RoyalPetz_ADMIN
             kodeRakColumn.HeaderText = "KODE RAK";
             kodeRakColumn.Width = 200;
             kodeRakColumn.MaxInputLength = 2;
+            kodeRakColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             DataGridViewTextBoxColumn nomorRakColumn = new DataGridViewTextBoxColumn();
             nomorRakColumn.Name = "NOMOR_RAK";
             nomorRakColumn.HeaderText = "NOMOR BARIS RAK";
             nomorRakColumn.Width = 200;
             nomorRakColumn.MaxInputLength = 2;
+            nomorRakColumn.DefaultCellStyle.BackColor = Color.LightBlue;
 
             dataProdukDataGridView.Columns.Add(kodeRakColumn);
             dataProdukDataGridView.Columns.Add(nomorRakColumn);
@@ -359,17 +319,21 @@ namespace RoyalPetz_ADMIN
             switch (originModuleID)
             {
                 case globalConstants.PENGATURAN_HARGA_JUAL:
-                    productPriceDataValue.Clear();
+                    producthargaEcer.Clear();
+                    producthargaPartai.Clear();
+                    producthargaGrosir.Clear();
+
                     loadDataHargaJual();
                     break;
 
                 case globalConstants.PENGATURAN_LIMIT_STOK:
-                    productLimitStokDataValue.Clear();
+                    productLimitStock.Clear();
                     loadDataLimitStok();
                     break;
 
                 case globalConstants.PENGATURAN_NOMOR_RAK:
-                    productShelvesDataValue.Clear();
+                    productBarisRak.Clear();
+                    productKodeRak.Clear();
                     loadDataNoRak();
                     break;
             }
@@ -383,49 +347,49 @@ namespace RoyalPetz_ADMIN
 
         private void dataProdukDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            bool valueIsChanged = false;
-            if ( dataProdukDataGridView.SelectedCells.Count <= 0 )
-                return;
+            //bool valueIsChanged = false;
+            //if ( dataProdukDataGridView.SelectedCells.Count <= 0 )
+            //    return;
 
-            int selectedrowindex = dataProdukDataGridView.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = dataProdukDataGridView.Rows[selectedrowindex];
+            //int selectedrowindex = dataProdukDataGridView.SelectedCells[0].RowIndex;
+            //DataGridViewRow selectedRow = dataProdukDataGridView.Rows[selectedrowindex];
 
-            switch (originModuleID)
-            {
-                case globalConstants.PENGATURAN_HARGA_JUAL:
-                    if ( !productPriceDataValue[selectedrowindex].hargaEcer.Equals(selectedRow.Cells["HARGA_ECER"].Value.ToString()) || 
-                         !productPriceDataValue[selectedrowindex].hargaPartai.Equals(selectedRow.Cells["HARGA_PARTAI"].Value.ToString()) || 
-                         !productPriceDataValue[selectedrowindex].hargaGrosir.Equals(selectedRow.Cells["HARGA_GROSIR"].Value.ToString())
-                        )
-                    {
-                        valueIsChanged = true;
-                    }
-                    break;
+            //switch (originModuleID)
+            //{
+            //    case globalConstants.PENGATURAN_HARGA_JUAL:
+            //        if (!producthargaEcer[selectedrowindex].Equals(selectedRow.Cells["HARGA_ECER"].Value.ToString()) ||
+            //             !producthargaPartai[selectedrowindex].Equals(selectedRow.Cells["HARGA_PARTAI"].Value.ToString()) ||
+            //             !producthargaGrosir[selectedrowindex].Equals(selectedRow.Cells["HARGA_GROSIR"].Value.ToString())
+            //            )
+            //        {
+            //            valueIsChanged = true;
+            //        }
+            //        break;
 
-                case globalConstants.PENGATURAN_LIMIT_STOK:
-                    if ( !productLimitStokDataValue[selectedrowindex].limitStok.Equals(selectedRow.Cells["LIMIT_STOK"].Value.ToString()) )
-                    {
-                        valueIsChanged = true;
-                    }
-                    break;
+            //    case globalConstants.PENGATURAN_LIMIT_STOK:
+            //        if ( !productLimitStock[selectedrowindex].Equals(selectedRow.Cells["LIMIT_STOK"].Value.ToString()) )
+            //        {
+            //            valueIsChanged = true;
+            //        }
+            //        break;
                 
-                case globalConstants.PENGATURAN_NOMOR_RAK:
-                    if ( !productShelvesDataValue[selectedrowindex].productKodeRak.Equals(selectedRow.Cells["KODE_RAK"].Value.ToString()) ||
-                         !productShelvesDataValue[selectedrowindex].productBarisRak.Equals(selectedRow.Cells["NOMOR_RAK"].Value.ToString()) 
-                        )
-                    {
-                        valueIsChanged = true;
-                    }
-                    break;
-            }
+            //    case globalConstants.PENGATURAN_NOMOR_RAK:
+            //        if ( !productKodeRak[selectedrowindex].Equals(selectedRow.Cells["KODE_RAK"].Value.ToString()) ||
+            //             !productBarisRak[selectedrowindex].Equals(selectedRow.Cells["NOMOR_RAK"].Value.ToString()) 
+            //            )
+            //        {
+            //            valueIsChanged = true;
+            //        }
+            //        break;
+            //}
 
-            if (valueIsChanged)
-            {
-                selectedRow.Cells["CHANGED"].Value = true;
-                namaProdukTextBox.ReadOnly = true;
-                namaProdukTextBox.BackColor = Color.Red;
-                saveButton.Enabled = true;
-            }
+            //if (valueIsChanged)
+            //{
+            //    selectedRow.Cells["CHANGED"].Value = true;
+            //    namaProdukTextBox.ReadOnly = true;
+            //    namaProdukTextBox.BackColor = Color.Red;
+            //    saveButton.Enabled = true;
+            //}
         }
 
         private bool dataValidated()
@@ -460,7 +424,9 @@ namespace RoyalPetz_ADMIN
                                                         "PRODUCT_WHOLESALE_PRICE = " + Convert.ToInt32(dataProdukDataGridView.Rows[i].Cells["HARGA_GROSIR"].Value) + " " +
                                                         "WHERE ID = " + Convert.ToInt32(dataProdukDataGridView.Rows[i].Cells["ID"].Value);
 
-                                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_HARGA, "UPDATE HARGA FOR ["+Convert.ToString(dataProdukDataGridView.Rows[i].Cells["kodeProduk"].Value) +"]");
+
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
                                 }
                             }
@@ -474,7 +440,9 @@ namespace RoyalPetz_ADMIN
                                                         "PRODUCT_LIMIT_STOCK = " + Convert.ToInt32(dataProdukDataGridView.Rows[i].Cells["LIMIT_STOK"].Value) + " " +
                                                         "WHERE ID = " + Convert.ToInt32(dataProdukDataGridView.Rows[i].Cells["ID"].Value);
 
-                                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_LIMIT_STOK, "UPDATE LIMIT STOK FOR [" + Convert.ToString(dataProdukDataGridView.Rows[i].Cells["kodeProduk"].Value) + "]");
+
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
                                 }
                             }
@@ -496,7 +464,9 @@ namespace RoyalPetz_ADMIN
                                                         "PRODUCT_SHELVES = '" + kodeRakValue + nomorRakValue + "' " +
                                                         "WHERE ID = " + Convert.ToInt32(dataProdukDataGridView.Rows[i].Cells["ID"].Value);
 
-                                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_NOMOR_RAK, "UPDATE NOMOR RAK FOR [" + Convert.ToString(dataProdukDataGridView.Rows[i].Cells["kodeProduk"].Value) + "]");
+
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
                                 }
                             }
@@ -508,6 +478,8 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_HARGA, "EXCEPTION THROWN [" + e.Message + "]");
+
                 try
                 {
                     DS.rollBack();
@@ -549,6 +521,19 @@ namespace RoyalPetz_ADMIN
                 namaProdukTextBox.BackColor = Color.White;
 
                 loadData();
+
+                switch (originModuleID)
+                {
+                    case globalConstants.PENGATURAN_HARGA_JUAL:
+                        gutil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_HARGA, globalConstants.CHANGE_LOG_UPDATE, "PENGATURAN HARGA JUAL, SEARCH TERM [" + namaProdukTextBox.Text + "]");
+                        break;
+                    case globalConstants.PENGATURAN_LIMIT_STOK:
+                        gutil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_LIMIT_STOK, globalConstants.CHANGE_LOG_UPDATE, "PENGATURAN LIMIT STOK, SEARCH TERM [" + namaProdukTextBox.Text + "]");
+                        break;
+                    case globalConstants.PENGATURAN_NOMOR_RAK:
+                        gutil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_NOMOR_RAK, globalConstants.CHANGE_LOG_UPDATE, "PENGATURAN NOMOR RAK, SEARCH TERM [" + namaProdukTextBox.Text + "]");
+                        break;
+                }
 
                 //MessageBox.Show("SUCCESS");
                 gutil.showSuccess(gutil.UPD);

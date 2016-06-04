@@ -53,6 +53,7 @@
             // 
             // noInvoiceTextBox
             // 
+            this.noInvoiceTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.noInvoiceTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noInvoiceTextBox.Location = new System.Drawing.Point(147, 20);
             this.noInvoiceTextBox.Name = "noInvoiceTextBox";
@@ -74,6 +75,7 @@
             this.dataInvoiceDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataInvoiceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataInvoiceDataGridView.Location = new System.Drawing.Point(0, 136);
+            this.dataInvoiceDataGridView.MultiSelect = false;
             this.dataInvoiceDataGridView.Name = "dataInvoiceDataGridView";
             this.dataInvoiceDataGridView.RowHeadersVisible = false;
             this.dataInvoiceDataGridView.Size = new System.Drawing.Size(602, 449);
@@ -106,6 +108,8 @@
             // pelangganCombo
             // 
             this.pelangganCombo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pelangganCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.pelangganCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.pelangganCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pelangganCombo.FormattingEnabled = true;
             this.pelangganCombo.Location = new System.Drawing.Point(147, 53);
@@ -138,6 +142,7 @@
             this.showAllCheckBox.TabIndex = 48;
             this.showAllCheckBox.Text = "Show All";
             this.showAllCheckBox.UseVisualStyleBackColor = true;
+            this.showAllCheckBox.Visible = false;
             // 
             // dataInvoiceForm
             // 
@@ -159,6 +164,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DATA INVOICE";
+            this.Activated += new System.EventHandler(this.dataInvoiceForm_Activated);
             this.Load += new System.EventHandler(this.dataInvoiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataInvoiceDataGridView)).EndInit();
             this.ResumeLayout(false);

@@ -19,53 +19,30 @@ namespace RoyalPetz_ADMIN
     {
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
-        private CultureInfo culture = new CultureInfo("id-ID");        
+        private CultureInfo culture = new CultureInfo("id-ID");
 
         public exportStockOpnameForm()
         {
             InitializeComponent();
         }
 
-        private void exportToCSV_Click(object sender, EventArgs e)
+        private bool saveToCSV(string fileName)
         {
-            //if (exportToCSV.Checked)
-            //{
-            //    exportToCSV.Checked = false;
-            //    //exportToExcel.Checked = true;
-            //}
-            //else
-            //{
-            //    exportToCSV.Checked = true;
-            // //   exportToExcel.Checked = false;
-            //}
-        }
-
-        private void exportToExcel_Click(object sender, EventArgs e)
-        {
-            //if (exportToExcel.Checked)
-            //{
-            //    exportToCSV.Checked = true;
-            //    exportToExcel.Checked = false;
-            //}
-            //else
-            //{
-            //    exportToCSV.Checked = false;
-            //    exportToExcel.Checked = true;
-            //}
-        }
-
-        private bool saveToCSV()
-        {
-            string fileName = "";
-            string localDate;
+            //string fileName = "";
+            //string localDate;
             string sqlCommand;
             string line = "";
             MySqlDataReader rdr;
             StreamWriter sw = null;
 
-            localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+            if (fileName.Length <= 0)
+                return false;
 
-            fileName = "EXPORT_" + localDate + ".csv";
+            //localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+
+            //fileName = "EXPORT_" + localDate + ".csv";
+
+            //localDate = String.Format(culture, "{0:dd-MMM-yyyy}", DateTime.Now);
 
             sqlCommand = "SELECT * FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
 
@@ -73,7 +50,7 @@ namespace RoyalPetz_ADMIN
             {
                 if (rdr.HasRows)
                 {
-                    if (!File.Exists(fileName)) 
+                    if (!File.Exists(fileName))
                         sw = File.CreateText(fileName);
                     else
                     { 
@@ -81,11 +58,14 @@ namespace RoyalPetz_ADMIN
                         sw = File.CreateText(fileName);
                     }
 
-                    line = "KODE PRODUK, BARCODE PRODUK, NAMA PRODUK, QTY PRODUK, QTY RIIL";
+                    //sw.WriteLine(localDate);
+
+                    line = "KODE PRODUK, BARCODE PRODUK, NAMA PRODUK, QTY PRODUK, QTY RIIL, DESCRIPTION";
                     sw.WriteLine(line);
+
                     while (rdr.Read())
                     {
-                        line = rdr.GetString("PRODUCT_ID") + "," + rdr.GetString("PRODUCT_BARCODE") + "," + rdr.GetString("PRODUCT_NAME") + "," + rdr.GetString("PRODUCT_STOCK_QTY") + ",0";
+                        line = rdr.GetString("PRODUCT_ID") + "," + rdr.GetString("PRODUCT_BARCODE") + "," + rdr.GetString("PRODUCT_NAME") + "," + rdr.GetString("PRODUCT_STOCK_QTY") + ",0,";
                         sw.WriteLine(line);
                     }
 
@@ -98,16 +78,29 @@ namespace RoyalPetz_ADMIN
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            //saveFileDialog1.ShowDialog();
-            if (saveToCSV())
+            string localDate = "";
+            string fileName = "";
+            localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+            fileName = "STOCKOPNAME_" + localDate + ".csv";
+
+            saveFileDialog1.FileName = fileName;
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.DefaultExt = "csv";
+            saveFileDialog1.Filter = "CSV File (.csv)|*.csv";
+            saveFileDialog1.ShowDialog();
+
+            gutil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "TRY TO EXPORT STOCK OPNAME TO CSV");
+
+            if (saveToCSV(saveFileDialog1.FileName))
             {
-                //gutil.showSuccess(gutil.INS);
+                gutil.saveSystemDebugLog(globalConstants.MENU_SATUAN, "STOCK OPNAME EXPORTED TO CSV[" + saveFileDialog1.FileName + "]");
                 MessageBox.Show("SUCCESS");
             }        
         }
 
         private void exportStockOpnameForm_Load(object sender, EventArgs e)
         {
+            newButton.Focus();
             gutil.reArrangeTabOrder(this);
         }
     }

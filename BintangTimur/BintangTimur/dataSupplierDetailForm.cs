@@ -77,7 +77,13 @@ namespace RoyalPetz_ADMIN
         }
 
         private void dataSupplierDetailForm_Load(object sender, EventArgs e)
-        {            
+        {
+            Button[] arrButton = new Button[2];
+
+            arrButton[0] = saveButton;
+            arrButton[1] = resetbutton;
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+
             gUtil.reArrangeTabOrder(this);
         }
 
@@ -98,17 +104,17 @@ namespace RoyalPetz_ADMIN
             string sqlCommand = "";
             MySqlException internalEX = null;
 
-            string suppName = supplierNameTextBox.Text.Trim();
+            string suppName = MySqlHelper.EscapeString(supplierNameTextBox.Text.Trim());
 
-            string suppAddress1 = supplierAddress1TextBox.Text.Trim();
+            string suppAddress1 = MySqlHelper.EscapeString(supplierAddress1TextBox.Text.Trim());
             if (suppAddress1.Equals(""))
                 suppAddress1 = " ";
 
-            string suppAddress2 = supplierAddress2TextBox.Text.Trim();
+            string suppAddress2 = MySqlHelper.EscapeString(supplierAddress2TextBox.Text.Trim());
             if (suppAddress2.Equals(""))
                 suppAddress2 = " ";
 
-            string suppAddressCity = supplierAddressCityTextBox.Text.Trim();
+            string suppAddressCity = MySqlHelper.EscapeString(supplierAddressCityTextBox.Text.Trim());
             if (suppAddressCity.Equals(""))
                 suppAddressCity = " ";
 
@@ -120,7 +126,7 @@ namespace RoyalPetz_ADMIN
             if (suppFax.Equals(""))
                 suppFax = " ";
 
-            string suppEmail = supplierEmailTextBox.Text.Trim();
+            string suppEmail = MySqlHelper.EscapeString(supplierEmailTextBox.Text.Trim());
             if (suppEmail.Equals(""))
                 suppEmail = " ";
 
@@ -143,6 +149,7 @@ namespace RoyalPetz_ADMIN
                         sqlCommand = "INSERT INTO MASTER_SUPPLIER " +
                                             "(SUPPLIER_FULL_NAME, SUPPLIER_ADDRESS1, SUPPLIER_ADDRESS2, SUPPLIER_ADDRESS_CITY, SUPPLIER_PHONE, SUPPLIER_FAX, SUPPLIER_EMAIL, SUPPLIER_ACTIVE) " +
                                             "VALUES ('" + suppName + "', '" + suppAddress1 + "', '" + suppAddress2 + "', '" + suppAddressCity + "', '" + suppPhone + "', '" + suppFax + "', '" + suppEmail + "', " + suppStatus + ")";
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_SUPPLIER, "INSERT NEW SUPPLIER [" + suppName + "]");
                         break;
                     case globalConstants.EDIT_SUPPLIER:
 
@@ -156,6 +163,7 @@ namespace RoyalPetz_ADMIN
                                             "SUPPLIER_EMAIL = '" + suppEmail + "', " +
                                             "SUPPLIER_ACTIVE = " + suppStatus + " " +
                                             "WHERE SUPPLIER_ID = " + selectedSupplierID;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_SUPPLIER, "UPDATE SUPPLIER [" + selectedSupplierID+ "]");
                         break;
                 }
 
@@ -167,6 +175,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_SUPPLIER, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -203,8 +212,21 @@ namespace RoyalPetz_ADMIN
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            gUtil.saveSystemDebugLog(globalConstants.MENU_SUPPLIER, "ATTEMPT TO SAVE");
             if (saveData())
             {
+                switch (originModuleID)
+                {
+                    case globalConstants.NEW_SUPPLIER:
+                        gUtil.saveUserChangeLog(globalConstants.MENU_SUPPLIER, globalConstants.CHANGE_LOG_INSERT, "INSERT NEW SUPPLIER [" + supplierNameTextBox.Text + "]");
+                        break;
+                    case globalConstants.EDIT_SUPPLIER:
+                        if (nonAktifCheckbox.Checked == true)
+                            gUtil.saveUserChangeLog(globalConstants.MENU_SUPPLIER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE SUPPLIER [" + supplierNameTextBox.Text + "] STATUS NON-AKTIF");
+                        else
+                            gUtil.saveUserChangeLog(globalConstants.MENU_SUPPLIER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE SUPPLIER [" + supplierNameTextBox.Text + "] STATUS AKTIF");
+                        break;
+                }
                 gUtil.showSuccess(options);
                 gUtil.ResetAllControls(this);
                 originModuleID = globalConstants.NEW_SUPPLIER;
@@ -214,13 +236,6 @@ namespace RoyalPetz_ADMIN
 
         private void supplierPhoneTextBox_TextChanged(object sender, EventArgs e)
         {
-            //string regExValue = "";
-
-            //regExValue = @"^[0-9]*$";
-            //Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
-            //Match m = r.Match(supplierPhoneTextBox.Text);
-
-            //if (m.Success)
             if (gUtil.matchRegEx(supplierPhoneTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
             {
                 previousInputPhone = supplierPhoneTextBox.Text;
@@ -233,13 +248,6 @@ namespace RoyalPetz_ADMIN
 
         private void supplierFaxTextBox_TextChanged(object sender, EventArgs e)
         {
-            //string regExValue = "";
-
-            //regExValue = @"^[0-9]*$";
-            //Regex r = new Regex(regExValue); // This is the main part, can be altered to match any desired form or limitations
-            //Match m = r.Match(supplierFaxTextBox.Text);
-
-            //if (m.Success)
             if (gUtil.matchRegEx(supplierFaxTextBox.Text, globalUtilities.REGEX_NUMBER_ONLY))
             {
                 previousInputFax = supplierFaxTextBox.Text;

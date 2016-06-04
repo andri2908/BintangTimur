@@ -77,9 +77,12 @@ namespace RoyalPetz_ADMIN
             bool valCheckBox = false;
             string sqlCommand = "";
             categoryProduct tempValue;
+            string namaProductParam = MySqlHelper.EscapeString(namaProdukTextbox.Text);
+            string kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
+
 
             DS.mySqlConnect();
-            sqlCommand = "SELECT M.PRODUCT_ID, M.PRODUCT_NAME, IFNULL(P.CATEGORY_ID, 0) AS CATEGORY_ID FROM MASTER_PRODUCT M LEFT OUTER JOIN PRODUCT_CATEGORY P ON (P.PRODUCT_ID = M.PRODUCT_ID AND P.CATEGORY_ID = " + selectedCategoryID + ") WHERE M.PRODUCT_NAME LIKE '%" + namaProdukTextbox.Text + "%'";
+            sqlCommand = "SELECT M.PRODUCT_ID, M.PRODUCT_NAME, IFNULL(P.CATEGORY_ID, 0) AS CATEGORY_ID FROM MASTER_PRODUCT M LEFT OUTER JOIN PRODUCT_CATEGORY P ON (P.PRODUCT_ID = M.PRODUCT_ID AND P.CATEGORY_ID = " + selectedCategoryID + ") WHERE M.PRODUCT_NAME LIKE '%" + namaProductParam + "%' AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -151,7 +154,13 @@ namespace RoyalPetz_ADMIN
                 selectedRow.Cells["changed"].Value = true;
 
                 namaProdukTextbox.ReadOnly = true;
-                namaProdukTextbox.BackColor = Color.Red;
+                textBox1.ReadOnly = true;
+                selectedRow.DefaultCellStyle.BackColor = Color.LightCoral;
+       //         namaProdukTextbox.BackColor = Color.Red;
+            }
+            else
+            {
+                selectedRow.DefaultCellStyle.BackColor = Color.White;
             }
 
         }
@@ -180,10 +189,12 @@ namespace RoyalPetz_ADMIN
                         if ((categoryProductValue[i].hasCategoryID))
                         {
                             sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + pengaturanKategoriDataGridView.Rows[i].Cells["PRODUCT_ID"].Value.ToString() + "' AND CATEGORY_ID = " + selectedCategoryID;
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_KATEGORI_PRODUK, "REMOVE CATEGORY ["+ selectedCategoryID+"] FOR PRODUCT ["+ pengaturanKategoriDataGridView.Rows[i].Cells["PRODUCT_ID"].Value.ToString()+"]");
                         }
                         else 
                         {
                             sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + pengaturanKategoriDataGridView.Rows[i].Cells["PRODUCT_ID"].Value.ToString() + "', " + selectedCategoryID + ")";
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_KATEGORI_PRODUK, "ADD CATEGORY [" + selectedCategoryID + "] FOR PRODUCT [" + pengaturanKategoriDataGridView.Rows[i].Cells["PRODUCT_ID"].Value.ToString() + "]");
                         }
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -196,6 +207,8 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_KATEGORI_PRODUK, "EXCEPTION THROWN [" + e.Message + "]");
+
                 try
                 {
                     DS.rollBack();
@@ -233,14 +246,14 @@ namespace RoyalPetz_ADMIN
         {
             if (saveData())
             {
+                gutil.saveUserChangeLog(globalConstants.MENU_PENGATURAN_KATEGORI_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "PENGATURAN KATEGORI PRODUK [" + namaKategoriTextbox.Text + "]");
                 //MessageBox.Show("SUCCESS");
                 gutil.showSuccess(gutil.UPD);
                 //gutil.ResetAllControls(this); //notneeded?
                 pengaturanKategoriDataGridView.Rows.Clear();
                 categoryProductValue.Clear();
                 namaProdukTextbox.ReadOnly = false;
-                namaProdukTextbox.BackColor = Color.White;
-
+                textBox1.ReadOnly = false;
                 loadProdukName();
             }
         }
@@ -253,6 +266,13 @@ namespace RoyalPetz_ADMIN
         private void pengaturanKategoriProdukForm_Activated(object sender, EventArgs e)
         {
             loadKategoriInformation();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            categoryProductValue.Clear();
+            pengaturanKategoriDataGridView.Rows.Clear();
+            loadProdukName();
         }
     }
 }

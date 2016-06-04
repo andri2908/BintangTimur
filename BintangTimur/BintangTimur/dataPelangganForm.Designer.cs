@@ -34,6 +34,7 @@
             this.dataPelangganDataGridView = new System.Windows.Forms.DataGridView();
             this.newButton = new System.Windows.Forms.Button();
             this.pelanggangnonactiveoption = new System.Windows.Forms.CheckBox();
+            this.unknownCustomerButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataPelangganDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,11 +73,12 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataPelangganDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataPelangganDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataPelangganDataGridView.Location = new System.Drawing.Point(0, 73);
+            this.dataPelangganDataGridView.Location = new System.Drawing.Point(0, 85);
+            this.dataPelangganDataGridView.MultiSelect = false;
             this.dataPelangganDataGridView.Name = "dataPelangganDataGridView";
             this.dataPelangganDataGridView.ReadOnly = true;
             this.dataPelangganDataGridView.RowHeadersVisible = false;
-            this.dataPelangganDataGridView.Size = new System.Drawing.Size(602, 475);
+            this.dataPelangganDataGridView.Size = new System.Drawing.Size(602, 463);
             this.dataPelangganDataGridView.TabIndex = 8;
             this.dataPelangganDataGridView.DoubleClick += new System.EventHandler(this.dataPelangganDataGridView_DoubleClick);
             this.dataPelangganDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataPelangganDataGridView_KeyDown);
@@ -104,12 +106,24 @@
             this.pelanggangnonactiveoption.UseVisualStyleBackColor = true;
             this.pelanggangnonactiveoption.CheckedChanged += new System.EventHandler(this.pelanggangnonactiveoption_CheckedChanged);
             // 
+            // unknownCustomerButton
+            // 
+            this.unknownCustomerButton.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold);
+            this.unknownCustomerButton.Location = new System.Drawing.Point(431, 12);
+            this.unknownCustomerButton.Name = "unknownCustomerButton";
+            this.unknownCustomerButton.Size = new System.Drawing.Size(159, 67);
+            this.unknownCustomerButton.TabIndex = 35;
+            this.unknownCustomerButton.Text = "PELANGGAN TIDAK TERDAFTAR";
+            this.unknownCustomerButton.UseVisualStyleBackColor = true;
+            this.unknownCustomerButton.Click += new System.EventHandler(this.unknownCustomerButton_Click);
+            // 
             // dataPelangganForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(602, 549);
+            this.Controls.Add(this.unknownCustomerButton);
             this.Controls.Add(this.pelanggangnonactiveoption);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.namaPelangganTextbox);
@@ -136,5 +150,6 @@
         private System.Windows.Forms.DataGridView dataPelangganDataGridView;
         private System.Windows.Forms.Button newButton;
         private System.Windows.Forms.CheckBox pelanggangnonactiveoption;
+        private System.Windows.Forms.Button unknownCustomerButton;
     }
 }

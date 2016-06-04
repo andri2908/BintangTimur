@@ -26,12 +26,13 @@ namespace RoyalPetz_ADMIN
 
         private void setNoFakturForm_Load(object sender, EventArgs e)
         {
+            errorLabel.Text = "";
             gutil.reArrangeTabOrder(this);
         }
 
         private void loadNoFaktur()
         {
-            noFakturValue = DS.getDataSingleValue("SELECT IFNULL(NO_FAKTUR, '') FROM SYS_CONFIG").ToString();
+            noFakturValue = DS.getDataSingleValue("SELECT IFNULL(NO_FAKTUR, '') FROM SYS_CONFIG WHERE ID = 1").ToString();
             noFakturTextBox.Text = noFakturValue;
         }
 
@@ -48,6 +49,18 @@ namespace RoyalPetz_ADMIN
 
         private bool dataValidated()
         {
+            if (noFakturTextBox.Text.Length<=0)
+            {
+                errorLabel.Text = "NO FAKTUR TIDAK BOLEH KOSONG";
+                return false;
+            }
+
+            if (!gutil.matchRegEx(noFakturTextBox.Text, globalUtilities.REGEX_ALPHANUMERIC_ONLY))
+            {
+                errorLabel.Text = "NO FAKTUR HARUS ALPHA NUMERIC";
+                return false;
+            }
+
             return true;
         }
 
@@ -64,8 +77,8 @@ namespace RoyalPetz_ADMIN
             {
                 DS.mySqlConnect();
 
-                sqlCommand = "UPDATE SYS_CONFIG SET NO_FAKTUR = '" + noFakturValue + "'";
-
+                sqlCommand = "UPDATE SYS_CONFIG SET NO_FAKTUR = '" + noFakturValue + "' WHERE ID = 1";
+                gutil.saveSystemDebugLog(globalConstants.MENU_SET_NO_FAKTUR, "UPDATE SYS CONFIG VALUE [" + noFakturValue + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -74,6 +87,7 @@ namespace RoyalPetz_ADMIN
             }
             catch (Exception e)
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_SET_NO_FAKTUR, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -109,10 +123,19 @@ namespace RoyalPetz_ADMIN
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            gutil.saveSystemDebugLog(globalConstants.MENU_SET_NO_FAKTUR, "ATTEMPT TO SAVE NO FAKTUR");
             if (saveData())
             {
+                gutil.saveSystemDebugLog(globalConstants.MENU_SET_NO_FAKTUR, "NO FAKTUR SAVED");
+                gutil.saveUserChangeLog(globalConstants.MENU_SET_NO_FAKTUR, globalConstants.CHANGE_LOG_UPDATE, "SET NO FAKTUR [" + noFakturTextBox.Text + "]");
                 gutil.showSuccess(gutil.UPD);
+                errorLabel.Text = "";
             }
+        }
+
+        private void noFakturTextBox_TextChanged(object sender, EventArgs e)
+        {
+            noFakturTextBox.Text = gutil.allTrim(noFakturTextBox.Text);
         }
     }
 }
