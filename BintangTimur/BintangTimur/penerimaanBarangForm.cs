@@ -27,6 +27,7 @@ namespace RoyalPetz_ADMIN
         double POduration = 0;
         private Hotkeys.GlobalHotkey ghk_F2;
         Button[] arrButton = new Button[3];
+        int locationID = 0;
 
         private List<string> detailRequestQty = new List<string>();
         private List<string> detailHpp = new List<string>();
@@ -513,6 +514,13 @@ namespace RoyalPetz_ADMIN
             PRDtPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             int userAccessOption = 0;
 
+            locationID = gUtil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             //initializeScreen();
             labelTotal.Visible = false;
             labelTotal_1.Visible = false;
@@ -991,6 +999,12 @@ namespace RoyalPetz_ADMIN
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
                         
+                        // UPDATE TO PRODUCT LOCATION
+                        sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + Convert.ToDouble(detailGridView.Rows[i].Cells["qtyReceived"].Value) + " WHERE PRODUCT_ID = '" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = "+ locationID;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "UPDATE PRODUCT LOCATION DATA [" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "'" + locationID + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+
                         // UPDATE TO MASTER PRODUCT
                         sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_BASE_PRICE = " + newHPP + ", PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY + " + Convert.ToDouble(detailGridView.Rows[i].Cells["qtyReceived"].Value) + " WHERE PRODUCT_ID = '" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "UPDATE MASTER PRODUCT DATA [" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
@@ -1187,6 +1201,12 @@ namespace RoyalPetz_ADMIN
         {
             bool result = false;
             //Data_Access DS_HQ = new Data_Access();
+
+            if (gUtil.checkLocalIPAddressFound(DS.getHQ_IPServer()) || DS.getHQ_IPServer() == "127.0.0.1")
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "HQ IP AND LOCAL IP ARE THE SAME");
+                return true;
+            }
 
             //if (saveData()) // SAVE TO LOCAL DATABASE FIRST
             {
@@ -1435,6 +1455,11 @@ namespace RoyalPetz_ADMIN
 
                 pleaseWait.Close();
             }
+        }
+
+        private void detailGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

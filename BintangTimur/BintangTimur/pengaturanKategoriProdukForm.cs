@@ -81,7 +81,7 @@ namespace RoyalPetz_ADMIN
             string kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
 
 
-            DS.mySqlConnect();
+            //DS.mySqlConnect();
             sqlCommand = "SELECT M.PRODUCT_ID, M.PRODUCT_NAME, IFNULL(P.CATEGORY_ID, 0) AS CATEGORY_ID FROM MASTER_PRODUCT M LEFT OUTER JOIN PRODUCT_CATEGORY P ON (P.PRODUCT_ID = M.PRODUCT_ID AND P.CATEGORY_ID = " + selectedCategoryID + ") WHERE M.PRODUCT_NAME LIKE '%" + namaProductParam + "%' AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))

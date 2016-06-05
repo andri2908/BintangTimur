@@ -124,7 +124,7 @@ namespace RoyalPetz_ADMIN
             kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
 
             sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
-            
+
             if (originModuleID == globalConstants.STOK_PECAH_BARANG)
             {
                 sqlCommand = sqlCommand + " AND PRODUCT_IS_SERVICE = 0";

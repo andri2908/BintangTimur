@@ -321,6 +321,7 @@ namespace RoyalPetz_ADMIN
             MySqlException internalEX = null;
             string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim(); ;
             String branchID = BranchIDTextbox.Text;
+            String locationID = locationIDTextBox.Text;
             //String no_faktur = "";
             String nama_toko = MySqlHelper.EscapeString(NamaTokoTextbox.Text);
             String alamat_toko = MySqlHelper.EscapeString(AlamatTextbox.Text);
@@ -336,8 +337,8 @@ namespace RoyalPetz_ADMIN
                 switch (mode)
                 {
                     case 1:
-                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL) " +
-                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "')";
+                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, LOCATION_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL) " +
+                                            "VALUES (2, '', '" + branchID + "', '" + locationID +"', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "')";
                         options = gutil.INS;
                         gutil.saveSystemDebugLog(0, "INSERT DATA ID 2 TO SYS_CONFIG");
 
@@ -345,6 +346,7 @@ namespace RoyalPetz_ADMIN
                     case 2:
                         sqlCommand = "UPDATE SYS_CONFIG SET " +
                                             "BRANCH_ID = " + branchID + ", " +
+                                            "LOCATION_ID = " + locationID + ", " +
                                             "HQ_IP4 = '" + HQIP + "', " +
                                             "STORE_NAME = '" + nama_toko + "', " +
                                             "STORE_ADDRESS = '" + alamat_toko + "', " +
@@ -543,6 +545,14 @@ namespace RoyalPetz_ADMIN
             BeginInvoke((Action)delegate
             {
                 ip4Textbox.SelectAll();
+            });
+        }
+
+        private void locationID_Enter(object sender, EventArgs e)
+        {
+            BeginInvoke((Action)delegate
+            {
+                BranchIDTextbox.SelectAll();
             });
         }
 

@@ -403,7 +403,7 @@ namespace RoyalPetz_ADMIN
                         hppTextBox.Text = rdr.GetString("PRODUCT_BASE_PRICE");
                         hargaEcerTextBox.Text = rdr.GetString("PRODUCT_RETAIL_PRICE");
                         hargaPartaiTextBox.Text = rdr.GetString("PRODUCT_BULK_PRICE");
-                        hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); ;
+                        hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); 
                         merkTextBox.Text = rdr.GetString("PRODUCT_BRAND");
                         stokAwalTextBox.Text = rdr.GetString("PRODUCT_STOCK_QTY");
                         limitStokTextBox.Text = rdr.GetString("PRODUCT_LIMIT_STOCK");

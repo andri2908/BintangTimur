@@ -1066,33 +1066,41 @@ namespace RoyalPetz_ADMIN
             gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO SAVE TO LOCAL DATABASE");
             if (saveData()) // SAVE TO LOCAL DATABASE FIRST
             {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SAVED TO LOCAL DATABASE");
-                // CREATE CONNECTION TO CENTRAL HQ DATABASE SERVER
-                gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO CONNECT TO HQ");
-                if (DS.HQ_mySQLConnect())
+                if (gUtil.checkLocalIPAddressFound(DS.getHQ_IPServer()) || DS.getHQ_IPServer() == "127.0.0.1")
                 {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "CONNECTION TO HQ CREATED");
-                    // SEND REQUEST DATA TO HQ
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO INSERT DATA TO HQ");
-                    if (insertDataToHQ(DS))
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "HQ IP AND LOCAL IP ARE THE SAME");
+                    result = true;
+                }
+                else
+                { 
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SAVED TO LOCAL DATABASE");
+                    // CREATE CONNECTION TO CENTRAL HQ DATABASE SERVER
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO CONNECT TO HQ");
+                    if (DS.HQ_mySQLConnect())
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SENT TO HQ SUCCESSFULLY");
-                        result = true;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "CONNECTION TO HQ CREATED");
+                        // SEND REQUEST DATA TO HQ
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO INSERT DATA TO HQ");
+                        if (insertDataToHQ(DS))
+                        {
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SENT TO HQ SUCCESSFULLY");
+                            result = true;
+                        }
+                        else
+                        {
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER FAILED TO SENT TO HQ");
+                            MessageBox.Show("FAIL TO INSERT DATA TO HQ");
+                            result = false;
+                        }
+                        // CLOSE CONNECTION TO CENTRAL HQ DATABASE SERVER
+                        DS.HQ_mySqlClose();
                     }
                     else
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER FAILED TO SENT TO HQ");
-                        MessageBox.Show("FAIL TO INSERT DATA TO HQ");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "FAILED TO CREATE CONNECTION TO HQ");
+                        MessageBox.Show("FAIL TO CONNECT");
                         result = false;
                     }
-                    // CLOSE CONNECTION TO CENTRAL HQ DATABASE SERVER
-                    DS.HQ_mySqlClose();
-                }
-                else
-                {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "FAILED TO CREATE CONNECTION TO HQ");
-                    MessageBox.Show("FAIL TO CONNECT");
-                    result = false;
                 }
             }
 

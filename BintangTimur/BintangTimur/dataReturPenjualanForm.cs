@@ -30,7 +30,7 @@ namespace RoyalPetz_ADMIN
         private string previousInput = "";
         private double extraAmount = 0;
         private string returID = "0";
-
+        private int locationID = 0;
 
         private Data_Access DS = new Data_Access();
         private globalUtilities gutil = new globalUtilities();
@@ -537,6 +537,13 @@ namespace RoyalPetz_ADMIN
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
+                    // UPDATE PRODUCT LOCATION
+                    sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = " + locationID;
+
+                    gutil.saveSystemDebugLog(originModuleID, "UPDATE PRODUCT_LOCATION QTY [" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "/" + locationID + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
                     // UPDATE MASTER PRODUCT
                     sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY + " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
 
@@ -825,23 +832,9 @@ namespace RoyalPetz_ADMIN
             string sqlCommand = "";
             int totalLengthPage = startY + Offset; ;
 
-            String ucapan = "";
-
             //event printing
 
             gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "printDocument1_PrintPage, print POS size receipt");
-
-            int startX = 5;
-            int colxwidth = 93; //31x3
-            int totrowwidth = 310; //310/10=31
-            int totrowheight = 20;
-            string customer = "";
-            string tgl = "";
-            string group = "";
-            double total = 0;
-            string paymentDesc = "";
-            double totalPayment = 0;
-            string soInvoice = "";
 
             //HEADER
 
@@ -978,6 +971,13 @@ namespace RoyalPetz_ADMIN
         
         private void dataReturPenjualanForm_Load(object sender, EventArgs e)
         {
+            locationID = gutil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             errorLabel.Text = "";
             rsDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 

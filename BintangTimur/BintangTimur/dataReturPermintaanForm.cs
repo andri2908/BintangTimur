@@ -21,6 +21,7 @@ namespace RoyalPetz_ADMIN
         private string previousInput = "";
         private int originModuleID = 0;
         private bool isLoading = false;
+        private int locationID = 0;
 
         private List<string> detailQty = new List<string>();
         private CultureInfo culture = new CultureInfo("id-ID");
@@ -74,7 +75,8 @@ namespace RoyalPetz_ADMIN
             DataGridViewTextBoxColumn subTotalColumn = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn descriptionColumn = new DataGridViewTextBoxColumn();
 
-            sqlCommand = "SELECT PRODUCT_ID, PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK > 0) ORDER BY PRODUCT_NAME ASC";
+            //sqlCommand = "SELECT PRODUCT_ID, PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK > 0) ORDER BY PRODUCT_NAME ASC";
+            sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE MP.PRODUCT_ACTIVE = 1 AND (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK > 0) AND PL.PRODUCT_ID = MP.PRODUCT_ID AND PL.LOCATION_ID = " + locationID + " ORDER BY PRODUCT_NAME ASC";
 
             //productIDComboHidden.Items.Clear();
             //productNameComboHidden.Items.Clear();
@@ -322,6 +324,14 @@ namespace RoyalPetz_ADMIN
 
         private void dataReturPermintaanForm_Load(object sender, EventArgs e)
         {
+            locationID = GUTIL.loadlocationID(2);
+
+            if (locationID<=0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             errorLabel.Text = "";
             detailReturDataGridView.EditingControlShowing += detailReturDataGridView_EditingControlShowing;
 
@@ -465,8 +475,14 @@ namespace RoyalPetz_ADMIN
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                            throw internalEX;
 
-                       // UPDATE MASTER PRODUCT
-                       sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
+                        // UPDATE PRODUCT LOCATION DATA
+                        sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = "+locationID;
+                        GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PEMBELIAN, "UPDATE PRODUCT LOCATION DATA");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+
+                        // UPDATE MASTER PRODUCT
+                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
                        GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PEMBELIAN, "UPDATE MASTER PRODUCT");
                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                          throw internalEX;

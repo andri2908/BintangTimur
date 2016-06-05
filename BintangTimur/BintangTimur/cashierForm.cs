@@ -30,6 +30,7 @@ namespace RoyalPetz_ADMIN
         private double bayarAmount = 0;
         private double sisaBayar = 0;
         private int originModuleID = 0;
+        private int locationID = 0;
 
         private Data_Access DS = new Data_Access();
 
@@ -786,7 +787,16 @@ namespace RoyalPetz_ADMIN
                         }
 
                         if (originModuleID == 0)  // NORMAL TRANSACTION
-                        { 
+                        {
+                            // REDUCE STOCK QTY AT SPECIFIC LOCATION
+                            sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
+                                                " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = " +locationID;
+
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "REDUCE STOCK AT PRODUCT_LOCATION [" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "/"+ locationID + "]");
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+
+
                             // REDUCE STOCK QTY AT MASTER PRODUCT
                             sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
                                                 " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
@@ -1079,7 +1089,8 @@ namespace RoyalPetz_ADMIN
             {
                 double stockQty = 0;
 
-                stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
+                //stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
+                stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK) FROM PRODUCT_LOCATION PL, MASTER_PRODUCT MP WHERE PL.PRODUCT_ID = '" + productID + "' AND PL.PRODUCT_ID = MP.PRODUCT_ID AND PL.LOCATION_ID = " + locationID));
 
                 if (stockQty >= qtyRequested)
                     result = true;
@@ -1419,6 +1430,15 @@ namespace RoyalPetz_ADMIN
 
         private void cashierForm_Load(object sender, EventArgs e)
         {
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO get Selected Location ID");
+            locationID = gutil.loadlocationID(2);
+
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             registerGlobalHotkey();
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR");
@@ -1426,6 +1446,7 @@ namespace RoyalPetz_ADMIN
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid");
             addColumnToDataGrid();
 
+ 
             customerComboBox.SelectedIndex = 0;
             customerComboBox.Text = customerComboBox.Items[0].ToString();
 
@@ -1799,7 +1820,7 @@ namespace RoyalPetz_ADMIN
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else
-                {
+                { 
                     // GET DUMMY DATA
                     sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
                     "PRODUCT_SALES_PRICE AS 'PRICE', ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +

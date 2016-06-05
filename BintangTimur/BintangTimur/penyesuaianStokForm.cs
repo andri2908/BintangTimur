@@ -18,6 +18,7 @@ namespace RoyalPetz_ADMIN
     {
         private int selectedProductID = 0;
         private double selectedProductLimitStock = 0;
+        private int locationID = 0;
 
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
@@ -39,7 +40,7 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             string sqlCommand;
 
-            sqlCommand = "SELECT * FROM MASTER_PRODUCT WHERE ID = " + selectedProductID;
+            sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME, MP.PRODUCT_LIMIT_STOCK, PL.PRODUCT_LOCATION_QTY FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE MP.ID = " + selectedProductID + " AND PL.LOCATION_ID = " + locationID;
             using(rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -48,7 +49,7 @@ namespace RoyalPetz_ADMIN
 
                     kodeProductTextBox.Text = rdr.GetString("PRODUCT_ID");
                     namaProductTextBox.Text = rdr.GetString("PRODUCT_NAME");
-                    jumlahAwalMaskedTextBox.Text = rdr.GetString("PRODUCT_STOCK_QTY");
+                    jumlahAwalMaskedTextBox.Text = rdr.GetString("PRODUCT_LOCATION_QTY");
                     selectedProductLimitStock = rdr.GetDouble("PRODUCT_LIMIT_STOCK");
                 }
             }
@@ -109,6 +110,13 @@ namespace RoyalPetz_ADMIN
             try
             {
                 DS.mySqlConnect();
+
+                // UPDATE PRODUCT LOCATION TABLE WITH THE NEW QTY
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = " + newStockQty + " WHERE LOCATION_ID = " + locationID + " AND  ID = " + selectedProductID;
+
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENYESUAIAN_STOK, "UPDATE PRODUCT LOCATION QTY [" + selectedProductID + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
 
                 // UPDATE MASTER PRODUCT WITH THE NEW QTY
                 sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = " + newStockQty + " WHERE ID = " + selectedProductID;
@@ -176,6 +184,13 @@ namespace RoyalPetz_ADMIN
         
         private void penyesuaianStokForm_Load(object sender, EventArgs e)
         {
+            locationID = gutil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             loadProductData();
             errorLabel.Text = "";
             gutil.reArrangeTabOrder(this);

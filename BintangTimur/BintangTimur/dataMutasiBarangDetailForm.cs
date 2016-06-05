@@ -30,6 +30,7 @@ namespace RoyalPetz_ADMIN
         private string previousInput = "";
         private string noMutasi = "";
         private Button[] arrButton = new Button[5];
+        private int locationID = 0;
 
         private Data_Access DS = new Data_Access();
         private List<string> detailRequestQtyApproved = new List<string>();
@@ -128,8 +129,12 @@ namespace RoyalPetz_ADMIN
         {
             bool result = false;
             double stockQty = 0;
+            string sqlCommand;
 
-            stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
+            //sqlCommand = "SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'";
+            sqlCommand = "SELECT (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE MP.PRODUCT_ID = '" + productID + "' AND PL.LOCATION_ID = " + locationID + " AND PL.LOCATION_ID = MP.LOCATION_ID";
+
+            stockQty = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
 
             if (stockQty >= qtyRequested)
                 result = true;
@@ -649,6 +654,13 @@ namespace RoyalPetz_ADMIN
             RODateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             ROExpiredDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
+            locationID = gUtil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             isLoading = true;
             selectedBranchFromID = 0;
 
@@ -1056,7 +1068,7 @@ namespace RoyalPetz_ADMIN
             int branchID = 0;
             bool result = false;
             string roInvoice = ROInvoiceTextBox.Text;
-
+            string branchIP = "";
             // GET BRANCH ID
             if (!directMutasiBarang)
                 branchID = Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(RO_BRANCH_ID_TO, 0) FROM REQUEST_ORDER_HEADER WHERE RO_INVOICE = '" + roInvoice + "'"));
@@ -1067,14 +1079,23 @@ namespace RoyalPetz_ADMIN
 
             if (branchID > 0)
             {
-                // CONNECT TO BRANCH
-                gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "TRY TO CONNECT TO BRANCH [" + branchID + "]");
-                if (DS.Branch_mySQLConnect(branchID))
+                branchIP = DS.getBranch_IPServer(branchID);
+                if (gUtil.checkLocalIPAddressFound(branchIP) || branchIP == "127.0.0.1")
                 {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "CONNECTED TO BRANCH [" + branchID + "] [" + approvedRO + "]");
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "BRANCH IP EQUALS TO LOCAL IP");
+                    result = true;
+                }
+                else
+                { 
+                    // CONNECT TO BRANCH
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "TRY TO CONNECT TO BRANCH [" + branchID + "]");
+                    if (DS.Branch_mySQLConnect(branchID))
+                    {
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "CONNECTED TO BRANCH [" + branchID + "] [" + approvedRO + "]");
 
-                    result = insertAndUpdateBranchData(approvedRO);
-                    DS.Branch_mySqlClose();
+                        result = insertAndUpdateBranchData(approvedRO);
+                        DS.Branch_mySqlClose();
+                    }
                 }
             }
 

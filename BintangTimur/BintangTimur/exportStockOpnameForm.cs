@@ -20,6 +20,7 @@ namespace RoyalPetz_ADMIN
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
         private CultureInfo culture = new CultureInfo("id-ID");
+        private int locationID = 0;
 
         public exportStockOpnameForm()
         {
@@ -37,12 +38,6 @@ namespace RoyalPetz_ADMIN
 
             if (fileName.Length <= 0)
                 return false;
-
-            //localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
-
-            //fileName = "EXPORT_" + localDate + ".csv";
-
-            //localDate = String.Format(culture, "{0:dd-MMM-yyyy}", DateTime.Now);
 
             sqlCommand = "SELECT * FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
 
@@ -100,6 +95,13 @@ namespace RoyalPetz_ADMIN
 
         private void exportStockOpnameForm_Load(object sender, EventArgs e)
         {
+            locationID = gutil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             newButton.Focus();
             gutil.reArrangeTabOrder(this);
         }

@@ -11,6 +11,8 @@ using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace RoyalPetz_ADMIN
 {
@@ -117,6 +119,27 @@ namespace RoyalPetz_ADMIN
                         namacabang = "PUSAT";
                     }
                     
+                }
+            }
+            return rslt;
+        }
+
+        public int loadlocationID(int opt)
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+            DS.mySqlConnect();
+            int rslt = 0;
+            //1 load default 2 setting user
+            using (rdr = DS.getData("SELECT IFNULL(S.LOCATION_ID,0) AS 'ID' FROM SYS_CONFIG S WHERE ID =  " + opt))
+            {
+                if (rdr.HasRows)
+                {
+                    rdr.Read();
+                    if (!String.IsNullOrEmpty(rdr.GetString("ID")))
+                    {
+                        rslt = rdr.GetInt32("ID");
+                    }
                 }
             }
             return rslt;
@@ -517,6 +540,23 @@ namespace RoyalPetz_ADMIN
             string newPath = Application.StartupPath + "\\LOG_FILE\\logFile_" + dateTimeValue + ".log";
             if (File.Exists(oldPath))
                 File.Move(oldPath, newPath);
+        }
+
+        public bool checkLocalIPAddressFound(string ipToCheck)
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    if (ip.ToString() == ipToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

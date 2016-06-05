@@ -24,6 +24,7 @@ namespace RoyalPetz_ADMIN
         private int currentUnitID;
         private int newUnitID;
         private double newUnitConverter;
+        private int locationID = 0;
 
         private Data_Access DS = new Data_Access();
         private string previousInput = "";
@@ -170,6 +171,13 @@ namespace RoyalPetz_ADMIN
 
         private void stokPecahBarangForm_Load(object sender, EventArgs e)
         {
+            locationID = gUtil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             gUtil.reArrangeTabOrder(this);
         }
 
@@ -299,10 +307,21 @@ namespace RoyalPetz_ADMIN
             {
                 DS.mySqlConnect();
 
+                //REDUCE CURRENT PRODUCT LOCATION QTY
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE ID = " + selectedInternalProductID + " AND LOCATION_ID = " + locationID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE PRODUCT LOCATION QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "/" + locationID + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
                 //REDUCE CURRENT STOCK QTY
                 sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE ID = " + selectedInternalProductID;
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
 
+                //INCREASE NEW PRODUCT LOCATION QTY
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + actualResult + " WHERE ID = " + newSelectedInternalProductID + " AND LOCATION_ID = " + locationID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "ADD PRODUCT LOCATION QTY [" + newProductIDTextBox.Text + "] AMT [" + actualResult + "] [" + locationID + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
