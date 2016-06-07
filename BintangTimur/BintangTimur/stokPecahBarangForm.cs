@@ -17,7 +17,11 @@ namespace RoyalPetz_ADMIN
     public partial class stokPecahBarangForm : Form
     {
         private int newSelectedInternalProductID = 0;
+        private string newSelectedProductID = "";
+
         private int selectedInternalProductID = 0;
+        private string selectedProductID = "";
+
         private int selectedUnitID = 0;
         private List<int> selectedKategoriID = new List<int>();
         private double currentStockQty;
@@ -307,8 +311,11 @@ namespace RoyalPetz_ADMIN
             {
                 DS.mySqlConnect();
 
+                newSelectedProductID = gUtil.getProductID(newSelectedInternalProductID);
+                selectedProductID = gUtil.getProductID(selectedInternalProductID);
+
                 //REDUCE CURRENT PRODUCT LOCATION QTY
-                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE ID = " + selectedInternalProductID + " AND LOCATION_ID = " + locationID;
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE PRODUCT_ID = " + selectedProductID + " AND LOCATION_ID = " + locationID;
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE PRODUCT LOCATION QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "/" + locationID + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
@@ -320,7 +327,7 @@ namespace RoyalPetz_ADMIN
                     throw internalEX;
 
                 //INCREASE NEW PRODUCT LOCATION QTY
-                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + actualResult + " WHERE ID = " + newSelectedInternalProductID + " AND LOCATION_ID = " + locationID;
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + actualResult + " WHERE PRODUCT_ID = " + newSelectedProductID + " AND LOCATION_ID = " + locationID;
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "ADD PRODUCT LOCATION QTY [" + newProductIDTextBox.Text + "] AMT [" + actualResult + "] [" + locationID + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;

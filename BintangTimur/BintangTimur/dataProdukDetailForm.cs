@@ -452,7 +452,7 @@ namespace RoyalPetz_ADMIN
 
             string sqlCommand;
 
-            if (originModuleID == globalConstants.NEW_PRODUK)
+            if (originModuleID == globalConstants.NEW_PRODUK || originModuleID == globalConstants.STOK_PECAH_BARANG)
             {
                 sqlCommand = "SELECT ID, LOCATION_NAME , 0 AS 'JUMLAH' FROM MASTER_LOCATION";
 

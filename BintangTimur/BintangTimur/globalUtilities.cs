@@ -145,6 +145,17 @@ namespace RoyalPetz_ADMIN
             return rslt;
         }
 
+        public string getProductID(int internalProductID)
+        {
+            string productID = "";
+
+            productID = DS.getDataSingleValue("SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE ID = " + internalProductID).ToString();
+
+            return productID;
+        }
+
+
+
         public bool loadinfotoko(int opt, out string NamaToko, out string AlamatToko, out string TeleponToko, out string EmailToko)
         {
             MySqlDataReader rdr;

@@ -40,7 +40,7 @@ namespace RoyalPetz_ADMIN
             MySqlDataReader rdr;
             string sqlCommand;
 
-            sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME, MP.PRODUCT_LIMIT_STOCK, PL.PRODUCT_LOCATION_QTY FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE MP.ID = " + selectedProductID + " AND PL.LOCATION_ID = " + locationID;
+            sqlCommand = "SELECT MP.PRODUCT_ID, MP.PRODUCT_NAME, MP.PRODUCT_LIMIT_STOCK, PL.PRODUCT_LOCATION_QTY FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE PL.PRODUCT_ID = MP.PRODUCT_ID AND MP.ID = " + selectedProductID + " AND PL.LOCATION_ID = " + locationID;
             using(rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -94,6 +94,7 @@ namespace RoyalPetz_ADMIN
             double newStockQty = 0;
             string adjustmentDate;
             string descriptionParam;
+            string selectedKodeProduct = "";
 
             MySqlException internalEX = null;
 
@@ -111,8 +112,9 @@ namespace RoyalPetz_ADMIN
             {
                 DS.mySqlConnect();
 
+                selectedKodeProduct = gutil.getProductID(selectedProductID);
                 // UPDATE PRODUCT LOCATION TABLE WITH THE NEW QTY
-                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = " + newStockQty + " WHERE LOCATION_ID = " + locationID + " AND  ID = " + selectedProductID;
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = " + newStockQty + " WHERE LOCATION_ID = " + locationID + " AND  PRODUCT_ID = " + selectedKodeProduct;
 
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENYESUAIAN_STOK, "UPDATE PRODUCT LOCATION QTY [" + selectedProductID + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))

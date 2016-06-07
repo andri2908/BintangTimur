@@ -132,7 +132,8 @@ namespace RoyalPetz_ADMIN
             string sqlCommand;
 
             //sqlCommand = "SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'";
-            sqlCommand = "SELECT (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE MP.PRODUCT_ID = '" + productID + "' AND PL.LOCATION_ID = " + locationID + " AND PL.LOCATION_ID = MP.LOCATION_ID";
+            sqlCommand = "SELECT (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL " + 
+                                   "WHERE MP.PRODUCT_ID = '" + productID + "' AND PL.LOCATION_ID = " + locationID + " AND PL.PRODUCT_ID = MP.PRODUCT_ID";
 
             stockQty = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
 
@@ -1205,7 +1206,8 @@ namespace RoyalPetz_ADMIN
                 int rowSelectedIndex = detailRequestOrderDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];
 
-                detailRequestOrderDataGridView.Rows.Remove(selectedRow);
+                if (rowSelectedIndex < detailRequestOrderDataGridView.Rows.Count-1)
+                    detailRequestOrderDataGridView.Rows.Remove(selectedRow);
             }
         }
 
