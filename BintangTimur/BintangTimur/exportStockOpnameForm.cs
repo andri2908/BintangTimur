@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.IO;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class exportStockOpnameForm : Form
     {
@@ -35,11 +35,20 @@ namespace RoyalPetz_ADMIN
             string line = "";
             MySqlDataReader rdr;
             StreamWriter sw = null;
+            bool firstColumn = true;
+            StringBuilder builder = new StringBuilder();
+            string value = "";
 
             if (fileName.Length <= 0)
                 return false;
 
-            sqlCommand = "SELECT * FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
+            //localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
+
+            //fileName = "EXPORT_" + localDate + ".csv";
+
+            //localDate = String.Format(culture, "{0:dd-MMM-yyyy}", DateTime.Now);
+
+            sqlCommand = "SELECT PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_STOCK_QTY, 0 AS PRODUCT_ACTUAL_QTY, '' AS DESCRIPTION FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -55,12 +64,43 @@ namespace RoyalPetz_ADMIN
 
                     //sw.WriteLine(localDate);
 
-                    line = "KODE PRODUK, BARCODE PRODUK, NAMA PRODUK, QTY PRODUK, QTY RIIL, DESCRIPTION";
+                    builder.Append("KODE PRODUK");
+                    builder.Append(",");
+                    builder.Append("BARCODE PRODUK");
+                    builder.Append(",");
+                    builder.Append("NAMA PRODUK");
+                    builder.Append(",");
+                    builder.Append("QTY PRODUK");
+                    builder.Append(",");
+                    builder.Append("QTY RIIL");
+                    builder.Append(",");
+                    builder.Append("DESCRIPTION");
+
+                    line = builder.ToString();
                     sw.WriteLine(line);
 
                     while (rdr.Read())
                     {
-                        line = rdr.GetString("PRODUCT_ID") + "," + rdr.GetString("PRODUCT_BARCODE") + "," + rdr.GetString("PRODUCT_NAME") + "," + rdr.GetString("PRODUCT_STOCK_QTY") + ",0,";
+                        builder.Clear();
+                        firstColumn = true;
+                        for (int index = 0; index < rdr.FieldCount; index++)
+                        {
+                            value = rdr.GetString(index);
+                            // Add separator if this isn't the first value
+                            if (!firstColumn)
+                                builder.Append(',');
+                            // Implement special handling for values that contain comma or quote
+                            // Enclose in quotes and double up any double quotes
+                            if (value.IndexOfAny(new char[] { '"', ',' }) != -1)
+                                builder.AppendFormat("\"{0}\"", value.Replace("\"", "\"\""));
+                            else
+                                builder.Append(value);
+                            //else
+                            //    builder.AppendFormat("\'{0}\'", value);
+                            firstColumn = false;
+                        }
+                        line = builder.ToString();
+                        //line = rdr.GetString("PRODUCT_ID") + ";" + rdr.GetString("PRODUCT_BARCODE") + ";" + rdr.GetString("PRODUCT_NAME") + ";" + rdr.GetString("PRODUCT_STOCK_QTY") + ";0;";
                         sw.WriteLine(line);
                     }
 

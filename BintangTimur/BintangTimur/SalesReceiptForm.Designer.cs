@@ -1,4 +1,4 @@
-﻿namespace RoyalPetz_ADMIN
+﻿namespace BintangTimur
 {
     partial class SalesReceiptForm
     {
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.ReportAccount1 = new RoyalPetz_ADMIN.ReportAccount();
-            this.SalesReceipt1 = new RoyalPetz_ADMIN.SalesReceipt();
+            this.ReportAccount1 = new BintangTimur.ReportAccount();
+            this.SalesReceipt1 = new BintangTimur.SalesReceipt();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

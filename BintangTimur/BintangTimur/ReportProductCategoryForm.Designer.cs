@@ -1,4 +1,4 @@
-﻿namespace RoyalPetz_ADMIN
+﻿namespace BintangTimur
 {
     partial class ReportProductCategoryForm
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.ReportProductCategory1 = new RoyalPetz_ADMIN.ReportProductCategory();
+            this.ReportProductCategory1 = new BintangTimur.ReportProductCategory();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

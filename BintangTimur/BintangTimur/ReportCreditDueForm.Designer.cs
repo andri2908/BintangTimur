@@ -1,4 +1,4 @@
-﻿namespace RoyalPetz_ADMIN
+﻿namespace BintangTimur
 {
     partial class ReportCreditDueForm
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.ReportCreditDue1 = new RoyalPetz_ADMIN.ReportCreditDue();
+            this.ReportCreditDue1 = new BintangTimur.ReportCreditDue();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

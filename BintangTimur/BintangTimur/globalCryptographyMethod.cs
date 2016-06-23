@@ -8,7 +8,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Management;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     class globalCryptographyMethod
     {

@@ -14,7 +14,7 @@ using System.IO;
 using CrystalDecisions.ReportSource;
 using CrystalDecisions.CrystalReports.Engine;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class ReportUserForm : Form
     {

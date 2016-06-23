@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.IO;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     class Data_Access
     {

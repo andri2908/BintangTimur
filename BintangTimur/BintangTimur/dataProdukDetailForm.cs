@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 
 using System.Text.RegularExpressions;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class dataProdukDetailForm : Form
     {

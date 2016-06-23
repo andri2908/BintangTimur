@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class SetPrinterForm : Form
     {
@@ -55,6 +55,7 @@ namespace RoyalPetz_ADMIN
         private void SetPrinterForm_Load(object sender, EventArgs e)
         {
             sizeComboBox.SelectedIndex = gutil.getPaper();
+            PrinterlistBox.SelectedItem = PrinterlistBox.Items[0];
         }
 
         private void PrinterlistBox_SelectedValueChanged(object sender, EventArgs e)

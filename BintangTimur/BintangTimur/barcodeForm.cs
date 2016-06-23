@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class barcodeForm : Form
     {
@@ -20,6 +20,12 @@ namespace RoyalPetz_ADMIN
         Form parentForm;
         cashierForm originCashierForm;
         penerimaanBarangForm originPenerimaanForm;
+        purchaseOrderDetailForm originPOForm;
+        dataMutasiBarangDetailForm originMutasiForm;
+        permintaanProdukForm originRequestForm;
+        dataReturPenjualanForm originReturJualForm;
+        dataReturPermintaanForm originReturBeliForm;
+
         int originModuleID = 0;
 
         public barcodeForm(Form originForm, int moduleID)
@@ -45,6 +51,21 @@ namespace RoyalPetz_ADMIN
             return productName;
         }
 
+        private string getProductID(string barcodeValue)
+        {
+            string productID = "";
+
+            if (barcodeValue.Length > 0)
+                try
+                {
+                    productID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID, '') FROM MASTER_PRODUCT WHERE PRODUCT_BARCODE = '" + barcodeValue + "'").ToString();
+                }
+                catch (Exception e)
+                { }
+
+            return productID;
+        }
+
         private void barcodeTextBox_TextChanged(object sender, EventArgs e)
         {
         }
@@ -52,29 +73,57 @@ namespace RoyalPetz_ADMIN
         private void barcodeForm_Load(object sender, EventArgs e)
         {
             barcodeTextBox.Focus();
-            DS.mySqlConnect();
         }
 
         private void barcodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            string productID = "";
             if (e.KeyChar == 13)
             { 
                 productNameTextBox.Text = getProductName(barcodeTextBox.Text);
+                productID = getProductID(barcodeTextBox.Text);
 
                 if (productNameTextBox.Text.Length > 0)
                 {
-                    if (originModuleID == globalConstants.CASHIER_MODULE)
+                    switch(originModuleID)
                     {
-                        originCashierForm = (cashierForm)parentForm;
-                        originCashierForm.addNewRowFromBarcode(productNameTextBox.Text);
-                    }
-                    else if (originModuleID == globalConstants.PENERIMAAN_BARANG)
-                    {
-                        originPenerimaanForm = (penerimaanBarangForm)parentForm;
-                        originPenerimaanForm.addNewRowFromBarcode(productNameTextBox.Text);
+                        case globalConstants.CASHIER_MODULE:
+                            originCashierForm = (cashierForm)parentForm;
+                            originCashierForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.PENERIMAAN_BARANG:
+                            originPenerimaanForm = (penerimaanBarangForm)parentForm;
+                            originPenerimaanForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.NEW_PURCHASE_ORDER:
+                            originPOForm = (purchaseOrderDetailForm)parentForm;
+                            originPOForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.MUTASI_BARANG:
+                            originMutasiForm = (dataMutasiBarangDetailForm)parentForm;
+                            originMutasiForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.NEW_REQUEST_ORDER:
+                            originRequestForm = (permintaanProdukForm)parentForm;
+                            originRequestForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.RETUR_PENJUALAN:
+                            originReturJualForm = (dataReturPenjualanForm)parentForm;
+                            originReturJualForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
+                        case globalConstants.RETUR_PEMBELIAN:
+                            originReturBeliForm = (dataReturPermintaanForm)parentForm;
+                            originReturBeliForm.addNewRowFromBarcode(productID, productNameTextBox.Text);
+                            break;
+
                     }
                 }
-
                 barcodeTextBox.SelectAll();
             }
             else if (e.KeyChar == 27)

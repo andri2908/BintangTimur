@@ -12,7 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class dataPOForm : Form
     {
@@ -242,8 +242,11 @@ namespace RoyalPetz_ADMIN
                 }
                 else if (originModuleID == globalConstants.REPRINT_PURCHASE_ORDER)
                 {
-                    selectedPurchaseInvoice = selectedRow.Cells["NO PURCHASE"].Value.ToString();
-                    printOutPurchaseOrder(selectedPurchaseInvoice);
+                    if (DialogResult.Yes == MessageBox.Show("RE-PRINT PO ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    { 
+                        selectedPurchaseInvoice = selectedRow.Cells["NO PURCHASE"].Value.ToString();
+                        printOutPurchaseOrder(selectedPurchaseInvoice);
+                    }
                 }
 
                 loadPOData();

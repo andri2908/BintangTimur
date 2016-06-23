@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RoyalPetz_ADMIN {
+namespace BintangTimur {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace RoyalPetz_ADMIN {
         
         public override string FullResourceName {
             get {
-                return "RoyalPetz_ADMIN.SalesReceipt.rpt";
+                return "BintangTimur.SalesReceipt.rpt";
             }
             set {
                 // Do nothing

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class dataKategoriProdukDetailForm : Form
     {
@@ -184,12 +184,22 @@ namespace RoyalPetz_ADMIN
 
         private bool saveData()
         {
+            bool result = false;
             if (dataValidated())
             {
-                return saveDataTransaction();
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+                result = saveDataTransaction();
+
+                pleaseWait.Close();
+
+                return result;
             }
 
-            return false;
+            return result;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

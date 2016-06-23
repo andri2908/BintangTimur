@@ -13,7 +13,7 @@ using System.Threading;
 using Hotkeys;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class adminForm : Form
     {
@@ -29,6 +29,16 @@ namespace RoyalPetz_ADMIN
         private globalUtilities gutil = new globalUtilities();
         private bool newMessageFormExist = false;
         private Hotkeys.GlobalHotkey ghk_F1;
+        private Hotkeys.GlobalHotkey ghk_F2;
+        private Hotkeys.GlobalHotkey ghk_F3;
+        private Hotkeys.GlobalHotkey ghk_F4;
+        private Hotkeys.GlobalHotkey ghk_F5;
+        private Hotkeys.GlobalHotkey ghk_F6;
+        private Hotkeys.GlobalHotkey ghk_F7;
+        private Hotkeys.GlobalHotkey ghk_F8;
+        private Hotkeys.GlobalHotkey ghk_F9;
+
+        private Hotkeys.GlobalHotkey ghk_Ctrl_Enter;
 
         private class MyRenderer : ToolStripProfessionalRenderer
         {
@@ -81,11 +91,105 @@ namespace RoyalPetz_ADMIN
             switch (key)
             {
                 case Keys.F1:
-                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_MODULE_MESSAGING, gutil.getUserGroupID());
-                    if (!newMessageFormExist  && userAccessOptions == 1)
+                    if (0 != 
+                            (
+                            DS.getUserAccessRight(globalConstants.MENU_PRODUK, gutil.getUserGroupID()) * 
+                            DS.getUserAccessRight(globalConstants.MENU_PURCHASE_ORDER, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_PENJUALAN, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_PEMBAYARAN_PIUTANG, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_PEMBAYARAN_HUTANG_SUPPLIER, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_TRANSAKSI_HARIAN, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_RETUR_PEMBELIAN, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_RETUR_PENJUALAN, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_MODULE_MESSAGING, gutil.getUserGroupID())
+                            )
+                        )
                     { 
-                        messagingForm displayForm = new messagingForm();
-                        displayForm.ShowDialog(this);
+                        adminHelpForm displayHelp = new adminHelpForm();
+                        displayHelp.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F2:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_PRODUK, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataProdukForm displayedProdukForm = new dataProdukForm();
+                        displayedProdukForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F3:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_PURCHASE_ORDER, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataPOForm displayedPOForm = new dataPOForm();
+                        displayedPOForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F4:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_PENJUALAN, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        cashierForm displayedCashierForm = new cashierForm(1);
+                        displayedCashierForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F5:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_PEMBAYARAN_PIUTANG, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataInvoiceForm displayedInvoiceForm = new dataInvoiceForm(globalConstants.PEMBAYARAN_PIUTANG);
+                        displayedInvoiceForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F6:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_PEMBAYARAN_HUTANG_SUPPLIER, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataPOForm displayedPOSupplierForm = new dataPOForm(globalConstants.PEMBAYARAN_HUTANG);
+                        displayedPOSupplierForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F7:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_TRANSAKSI_HARIAN, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataTransaksiJurnalHarianDetailForm displayedDJForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ, selectedUserID);
+                        displayedDJForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F8:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_RETUR_PEMBELIAN, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataReturPermintaanForm displayedRetBeliForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
+                        displayedRetBeliForm.ShowDialog(this);
+                    }
+                    break;
+                case Keys.F9:
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_RETUR_PENJUALAN, gutil.getUserGroupID());
+                    if (userAccessOptions > 0)
+                    {
+                        dataInvoiceForm displayedRetJualForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
+                        displayedRetJualForm.ShowDialog(this);
+                    }
+                    break;
+            }
+        }
+
+        private void captureCtrlModifier(Keys key)
+        {
+            int userAccessOptions = 0;
+            switch (key)
+            {
+                case Keys.Enter: // CTRL + ENTER
+                    userAccessOptions = DS.getUserAccessRight(globalConstants.MENU_MODULE_MESSAGING, gutil.getUserGroupID());
+                    if (!newMessageFormExist && userAccessOptions == 1)
+                    {
+                        if (DialogResult.Yes == MessageBox.Show("DISPLAY MESSAGE ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            messagingForm displayForm = new messagingForm();
+                            displayForm.ShowDialog(this);
+                       }
                     }
                     break;
             }
@@ -102,8 +206,8 @@ namespace RoyalPetz_ADMIN
                     captureAll(key);
                 //else if (modifier == Constants.ALT)
                 //    captureAltModifier(key);
-                //else if (modifier == Constants.CTRL)
-                //    captureCtrlModifier(key);
+                else if (modifier == Constants.CTRL)
+                    captureCtrlModifier(key);
             }
 
             base.WndProc(ref m);
@@ -113,11 +217,40 @@ namespace RoyalPetz_ADMIN
         {
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
+            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            ghk_F2.Register();
+            ghk_F3 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F3, this);
+            ghk_F3.Register();
+            ghk_F4 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F4, this);
+            ghk_F4.Register();
+            ghk_F5 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F5, this);
+            ghk_F5.Register();
+            ghk_F6 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F6, this);
+            ghk_F6.Register();
+            ghk_F7 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F7, this);
+            ghk_F7.Register();
+            ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
+            ghk_F8.Register();
+            ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
+            ghk_F9.Register();
+
+            ghk_Ctrl_Enter = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
+            ghk_Ctrl_Enter.Register();
         }
 
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
+            ghk_F2.Unregister();
+            ghk_F3.Unregister();
+            ghk_F4.Unregister();
+            ghk_F5.Unregister();
+            ghk_F6.Unregister();
+            ghk_F7.Unregister();
+            ghk_F8.Unregister();
+            ghk_F9.Unregister();
+
+            ghk_Ctrl_Enter.Unregister();
         }
 
         public adminForm(int userID, int groupID)
@@ -376,40 +509,26 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem65_Click(object sender, EventArgs e)
         {
-            //dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.PERMINTAAN_BARANG);
             dataPermintaanForm displayedForm = new dataPermintaanForm(globalConstants.PERMINTAAN_BARANG);
             displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem63_Click(object sender, EventArgs e)
         {
-            //dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.CEK_DATA_MUTASI);
             dataPermintaanForm displayedForm = new dataPermintaanForm(globalConstants.CEK_DATA_MUTASI);
             displayedForm.ShowDialog(this);
-        }
-
-        private void toolStripMenuItem64_Click(object sender, EventArgs e)
-        {
-        //    importDataMutasiForm displayedForm = new importDataMutasiForm();
-        //    displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem67_Click(object sender, EventArgs e)
         {
             dataPOForm displayedForm = new dataPOForm(globalConstants.REPRINT_PURCHASE_ORDER);
             displayedForm.ShowDialog(this);
-            //            dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.REPRINT_PERMINTAAN_BARANG);
         }
 
         private void toolStripMenuItem52_Click(object sender, EventArgs e)
         {
             dataKategoriProdukForm displayedForm = new dataKategoriProdukForm(globalConstants.PENGATURAN_KATEGORI_PRODUK);
             displayedForm.ShowDialog(this);
-        }
-
-        private void toolStripMenuItem66_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
@@ -480,7 +599,9 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
         {
-            dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
+            //dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            //displayedForm.ShowDialog(this);
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
             displayedForm.ShowDialog(this);
         }
 
@@ -494,11 +615,6 @@ namespace RoyalPetz_ADMIN
         {
             dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
             displayedForm.ShowDialog(this);
-        }
-
-        private void toolStripMenuItem68_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void toolStripMenuItem70_Click(object sender, EventArgs e)
@@ -541,7 +657,6 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem24_Click(object sender, EventArgs e)
         {
-            //dataTransaksiJurnalHarianDetailForm displayedForm = new dataTransaksiJurnalHarianDetailForm();
             dataTransaksiJurnalHarianDetailForm displayedForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ,selectedUserID);
             displayedForm.ShowDialog(this);
         }
@@ -561,7 +676,6 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            //dataInvoiceForm displayedForm = new dataInvoiceForm();
             dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
             displayedForm.ShowDialog(this);
         }
@@ -580,9 +694,6 @@ namespace RoyalPetz_ADMIN
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //logoutForm displayedForm = new logoutForm();
-            //displayedForm.ShowDialog(this);
-
             this.Close();
         }
 
@@ -615,15 +726,7 @@ namespace RoyalPetz_ADMIN
         {
             dataMutasiBarangForm displayForm = new dataMutasiBarangForm(globalConstants.CEK_DATA_MUTASI);
             displayForm.ShowDialog(this); 
-            //dataMutasiBarangDetailForm displayForm = new dataMutasiBarangDetailForm(globalConstants.MUTASI_BARANG);
-            //displayForm.ShowDialog(this);
         }
-
-        //private void toolStripMenuItem11_Click_1(object sender, EventArgs e)
-        //{
-        //    dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.PENERIMAAN_BARANG);
-        //    displayedForm.ShowDialog(this);
-        //}
 
         private void developerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -636,12 +739,6 @@ namespace RoyalPetz_ADMIN
             dataPOForm displayedForm = new dataPOForm();
             displayedForm.ShowDialog(this);
         }
-
-        //private void toolStripMenuItem12_Click_1(object sender, EventArgs e)
-        //{
-        //    dataPOForm displayedForm = new dataPOForm(globalConstants.PENERIMAAN_BARANG_DARI_PO);
-        //    displayedForm.ShowDialog(this);
-        //}
 
         private void fileToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
@@ -725,14 +822,10 @@ namespace RoyalPetz_ADMIN
 
         private void toolStripMenuItem37_Click(object sender, EventArgs e)
         {
-            dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            //dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            //displayedForm.ShowDialog(this);
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
             displayedForm.ShowDialog(this);
-
-        }
-
-        private void toolStripMenuItem38_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void toolStripMenuItem39_Click(object sender, EventArgs e)
@@ -744,18 +837,6 @@ namespace RoyalPetz_ADMIN
         private void toolStripMenuItem40_Click(object sender, EventArgs e)
         {
             importDataCSVForm displayedForm = new importDataCSVForm();
-            displayedForm.ShowDialog(this);
-        }
-
-        private void toolStripMenuItem11_Click_2(object sender, EventArgs e)
-        {
-            dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.PENERIMAAN_BARANG);
-            displayedForm.ShowDialog(this);
-        }
-
-        private void toolStripMenuItem12_Click_2(object sender, EventArgs e)
-        {
-            dataPOForm displayedForm = new dataPOForm(globalConstants.PENERIMAAN_BARANG_DARI_PO);
             displayedForm.ShowDialog(this);
         }
 
@@ -910,11 +991,6 @@ namespace RoyalPetz_ADMIN
             displayedForm.ShowDialog(this);
         }
 
-        private void toolStripMenuItem30_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void generatorXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XMLGeneratorForm displayedform = new XMLGeneratorForm();
@@ -976,13 +1052,6 @@ namespace RoyalPetz_ADMIN
             displayedform.ShowDialog(this);
         }
 
-        private void laporanDaftarProdukDalamKategoriTertentuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ReportProductCategoryForm displayedform = new ReportProductCategoryForm();
-            displayedform.ShowDialog(this);
-
-        }
-
         private void pengaturanSistemAplikasiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetApplicationForm displayedForm = new SetApplicationForm();
@@ -1031,11 +1100,6 @@ namespace RoyalPetz_ADMIN
         {
             ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_DETAILED);
             displayedForm.ShowDialog(this);
-        }
-
-        private void pembelianBarangToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void perProdukBarangToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1153,37 +1217,43 @@ namespace RoyalPetz_ADMIN
                             "FROM MASTER_PRODUCT P, MASTER_UNIT U " +
                             "WHERE P.UNIT_ID = U.UNIT_ID AND P.PRODUCT_IS_SERVICE = 0 AND P.PRODUCT_ACTIVE = 1 AND P.PRODUCT_STOCK_QTY <= P.PRODUCT_LIMIT_STOCK";
             DS.writeXML(sqlCommandx, globalConstants.ProductStockLimitXML);
-            //ReportCreditUnpaidForm displayedForm = new ReportCreditUnpaidForm();
-            //displayedForm.ShowDialog(this);
+            ReportProductStockLimitForm displayedForm = new ReportProductStockLimitForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void deviasiAdjustmentStokToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_STOCK_DEVIATION);
             displayedForm.ShowDialog(this);
         }
 
         private void pembelianToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_PURCHASE_RETURN);
             displayedForm.ShowDialog(this);
         }
 
         private void penjualanToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_SALES_RETURN);
             displayedForm.ShowDialog(this);
         }
 
         private void permintaanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_REQUEST_RETURN);
             displayedForm.ShowDialog(this);
         }
 
         private void mutasiBarangToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm();
+            ReportStockInOutSearchForm displayedForm = new ReportStockInOutSearchForm(globalConstants.REPORT_PRODUCT_MUTATION);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void pembayaranHutangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportPaymentSearchForm displayedForm = new ReportPaymentSearchForm(globalConstants.REPORT_DEBT_PAYMENT);
             displayedForm.ShowDialog(this);
         }
 
@@ -1193,6 +1263,35 @@ namespace RoyalPetz_ADMIN
             displayedForm.ShowDialog(this);
         }
 
+        private void pembayaranPiutangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportPaymentSearchForm displayedForm = new ReportPaymentSearchForm(globalConstants.REPORT_CREDIT_PAYMENT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void pembayaranMutasiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportPaymentSearchForm displayedForm = new ReportPaymentSearchForm(globalConstants.REPORT_MUTATION_PAYMENT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void pengeluaranKasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_OUT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void pemasukanKasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_OUT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void labaRugiHarianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_MARGIN);
+            displayedForm.ShowDialog(this);
+        }
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
             ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_DETAILED, true);
@@ -1208,6 +1307,12 @@ namespace RoyalPetz_ADMIN
         private void toolStripMenuItem8_Click(object sender, EventArgs e)
         {
             ReportSalesSummarySearchForm displayedForm = new ReportSalesSummarySearchForm(globalConstants.REPORT_SALES_PRODUCT, true);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem9_Click_1(object sender, EventArgs e)
+        {
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PENJUALAN);
             displayedForm.ShowDialog(this);
         }
     }

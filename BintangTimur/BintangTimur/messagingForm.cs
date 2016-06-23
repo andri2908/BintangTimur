@@ -12,7 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class messagingForm : Form
     {
@@ -230,7 +230,7 @@ namespace RoyalPetz_ADMIN
 
         private void messagingForm_Load(object sender, EventArgs e)
         {
-            pleaseWaitForm pleaseWait = new pleaseWaitForm();
+            smallPleaseWait pleaseWait = new smallPleaseWait();
             pleaseWait.Show();
 
             //  ALlow main UI thread to properly display please wait form.
@@ -239,7 +239,6 @@ namespace RoyalPetz_ADMIN
             pullMessageData();
 
             pleaseWait.Close();
-
 
             loadMessageData();
         }

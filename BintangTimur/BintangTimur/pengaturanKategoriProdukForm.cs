@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class pengaturanKategoriProdukForm : Form
     {
@@ -81,7 +81,7 @@ namespace RoyalPetz_ADMIN
             string kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
 
 
-            //DS.mySqlConnect();
+            DS.mySqlConnect();
             sqlCommand = "SELECT M.PRODUCT_ID, M.PRODUCT_NAME, IFNULL(P.CATEGORY_ID, 0) AS CATEGORY_ID FROM MASTER_PRODUCT M LEFT OUTER JOIN PRODUCT_CATEGORY P ON (P.PRODUCT_ID = M.PRODUCT_ID AND P.CATEGORY_ID = " + selectedCategoryID + ") WHERE M.PRODUCT_NAME LIKE '%" + namaProductParam + "%' AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
@@ -234,12 +234,22 @@ namespace RoyalPetz_ADMIN
 
         private bool saveData()
         {
+            bool result = false;
             if (dataValidated())
             {
-                return saveDataTransaction();
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+                result = saveDataTransaction();
+
+                pleaseWait.Close();
+
+                return result;
             }
 
-            return false;
+            return result;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

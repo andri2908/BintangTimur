@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Drawing.Printing;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class pembayaranPiutangForm : Form
     {

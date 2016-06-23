@@ -12,7 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class dataPenerimaanBarangForm : Form
     {

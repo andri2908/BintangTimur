@@ -23,8 +23,8 @@
     </xs:element>
   </xs:schema>
   <Table>
-    <TYPE>0</TYPE>
-    <ORIGIN_INVOICE>AA</ORIGIN_INVOICE>
+    <TYPE>2</TYPE>
+    <ORIGIN_INVOICE>1</ORIGIN_INVOICE>
     <TGL>2016-06-07T00:00:00+07:00</TGL>
     <INVOICE>1</INVOICE>
     <PRODUK>SAPU LIDI</PRODUK>

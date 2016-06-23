@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Drawing;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
 	/// <summary>
 	/// Wrap the TabOrderManager class and supply extendee controls with a custom tab scheme.

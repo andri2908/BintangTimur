@@ -1,4 +1,4 @@
-﻿namespace RoyalPetz_ADMIN
+﻿namespace BintangTimur
 {
     partial class ReportTopSalesbyMarginForm
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.ReportTopSalesbyMargin1 = new RoyalPetz_ADMIN.ReportTopSalesbyMargin();
+            this.ReportTopSalesbyMargin1 = new BintangTimur.ReportTopSalesbyMargin();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

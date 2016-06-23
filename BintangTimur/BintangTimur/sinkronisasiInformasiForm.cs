@@ -14,7 +14,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class sinkronisasiInformasiForm : Form
     {
@@ -55,7 +55,7 @@ namespace RoyalPetz_ADMIN
             //System.Diagnostics.Process proc = new System.Diagnostics.Process();
             MySqlDataReader rdr;
             string sqlCommand = "";
-            string insertStatement;
+            string insertStatement = "";
             StreamWriter sw = null;
 
             // EXPORT MASTER PRODUCT DATA
@@ -90,7 +90,7 @@ namespace RoyalPetz_ADMIN
             //localDate = String.Format(culture, "{0:ddMMyyyy}", DateTime.Now);
             //fileName = "SYNCINFO_PRODUCT_" + localDate + ".sql";
 
-            sqlCommand = "SELECT PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, UNIT_ID, PRODUCT_IS_SERVICE FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_ID, IFNULL(PRODUCT_BARCODE, '') AS PRODUCT_BARCODE, IFNULL(PRODUCT_NAME, '') AS PRODUCT_NAME, IFNULL(PRODUCT_DESCRIPTION, '') AS PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, UNIT_ID, PRODUCT_IS_SERVICE FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             using (rdr = DAccess.getData(sqlCommand, isHQConnection))
             {
                 if (rdr.HasRows)
@@ -119,7 +119,7 @@ namespace RoyalPetz_ADMIN
             // EXPORT MASTER KATEGORI DATA
             sw.WriteLine("");
             sw.WriteLine("DELETE FROM MASTER_CATEGORY;");
-            sqlCommand = "SELECT CATEGORY_ID, CATEGORY_NAME, CATEGORY_DESCRIPTION FROM MASTER_CATEGORY WHERE CATEGORY_ACTIVE = 1";
+            sqlCommand = "SELECT CATEGORY_ID, CATEGORY_NAME, IFNULL(CATEGORY_DESCRIPTION, '') AS CATEGORY_DESCRIPTION FROM MASTER_CATEGORY WHERE CATEGORY_ACTIVE = 1";
             using (rdr = DAccess.getData(sqlCommand, isHQConnection))
             {
                 if (rdr.HasRows)
@@ -138,7 +138,7 @@ namespace RoyalPetz_ADMIN
             // EXPORT MASTER UNIT DATA
             sw.WriteLine("");
             sw.WriteLine("DELETE FROM MASTER_UNIT;");
-            sqlCommand = "SELECT UNIT_ID, UNIT_NAME, UNIT_DESCRIPTION FROM MASTER_UNIT WHERE UNIT_ACTIVE = 1";
+            sqlCommand = "SELECT UNIT_ID, UNIT_NAME, IFNULL(UNIT_DESCRIPTION, '') AS UNIT_DESCRIPTION FROM MASTER_UNIT WHERE UNIT_ACTIVE = 1";
             using (rdr = DAccess.getData(sqlCommand, isHQConnection))
             {
                 if (rdr.HasRows)
@@ -217,8 +217,16 @@ namespace RoyalPetz_ADMIN
             saveFileDialog1.DefaultExt = "sql";
             saveFileDialog1.Filter = "SQL File (.sql)|*.sql";
             saveFileDialog1.ShowDialog();
-           
+
+            smallPleaseWait pleaseWait = new smallPleaseWait();
+            pleaseWait.Show();
+
+            //  ALlow main UI thread to properly display please wait form.
+            Application.DoEvents();
             exportData(saveFileDialog1.FileName, DS);
+
+            pleaseWait.Close();
+
             gutil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "EXPORTED FILE NAME = " + saveFileDialog1.FileName);
             MessageBox.Show("DONE");
         }
@@ -443,7 +451,15 @@ namespace RoyalPetz_ADMIN
 
                 //restore database from file
                 gutil.saveSystemDebugLog(globalConstants.MENU_SINKRONISASI_INFORMASI, "SINKRONISASI INFORMASI, FILENAME [" + fileNameTextbox.Text + "]");
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+
                 syncInformation(fileNameTextbox.Text);
+
+                pleaseWait.Close();
+
                 gutil.saveUserChangeLog(globalConstants.MENU_SINKRONISASI_INFORMASI, globalConstants.CHANGE_LOG_UPDATE, "SINKRONISASI INFORMASI DENGAN SERVER VIA USB EXPORT");
                 
             }
@@ -494,10 +510,18 @@ namespace RoyalPetz_ADMIN
         private void importFromServerButton_Click(object sender, EventArgs e)
         {
             if (DialogResult.Yes == MessageBox.Show("PASTIKAN TIDAK ADA KONEKSI AKTIF KE DATABASE LOKAL, SEMUA USER DIPASTIKAN LOG OUT", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            {
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+
                 if (syncToCentralHQ())
                 { 
                     gutil.saveUserChangeLog(globalConstants.MENU_SINKRONISASI_INFORMASI, globalConstants.CHANGE_LOG_UPDATE, "SINKRONISASI INFORMASI DENGAN SERVER VIA ONLINE CONNECTION");
                 }
+                pleaseWait.Close();
+            }
         }
     }
 }

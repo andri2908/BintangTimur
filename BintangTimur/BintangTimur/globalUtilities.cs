@@ -14,7 +14,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     class globalUtilities
     {
@@ -551,6 +551,19 @@ namespace RoyalPetz_ADMIN
             string newPath = Application.StartupPath + "\\LOG_FILE\\logFile_" + dateTimeValue + ".log";
             if (File.Exists(oldPath))
                 File.Move(oldPath, newPath);
+        }
+
+        public bool isProductIDExist(string productID)
+        {
+            bool result = false;
+            int numRows = 0;
+
+            numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "' AND PRODUCT_ACTIVE = 1"));
+
+            if (numRows > 0)
+                result = true;
+
+            return result;
         }
 
         public bool checkLocalIPAddressFound(string ipToCheck)

@@ -12,7 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class dataMutasiBarangForm : Form
     {
@@ -392,7 +392,7 @@ namespace RoyalPetz_ADMIN
 
                         //}
                         //checkForRO = false;
-                        if (DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
                     }
 
@@ -401,7 +401,7 @@ namespace RoyalPetz_ADMIN
                     if (roInvoice.Length > 0)
                     {
                         sqlCommand = "UPDATE REQUEST_ORDER_HEADER SET RO_ACTIVE = 0 WHERE RO_INVOICE = '" + roInvoice + "'";
-                        if (DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
                     }
 
@@ -412,7 +412,6 @@ namespace RoyalPetz_ADMIN
                 else
                 {
                     file.Close();
-                    //MessageBox.Show("NOMOR MUTASI SUDAH ADA");
                     throw new Exception("NOMOR MUTASI SUDAH ADA");    
                 }
 

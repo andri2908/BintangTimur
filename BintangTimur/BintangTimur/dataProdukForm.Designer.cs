@@ -1,4 +1,4 @@
-﻿namespace RoyalPetz_ADMIN
+﻿namespace BintangTimur
 {
     partial class dataProdukForm
     {
@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataProdukGridView = new System.Windows.Forms.DataGridView();
             this.namaProdukTextBox = new System.Windows.Forms.TextBox();
             this.newButton = new System.Windows.Forms.Button();
@@ -44,15 +45,23 @@
             this.dataProdukGridView.AllowUserToAddRows = false;
             this.dataProdukGridView.AllowUserToDeleteRows = false;
             this.dataProdukGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataProdukGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataProdukGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataProdukGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataProdukGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataProdukGridView.Location = new System.Drawing.Point(0, 103);
             this.dataProdukGridView.MultiSelect = false;
             this.dataProdukGridView.Name = "dataProdukGridView";
@@ -68,16 +77,17 @@
             // 
             this.namaProdukTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.namaProdukTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.namaProdukTextBox.Location = new System.Drawing.Point(140, 29);
+            this.namaProdukTextBox.Location = new System.Drawing.Point(140, 46);
             this.namaProdukTextBox.Name = "namaProdukTextBox";
             this.namaProdukTextBox.Size = new System.Drawing.Size(260, 27);
             this.namaProdukTextBox.TabIndex = 6;
             this.namaProdukTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.namaProdukTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.namaProdukTextBox_KeyPress);
             // 
             // newButton
             // 
             this.newButton.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold);
-            this.newButton.Location = new System.Drawing.Point(419, 28);
+            this.newButton.Location = new System.Drawing.Point(418, 12);
             this.newButton.Name = "newButton";
             this.newButton.Size = new System.Drawing.Size(56, 27);
             this.newButton.TabIndex = 7;
@@ -90,7 +100,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(7, 32);
+            this.label1.Location = new System.Drawing.Point(7, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 18);
             this.label1.TabIndex = 5;
@@ -118,7 +128,6 @@
             this.label2.Size = new System.Drawing.Size(121, 18);
             this.label2.TabIndex = 36;
             this.label2.Text = "Kode Produk";
-            this.label2.Visible = false;
             // 
             // textBox1
             // 
@@ -128,8 +137,8 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(260, 27);
             this.textBox1.TabIndex = 37;
-            this.textBox1.Visible = false;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // dataProdukForm
             // 

@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 
 //using System.Text.RegularExpressions;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class konversiSatuanForm : Form
     {
@@ -210,12 +210,22 @@ namespace RoyalPetz_ADMIN
 
         private bool saveData()
         {
+            bool result = false;
             if (dataValidated())
             {
-                return saveDataTransaction();
+                smallPleaseWait pleaseWait = new smallPleaseWait();
+                pleaseWait.Show();
+
+                //  ALlow main UI thread to properly display please wait form.
+                Application.DoEvents();
+                result = saveDataTransaction();
+
+                pleaseWait.Close();
+
+                return result;
             }
 
-            return false;
+            return result;
         }
 
         private void newButton_Click(object sender, EventArgs e)

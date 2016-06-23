@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
     public partial class logoutForm : Form
     {

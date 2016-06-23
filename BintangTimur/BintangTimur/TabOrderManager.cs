@@ -14,7 +14,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-namespace RoyalPetz_ADMIN
+namespace BintangTimur
 {
 	/// <summary>
 	/// Dynamically determine and set a tab order for a container and children according to a given strategy.
