@@ -222,6 +222,12 @@
     <Compile Include="dataReturPermintaanPrintOutForm.Designer.cs">
       <DependentUpon>dataReturPermintaanPrintOutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="dataSalesInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataSalesInvoice.Designer.cs">
+      <DependentUpon>dataSalesInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="dataSatuanDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1049,6 +1055,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dataReturPermintaanPrintOutForm.resx">
       <DependentUpon>dataReturPermintaanPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataSalesInvoice.resx">
+      <DependentUpon>dataSalesInvoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataSatuanDetailForm.resx">
       <DependentUpon>dataSatuanDetailForm.cs</DependentUpon>

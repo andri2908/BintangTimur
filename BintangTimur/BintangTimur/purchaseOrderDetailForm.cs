@@ -152,8 +152,8 @@ namespace BintangTimur
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
@@ -176,7 +176,7 @@ namespace BintangTimur
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
+            //ghk_F2.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
@@ -192,9 +192,9 @@ namespace BintangTimur
 
             for (int i = 0; i < detailPODataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!gUtil.isProductNameExist(detailPODataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -220,7 +220,7 @@ namespace BintangTimur
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailPODataGridView.CurrentCell = detailPODataGridView.Rows[newRowIndex].Cells["productID"];
+            detailPODataGridView.CurrentCell = detailPODataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -275,7 +275,7 @@ namespace BintangTimur
             }
 
             DataGridViewRow selectedRow = detailPODataGridView.Rows[rowSelectedIndex];
-            updateSomeRowContents(selectedRow, rowSelectedIndex, productID);
+            updateSomeRowContents(selectedRow, rowSelectedIndex, productName);
 
             if (!found)
             {
@@ -383,13 +383,14 @@ namespace BintangTimur
             productIDTextBox.HeaderText = "KODE PRODUK";
             productIDTextBox.Name = "productID";
             productIDTextBox.Width = 200;
-            productIDTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
+            productIDTextBox.Visible = false;
+            //productIDTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailPODataGridView.Columns.Add(productIDTextBox);
 
             productNameTextBox.HeaderText = "NAMA PRODUK";
             productNameTextBox.Name = "productName";
             productNameTextBox.Width = 300;
-            productNameTextBox.ReadOnly = true;
+            productNameTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailPODataGridView.Columns.Add(productNameTextBox);
 
             basePriceColumn.HeaderText = "HARGA POKOK";
@@ -419,14 +420,14 @@ namespace BintangTimur
             string[] arr = null;
             List<string> arrList = new List<string>();
 
-            sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             rdr = DS.getData(sqlCommand);
 
             if (rdr.HasRows)
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -449,7 +450,7 @@ namespace BintangTimur
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
 
-            if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -510,11 +511,11 @@ namespace BintangTimur
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -522,7 +523,7 @@ namespace BintangTimur
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -562,7 +563,7 @@ namespace BintangTimur
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailPODataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailPODataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -784,14 +785,14 @@ namespace BintangTimur
 
             for (i = 0; i < detailPODataGridView.Rows.Count && dataExist; i++)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
-                    dataExist = gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString());
+                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailPODataGridView.Rows[i].Cells["productName"].Value.ToString());
                 else
                     dataExist = false;
             }
             if (!dataExist)
             {
-                errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
                 return false;
             }
 
@@ -1337,6 +1338,30 @@ namespace BintangTimur
         private void purchaseOrderDetailForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
+        }
+
+        private void detailPODataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
+
+            if (isLoading == true)
+                return;
+
+            if (cell.OwningColumn.Name == "productName")
+            {
+                if (null != cell.Value)
+                {
+                    if (cell.Value.ToString().Length > 0)
+                    {
+                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                    }
+                    else
+                    {
+                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                    }
+                }
+            }
         }
     }
 }

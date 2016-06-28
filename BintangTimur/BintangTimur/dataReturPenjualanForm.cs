@@ -170,8 +170,8 @@ namespace BintangTimur
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
@@ -194,7 +194,7 @@ namespace BintangTimur
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
+            //ghk_F2.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
@@ -210,9 +210,9 @@ namespace BintangTimur
 
             for (int i = 0; i < detailReturDataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailReturDataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -237,7 +237,7 @@ namespace BintangTimur
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailReturDataGridView.CurrentCell = detailReturDataGridView.Rows[newRowIndex].Cells["productID"];
+            detailReturDataGridView.CurrentCell = detailReturDataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -290,7 +290,7 @@ namespace BintangTimur
             }
 
             DataGridViewRow selectedRow = detailReturDataGridView.Rows[rowSelectedIndex];
-            updateSomeRowContents(selectedRow, rowSelectedIndex, productID);
+            updateSomeRowContents(selectedRow, rowSelectedIndex, productName);
 
             if (!found)
             {
@@ -332,13 +332,14 @@ namespace BintangTimur
             productIDColumn.HeaderText = "KODE PRODUK";
             productIDColumn.Name = "productID";
             productIDColumn.Width = 200;
+            productIDColumn.Visible = false;
             productIDColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailReturDataGridView.Columns.Add(productIDColumn);
 
             productNameColumn.HeaderText = "NAMA PRODUK";
             productNameColumn.Name = "productName";
             productNameColumn.Width = 300;
-            productNameColumn.ReadOnly = true;
+            productNameColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailReturDataGridView.Columns.Add(productNameColumn);
 
             retailPriceColumn.HeaderText = "SALES PRICE";
@@ -476,7 +477,7 @@ namespace BintangTimur
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -490,7 +491,7 @@ namespace BintangTimur
 
         private void detailReturDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -546,11 +547,11 @@ namespace BintangTimur
             double disc2 = 0;
             double discRP = 0;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -558,7 +559,7 @@ namespace BintangTimur
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -612,7 +613,7 @@ namespace BintangTimur
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -849,15 +850,15 @@ namespace BintangTimur
 
             for (i = 0; i < detailReturDataGridView.Rows.Count && dataExist; i++)
             {
-                if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
-                    dataExist = gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString());
+                if (null != detailReturDataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gutil.isProductNameExist(detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString());
                 else
                     dataExist = false;
             }
             if (!dataExist)
             {
                 i = i+1;
-                errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
                 return false;
             }
 
@@ -1789,7 +1790,7 @@ namespace BintangTimur
             var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productID")
+            if (cell.OwningColumn.Name == "productName")
             {
                 if (null != cell.Value)
                 {

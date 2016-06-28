@@ -141,8 +141,8 @@ namespace BintangTimur
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
@@ -165,7 +165,7 @@ namespace BintangTimur
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
+            //ghk_F2.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
@@ -962,20 +962,20 @@ namespace BintangTimur
 
             if (detailGridView.Rows.Count <= 0)
             {
-                errorLabel.Text = "TIDAK ADA PRODUCT YANG DITERIMA";
+                errorLabel.Text = "TIDAK ADA PRODUK YANG DITERIMA";
                 return false;
             }
 
             for (i = 0; i < detailGridView.Rows.Count && dataExist; i ++)
             {
-                if (null != detailGridView.Rows[i].Cells["productID"].Value)
-                    dataExist = gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString());
+                if (null != detailGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailGridView.Rows[i].Cells["productName"].Value.ToString());
                 else
                     dataExist = false;
             }
             if (!dataExist)
             {
-                errorLabel.Text = "PRODUCT ID PADA BARIS ["+ i +"] INVALID";
+                errorLabel.Text = "NAMA PRODUK PADA BARIS ["+ i +"] INVALID";
                 return false;
             }
 

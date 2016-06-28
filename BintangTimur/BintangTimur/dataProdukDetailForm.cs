@@ -445,17 +445,53 @@ namespace BintangTimur
             }
         }
 
+        private void createEntryForProductID(string productID)
+        {
+            MySqlDataReader rdr;
+            MySqlException internalEX = null;
+            string sqlCommand;
+
+            DS.beginTransaction();
+            try
+            { 
+                sqlCommand = "SELECT ID FROM MASTER_LOCATION";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        { 
+                            sqlCommand = "INSERT INTO PRODUCT_LOCATION (LOCATION_ID, PRODUCT_ID, PRODUCT_LOCATION_QTY) VALUES (" + rdr.GetInt32("ID") + ", '" + productID + "', 0)";
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw (internalEX);
+                        }
+                    }
+                }
+                rdr.Close();
+
+                DS.commit();
+            }
+            catch (Exception ex)
+            { }
+        }
+
         private void loadProductLocationData()
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
 
             string sqlCommand;
+            int numRecords = 0;
+
+            numRecords = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM PRODUCT_LOCATION WHERE PRODUCT_ID = '" + selectedProductID + "'"));
+            if (numRecords == 0)
+            {
+                createEntryForProductID(selectedProductID);
+            }
 
             if (originModuleID == globalConstants.NEW_PRODUK || originModuleID == globalConstants.STOK_PECAH_BARANG)
             {
                 sqlCommand = "SELECT ID, LOCATION_NAME , 0 AS 'JUMLAH' FROM MASTER_LOCATION";
-
             }
             else
             {
@@ -476,6 +512,7 @@ namespace BintangTimur
                         detailLokasiDataGridView.Rows.Add(rdr.GetString("ID"), rdr.GetString("LOCATION_NAME"), rdr.GetString("JUMLAH"));
                     }                    
                 }
+                rdr.Close();
             }
         }
 
@@ -921,8 +958,10 @@ namespace BintangTimur
                 
                 errorLabel.Text = "";
 
-                detailLokasiDataGridView.Rows[0].Cells["locationQty"].Value = 0;
-                detailLokasiDataGridView.Rows[1].Cells["locationQty"].Value = 0;
+                for (int i = 0;i<detailLokasiDataGridView.Rows.Count; i++)
+                {
+                    detailLokasiDataGridView.Rows[i].Cells["locationQty"].Value = 0;
+                }
 
                 originModuleID = globalConstants.NEW_PRODUK;
                 options = gUtil.INS;

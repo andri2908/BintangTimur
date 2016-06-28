@@ -154,8 +154,6 @@ namespace BintangTimur
             return productID;
         }
 
-
-
         public bool loadinfotoko(int opt, out string NamaToko, out string AlamatToko, out string TeleponToko, out string EmailToko)
         {
             MySqlDataReader rdr;
@@ -559,6 +557,19 @@ namespace BintangTimur
             int numRows = 0;
 
             numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "' AND PRODUCT_ACTIVE = 1"));
+
+            if (numRows > 0)
+                result = true;
+
+            return result;
+        }
+
+        public bool isProductNameExist(string productName)
+        {
+            bool result = false;
+            int numRows = 0;
+
+            numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + productName + "' AND PRODUCT_ACTIVE = 1"));
 
             if (numRows > 0)
                 result = true;

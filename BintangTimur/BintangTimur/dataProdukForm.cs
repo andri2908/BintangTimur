@@ -228,6 +228,7 @@ namespace BintangTimur
             string sqlCommand = "";
             string namaProductParam = "";
             string kodeProductParam = "";
+            int locationID = 0;
 
             DS.mySqlConnect();
 
@@ -235,6 +236,7 @@ namespace BintangTimur
             //    return;
             namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
             kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
+            locationID = gutil.loadlocationID(2);
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
             {
@@ -265,7 +267,7 @@ namespace BintangTimur
             {
                 sqlCommand = sqlCommand + " AND PRODUCT_IS_SERVICE = 0";
             }
-            
+
             using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -274,7 +276,8 @@ namespace BintangTimur
                     dataProdukGridView.DataSource = dt;
 
                     dataProdukGridView.Columns["ID"].Visible = false;
-                    dataProdukGridView.Columns["PRODUK ID"].Width = 200;
+                    //dataProdukGridView.Columns["PRODUK ID"].Width = 200;
+                    dataProdukGridView.Columns["PRODUK ID"].Visible = false;
                     dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
                     dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
                 }

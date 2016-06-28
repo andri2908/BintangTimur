@@ -140,8 +140,8 @@ namespace BintangTimur
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
@@ -164,7 +164,7 @@ namespace BintangTimur
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
+            //ghk_F2.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
@@ -180,9 +180,10 @@ namespace BintangTimur
 
             for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
+                //if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!gUtil.isProductIDExist(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!gUtil.isProductNameExist(detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -207,7 +208,7 @@ namespace BintangTimur
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[newRowIndex].Cells["productID"];
+            detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -285,25 +286,6 @@ namespace BintangTimur
 
             detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
         }
-        private string getBranchName(int branchID)
-        {
-            string result = "";
-
-            Data_Access tempDS = new Data_Access();
-            result = tempDS.getDataSingleValue("SELECT ifnull(BRANCH_NAME, '') FROM MASTER_BRANCH WHERE BRANCH_ID = " + branchID).ToString();
-            tempDS.mySqlClose();
-            
-            return result;
-        }
-
-        private string getProductName(int productID)
-        {
-            string result = "";
-
-            result = DS.getDataSingleValue("SELECT ifnull(PRODUCT_NAME, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = " + productID).ToString();
-
-            return result;
-        }
 
         private void loadDataHeaderRO()
         {
@@ -380,14 +362,15 @@ namespace BintangTimur
             string[] arr = null;
             List<string> arrList = new List<string>();
 
-            sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            //sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             rdr = DS.getData(sqlCommand);
 
             if (rdr.HasRows)
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -401,7 +384,7 @@ namespace BintangTimur
 
         private void detailRequestOrderDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if ((detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -445,11 +428,11 @@ namespace BintangTimur
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -457,7 +440,7 @@ namespace BintangTimur
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -496,7 +479,7 @@ namespace BintangTimur
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -791,13 +774,15 @@ namespace BintangTimur
             productIdColumn.HeaderText = "KODE PRODUK";
             productIdColumn.Name = "productID";
             productIdColumn.Width = 200;
-            productIdColumn.DefaultCellStyle.BackColor = Color.LightBlue;
+            productIdColumn.Visible = false;
+            //productIdColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailRequestOrderDataGridView.Columns.Add(productIdColumn);
 
             productNameColumn.HeaderText = "NAMA PRODUK";
             productNameColumn.Name = "productName";
             productNameColumn.Width = 300;
-            productNameColumn.ReadOnly = true;
+            //productNameColumn.ReadOnly = true;
+            productNameColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailRequestOrderDataGridView.Columns.Add(productNameColumn);
 
             stockQtyColumn.HeaderText = "QTY";
@@ -974,15 +959,15 @@ namespace BintangTimur
 
             for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && dataExist; i++)
             {
-                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
-                    dataExist = gUtil.isProductIDExist(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString());
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString());
                 else
                     dataExist = false;
             }
             if (!dataExist)
             {
                 i = i + 1;
-                errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
                 return false;
             }
 
@@ -1507,7 +1492,7 @@ namespace BintangTimur
             if (isLoading == true)
                 return;
 
-            if (cell.OwningColumn.Name == "productID")
+            if (cell.OwningColumn.Name == "productName")
             {
                 if (null != cell.Value)
                 {

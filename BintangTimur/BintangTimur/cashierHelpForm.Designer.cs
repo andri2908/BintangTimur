@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,25 +53,13 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "F1 : Tampilkan Layar Bantuan";
             // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(12, 46);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(321, 18);
-            this.label2.TabIndex = 37;
-            this.label2.Text = "F2 : Tampilkan Layar Input Barcode";
-            // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(12, 77);
+            this.label3.Location = new System.Drawing.Point(12, 49);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(286, 18);
             this.label3.TabIndex = 38;
@@ -84,7 +71,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(12, 108);
+            this.label4.Location = new System.Drawing.Point(12, 80);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(326, 18);
             this.label4.TabIndex = 39;
@@ -96,7 +83,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label5.Location = new System.Drawing.Point(13, 199);
+            this.label5.Location = new System.Drawing.Point(13, 171);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(245, 18);
             this.label5.TabIndex = 40;
@@ -108,7 +95,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label6.Location = new System.Drawing.Point(13, 231);
+            this.label6.Location = new System.Drawing.Point(13, 203);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(307, 18);
             this.label6.TabIndex = 41;
@@ -144,7 +131,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label9.Location = new System.Drawing.Point(13, 267);
+            this.label9.Location = new System.Drawing.Point(13, 259);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(316, 18);
             this.label9.TabIndex = 44;
@@ -168,7 +155,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label11.Location = new System.Drawing.Point(13, 168);
+            this.label11.Location = new System.Drawing.Point(13, 140);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(211, 18);
             this.label11.TabIndex = 47;
@@ -180,7 +167,7 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label12.Location = new System.Drawing.Point(13, 137);
+            this.label12.Location = new System.Drawing.Point(13, 109);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(254, 18);
             this.label12.TabIndex = 46;
@@ -202,7 +189,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.Name = "cashierHelpForm";
@@ -217,7 +203,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

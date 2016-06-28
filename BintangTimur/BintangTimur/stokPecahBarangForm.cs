@@ -189,9 +189,16 @@ namespace BintangTimur
         {
             double convertValue = 0;
             DS.mySqlConnect();
+            int numRows = 0;
 
             if (currentUnitID != newUnitID)
-                convertValue = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 0) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+            {
+                numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+                if (numRows > 0)
+                    convertValue = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 1) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+                else
+                    convertValue = 1;
+            }
             else
                 convertValue = 1;
 

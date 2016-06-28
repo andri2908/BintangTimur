@@ -103,11 +103,11 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.detailRequestOrderDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.detailRequestOrderDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.detailRequestOrderDataGridView.Location = new System.Drawing.Point(0, 308);
+            this.detailRequestOrderDataGridView.Location = new System.Drawing.Point(2, 308);
             this.detailRequestOrderDataGridView.MultiSelect = false;
             this.detailRequestOrderDataGridView.Name = "detailRequestOrderDataGridView";
             this.detailRequestOrderDataGridView.RowHeadersVisible = false;
-            this.detailRequestOrderDataGridView.Size = new System.Drawing.Size(894, 297);
+            this.detailRequestOrderDataGridView.Size = new System.Drawing.Size(892, 297);
             this.detailRequestOrderDataGridView.TabIndex = 39;
             this.detailRequestOrderDataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailRequestOrderDataGridView_CellValidated);
             // 
