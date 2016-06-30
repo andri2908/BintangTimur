@@ -593,5 +593,14 @@ namespace BintangTimur
 
             return false;
         }
+
+        public string getLatestRevisionNo(string salesInvoice)
+        {
+            string result = "0";
+
+            result = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(CONVERT(REV_NO, UNSIGNED INTEGER)), 0) FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "'")) + 1).ToString();
+
+            return result;
+        }
     }
 }

@@ -51,6 +51,7 @@ namespace BintangTimur
         public const int DUMMY_TRANSACTION_TAX = 120;
         public const int SALES_QUOTATION = 121;
         public const int EDIT_SALES_QUOTATION = 122;
+        public const int SALES_ORDER_REVISION = 123;
 
         public const int NEW_GROUP_USER = 201;
         public const int EDIT_GROUP_USER = 202;

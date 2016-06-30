@@ -72,13 +72,23 @@ namespace BintangTimur
 
             if (originModuleID == globalConstants.SALES_QUOTATION)
             {
-                sqlClause1  = "SELECT ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', SQ_TOTAL AS 'TOTAL', SQ_APPROVED AS STATUS " +
+                sqlClause1  = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', '')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
                                        "WHERE SQ.CUSTOMER_ID = MC.CUSTOMER_ID";
 
-                sqlClause2 = "SELECT ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', SQ_TOTAL AS 'TOTAL', SQ_APPROVED AS STATUS " +
+                sqlClause2 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', '')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
                                        "FROM SALES_QUOTATION_HEADER SQ " +
                                        "WHERE SQ.CUSTOMER_ID = 0";
+            }
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
+            {
+                sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID";
+
+                sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH " +
+                                       "WHERE SH.CUSTOMER_ID = 0";
             }
 
             if (!showAllCheckBox.Checked)
@@ -86,21 +96,35 @@ namespace BintangTimur
                 if (noInvoiceTextBox.Text.Length > 0)
                 {
                     noInvoiceParam = MySqlHelper.EscapeString(noInvoiceTextBox.Text);
-                    whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
+                    else if (originModuleID == globalConstants.CASHIER_MODULE)
+                        whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
                 }
 
                 dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
                 dateTo = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
-                whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
+
+                if (originModuleID == globalConstants.SALES_QUOTATION)
+                    whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
+                else if (originModuleID == globalConstants.CASHIER_MODULE)
+                    whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
-                    sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
+                    else if (originModuleID == globalConstants.CASHIER_MODULE)
+                        sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
                 {
                     sqlCommand = sqlClause1 + whereClause1 + " UNION " + sqlClause2 + whereClause1;
                 }
+            }
+            else
+            {
+                sqlCommand = sqlClause1 + " UNION " + sqlClause2;
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -110,8 +134,13 @@ namespace BintangTimur
                 {
                     dt.Load(rdr);
                     dataPenerimaanBarang.DataSource = dt;
-
                     dataPenerimaanBarang.Columns["ID"].Visible = false;
+
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
+
+                    if (originModuleID == globalConstants.CASHIER_MODULE)
+                        dataPenerimaanBarang.Columns["REV_NO"].Visible = false;
 
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;
@@ -156,7 +185,7 @@ namespace BintangTimur
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
-        private void displaySpecificForm(string noInvoice)
+        private void displaySpecificForm(string noInvoice, string revNo = "")
         {
             switch(originModuleID)
             {
@@ -164,8 +193,8 @@ namespace BintangTimur
                         cashierForm displayedForm = new cashierForm(globalConstants.EDIT_SALES_QUOTATION, noInvoice);
                         displayedForm.ShowDialog(this);
                     break;
-                default:
-                        cashierForm cashierFormDisplay= new cashierForm();
+                case globalConstants.SALES_ORDER_REVISION:
+                        cashierForm cashierFormDisplay= new cashierForm(noInvoice, revNo);
                         cashierFormDisplay.ShowDialog(this);
                     break;
             }
@@ -174,6 +203,8 @@ namespace BintangTimur
         private void dataPenerimaanBarang_DoubleClick(object sender, EventArgs e)
         {
             string noInvoice = "";
+            string revNo = "";
+            string status = "";
 
             if (dataPenerimaanBarang.Rows.Count <= 0)
                 return;
@@ -181,33 +212,54 @@ namespace BintangTimur
             int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
             DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
             noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
+            revNo = selectedRow.Cells["REV_NO"].Value.ToString();
 
-            displaySpecificForm(noInvoice);
+            if (originModuleID == globalConstants.SALES_QUOTATION)
+            {
+                status = selectedRow.Cells["SQ_APPROVED"].Value.ToString();
+
+                if (status == "0")
+                    displaySpecificForm(noInvoice);
+            }
+            else
+                displaySpecificForm(noInvoice, revNo);
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
         {
             string noInvoice = "";
+            string status = "";
+            string revNo = "";
+
             if (e.KeyCode == Keys.Enter)
             {
                 int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
+                revNo = selectedRow.Cells["REV_NO"].Value.ToString();
 
-                displaySpecificForm(noInvoice);
+                if (originModuleID == globalConstants.SALES_QUOTATION)
+                {
+                    status = selectedRow.Cells["SQ_APPROVED"].Value.ToString();
+
+                    if (status == "0")
+                        displaySpecificForm(noInvoice);
+                }
+                else
+                    displaySpecificForm(noInvoice, revNo);
             }
         }
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            if (originModuleID != 0)
+            if (originModuleID == globalConstants.SALES_QUOTATION)
             { 
                 cashierForm displayedForm = new cashierForm(originModuleID, true);
                 displayedForm.ShowDialog(this);
             }
-            else
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
             {
-                cashierForm cashierDisplayForm = new cashierForm();
+                cashierForm cashierDisplayForm = new cashierForm(1);
                 cashierDisplayForm.ShowDialog(this);
             }
         }
