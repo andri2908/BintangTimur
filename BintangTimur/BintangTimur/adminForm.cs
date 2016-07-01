@@ -1327,5 +1327,11 @@ namespace BintangTimur
             dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SALES_ORDER_REVISION);
             displayedForm.ShowDialog(this);
         }
+
+        private void MENU_SalesTarget_Click(object sender, EventArgs e)
+        {
+            dataSalesTargetForm displayedForm = new dataSalesTargetForm();
+            displayedForm.ShowDialog(this);
+        }
     }
 }

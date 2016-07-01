@@ -43,6 +43,8 @@
             this.errorLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.AppModeBox = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.locationIDTextBox = new System.Windows.Forms.MaskedTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.EmailTextbox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -61,19 +63,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.branchIDBox = new System.Windows.Forms.GroupBox();
             this.BranchIDTextbox = new System.Windows.Forms.MaskedTextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.locationIDTextBox = new System.Windows.Forms.MaskedTextBox();
             this.ConModeBox.SuspendLayout();
             this.ipServerBox.SuspendLayout();
             this.panel1.SuspendLayout();
             this.AppModeBox.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.HQIPBox.SuspendLayout();
             this.branchIDBox.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // ip1Textbox
@@ -271,6 +271,29 @@
             this.AppModeBox.TabStop = false;
             this.AppModeBox.Text = "Pengaturan Aplikasi";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.locationIDTextBox);
+            this.groupBox5.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(235, 86);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(200, 54);
+            this.groupBox5.TabIndex = 30;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Location ID";
+            // 
+            // locationIDTextBox
+            // 
+            this.locationIDTextBox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.locationIDTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationIDTextBox.Location = new System.Drawing.Point(6, 18);
+            this.locationIDTextBox.Mask = "000";
+            this.locationIDTextBox.Name = "locationIDTextBox";
+            this.locationIDTextBox.Size = new System.Drawing.Size(38, 27);
+            this.locationIDTextBox.TabIndex = 30;
+            this.locationIDTextBox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.locationIDTextBox.Enter += new System.EventHandler(this.locationID_Enter);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.EmailTextbox);
@@ -361,7 +384,7 @@
             this.HQIPBox.Controls.Add(this.label6);
             this.HQIPBox.Controls.Add(this.label7);
             this.HQIPBox.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HQIPBox.Location = new System.Drawing.Point(9, 30);
+            this.HQIPBox.Location = new System.Drawing.Point(9, 29);
             this.HQIPBox.Name = "HQIPBox";
             this.HQIPBox.Size = new System.Drawing.Size(200, 59);
             this.HQIPBox.TabIndex = 27;
@@ -469,29 +492,6 @@
             this.BranchIDTextbox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             this.BranchIDTextbox.Enter += new System.EventHandler(this.BranchIDTextbox_Enter);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.locationIDTextBox);
-            this.groupBox5.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(235, 86);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 54);
-            this.groupBox5.TabIndex = 30;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Location ID";
-            // 
-            // locationIDTextBox
-            // 
-            this.locationIDTextBox.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.locationIDTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationIDTextBox.Location = new System.Drawing.Point(6, 18);
-            this.locationIDTextBox.Mask = "000";
-            this.locationIDTextBox.Name = "locationIDTextBox";
-            this.locationIDTextBox.Size = new System.Drawing.Size(38, 27);
-            this.locationIDTextBox.TabIndex = 30;
-            this.locationIDTextBox.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            this.locationIDTextBox.Enter += new System.EventHandler(this.locationID_Enter);
-            // 
             // SetApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -516,6 +516,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.AppModeBox.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -528,8 +530,6 @@
             this.HQIPBox.PerformLayout();
             this.branchIDBox.ResumeLayout(false);
             this.branchIDBox.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }

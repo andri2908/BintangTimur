@@ -905,9 +905,9 @@ namespace BintangTimur
                     //pass thru to receipt generator
                     selectedsalesinvoice = salesInvoice;
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED) " +
+                    sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED, SALESPERSON_ID) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0)";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + gutil.getUserID() + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES QUOTATION HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1934,6 +1934,7 @@ namespace BintangTimur
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid");
                 approvalButton.Visible = false;
             }
+
             addColumnToDataGrid();
 
             if (selectedsalesinvoice != "")
@@ -2806,6 +2807,7 @@ namespace BintangTimur
             string sqInvoice = "";
             string sqlCommand = "";
             MySqlException internalEX = null;
+            string SQApprovedDate = "";
 
             // STORE SALES QUOTATION INVOICE NO
             sqInvoice = selectedsalesinvoice;
@@ -2816,6 +2818,8 @@ namespace BintangTimur
                 bayarTextBox.Text = globalTotalValue.ToString();
             }
             
+            SQApprovedDate = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+
             originModuleID = 0;
             saveAndPrintOutInvoice();
 
@@ -2836,7 +2840,7 @@ namespace BintangTimur
                     throw internalEX;
 
                 // UPDATE SALES QUOTATION TABLE
-                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1 WHERE SQ_INVOICE = '" + sqInvoice + "'";
+                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -2850,60 +2854,6 @@ namespace BintangTimur
             {
                 DS.mySqlClose();
             }
-
-
-            //if (cashRadioButton.Checked)
-            //{
-            //    salesTop = 1;
-            //    salesPaid = 1;
-            //    SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now); ;
-            //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CASH SALES");
-            //    //paymentMethod = paymentComboBox.SelectedIndex;
-            //}
-            //else
-            //{
-            //    salesTop = 0;
-            //    salesPaid = 0;
-            //    SODueDateTimeValue = DateTime.Now;
-            //    SODueDateTimeValue.AddDays(Convert.ToInt32(tempoMaskedTextBox.Text));
-            //    SODueDateTimeValue = SODueDateTimeValue.AddDays(Convert.ToInt32(tempoMaskedTextBox.Text));
-            //    SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", SODueDateTimeValue);
-            //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : NON CASH - SALES DUE DATE [" + SODueDateTime + "]");
-            //}
-
-
-            //DS.beginTransaction();
-
-            //try
-            //{
-            //    SODateTime = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
-
-
-            //    // SAVE THE DATA TO SALES TABLE
-            //    salesInvoice = getSalesInvoiceID();
-            //    //pass thru to receipt generator
-            //    newSO_invoice = salesInvoice;
-            //    // SAVE HEADER TABLE
-            //    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
-            //                        "VALUES " +
-            //                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + 
-            //                        gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + 
-            //                        salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + 
-            //                        gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '"++"')";
-
-            //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
-            //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-            //        throw internalEX;
-
-            //    // UPDATE FLAG ON SALES QUOTATION TABLE
-
-
-            //    DS.commit();
-            //}
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
 
         private void approvalButton_Click(object sender, EventArgs e)
