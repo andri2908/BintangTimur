@@ -277,6 +277,18 @@
       <DependentUpon>dataUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DATA_ACCESS.cs" />
+    <Compile Include="deliveryOrderPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>deliveryOrderPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="deliveryOrderPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="deliveryOrderPrintOutForm.Designer.cs">
+      <DependentUpon>deliveryOrderPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="exportStockOpnameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1088,6 +1100,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dataUserForm.resx">
       <DependentUpon>dataUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="deliveryOrderPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>deliveryOrderPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="deliveryOrderPrintOutForm.resx">
+      <DependentUpon>deliveryOrderPrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="exportStockOpnameForm.resx">
       <DependentUpon>exportStockOpnameForm.cs</DependentUpon>

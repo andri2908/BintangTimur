@@ -84,11 +84,21 @@ namespace BintangTimur
             {
                 sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
-                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID";
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
 
                 sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH " +
-                                       "WHERE SH.CUSTOMER_ID = 0";
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+            }
+            else if (originModuleID == globalConstants.DELIVERY_ORDER)
+            {
+                sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+
+                sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH " +
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
             }
 
             if (!showAllCheckBox.Checked)
@@ -98,7 +108,7 @@ namespace BintangTimur
                     noInvoiceParam = MySqlHelper.EscapeString(noInvoiceTextBox.Text);
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
-                    else if (originModuleID == globalConstants.CASHIER_MODULE)
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                         whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
                 }
 
@@ -107,14 +117,14 @@ namespace BintangTimur
 
                 if (originModuleID == globalConstants.SALES_QUOTATION)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
-                else if (originModuleID == globalConstants.CASHIER_MODULE)
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
-                    else if (originModuleID == globalConstants.CASHIER_MODULE)
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
@@ -139,7 +149,7 @@ namespace BintangTimur
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
 
-                    if (originModuleID == globalConstants.CASHIER_MODULE)
+                    if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                         dataPenerimaanBarang.Columns["REV_NO"].Visible = false;
 
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
@@ -168,6 +178,9 @@ namespace BintangTimur
             else
                 newButton.Visible = false;
 
+            if (originModuleID == globalConstants.DELIVERY_ORDER)
+                newButton.Visible = false;
+
             arrButton[0] = displayButton;
             arrButton[1] = newButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
@@ -185,6 +198,21 @@ namespace BintangTimur
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
+        private void printOutDeliveryOrder(string SONo, string revNo)
+        {
+            //string sqlCommandx = "SELECT PH.PURCHASE_DATETIME AS 'TGL', PH.PURCHASE_DATE_RECEIVED AS 'TERIMA', PH.PURCHASE_INVOICE AS 'INVOICE', MS.SUPPLIER_FULL_NAME AS 'SUPPLIER', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_PRICE AS 'HARGA', PD.PRODUCT_QTY AS 'QTY', PD.PURCHASE_SUBTOTAL AS 'SUBTOTAL' " +
+            //                            "FROM PURCHASE_HEADER PH, PURCHASE_DETAIL PD, MASTER_SUPPLIER MS, MASTER_PRODUCT MP " +
+            //                            "WHERE PH.PURCHASE_INVOICE = '" + PONo + "' AND PH.SUPPLIER_ID = MS.SUPPLIER_ID AND PD.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
+
+            string sqlCommandx = "SELECT SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
+                                        "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
+                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
+
+            DS.writeXML(sqlCommandx, globalConstants.deliveryOrderXML);
+            deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
+            displayForm.ShowDialog(this);
+        }
+
         private void displaySpecificForm(string noInvoice, string revNo = "")
         {
             switch(originModuleID)
@@ -197,6 +225,10 @@ namespace BintangTimur
                         cashierForm cashierFormDisplay= new cashierForm(noInvoice, revNo);
                         cashierFormDisplay.ShowDialog(this);
                     break;
+                case globalConstants.DELIVERY_ORDER:
+                    printOutDeliveryOrder(noInvoice, revNo);
+                    break;
+
             }
         }
 
@@ -212,7 +244,6 @@ namespace BintangTimur
             int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
             DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
             noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
-            revNo = selectedRow.Cells["REV_NO"].Value.ToString();
 
             if (originModuleID == globalConstants.SALES_QUOTATION)
             {
@@ -221,8 +252,11 @@ namespace BintangTimur
                 if (status == "0")
                     displaySpecificForm(noInvoice);
             }
-            else
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+            {
+                revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                 displaySpecificForm(noInvoice, revNo);
+            }
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
@@ -236,7 +270,6 @@ namespace BintangTimur
                 int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
-                revNo = selectedRow.Cells["REV_NO"].Value.ToString();
 
                 if (originModuleID == globalConstants.SALES_QUOTATION)
                 {
@@ -245,8 +278,11 @@ namespace BintangTimur
                     if (status == "0")
                         displaySpecificForm(noInvoice);
                 }
-                else
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                {
+                    revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                     displaySpecificForm(noInvoice, revNo);
+                }
             }
         }
 

@@ -22,6 +22,7 @@ namespace BintangTimur
         private string selectedsalesinvoice = "";
         private string selectedsalesinvoiceTax = "";
         private string selectedsalesinvoiceRevNo = "";
+        private string selectedSQInvoice = "";
         public static int objCounter = 1;
         private DateTime localDate = DateTime.Now;
         private double globalTotalValue = 0;
@@ -712,8 +713,32 @@ namespace BintangTimur
             }
 
             if (selectedPelangganID == 0)
+            { 
                 if (DialogResult.No == MessageBox.Show("PELANGGAN KOSONG, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     return false;
+            }
+            else if (creditRadioButton.Checked == true)
+            {
+                // CALCULATE TOTAL UNPAID TRANSACTION
+                double totalUnpaidTransaction = 0;
+                totalUnpaidTransaction = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(SALES_TOTAL), 0) FROM SALES_HEADER WHERE CUSTOMER_ID = "+selectedPelangganID + " AND SALES_PAID = 0 AND SALES_VOID = 0"));
+
+                // CALCULATE TOTAL PAYMENT FOR UNPAID TRANSACTION
+                double totalPaymentTransaction = 0;
+                totalPaymentTransaction = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_CREDIT PC, CREDIT C, SALES_HEADER SH WHERE SH.CUSTOMER_ID = " + selectedPelangganID + " AND SH.SALES_PAID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_INVOICE = C.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID"));
+
+                // CALCULATE TOTAL CREDIT AT PRESENT
+                double totalOutstandingCredit = 0;
+                double maxCredit = 0;
+                totalOutstandingCredit = totalUnpaidTransaction - totalPaymentTransaction;
+                maxCredit = Convert.ToDouble(DS.getDataSingleValue("SELECT MAX_CREDIT FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
+
+                if (maxCredit <= totalOutstandingCredit)
+                {
+                    if (DialogResult.No == MessageBox.Show("PLAFON HUTANG TERCAPAI, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return false;
+                }
+            }
 
             if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION)
             { 
@@ -781,6 +806,15 @@ namespace BintangTimur
             int taxLimitType = 0; // 0 - percentage, 1 - amount
             string salesDateValue = "";
             bool addToTaxTable = false;
+
+            int salesPersonID = 0;
+            double commissionPercentage = 0;
+            double commissionValue = 0;
+            string currentYear = "0";
+            int numericCurrentYear = 0;
+            string currentMonth = "0";
+            int numericCurrentMonth = 0;
+            int numRows = 0;
 
             SODateTime = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
 
@@ -889,15 +923,48 @@ namespace BintangTimur
                 {
                     salesInvoice = selectedsalesinvoice;
                     salesRevNo = gutil.getLatestRevisionNo(salesInvoice);
+                    int prevRevNo = Convert.ToInt32(salesRevNo) - 1;
+
+                    // VOID LAST REVISION NO
+                    sqlCommand = "UPDATE SALES_HEADER SET SALES_VOID = 1, SALES_ACTIVE = 0 WHERE SALES_INVOICE = '"+salesInvoice+"' AND REV_NO = " + prevRevNo;
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE PREVIOUS REV_NO TO VOID [" + salesInvoice + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
 
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD) " +
+                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ")";
+                                        "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "')";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
+
+                    if (salesPaid == 1)
+                    {
+                        // CALCULATE COMMISSION FOR SALESPERSON
+                        salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+
+                        currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
+                        numericCurrentYear = Convert.ToInt32(currentYear);
+                        currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
+                        numericCurrentMonth = Convert.ToInt32(currentMonth);
+
+                        numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+                        if (numRows > 0)
+                            commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+                        else
+                            commissionPercentage = 0;
+
+                        commissionValue = Math.Round(((globalTotalValue - Convert.ToDouble(salesDiscountFinal)) * commissionPercentage) / 100, 2);
+
+                        sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                                                "(" + salesPersonID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + salesInvoice + ")";
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + salesInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
                 }
                 else if (originModuleID == globalConstants.SALES_QUOTATION)
                 {
@@ -1013,13 +1080,14 @@ namespace BintangTimur
 
                         if (originModuleID == 0)  // NORMAL TRANSACTION
                         { 
-                            // REDUCE STOCK QTY AT MASTER PRODUCT
-                            sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
-                                                " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
+                            // REDUCE STOCK QTY MUST BE DONE WHEN DO HAS BEEN PRINTED
+                            //// REDUCE STOCK QTY AT MASTER PRODUCT
+                            //sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value) +
+                            //                    " WHERE PRODUCT_ID = '" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
 
-                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "REDUCE STOCK AT MASTER PRODUCT [" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                            //gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "REDUCE STOCK AT MASTER PRODUCT [" + cashierDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
+                            //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            //    throw internalEX;
                         
                             // SAVE OR UPDATE TO CUSTOMER_PRODUCT_DISC
                             if (selectedPelangganID != 0)
@@ -1045,16 +1113,31 @@ namespace BintangTimur
                     }
                 }
 
-                if (originModuleID == 0)  // NORMAL TRANSACTION
-                { 
-                    // SAVE TO CREDIT TABLE
-                    sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
-                                        "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + salesPaid + ")";
+                if (originModuleID == 0 || originModuleID == globalConstants.SALES_ORDER_REVISION)  // NORMAL TRANSACTION
+                {
+                    // CHECK WHETHER AN ENTRY FOR CREDIT HAS BEEN CREATED OR NOT
+                    numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM CREDIT WHERE SALES_INVOICE = '" + salesInvoice + "'"));
 
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
+                    if (numRows > 0)
+                    {
+                        // UPDATE CREDIT TABLE TO REFLECT REVISION
+                        sqlCommand = "UPDATE CREDIT SET CREDIT_DUE_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + "CREDIT_NOMINAL = " + gutil.validateDecimalNumericInput(globalTotalValue) +
+                                               ", CREDIT_PAID = " + salesPaid + " WHERE SALES_INVOICE = '" + salesInvoice + "'";
 
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
+                    else
+                    { 
+                        // SAVE TO CREDIT TABLE
+                        sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
+                                            "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + salesPaid + ")";
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
 
                     if (selectedPaymentMethod == 0)
                     {
@@ -1454,7 +1537,7 @@ namespace BintangTimur
             int numRow = 0;
             string selectedProductID = "";
             string selectedProductName = "";
-
+            string selectedProductImg = "";
             double hpp = 0;
             double subTotal = 0;
             MySqlDataReader rdr;
@@ -1487,6 +1570,20 @@ namespace BintangTimur
 
                 if (!changed)
                     return;
+
+                selectedProductImg = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_PHOTO_1, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + selectedProductID + "'").ToString();
+
+                if (selectedProductImg.Length > 0)
+                {
+                    string imagePath = Application.StartupPath + "\\PRODUCT_PHOTO\\" + selectedProductImg;
+                    Size imageSize = new Size(50, 50);
+                    Bitmap productImage = new Bitmap(imagePath);
+                    Bitmap resizedImage = new Bitmap(productImage, imageSize);
+                    //productImage.
+
+                    DataGridViewImageCell cell = (DataGridViewImageCell) selectedRow.Cells["productImage"];
+                    cell.Value = resizedImage;
+                }
 
                 hpp = getProductPriceValue(selectedProductID, customerComboBox.SelectedIndex, true);
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [" + hpp + "]");
@@ -1772,7 +1869,7 @@ namespace BintangTimur
                         while (rdr.Read())
                         {
                             pelangganTextBox.Text = rdr.GetString("NAMA");
-                            noFakturLabel.Text = selectedsalesinvoice + " / REV : " + selectedsalesinvoiceRevNo;
+                            noFakturLabel.Text = noFakturLabel.Text + " " + rdr.GetString("NO_INVOICE");
 
                             customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
                             customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
@@ -1820,7 +1917,7 @@ namespace BintangTimur
                     break;
                 case globalConstants.SALES_ORDER_REVISION:
                     // PULL HEADER DATA
-                    sqlCommand = "SELECT SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
+                    sqlCommand = "SELECT SH.SQ_INVOICE, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
                                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "' AND SH.REV_NO = " + selectedsalesinvoiceRevNo;
                     rdr = DS.getData(sqlCommand);
                     if (rdr.HasRows)
@@ -1828,7 +1925,7 @@ namespace BintangTimur
                         while (rdr.Read())
                         {
                             pelangganTextBox.Text = rdr.GetString("NAMA");
-                            noFakturLabel.Text = noFakturLabel.Text + " " + rdr.GetString("NO_INVOICE");
+                            noFakturLabel.Text = selectedsalesinvoice + " / REV : " + selectedsalesinvoiceRevNo;
 
                             customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
                             customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
@@ -1840,6 +1937,8 @@ namespace BintangTimur
                             discJualMaskedTextBox.Text = discValue.ToString();
                             totalLabel.Text = (globalTotalValue - discValue).ToString("C2", culture);
                             TOPValue = rdr.GetInt32("TOP");
+                            selectedSQInvoice = rdr.GetString("SQ_INVOICE");
+
                             if (TOPValue == 1)
                                 cashRadioButton.Checked = true;
                             else
@@ -1992,12 +2091,22 @@ namespace BintangTimur
             DataGridViewTextBoxColumn discRPColumn = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn subTotalColumn = new DataGridViewTextBoxColumn();
 
+            DataGridViewImageColumn productImageColumn = new DataGridViewImageColumn();
+
             // F8 COLUMN
             F8Column.HeaderText = "F8";
             F8Column.Name = "F8";
             F8Column.Width = 44;
             F8Column.ReadOnly = true;
             cashierDataGridView.Columns.Add(F8Column);
+
+            // IMAGE COLUMN
+            productImageColumn.HeaderText = "GAMBAR";
+            productImageColumn.Name = "productImage";
+            productImageColumn.Width = 100;
+            productImageColumn.ReadOnly = true;
+            //productImageColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            cashierDataGridView.Columns.Add(productImageColumn);
 
             productIdColumn.HeaderText = "KODE PRODUK";
             productIdColumn.Name = "productID";
@@ -2808,6 +2917,17 @@ namespace BintangTimur
             string sqlCommand = "";
             MySqlException internalEX = null;
             string SQApprovedDate = "";
+            int salesPaid = 0;
+            int salesPersonID = 0;
+            string currentYear = "0";
+            string currentMonth = "0";
+            int numericCurrentYear = 0;
+            int numericCurrentMonth = 0;
+            int numRows = 0;
+            double commissionPercentage = 0;
+            double commissionValue = 0;
+            double salesDiscountFinal = 0;
+           
 
             // STORE SALES QUOTATION INVOICE NO
             sqInvoice = selectedsalesinvoice;
@@ -2833,6 +2953,34 @@ namespace BintangTimur
                 sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
+
+                salesPaid = Convert.ToInt32(DS.getDataSingleValue("SELECT SALES_PAID FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'"));
+                if (salesPaid == 1)
+                {
+                    // CALCULATE COMMISSION FOR SALESPERSON
+                    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+                    salesDiscountFinal = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_DISCOUNT_FINAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'"));
+
+                    currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
+                    numericCurrentYear = Convert.ToInt32(currentYear);
+                    currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
+                    numericCurrentMonth = Convert.ToInt32(currentMonth);
+
+                    numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+                    if (numRows > 0)
+                        commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+                    else
+                        commissionPercentage = 0;
+
+                    commissionValue = Math.Round(((globalTotalValue - salesDiscountFinal) * commissionPercentage) / 100, 2);
+
+                    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                                            "(" + salesPersonID + ", STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", '" + selectedsalesinvoice + "')";
+
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + selectedsalesinvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
 
                 // UPDATE SALES HEADER TAX TABLE
                 sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";

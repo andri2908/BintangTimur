@@ -227,7 +227,11 @@ namespace BintangTimur
 
             string paymentDescription = "";
             int paymentConfirmed = 0;
-            
+
+            int salesPersonID = 0;
+            string selectedSQInvoice = "";
+            double commissionValue = 0;
+
             MySqlException internalEX = null;
 
             selectedPaymentDate = paymentDateTimePicker.Value;
@@ -305,6 +309,25 @@ namespace BintangTimur
                     gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "UPDATE SALES HEADER TAX SET TO FULLY PAID [" + selectedSOInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
+
+                    // INSERT TO SALES COMMISSION DETAIL
+
+                    // CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
+                    selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '"+ selectedSOInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
+
+                    if (selectedSQInvoice.Length>0)
+                    { 
+                        // CALCULATE COMMISSION FOR SALESPERSON
+                        salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+                        commissionValue = gutil.getSalesCommission(selectedSOInvoice, selectedSQInvoice);
+
+                        sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                                                "(" + salesPersonID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + selectedSOInvoice + ")";
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + selectedSOInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+                    }
                 }
 
                 if (paymentMethod == 1)

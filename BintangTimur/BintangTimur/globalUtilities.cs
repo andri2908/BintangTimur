@@ -602,5 +602,42 @@ namespace BintangTimur
 
             return result;
         }
+
+        public double getSalesCommission(string salesInvoice, string sqInvoice)
+        {
+            double commissionValue = 0;
+            string currentYear = "";
+            string currentMonth = "";
+            int numericCurrentYear = 0;
+            int numericCurrentMonth = 0;
+            double commissionPercentage = 0;
+            double salesDiscountFinal = 0;
+            int numRows = 0;
+            double salesTotalAmount = 0;
+            double totalReturAmount = 0;
+
+            // CALCULATE COMMISSION FOR SALESPERSON
+            salesTotalAmount = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_TOTAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1"));
+            salesDiscountFinal = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_DISCOUNT_FINAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1"));
+            totalReturAmount = Convert.ToDouble(DS.getDataSingleValue("SELECT SUM(RS_TOTAL) FROM RETURN_SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "'"));
+
+            currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
+            numericCurrentYear = Convert.ToInt32(currentYear);
+            currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
+            numericCurrentMonth = Convert.ToInt32(currentMonth);
+
+            numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+            if (numRows > 0)
+            { 
+                commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+
+                salesTotalAmount = salesTotalAmount - salesDiscountFinal - totalReturAmount;
+
+                if (salesTotalAmount > 0)
+                    commissionValue = Math.Round((salesTotalAmount * commissionPercentage) / 100, 2);
+            }
+
+            return commissionValue;
+        }
     }
 }

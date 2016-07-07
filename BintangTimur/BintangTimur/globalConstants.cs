@@ -52,6 +52,7 @@ namespace BintangTimur
         public const int SALES_QUOTATION = 121;
         public const int EDIT_SALES_QUOTATION = 122;
         public const int SALES_ORDER_REVISION = 123;
+        public const int DELIVERY_ORDER = 124;
 
         public const int NEW_GROUP_USER = 201;
         public const int EDIT_GROUP_USER = 202;
@@ -248,6 +249,7 @@ namespace BintangTimur
         public const string purchaseOrderXML = "PurchaseOrder.xml";
         public const string penerimaanBarangXML = "ProductsReceived.xml";
         public const string returPermintaanXML = "ReturPermintaan.xml";
+        public const string deliveryOrderXML = "DeliveryOrder.xml";
 
     }
 }

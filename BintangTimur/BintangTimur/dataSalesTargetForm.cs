@@ -20,6 +20,8 @@ namespace BintangTimur
         int numericCurrentYear = 0;
         string currentMonth = "";
         int numericMonth = 0;
+        private string previousInput = "";
+        private bool isLoading = false;
 
         private Data_Access DS = new Data_Access();
 
@@ -67,13 +69,32 @@ namespace BintangTimur
             {
                 sqlCommand = "SELECT IFNULL(TARGET_AMOUNT, 0) FROM MASTER_SALES_TARGET WHERE TARGET_YEAR = " + currentYear + " AND TARGET_MONTH = " + currentMonth;
                 targetPenjualanTextBox.Text = DS.getDataSingleValue(sqlCommand).ToString();
+
+                sqlCommand = "SELECT IFNULL(SALES_COMMISSION, 0) FROM MASTER_SALES_TARGET WHERE TARGET_YEAR = " + currentYear + " AND TARGET_MONTH = " + currentMonth;
+                commissionValue.Text = DS.getDataSingleValue(sqlCommand).ToString();
             }
             else
+            { 
                 targetPenjualanTextBox.Text = "0";
+                commissionValue.Text = "1";
+            }
         }
 
         private bool dataValidated()
         {
+            if (commissionValue.Text.Length <= 0)
+            {
+                errorLabel.Text = "NILAI KOMISI TIDAK BOLEH KOSONG";
+                return false;
+            }
+
+            if (targetPenjualanTextBox.Text.Length <= 0)
+            {
+                errorLabel.Text = "NILAI TARGET PENJUALAN TIDAK BOLEH KOSONG";
+                return false;
+            }
+
+            errorLabel.Text = "";
             return true;
         }
 
@@ -98,13 +119,13 @@ namespace BintangTimur
                 if (numRows > 0)
                 {
                     // UPDATE DATA SALES TARGET
-                    sqlCommand = "UPDATE MASTER_SALES_TARGET SET TARGET_AMOUNT = " + targetPenjualanTextBox.Text + " WHERE TARGET_YEAR = " + periodeTahunCombo.Text + " AND TARGET_MONTH = " + selectedMonth;
+                    sqlCommand = "UPDATE MASTER_SALES_TARGET SET SALES_COMMISSION = " + commissionValue.Text + ", TARGET_AMOUNT = " + targetPenjualanTextBox.Text + " WHERE TARGET_YEAR = " + periodeTahunCombo.Text + " AND TARGET_MONTH = " + selectedMonth;
                 }
                 else
                 {
                     // INSERT NEW DATA SALES TARGET
                     selectedMonth = periodeBulanCombo.SelectedIndex + 1;
-                    sqlCommand = "INSERT INTO MASTER_SALES_TARGET (TARGET_MONTH, TARGET_YEAR, TARGET_AMOUNT) VALUES (" + selectedMonth + ", " + periodeTahunCombo.Text + ", " + targetPenjualanTextBox.Text + ")";
+                    sqlCommand = "INSERT INTO MASTER_SALES_TARGET (TARGET_MONTH, TARGET_YEAR, TARGET_AMOUNT, SALES_COMMISSION) VALUES (" + selectedMonth + ", " + periodeTahunCombo.Text + ", " + targetPenjualanTextBox.Text + ", " + commissionValue.Text + ")";
                 }
 
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -157,20 +178,19 @@ namespace BintangTimur
             periodeBulanCombo.Text = periodeBulanCombo.Items[periodeBulanCombo.SelectedIndex].ToString();
 
             loadSalesTargetData(numericCurrentYear);
+            errorLabel.Text = "";
 
             gutil.reArrangeTabOrder(this);
         }
 
         private void displayButton_Click(object sender, EventArgs e)
         {
-            saveData();
-            MessageBox.Show("DONE");
+            if (saveData())
+                MessageBox.Show("DONE");
+            else
+                MessageBox.Show("FAILED TO SAVE DATA");
+
             loadSalesTargetData(Convert.ToInt32(periodeTahunCombo.Text), false);
-        }
-
-        private void dataSalesTarget_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void dataSalesTarget_DoubleClick(object sender, EventArgs e)
@@ -220,6 +240,47 @@ namespace BintangTimur
 
                 targetPenjualanTextBox.Text = selectedAmount;
             }
+        }
+
+        private void convertValueTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string tempString = "";
+
+            if (isLoading)
+                return;
+
+            isLoading = true;
+            if (commissionValue.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                previousInput = "0";
+                commissionValue.Text = "0";
+
+                commissionValue.SelectionStart = commissionValue.Text.Length;
+                isLoading = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (commissionValue.Text.IndexOf('0') == 0 && commissionValue.Text.Length > 1 && commissionValue.Text.IndexOf("0.") < 0)
+            {
+                tempString = commissionValue.Text;
+                commissionValue.Text = tempString.Remove(0, 1);
+            }
+
+            if (gutil.matchRegEx(commissionValue.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
+            {
+                previousInput = commissionValue.Text;
+            }
+            else
+            {
+                commissionValue.Text = previousInput;
+            }
+
+            commissionValue.SelectionStart = commissionValue.Text.Length;
+
+            isLoading = false;
+
         }
     }
 }

@@ -184,6 +184,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -745,6 +746,7 @@
             this.MENU_transaksiPenjualan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_SalesQuotation,
             this.MENU_SORevision,
+            this.toolStripMenuItem10,
             this.MENU_SalesTarget,
             this.MENU_modulKasir,
             this.MENU_setNoFaktur});
@@ -1744,6 +1746,15 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem10.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(225, 22);
+            this.toolStripMenuItem10.Text = "Delivery Order";
+            this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click_1);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1936,6 +1947,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesQuotation;
         private System.Windows.Forms.ToolStripMenuItem MENU_SORevision;
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesTarget;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }
