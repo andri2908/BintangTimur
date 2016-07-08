@@ -94,11 +94,11 @@ namespace BintangTimur
             {
                 sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
-                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0";
 
                 sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH " +
-                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
             }
 
             if (!showAllCheckBox.Checked)
@@ -198,13 +198,9 @@ namespace BintangTimur
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
-        private void printOutDeliveryOrder(string SONo, string revNo)
+        private void printOutDeliveryOrder(string SONo, string revNo, int salesActiveStatus)
         {
-            //string sqlCommandx = "SELECT PH.PURCHASE_DATETIME AS 'TGL', PH.PURCHASE_DATE_RECEIVED AS 'TERIMA', PH.PURCHASE_INVOICE AS 'INVOICE', MS.SUPPLIER_FULL_NAME AS 'SUPPLIER', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_PRICE AS 'HARGA', PD.PRODUCT_QTY AS 'QTY', PD.PURCHASE_SUBTOTAL AS 'SUBTOTAL' " +
-            //                            "FROM PURCHASE_HEADER PH, PURCHASE_DETAIL PD, MASTER_SUPPLIER MS, MASTER_PRODUCT MP " +
-            //                            "WHERE PH.PURCHASE_INVOICE = '" + PONo + "' AND PH.SUPPLIER_ID = MS.SUPPLIER_ID AND PD.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
-
-            string sqlCommandx = "SELECT SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
+            string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
                                         "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
                                         "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
 
@@ -213,8 +209,78 @@ namespace BintangTimur
             displayForm.ShowDialog(this);
         }
 
+        private bool processSalesOrderToDO(string noInvoice, string revNo, int salesActiveStatus)
+        {
+            bool result = false;
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+            int locationID = 0;
+            MySqlDataReader rdr;
+            List<string> productIDList = new List<string>();
+            List<string> productIDQty = new List<string>();
+
+            if (salesActiveStatus == 0)
+                return true;
+
+            DS.beginTransaction();
+
+            try
+            {
+                DS.mySqlConnect();
+
+                // UPDATE SALES HEADER SET SALES ACTIVE TO 0
+                sqlCommand = "UPDATE SALES_HEADER SET SALES_ACTIVE = 0 WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
+                // GET LIST OF PRODUCT ID
+                productIDList.Clear();
+                productIDQty.Clear();
+
+                sqlCommand = "SELECT PRODUCT_ID, PRODUCT_QTY FROM SALES_DETAIL WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            productIDList.Add(rdr.GetString("PRODUCT_ID"));
+                            productIDQty.Add(rdr.GetString("PRODUCT_QTY"));
+                        }
+                    }
+                }
+                rdr.Close();
+
+                locationID = gUtil.loadlocationID(2);
+
+                for (int i =0;i<productIDList.Count;i++)
+                {
+                    // REDUCE STOCK AT MASTER STOCK
+                    sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    // REDUCE STOCK AT PRODUCT LOCATION
+                    sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "' AND LOCATION_ID = " + locationID;
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+
+                DS.commit();
+                result = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
         private void displaySpecificForm(string noInvoice, string revNo = "")
         {
+            int salesActiveStatus = 0;
+            string dialogMessage = "";
             switch(originModuleID)
             {
                 case globalConstants.SALES_QUOTATION:
@@ -226,7 +292,22 @@ namespace BintangTimur
                         cashierFormDisplay.ShowDialog(this);
                     break;
                 case globalConstants.DELIVERY_ORDER:
-                    printOutDeliveryOrder(noInvoice, revNo);
+                    salesActiveStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT SALES_ACTIVE FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'"));
+                    if (salesActiveStatus == 1)
+                    {
+                        dialogMessage = "TERBITKAN DELIVERY ORDER ?";
+                    }
+                    else
+                    {
+                        dialogMessage = "TERBITKAN COPY DELIVERY ORDER ?";
+                    }
+
+                    if (DialogResult.Yes == MessageBox.Show(dialogMessage, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+                        // UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
+                        if (processSalesOrderToDO(noInvoice, revNo, salesActiveStatus))
+                            printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
+                    }
                     break;
 
             }
