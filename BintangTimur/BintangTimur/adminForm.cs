@@ -1339,5 +1339,11 @@ namespace BintangTimur
             dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.DELIVERY_ORDER);
             displayedForm.ShowDialog(this);
         }
+
+        private void loadDummyReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            crReportContainer dummyCR = new crReportContainer();
+            dummyCR.ShowDialog();
+        }
     }
 }

@@ -29,6 +29,9 @@ namespace BintangTimur
 
         public loginForm()
         {
+            crReportContainer dummyReport = new crReportContainer();
+            dummyReport.ShowDialog();
+
             InitializeComponent();
         }
 
