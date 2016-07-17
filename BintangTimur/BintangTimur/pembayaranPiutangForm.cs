@@ -277,10 +277,18 @@ namespace BintangTimur
             {
                 DS.mySqlConnect();
 
+                if (paymentConfirmed == 0)
+                { 
                 // SAVE HEADER TABLE
                 sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE) VALUES " +
                                     "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
-
+                }
+                else
+                {
+                    // SAVE HEADER TABLE
+                    sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) VALUES " +
+                                        "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
+                }
                 gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(paymentNominal) + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
@@ -310,24 +318,6 @@ namespace BintangTimur
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
-                    // INSERT TO SALES COMMISSION DETAIL
-
-                    // CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
-                    selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '"+ selectedSOInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
-
-                    if (selectedSQInvoice.Length>0)
-                    { 
-                        // CALCULATE COMMISSION FOR SALESPERSON
-                        salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
-                        commissionValue = gutil.getSalesCommission(selectedSOInvoice, selectedSQInvoice);
-
-                        sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
-                                                "(" + salesPersonID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + selectedSOInvoice + ")";
-
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + selectedSOInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
-                    }
                 }
 
                 if (paymentMethod == 1)

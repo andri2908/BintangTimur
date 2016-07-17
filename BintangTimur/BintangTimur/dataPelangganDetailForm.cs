@@ -141,6 +141,7 @@ namespace BintangTimur
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
+            int custBlocked = 0;
 
             string selectedDate = dateJoinedDateTimePicked.Value.ToShortDateString();
             string custJoinedDate = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
@@ -199,6 +200,8 @@ namespace BintangTimur
             if (maxCredit.Text.Length > 0)
                 maxCreditAmount = Convert.ToDouble(maxCredit.Text);
 
+            if (blockedCustomer.Checked)
+                custBlocked = 1;
 
             DS.beginTransaction();
 
@@ -210,8 +213,8 @@ namespace BintangTimur
                 {
                     case globalConstants.NEW_CUSTOMER:
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
-                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT) " +
-                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ")";
+                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED) " +
+                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ")";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
@@ -228,7 +231,8 @@ namespace BintangTimur
                                             "CUSTOMER_JOINED_DATE = STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " +
                                             "CUSTOMER_TOTAL_SALES_COUNT = " + custTotalSales + ", " +
                                             "CUSTOMER_GROUP = " + custGroup + ", " +
-                                            "MAX_CREDIT = " + maxCreditAmount + " " +
+                                            "MAX_CREDIT = " + maxCreditAmount + ", " +
+                                            "CUSTOMER_BLOCKED = " + custBlocked + " " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;

@@ -845,22 +845,22 @@ namespace BintangTimur
             {
                 DS.mySqlConnect();
 
-                // INSERT TO SALES COMMISSION DETAIL
-                // CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
-                selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '" + soInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
+                //// INSERT TO SALES COMMISSION DETAIL
+                //// CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
+                //selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '" + soInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
 
-                if (selectedSQInvoice.Length > 0)
-                {
-                    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
-                    commissionValue = gutil.getSalesCommission(soInvoice, selectedSQInvoice);
+                //if (selectedSQInvoice.Length > 0)
+                //{
+                //    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+                //    commissionValue = gutil.getSalesCommission(soInvoice, selectedSQInvoice);
 
-                    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
-                                            "(" + salesPersonID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + soInvoice + ")";
+                //    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                //                            "(" + salesPersonID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + soInvoice + ")";
 
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + soInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
-                }
+                //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + soInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                //        throw internalEX;
+                //}
             }
             catch(Exception ex)
             {
@@ -1466,9 +1466,9 @@ namespace BintangTimur
                     gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "extraAmount [" + extraAmount + "]");
                 }
 
-                salesPaidStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(SALES_PAID, 0) FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedSalesInvoice + "'"));
-                if (salesPaidStatus == 1)
-                    calculateSalesCommissionIfAny(selectedSalesInvoice);
+                //salesPaidStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(SALES_PAID, 0) FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedSalesInvoice + "'"));
+                //if (salesPaidStatus == 1)
+                //    calculateSalesCommissionIfAny(selectedSalesInvoice);
 
                 gutil.saveUserChangeLog(globalConstants.MENU_RETUR_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "RETUR PENJUALAN [" + noReturTextBox.Text + "]");
                 errorLabel.Text = "";

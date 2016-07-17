@@ -1330,7 +1330,7 @@ namespace BintangTimur
 
         private void MENU_SalesTarget_Click(object sender, EventArgs e)
         {
-            dataSalesTargetForm displayedForm = new dataSalesTargetForm();
+            membershipPointForm displayedForm = new membershipPointForm(globalConstants.SALES_COMMISSION);
             displayedForm.ShowDialog(this);
         }
 
@@ -1344,6 +1344,12 @@ namespace BintangTimur
         {
             crReportContainer dummyCR = new crReportContainer();
             dummyCR.ShowDialog();
+        }
+
+        private void MENU_membership_Click(object sender, EventArgs e)
+        {
+            membershipPointForm displayedForm = new membershipPointForm(globalConstants.MEMBERSHIP_POINT);
+            displayedForm.ShowDialog(this);
         }
     }
 }

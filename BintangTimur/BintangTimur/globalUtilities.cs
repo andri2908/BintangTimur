@@ -24,6 +24,12 @@ namespace BintangTimur
         public const string CUSTOM_DATE_FORMAT = "dd MMM yyyy";
         private const string logFileName = "system.log";
 
+        public const int PAPER_POS_RECEIPT = 0;
+        public const int PAPER_HALF_KWARTO = 1;
+        public const int PAPER_FULL_KWARTO = 2;
+
+        public const double MAX_CREDIT_TOLERANCE_PERCENTAGE = 10;
+
         public int INS = 1;
         public int UPD = 2;
         private Data_Access DS = new Data_Access();

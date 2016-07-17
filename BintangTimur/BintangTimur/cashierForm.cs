@@ -33,6 +33,7 @@ namespace BintangTimur
         private double bayarAmount = 0;
         private double sisaBayar = 0;
         private int originModuleID = 0;
+        private int custIsBlocked = 0;
 
         private Data_Access DS = new Data_Access();
 
@@ -118,6 +119,7 @@ namespace BintangTimur
                     break;
 
                 case Keys.F2:
+                    totalAfterDiscTextBox.Focus();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY BARCODE FORM");
 
                     barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.CASHIER_MODULE);
@@ -163,15 +165,24 @@ namespace BintangTimur
                     break;
 
                 case Keys.F9:
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
 
-                    saveAndPrintOutInvoice();
+                    if (custIsBlocked == 0)
+                    { 
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
+
+                        saveAndPrintOutInvoice();
+                    }
+                    else
+                    {
+                        MessageBox.Show("CUSTOMER DIBLOK");
+                    }
                     break;
 
                 case Keys.F11:
+                    totalAfterDiscTextBox.Focus();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO OPEN PRODUK SEARCH FORM PRESSED");
 
-                    dataProdukForm displayProdukForm = new dataProdukForm(globalConstants.CASHIER_MODULE, this);
+                    POSSearchProductForm displayProdukForm = new POSSearchProductForm(globalConstants.CASHIER_MODULE, this);
                     displayProdukForm.ShowDialog(this);
                     break;
 
@@ -219,9 +230,16 @@ namespace BintangTimur
                     break;
 
                 case Keys.Enter:
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
+                    if (custIsBlocked == 0)
+                    {
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
 
-                    saveAndPrintOutInvoice();
+                        saveAndPrintOutInvoice();
+                    }
+                    else
+                    {
+                        MessageBox.Show("CUSTOMER DIBLOK");
+                    }
                     break;
 
                 case Keys.C: // CTRL + C
@@ -396,6 +414,15 @@ namespace BintangTimur
             creditRadioButton.Checked = false;
         }
 
+        public int getBlockedStatus(int ID)
+        {
+            int result = 0;
+
+            result = Convert.ToInt32(DS.getDataSingleValue("SELECT CUSTOMER_BLOCKED FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + ID));
+
+            return result;
+        }
+
         public void setCustomerID(int ID)
         {
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : SELECTED CUSTOMER ID [" + ID+ "]");
@@ -406,9 +433,18 @@ namespace BintangTimur
             setCustomerProfile();
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : FINISHED SET CUSTOMER PROFILE");
 
-            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO REFRESH PRODUCT PRICE");
-            refreshProductPrice();
-            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PRODUCT PRICE REFRESHED");
+            custIsBlocked = getBlockedStatus(selectedPelangganID);
+
+            if (custIsBlocked == 1)
+            {
+                MessageBox.Show("CUSTOMER DIBLOK , TRANSAKSI TIDAK BISA DILAKUKAN");
+            }
+            else
+            { 
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO REFRESH PRODUCT PRICE");
+                refreshProductPrice();
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PRODUCT PRICE REFRESHED");
+            }
         }
 
         private void setCustomerProfile()
@@ -543,6 +579,9 @@ namespace BintangTimur
 
             if (allowToAdd)
             {
+                if (cashierDataGridView.Rows.Count > 0)
+                    prevValue = Convert.ToInt32(cashierDataGridView.Rows[cashierDataGridView.Rows.Count - 1].Cells["F8"].Value);
+
                 cashierDataGridView.Rows.Add();
 
                 salesQty.Add("0");
@@ -671,6 +710,68 @@ namespace BintangTimur
             return result;
         }
 
+        private bool isCreditExceedLimit(double newCreditAmount = 0, string salesInvoiceID = "")
+        {
+            bool result = false;
+            string sqlCommand = "";
+
+            // CALCULATE TOTAL UNPAID TRANSACTION MINUS THE CURRENT SALES INVOICE FOR SALES ORDER REVISION
+            double totalUnpaidTransaction = 0;
+            sqlCommand = "SELECT IFNULL(SUM(SALES_TOTAL), 0) FROM SALES_HEADER WHERE CUSTOMER_ID = " + selectedPelangganID + " AND SALES_PAID = 0 AND SALES_VOID = 0";
+            if (salesInvoiceID.Length > 0)
+                sqlCommand = sqlCommand + " AND SALES_INVOICE <> '" + salesInvoiceID + "'";
+
+            totalUnpaidTransaction = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            // CALCULATE TOTAL PAYMENT FOR UNPAID TRANSACTION
+            double totalPaymentTransaction = 0;
+            totalPaymentTransaction = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_CREDIT PC, CREDIT C, SALES_HEADER SH WHERE SH.CUSTOMER_ID = " + selectedPelangganID + " AND SH.SALES_PAID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_INVOICE = C.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID"));
+
+            // CALCULATE TOTAL CREDIT AT PRESENT
+            double totalOutstandingCredit = 0;
+            double maxCredit = 0;
+            double creditTolerance = 0;
+            totalOutstandingCredit = totalUnpaidTransaction - totalPaymentTransaction;
+            maxCredit = Convert.ToDouble(DS.getDataSingleValue("SELECT MAX_CREDIT FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
+            creditTolerance = Math.Round(maxCredit * globalUtilities.MAX_CREDIT_TOLERANCE_PERCENTAGE / 100, 2);
+
+            maxCredit = maxCredit + creditTolerance;
+            totalOutstandingCredit = totalOutstandingCredit + newCreditAmount;
+
+            if (maxCredit <= totalOutstandingCredit)
+                result = true;
+
+            return result;
+        }
+
+        private void validateUserCreditStatus()
+        {
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+           
+            if (isCreditExceedLimit())
+            {
+                // BLOCK USER
+                DS.beginTransaction();
+
+                try
+                {
+                    DS.mySqlConnect();
+
+                    sqlCommand = "UPDATE MASTER_CUSTOMER SET CUSTOMER_BLOCKED = 1 WHERE CUSTOMER_ID = " + selectedPelangganID;
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    DS.commit();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+        }
+
         private bool dataValidated()
         {
             if (globalTotalValue <= 0)
@@ -719,25 +820,31 @@ namespace BintangTimur
             }
             else if (creditRadioButton.Checked == true)
             {
-                // CALCULATE TOTAL UNPAID TRANSACTION
-                double totalUnpaidTransaction = 0;
-                totalUnpaidTransaction = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(SALES_TOTAL), 0) FROM SALES_HEADER WHERE CUSTOMER_ID = "+selectedPelangganID + " AND SALES_PAID = 0 AND SALES_VOID = 0"));
+                int userStatus = 0;
 
-                // CALCULATE TOTAL PAYMENT FOR UNPAID TRANSACTION
-                double totalPaymentTransaction = 0;
-                totalPaymentTransaction = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_CREDIT PC, CREDIT C, SALES_HEADER SH WHERE SH.CUSTOMER_ID = " + selectedPelangganID + " AND SH.SALES_PAID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_INVOICE = C.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID"));
-
-                // CALCULATE TOTAL CREDIT AT PRESENT
-                double totalOutstandingCredit = 0;
-                double maxCredit = 0;
-                totalOutstandingCredit = totalUnpaidTransaction - totalPaymentTransaction;
-                maxCredit = Convert.ToDouble(DS.getDataSingleValue("SELECT MAX_CREDIT FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
-
-                if (maxCredit <= totalOutstandingCredit)
-                {
-                    if (DialogResult.No == MessageBox.Show("PLAFON HUTANG TERCAPAI, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (originModuleID == 0) // NORMAL TRANSACTION
+                { 
+                    userStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT CUSTOMER_BLOCKED FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
+                    if (userStatus == 1)
+                    {
+                        errorLabel.Text = "CUSTOMER DIBLOK";
                         return false;
+                    }
                 }
+
+                if (originModuleID != globalConstants.SALES_QUOTATION) // NORMAL TRANSACTION AND SALES ORDER REVISION
+                {
+                    string currentInvoiceID = "";
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        currentInvoiceID = selectedsalesinvoice;
+
+                    if (isCreditExceedLimit(globalTotalValue - Convert.ToDouble(totalAfterDiscTextBox.Text), currentInvoiceID))
+                    {
+                        errorLabel.Text = "PEMBELIAN MELEBIHI BATAS KREDIT";
+                        return false;
+                    }
+                }
+
             }
 
             if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION)
@@ -940,31 +1047,6 @@ namespace BintangTimur
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
-                    if (salesPaid == 1)
-                    {
-                        // CALCULATE COMMISSION FOR SALESPERSON
-                        salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
-
-                        currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
-                        numericCurrentYear = Convert.ToInt32(currentYear);
-                        currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
-                        numericCurrentMonth = Convert.ToInt32(currentMonth);
-
-                        numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
-                        if (numRows > 0)
-                            commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
-                        else
-                            commissionPercentage = 0;
-
-                        commissionValue = Math.Round(((globalTotalValue - Convert.ToDouble(salesDiscountFinal)) * commissionPercentage) / 100, 2);
-
-                        sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
-                                                "(" + salesPersonID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + salesInvoice + ")";
-
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + salesInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
-                    }
                 }
                 else if (originModuleID == globalConstants.SALES_QUOTATION)
                 {
@@ -1227,6 +1309,10 @@ namespace BintangTimur
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "PRINT OUT INVOICE");
                         PrintReceipt();
                     }
+
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "VALIDATE USER CREDIT STATUS");
+
+                    validateUserCreditStatus();
 
                     gutil.showSuccess(gutil.INS);
 
@@ -1571,19 +1657,19 @@ namespace BintangTimur
                 if (!changed)
                     return;
 
-                selectedProductImg = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_PHOTO_1, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + selectedProductID + "'").ToString();
+                //selectedProductImg = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_PHOTO_1, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + selectedProductID + "'").ToString();
 
-                if (selectedProductImg.Length > 0)
-                {
-                    string imagePath = Application.StartupPath + "\\PRODUCT_PHOTO\\" + selectedProductImg;
-                    Size imageSize = new Size(50, 50);
-                    Bitmap productImage = new Bitmap(imagePath);
-                    Bitmap resizedImage = new Bitmap(productImage, imageSize);
-                    //productImage.
+                //if (selectedProductImg.Length > 0)
+                //{
+                //    string imagePath = Application.StartupPath + "\\PRODUCT_PHOTO\\" + selectedProductImg;
+                //    Size imageSize = new Size(50, 50);
+                //    Bitmap productImage = new Bitmap(imagePath);
+                //    Bitmap resizedImage = new Bitmap(productImage, imageSize);
+                //    //productImage.
 
-                    DataGridViewImageCell cell = (DataGridViewImageCell) selectedRow.Cells["productImage"];
-                    cell.Value = resizedImage;
-                }
+                //    DataGridViewImageCell cell = (DataGridViewImageCell) selectedRow.Cells["productImage"];
+                //    cell.Value = resizedImage;
+                //}
 
                 hpp = getProductPriceValue(selectedProductID, customerComboBox.SelectedIndex, true);
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [" + hpp + "]");
@@ -2100,13 +2186,13 @@ namespace BintangTimur
             F8Column.ReadOnly = true;
             cashierDataGridView.Columns.Add(F8Column);
 
-            // IMAGE COLUMN
-            productImageColumn.HeaderText = "GAMBAR";
-            productImageColumn.Name = "productImage";
-            productImageColumn.Width = 100;
-            productImageColumn.ReadOnly = true;
-            //productImageColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
-            cashierDataGridView.Columns.Add(productImageColumn);
+            //// IMAGE COLUMN
+            //productImageColumn.HeaderText = "GAMBAR";
+            //productImageColumn.Name = "productImage";
+            //productImageColumn.Width = 100;
+            //productImageColumn.ReadOnly = true;
+            ////productImageColumn.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            //cashierDataGridView.Columns.Add(productImageColumn);
 
             productIdColumn.HeaderText = "KODE PRODUK";
             productIdColumn.Name = "productID";
@@ -2324,7 +2410,7 @@ namespace BintangTimur
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == 0) //kertas POS
+            if (papermode == globalUtilities.PAPER_POS_RECEIPT) //kertas POS
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
                 //width, height
@@ -2372,7 +2458,7 @@ namespace BintangTimur
                 }
 
                 DS.writeXML(sqlCommandx, globalConstants.SalesReceiptXML);
-                if (gutil.getPaper() == 2) // kuarto
+                if (gutil.getPaper() == globalUtilities.PAPER_FULL_KWARTO) // kuarto
                 {
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, kuarto paper, display SalesReceiptKuartoForm");
                     SalesReceiptKuartoForm displayedform = new SalesReceiptKuartoForm();
@@ -2917,17 +3003,6 @@ namespace BintangTimur
             string sqlCommand = "";
             MySqlException internalEX = null;
             string SQApprovedDate = "";
-            int salesPaid = 0;
-            int salesPersonID = 0;
-            string currentYear = "0";
-            string currentMonth = "0";
-            int numericCurrentYear = 0;
-            int numericCurrentMonth = 0;
-            int numRows = 0;
-            double commissionPercentage = 0;
-            double commissionValue = 0;
-            double salesDiscountFinal = 0;
-           
 
             // STORE SALES QUOTATION INVOICE NO
             sqInvoice = selectedsalesinvoice;
@@ -2953,34 +3028,6 @@ namespace BintangTimur
                 sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
-
-                salesPaid = Convert.ToInt32(DS.getDataSingleValue("SELECT SALES_PAID FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'"));
-                if (salesPaid == 1)
-                {
-                    // CALCULATE COMMISSION FOR SALESPERSON
-                    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
-                    salesDiscountFinal = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_DISCOUNT_FINAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'"));
-
-                    currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
-                    numericCurrentYear = Convert.ToInt32(currentYear);
-                    currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
-                    numericCurrentMonth = Convert.ToInt32(currentMonth);
-
-                    numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
-                    if (numRows > 0)
-                        commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
-                    else
-                        commissionPercentage = 0;
-
-                    commissionValue = Math.Round(((globalTotalValue - salesDiscountFinal) * commissionPercentage) / 100, 2);
-
-                    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
-                                            "(" + salesPersonID + ", STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", '" + selectedsalesinvoice + "')";
-
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + selectedsalesinvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
-                }
 
                 // UPDATE SALES HEADER TAX TABLE
                 sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";

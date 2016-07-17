@@ -84,6 +84,8 @@ namespace BintangTimur
         public const int EDIT_AKUN = 502;
         public const int NEW_DJ = 503;
         public const int EDIT_DJ = 504;
+        public const int SALES_COMMISSION = 505;
+        public const int MEMBERSHIP_POINT = 506;
 
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE

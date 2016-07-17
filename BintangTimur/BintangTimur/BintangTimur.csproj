@@ -308,6 +308,18 @@
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="globalCryptographyMethod.cs" />
+    <Compile Include="membershipPointForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="membershipPointForm.Designer.cs">
+      <DependentUpon>membershipPointForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="membershipPointPrintOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="membershipPointPrintOut.Designer.cs">
+      <DependentUpon>membershipPointPrintOut.cs</DependentUpon>
+    </Compile>
     <Compile Include="messagingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -438,6 +450,12 @@
     </Compile>
     <Compile Include="pleaseWaitForm.Designer.cs">
       <DependentUpon>pleaseWaitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POSSearchProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POSSearchProductForm.Designer.cs">
+      <DependentUpon>POSSearchProductForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintBarcode.cs">
       <AutoGen>True</AutoGen>
@@ -912,6 +930,12 @@
     <Compile Include="ReportUserForm.Designer.cs">
       <DependentUpon>ReportUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="salesCommissionAllPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>salesCommissionAllPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SalesReceipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1130,6 +1154,12 @@
     <EmbeddedResource Include="exportStockOpnameForm.resx">
       <DependentUpon>exportStockOpnameForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="membershipPointForm.resx">
+      <DependentUpon>membershipPointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="membershipPointPrintOut.resx">
+      <DependentUpon>membershipPointPrintOut.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="messagingForm.resx">
       <DependentUpon>messagingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1190,6 +1220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pleaseWaitForm.resx">
       <DependentUpon>pleaseWaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POSSearchProductForm.resx">
+      <DependentUpon>POSSearchProductForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintBarcode.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1453,6 +1486,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportUserForm.resx">
       <DependentUpon>ReportUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="salesCommissionAllPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>salesCommissionAllPrintOut.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesReceipt.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

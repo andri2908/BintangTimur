@@ -523,20 +523,20 @@ namespace BintangTimur
                                     // INSERT TO SALES COMMISSION DETAIL
 
                                     // CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
-                                    selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
+                                    //selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
 
-                                    if (selectedSQInvoice.Length > 0)
-                                    {
-                                        salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
-                                        commissionValue = gutil.getSalesCommission(noInvoice, selectedSQInvoice);
+                                    //if (selectedSQInvoice.Length > 0)
+                                    //{
+                                    //    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+                                    //    commissionValue = gutil.getSalesCommission(noInvoice, selectedSQInvoice);
 
-                                        sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
-                                                                "(" + salesPersonID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + noInvoice + ")";
+                                    //    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                                    //                            "(" + salesPersonID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + noInvoice + ")";
 
-                                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + noInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
-                                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                            throw internalEX;
-                                    }
+                                    //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + noInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                                    //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    //        throw internalEX;
+                                    //}
 
                                 }
                             }
