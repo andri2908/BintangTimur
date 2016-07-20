@@ -34,6 +34,7 @@ namespace BintangTimur
         private double sisaBayar = 0;
         private int originModuleID = 0;
         private int custIsBlocked = 0;
+        private double totalAfterDisc = 0;
 
         private Data_Access DS = new Data_Access();
 
@@ -806,6 +807,12 @@ namespace BintangTimur
                     return false;
                 }
 
+                if (null == cashierDataGridView.Rows[i].Cells["productID"].Value)
+                {
+                    errorLabel.Text = "KODE PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
+                    return false;
+                }
+
                 if (!productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
                 {
                     errorLabel.Text = "KODE PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
@@ -838,7 +845,7 @@ namespace BintangTimur
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         currentInvoiceID = selectedsalesinvoice;
 
-                    if (isCreditExceedLimit(globalTotalValue - Convert.ToDouble(totalAfterDiscTextBox.Text), currentInvoiceID))
+                    if (isCreditExceedLimit(globalTotalValue - Convert.ToDouble(discJualMaskedTextBox.Text), currentInvoiceID))
                     {
                         errorLabel.Text = "PEMBELIAN MELEBIHI BATAS KREDIT";
                         return false;
@@ -1476,7 +1483,6 @@ namespace BintangTimur
         {
             double total = 0;
             double discJual = 0;
-            double totalAfterDisc = 0;
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateTotal");
             for (int i = 0; i < cashierDataGridView.Rows.Count; i++)
@@ -1507,7 +1513,7 @@ namespace BintangTimur
 
         private void calculateChangeValue()
         {
-            double totalAfterDisc = 0;
+            //double totalAfterDisc = 0;
             if (bayarTextBox.Text.Length > 0)
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateChangeValue, bayarTextBox.Text [" + bayarTextBox.Text + "]");
@@ -2285,7 +2291,7 @@ namespace BintangTimur
 
         private void discJualMaskedTextBox_Validating(object sender, CancelEventArgs e)
         {
-            double totalAfterDisc = 0;
+            //double totalAfterDisc = 0;
 
             if (discJualMaskedTextBox.Text.Length > 0)
             {

@@ -49,6 +49,7 @@
             this.ClientSize = new System.Drawing.Size(678, 450);
             this.Controls.Add(this.crystalReportViewer1);
             this.Name = "salesCommissionPrintOut";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

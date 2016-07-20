@@ -47,7 +47,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(23, 25);
+            this.label2.Location = new System.Drawing.Point(11, 28);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 18);
             this.label2.TabIndex = 45;
@@ -89,11 +89,11 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(23, 99);
+            this.label3.Location = new System.Drawing.Point(11, 102);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 18);
+            this.label3.Size = new System.Drawing.Size(108, 18);
             this.label3.TabIndex = 49;
-            this.label3.Text = "Parameter";
+            this.label3.Text = "Prosentase";
             // 
             // displayButton
             // 
@@ -123,7 +123,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(23, 62);
+            this.label1.Location = new System.Drawing.Point(11, 65);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 18);
             this.label1.TabIndex = 57;
@@ -162,6 +162,7 @@
             this.button1.TabIndex = 60;
             this.button1.Text = "REPRINT";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // membershipPointForm
             // 

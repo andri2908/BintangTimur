@@ -40,6 +40,18 @@ namespace BintangTimur
         {
             InitializeComponent();
             originModule = moduleID;
+
+            if (originModule == globalConstants.SALES_COMMISSION)
+            {
+                this.Text = "KOMISI SALES";
+                label1.Text = "Sales";
+            }
+            else if (originModule == globalConstants.MEMBERSHIP_POINT)
+            {
+                this.Text = "MEMBERSHIP POINT";
+                label1.Text = "Member";
+            }
+
         }
 
         private void membershipPointForm_Load(object sender, EventArgs e)
@@ -81,6 +93,9 @@ namespace BintangTimur
                 }
             }
             rdr.Close();
+
+            nameCombo.Text = "ALL";
+            nameCombo.SelectedIndex = 0;
         }
 
         private void loadCustomer()
@@ -107,6 +122,9 @@ namespace BintangTimur
                 }
             }
             rdr.Close();
+
+            nameCombo.Text = "ALL";
+            nameCombo.SelectedIndex = 0;
         }
 
 
@@ -120,7 +138,7 @@ namespace BintangTimur
 
             if (parameterInputTextBox.Text.Length <= 0)
             {
-                MessageBox.Show("PARAMETER TIDAK BOLEH KOSONG");
+                MessageBox.Show("PROSENTASE TIDAK BOLEH KOSONG");
                 return false;
             }
 
@@ -135,7 +153,7 @@ namespace BintangTimur
 
             if (originModule == globalConstants.MEMBERSHIP_POINT)
             { 
-                sqlCommand = "SELECT IFNULL(SUM(SH.SALES_TOTAL - SH.SALES_DISCOUNT_FINAL), 0) FROM SALES_HEADER WHERE CUSTOMER_ID = " + customerID + " AND SALES_TOP = 1 AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  <= '" + endDate + "' AND SALES_VOID = 0";
+                sqlCommand = "SELECT IFNULL(SUM(SALES_TOTAL - SALES_DISCOUNT_FINAL), 0) FROM SALES_HEADER WHERE CUSTOMER_ID = " + customerID + " AND SALES_TOP = 1 AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  <= '" + endDate + "' AND SALES_VOID = 0";
             }
             else if (originModule == globalConstants.SALES_COMMISSION)
             {
@@ -236,11 +254,14 @@ namespace BintangTimur
                             nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
                             pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
-                            sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
-                                                "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + nameComboHidden.Items[i].ToString() + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
+                            if (pointsAmount > 0)
+                            { 
+                                sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
+                                                    "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + nameComboHidden.Items[i].ToString() + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
 
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
                         }
                     }
                     else
@@ -252,11 +273,14 @@ namespace BintangTimur
                         nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
                         pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
-                        sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
+                        if (pointsAmount > 0)
+                        {
+                            sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
                                                 "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + selectedID + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
 
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
                     }
                 }
                 else if (originModule == globalConstants.MEMBERSHIP_POINT)
@@ -272,11 +296,14 @@ namespace BintangTimur
                             nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
                             pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
-                            sqlCommand = "INSERT INTO MEMBERSHIP_POINT (DATE_START, DATE_END, CUSTOMER_ID, POINTS_PARAMETER, POINTS_AMOUNT) VALUES " +
+                            if (pointsAmount > 0)
+                            {
+                                sqlCommand = "INSERT INTO MEMBERSHIP_POINT (DATE_START, DATE_END, CUSTOMER_ID, POINTS_PARAMETER, POINTS_AMOUNT) VALUES " +
                                                 "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + nameComboHidden.Items[i].ToString() + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
 
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
                         }
                     }
                     else
@@ -288,11 +315,14 @@ namespace BintangTimur
                         nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
                         pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
-                        sqlCommand = "INSERT INTO MEMBERSHIP_POINT (DATE_START, DATE_END, CUSTOMER_ID, POINTS_PARAMETER, POINTS_AMOUNT) VALUES " +
+                        if (pointsAmount > 0)
+                        {
+                            sqlCommand = "INSERT INTO MEMBERSHIP_POINT (DATE_START, DATE_END, CUSTOMER_ID, POINTS_PARAMETER, POINTS_AMOUNT) VALUES " +
                                                 "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + selectedID + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
 
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                            throw internalEX;
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
                     }
                 }
 
@@ -321,7 +351,71 @@ namespace BintangTimur
 
         private void printOutReport()
         {
+            string sqlCommandx = "";
+            string dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
+            string dateTo = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
 
+            if (originModule == globalConstants.SALES_COMMISSION)
+            {
+                if (nameCombo.SelectedIndex == 0)
+                {
+                    // PRINT OUT ALL SALES PERSON
+                    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_START, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.USER_FULL_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT " +
+                                             "FROM MASTER_USER MU, SALES_COMMISSION SC " +
+                                             "WHERE SC.SALES_ID = MU.ID AND MU.USER_ACTIVE = 1 " +
+                                             "AND DATE_FORMAT(SC.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(SC.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                                             "GROUP BY SC.DATE_START, SC.DATE_END, MU.ID";
+
+                    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
+                    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
+                    displayForm.ShowDialog(this);
+                }
+                else
+                {
+                    // PRINT OUT SPECIFIC SALES PERSON
+                    // PRINT OUT ALL SALES PERSON
+                    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_END, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.USER_FULL_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT" +
+                                             "FROM MASTER_USER MU, SALES_COMMISSION SC " +
+                                             "WHERE SC.SALES_ID = MU.ID AND MU.USER_ACTIVE = 1 AND MU.ID = " + selectedID + " " +
+                                             "AND DATE_FORMAT(SC.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(SC.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                                             "GROUP BY SC.DATE_START, SC.DATE_END";
+
+                    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
+                    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
+                    displayForm.ShowDialog(this);
+                }
+            }
+            else if (originModule == globalConstants.MEMBERSHIP_POINT)
+            {
+                if (nameCombo.SelectedIndex == 0)
+                {
+                    // PRINT OUT ALL MEMBER
+                    sqlCommandx = "SELECT '2' AS TYPE, MAX(MP.ID), DATE_FORMAT(MP.DATE_START, '%d-%M-%Y') as DATE_START, DATE_FORMAT(MP.DATE_END, '%d-%M-%Y') as DATE_END, MC.CUSTOMER_FULL_NAME AS NAME, MP.POINTS_AMOUNT AS AMOUNT " +
+                                             "FROM MASTER_CUSTOMER MC, MEMBERSHIP_POINT MP " +
+                                             "WHERE MP.CUSTOMER_ID = MC.CUSTOMER_ID AND MC.CUSTOMER_ACTIVE = 1 " +
+                                             "AND DATE_FORMAT(MP.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(MP.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                                             "GROUP BY MP.DATE_START, MP.DATE_END, MC.CUSTOMER_ID";
+
+                    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
+                    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
+                    displayForm.ShowDialog(this);
+                }
+                else
+                {
+                    // PRINT OUT SPECIFIC SALES PERSON
+                    // PRINT OUT ALL SALES PERSON
+                    sqlCommandx = "SELECT '2' AS TYPE, MAX(MP.ID), DATE_FORMAT(MP.DATE_START, '%d-%M-%Y') as DATE_END, DATE_FORMAT(MP.DATE_END, '%d-%M-%Y') as DATE_END, MC.CUSTOMER_FULL_NAME AS NAME, MP.POINTS_AMOUNT AS AMOUNT" +
+                                             "FROM MASTER_CUSTOMER MC, MEMBERSHIP_POINT MP " +
+                                             "WHERE MP.CUSTOMER_ID = MC.CUSTOMER_ID AND MC.CUSTOMER_ACTIVE = 1 AND MC.CUSTOMER_ID = " + selectedID + " " +
+                                             "AND DATE_FORMAT(MP.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(MP.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                                             "GROUP BY MP.DATE_START, MP.DATE_END";
+
+                    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
+                    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
+                    displayForm.ShowDialog(this);
+                }
+
+            }
         }
 
         private void displayButton_Click(object sender, EventArgs e)
@@ -334,7 +428,7 @@ namespace BintangTimur
 
             if (saveData())
             {
-                MessageBox.Show("DONE");
+                //MessageBox.Show("DONE");
                 printOutReport();
             }
         }
@@ -382,6 +476,11 @@ namespace BintangTimur
         private void nameCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedID = nameComboHidden.Items[nameCombo.SelectedIndex].ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            printOutReport();
         }
     }
 }

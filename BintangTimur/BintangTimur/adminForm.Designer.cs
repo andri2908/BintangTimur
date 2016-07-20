@@ -822,6 +822,7 @@
             this.MENU_returPenjualan.Name = "MENU_returPenjualan";
             this.MENU_returPenjualan.Size = new System.Drawing.Size(221, 22);
             this.MENU_returPenjualan.Text = "Retur Penjualan";
+            this.MENU_returPenjualan.Click += new System.EventHandler(this.MENU_returPenjualan_Click);
             // 
             // MENU_returByInvoice
             // 
