@@ -50,10 +50,20 @@ namespace BintangTimur
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
-
+            string sqlCommand = "";
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT * FROM MASTER_SUPPLIER WHERE SUPPLIER_ID =  " + selectedSupplierID))
+            sqlCommand = "SELECT IFNULL(SUPPLIER_FULL_NAME, '') AS SUPPLIER_FULL_NAME, " +
+                                   "IFNULL(SUPPLIER_ADDRESS1, '') AS SUPPLIER_ADDRESS1, " +
+                                   "IFNULL(SUPPLIER_ADDRESS2, '') AS SUPPLIER_ADDRESS2, " +
+                                   "IFNULL(SUPPLIER_ADDRESS_CITY, '') AS SUPPLIER_ADDRESS_CITY, " +
+                                   "IFNULL(SUPPLIER_PHONE, '') AS SUPPLIER_PHONE, " +
+                                   "IFNULL(SUPPLIER_FAX, '') AS SUPPLIER_FAX, " +
+                                   "IFNULL(SUPPLIER_EMAIL, '') AS SUPPLIER_EMAIL, " +
+                                   "SUPPLIER_ACTIVE " +
+                                    "FROM MASTER_SUPPLIER WHERE SUPPLIER_ID =  " + selectedSupplierID;
+
+            using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
                 {
