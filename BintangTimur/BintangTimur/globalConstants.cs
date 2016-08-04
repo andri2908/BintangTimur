@@ -80,6 +80,10 @@ namespace BintangTimur
         public const int PRINTOUT_PURCHASE_ORDER = 224;
         public const int NEW_RETUR_PEMBELIAN = 225;
         public const int EDIT_RETUR_PEMBELIAN = 226;
+        public const int NEW_REGION = 227;
+        public const int EDIT_REGION = 228;
+
+
         public const int NEW_AKUN = 501;  //start from 5
         public const int EDIT_AKUN = 502;
         public const int NEW_DJ = 503;

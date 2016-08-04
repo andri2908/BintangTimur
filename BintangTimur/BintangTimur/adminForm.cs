@@ -1356,5 +1356,21 @@ namespace BintangTimur
         {
 
         }
+
+        private void toolStripMenuItem74_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MENU_tambahRegion_Click(object sender, EventArgs e)
+        {
+            dataRegion displayedForm = new dataRegion();
+            displayedForm.ShowDialog(this);
+        }
     }
 }

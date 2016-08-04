@@ -645,5 +645,15 @@ namespace BintangTimur
 
             return commissionValue;
         }
+
+        public string getProductName(string productID)
+        {
+            string result = "";
+
+            result = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'").ToString();
+
+            return result;
+        }
+
     }
 }

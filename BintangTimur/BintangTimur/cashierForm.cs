@@ -2084,7 +2084,7 @@ namespace BintangTimur
             {
                 noFakturLabel.Text = "SALES QUOTATION";
                 approvalButton.Visible = false;
-                rejectButton.Visible = false;
+                //rejectButton.Visible = false;
                 label12.Visible = false;
                 label13.Visible = false;
                 bayarTextBox.Visible = false;
@@ -2099,12 +2099,12 @@ namespace BintangTimur
                 if (userAccessOption == 1)
                 { 
                     approvalButton.Visible = true;
-                    rejectButton.Visible = true;
+                    //rejectButton.Visible = true;
                 }
                 else
                 { 
                     approvalButton.Visible = false;
-                    rejectButton.Visible = false;
+                    //rejectButton.Visible = false;
                 }
 
                 label12.Visible = false;
@@ -2116,7 +2116,7 @@ namespace BintangTimur
             {
                 noFakturLabel.Text = "";
                 approvalButton.Visible = false;
-                rejectButton.Visible = false;
+                //rejectButton.Visible = false;
             }
             else if (originModuleID == 0) // NORMAL TRANSACTION
             { 
