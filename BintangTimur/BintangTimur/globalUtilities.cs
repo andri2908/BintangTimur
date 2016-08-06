@@ -655,5 +655,21 @@ namespace BintangTimur
             return result;
         }
 
+        public string getCustomStringFormatDate(DateTime inputDateTime)
+        {
+            string result = "";
+
+            string dateInput = "";
+            string hourInput = "";
+            string minuteInput = "";
+
+            dateInput = String.Format(culture, "{0:dd-MM-yyyy}", inputDateTime);
+            hourInput = String.Format(culture, "{0:HH}", inputDateTime);
+            minuteInput = String.Format(culture, "{0:mm}", inputDateTime);
+
+            result = dateInput + " " + hourInput + ":" + minuteInput;
+
+            return result;
+        }
     }
 }

@@ -124,7 +124,9 @@
             this.Controls.Add(this.namaBranchTextbox);
             this.Controls.Add(this.dataCabangGridView);
             this.Controls.Add(this.newButton);
+            this.MaximizeBox = false;
             this.Name = "dataRegion";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DATA REGION";
             this.Activated += new System.EventHandler(this.dataRegion_Activated);

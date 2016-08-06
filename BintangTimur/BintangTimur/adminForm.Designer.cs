@@ -67,6 +67,7 @@
             this.MENU_exportDataCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_importDataCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_penyesuaianStok = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_mutasiBarang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahMutasiBarang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_cekPermintaanBarang = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +84,7 @@
             this.MAINMENU_penjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pelanggan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahPelanggan = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_tambahRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_transaksiPenjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SORevision = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +186,6 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
-            this.MENU_tambahRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -534,7 +535,8 @@
             this.MENU_stokOpname.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_exportDataCSV,
             this.MENU_importDataCSV,
-            this.MENU_penyesuaianStok});
+            this.MENU_penyesuaianStok,
+            this.toolStripMenuItem11});
             this.MENU_stokOpname.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_stokOpname.Name = "MENU_stokOpname";
             this.MENU_stokOpname.Size = new System.Drawing.Size(254, 22);
@@ -566,6 +568,15 @@
             this.MENU_penyesuaianStok.Size = new System.Drawing.Size(205, 22);
             this.MENU_penyesuaianStok.Text = "Penyesuaian Stok";
             this.MENU_penyesuaianStok.Click += new System.EventHandler(this.toolStripMenuItem62_Click);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem11.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMenuItem11.Text = "Transfer Stok";
+            this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click_1);
             // 
             // MENU_mutasiBarang
             // 
@@ -663,8 +674,9 @@
             this.MENU_requestOrder.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_requestOrder.Name = "MENU_requestOrder";
             this.MENU_requestOrder.ShowShortcutKeys = false;
-            this.MENU_requestOrder.Size = new System.Drawing.Size(243, 22);
-            this.MENU_requestOrder.Text = "Request Order";
+            this.MENU_requestOrder.Size = new System.Drawing.Size(246, 22);
+            this.MENU_requestOrder.Text = "Request Order (HIDDEN)";
+            this.MENU_requestOrder.Visible = false;
             this.MENU_requestOrder.Click += new System.EventHandler(this.toolStripMenuItem65_Click);
             // 
             // MENU_purchaseOrder
@@ -673,7 +685,7 @@
             this.MENU_purchaseOrder.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_purchaseOrder.Name = "MENU_purchaseOrder";
             this.MENU_purchaseOrder.ShowShortcutKeys = false;
-            this.MENU_purchaseOrder.Size = new System.Drawing.Size(243, 22);
+            this.MENU_purchaseOrder.Size = new System.Drawing.Size(246, 22);
             this.MENU_purchaseOrder.Text = "Purchase Order";
             this.MENU_purchaseOrder.Click += new System.EventHandler(this.toolStripMenuItem36_Click);
             // 
@@ -683,7 +695,7 @@
             this.MENU_reprintRequestOrder.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_reprintRequestOrder.Name = "MENU_reprintRequestOrder";
             this.MENU_reprintRequestOrder.ShowShortcutKeys = false;
-            this.MENU_reprintRequestOrder.Size = new System.Drawing.Size(243, 22);
+            this.MENU_reprintRequestOrder.Size = new System.Drawing.Size(246, 22);
             this.MENU_reprintRequestOrder.Text = "Re-print Purchase Order";
             this.MENU_reprintRequestOrder.Click += new System.EventHandler(this.toolStripMenuItem67_Click);
             // 
@@ -743,6 +755,15 @@
             this.MENU_tambahPelanggan.Size = new System.Drawing.Size(277, 22);
             this.MENU_tambahPelanggan.Text = "Tambah / Hapus Pelanggan";
             this.MENU_tambahPelanggan.Click += new System.EventHandler(this.toolStripMenuItem14_Click);
+            // 
+            // MENU_tambahRegion
+            // 
+            this.MENU_tambahRegion.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_tambahRegion.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_tambahRegion.Name = "MENU_tambahRegion";
+            this.MENU_tambahRegion.Size = new System.Drawing.Size(277, 22);
+            this.MENU_tambahRegion.Text = "Tambah / Hapus Region";
+            this.MENU_tambahRegion.Click += new System.EventHandler(this.MENU_tambahRegion_Click);
             // 
             // MENU_transaksiPenjualan
             // 
@@ -905,7 +926,7 @@
             this.MENU_tambahTransaksiHarian.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_tambahTransaksiHarian.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_tambahTransaksiHarian.Name = "MENU_tambahTransaksiHarian";
-            this.MENU_tambahTransaksiHarian.Size = new System.Drawing.Size(322, 22);
+            this.MENU_tambahTransaksiHarian.Size = new System.Drawing.Size(353, 22);
             this.MENU_tambahTransaksiHarian.Text = "Tambah / Hapus Transaksi Harian";
             this.MENU_tambahTransaksiHarian.Click += new System.EventHandler(this.toolStripMenuItem24_Click);
             // 
@@ -917,7 +938,7 @@
             this.toolStripMenuItem4});
             this.MENU_pembayaranPiutang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pembayaranPiutang.Name = "MENU_pembayaranPiutang";
-            this.MENU_pembayaranPiutang.Size = new System.Drawing.Size(322, 22);
+            this.MENU_pembayaranPiutang.Size = new System.Drawing.Size(353, 22);
             this.MENU_pembayaranPiutang.Text = "Pembayaran Piutang";
             // 
             // toolStripMenuItem3
@@ -943,8 +964,9 @@
             this.MENU_pembayaranPiutangMutasi.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_pembayaranPiutangMutasi.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pembayaranPiutangMutasi.Name = "MENU_pembayaranPiutangMutasi";
-            this.MENU_pembayaranPiutangMutasi.Size = new System.Drawing.Size(322, 22);
-            this.MENU_pembayaranPiutangMutasi.Text = "Pembayaran Piutang Mutasi";
+            this.MENU_pembayaranPiutangMutasi.Size = new System.Drawing.Size(353, 22);
+            this.MENU_pembayaranPiutangMutasi.Text = "Pembayaran Piutang Mutasi (HIDDEN)";
+            this.MENU_pembayaranPiutangMutasi.Visible = false;
             this.MENU_pembayaranPiutangMutasi.Click += new System.EventHandler(this.toolStripMenuItem39_Click);
             // 
             // MENU_pembayaranHutangKeSupplier
@@ -955,7 +977,7 @@
             this.toolStripMenuItem2});
             this.MENU_pembayaranHutangKeSupplier.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pembayaranHutangKeSupplier.Name = "MENU_pembayaranHutangKeSupplier";
-            this.MENU_pembayaranHutangKeSupplier.Size = new System.Drawing.Size(322, 22);
+            this.MENU_pembayaranHutangKeSupplier.Size = new System.Drawing.Size(353, 22);
             this.MENU_pembayaranHutangKeSupplier.Text = "Pembayaran Hutang ke Supplier";
             // 
             // toolStripMenuItem1
@@ -1323,7 +1345,7 @@
             this.pembelianToolStripMenuItem1.BackColor = System.Drawing.Color.SteelBlue;
             this.pembelianToolStripMenuItem1.ForeColor = System.Drawing.Color.FloralWhite;
             this.pembelianToolStripMenuItem1.Name = "pembelianToolStripMenuItem1";
-            this.pembelianToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.pembelianToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
             this.pembelianToolStripMenuItem1.Text = "Pembelian";
             this.pembelianToolStripMenuItem1.Click += new System.EventHandler(this.pembelianToolStripMenuItem1_Click);
             // 
@@ -1332,7 +1354,7 @@
             this.penjualanToolStripMenuItem1.BackColor = System.Drawing.Color.SteelBlue;
             this.penjualanToolStripMenuItem1.ForeColor = System.Drawing.Color.FloralWhite;
             this.penjualanToolStripMenuItem1.Name = "penjualanToolStripMenuItem1";
-            this.penjualanToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.penjualanToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
             this.penjualanToolStripMenuItem1.Text = "Penjualan";
             this.penjualanToolStripMenuItem1.Click += new System.EventHandler(this.penjualanToolStripMenuItem1_Click);
             // 
@@ -1341,8 +1363,9 @@
             this.permintaanToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
             this.permintaanToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.permintaanToolStripMenuItem.Name = "permintaanToolStripMenuItem";
-            this.permintaanToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.permintaanToolStripMenuItem.Text = "Permintaan";
+            this.permintaanToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.permintaanToolStripMenuItem.Text = "Permintaan (HIDDEN)";
+            this.permintaanToolStripMenuItem.Visible = false;
             this.permintaanToolStripMenuItem.Click += new System.EventHandler(this.permintaanToolStripMenuItem_Click);
             // 
             // toolStripSeparator24
@@ -1749,15 +1772,6 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
-            // MENU_tambahRegion
-            // 
-            this.MENU_tambahRegion.BackColor = System.Drawing.Color.SteelBlue;
-            this.MENU_tambahRegion.ForeColor = System.Drawing.Color.FloralWhite;
-            this.MENU_tambahRegion.Name = "MENU_tambahRegion";
-            this.MENU_tambahRegion.Size = new System.Drawing.Size(277, 22);
-            this.MENU_tambahRegion.Text = "Tambah / Hapus Region";
-            this.MENU_tambahRegion.Click += new System.EventHandler(this.MENU_tambahRegion_Click);
-            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1951,6 +1965,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem MENU_membership;
         private System.Windows.Forms.ToolStripMenuItem MENU_tambahRegion;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

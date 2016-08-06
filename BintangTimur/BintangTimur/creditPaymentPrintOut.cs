@@ -16,14 +16,14 @@ namespace BintangTimur {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ReportDebtPaid : ReportClass {
+    public class creditPaymentPrintOut : ReportClass {
         
-        public ReportDebtPaid() {
+        public creditPaymentPrintOut() {
         }
         
         public override string ResourceName {
             get {
-                return "ReportDebtPaid.rpt";
+                return "creditPaymentPrintOut.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace BintangTimur {
         
         public override string FullResourceName {
             get {
-                return "BintangTimur.ReportDebtPaid.rpt";
+                return "BintangTimur.creditPaymentPrintOut.rpt";
             }
             set {
                 // Do nothing
@@ -106,9 +106,9 @@ namespace BintangTimur {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReportDebtPaid : Component, ICachedReport {
+    public class CachedcreditPaymentPrintOut : Component, ICachedReport {
         
-        public CachedReportDebtPaid() {
+        public CachedcreditPaymentPrintOut() {
         }
         
         [Browsable(false)]
@@ -145,7 +145,7 @@ namespace BintangTimur {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ReportDebtPaid rpt = new ReportDebtPaid();
+            creditPaymentPrintOut rpt = new creditPaymentPrintOut();
             rpt.Site = this.Site;
             return rpt;
         }

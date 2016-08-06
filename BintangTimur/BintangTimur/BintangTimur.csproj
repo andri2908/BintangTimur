@@ -111,6 +111,12 @@
     <Compile Include="createConfigFileForm.Designer.cs">
       <DependentUpon>createConfigFileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="creditPaymentPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>creditPaymentPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="dataRegion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,12 @@
     </Compile>
     <Compile Include="dataRegionDetail.Designer.cs">
       <DependentUpon>dataRegionDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="debtPaymentPrintOut.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>debtPaymentPrintOut.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="dummyReport.cs">
       <AutoGen>True</AutoGen>
@@ -385,6 +397,12 @@
     <Compile Include="newMessageForm.Designer.cs">
       <DependentUpon>newMessageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="paymentCreditPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="paymentCreditPrintOutForm.Designer.cs">
+      <DependentUpon>paymentCreditPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="pembayaranHutangForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -579,7 +597,10 @@
     <Compile Include="ReportCreditDueForm.Designer.cs">
       <DependentUpon>ReportCreditDueForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReportCreditPaid.cs">
+    <Compile Include="ReportCreditPaid1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportCreditPaid.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportCreditPaidForm.cs">
@@ -626,6 +647,9 @@
     </Compile>
     <Compile Include="ReportDebtPaid.cs">
       <SubType>Component</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDebtPaid.rpt</DependentUpon>
     </Compile>
     <Compile Include="ReportDebtPaidForm.cs">
       <SubType>Form</SubType>
@@ -714,7 +738,10 @@
     <Compile Include="ReportProductForm.Designer.cs">
       <DependentUpon>ReportProductForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReportProductMutation.cs">
+    <Compile Include="ReportProductMutation1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportProductMutation.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportProductMutationForm.cs">
@@ -1044,6 +1071,12 @@
     <Compile Include="dataKategoriProdukForm.Designer.cs">
       <DependentUpon>dataKategoriProdukForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="stokTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="stokTransferForm.Designer.cs">
+      <DependentUpon>stokTransferForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TabOrderManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1083,6 +1116,10 @@
     <EmbeddedResource Include="createConfigFileForm.resx">
       <DependentUpon>createConfigFileForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="creditPaymentPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>creditPaymentPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="crReportContainer.resx">
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </EmbeddedResource>
@@ -1091,6 +1128,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dataRegionDetail.resx">
       <DependentUpon>dataRegionDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="debtPaymentPrintOut.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>debtPaymentPrintOut.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="dummyReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1220,6 +1261,9 @@
     <EmbeddedResource Include="newMessageForm.resx">
       <DependentUpon>newMessageForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="paymentCreditPrintOutForm.resx">
+      <DependentUpon>paymentCreditPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pembayaranHutangForm.resx">
       <DependentUpon>pembayaranHutangForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1330,6 +1374,10 @@
     <EmbeddedResource Include="ReportCreditDueForm.resx">
       <DependentUpon>ReportCreditDueForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportCreditPaid.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportCreditPaid1.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportCreditPaidForm.resx">
       <DependentUpon>ReportCreditPaidForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1353,6 +1401,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDebtDueForm.resx">
       <DependentUpon>ReportDebtDueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDebtPaid.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportDebtPaid.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDebtPaidForm.resx">
       <DependentUpon>ReportDebtPaidForm.cs</DependentUpon>
@@ -1581,6 +1633,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dataKategoriProdukForm.resx">
       <DependentUpon>dataKategoriProdukForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="stokTransferForm.resx">
+      <DependentUpon>stokTransferForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TabSchemeProvider.resx" />
     <EmbeddedResource Include="XMLGeneratorForm.resx">

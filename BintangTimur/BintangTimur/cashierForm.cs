@@ -930,7 +930,7 @@ namespace BintangTimur
             int numericCurrentMonth = 0;
             int numRows = 0;
 
-            SODateTime = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+            SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO SAVE SALES DATA [" + SODateTime + "]");
 

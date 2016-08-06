@@ -256,6 +256,8 @@ namespace BintangTimur
         public const string penerimaanBarangXML = "ProductsReceived.xml";
         public const string returPermintaanXML = "ReturPermintaan.xml";
         public const string deliveryOrderXML = "DeliveryOrder.xml";
+        public const string creditPaymentXML = "creditPaymentPrintOut.xml";
+
 
         public const string allSalesCommissionXML = "SalesCommission_ALL.xml";
         public const string salesCommissionXML = "SalesCommission.xml";
