@@ -695,10 +695,13 @@ namespace BintangTimur
             }
 
             selectedRow.Cells["jumlah"].Value = calculateSubTotal(rowSelectedIndex, Convert.ToDouble(selectedRow.Cells["productPrice"].Value));
+            
             calculateTotal();
             cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
             //comboSelectedIndexChangeMethod(rowSelectedIndex, i, selectedRow);
             //cashierDataGridView.CurrentCell = cashierDataGridView.Rows[rowSelectedIndex].Cells["qty"];
+
+            cashierDataGridView.Select();
         }
 
         private bool productIDValid(string productID)
