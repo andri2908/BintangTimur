@@ -31,6 +31,8 @@ namespace BintangTimur
         private int selectedPaymentMethod = 0;
         private bool isLoading = false;
         private double bayarAmount = 0;
+        private string bayarAmountText = "0";
+        private string discAmountText = "0";
         private double sisaBayar = 0;
         private int originModuleID = 0;
         private int custIsBlocked = 0;
@@ -395,14 +397,26 @@ namespace BintangTimur
             disc1.Clear();
             disc2.Clear();
             discRP.Clear();
+
+
+            salesQty.Add("0");
+            disc1.Add("0");
+            disc2.Add("0");
+            discRP.Add("0");
+
             selectedPelangganID = 0;
             globalTotalValue = 0;
             discValue = 0;
-            totalLabel.Text = globalTotalValue.ToString("C2", culture);
+            sisaBayar = 0;
+            bayarAmount = 0;
+            bayarAmountText = "0";
+            discAmountText = "0";
+        
+            totalLabel.Text = globalTotalValue.ToString("C0", culture);
             gutil.ResetAllControls(this);
 
-            totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
-            totalAfterDiscTextBox.Text = globalTotalValue.ToString("C2", culture);
+            totalPenjualanTextBox.Text = globalTotalValue.ToString("C0", culture);
+            totalAfterDiscTextBox.Text = globalTotalValue.ToString("C0", culture);
             uangKembaliTextBox.Text = "0";
 
             customerComboBox.SelectedIndex = 0;
