@@ -185,9 +185,9 @@ namespace BintangTimur
             else
                 newButton.Visible = false;
             
-            arrButton[0] = displayButton;
-            arrButton[1] = newButton;
-            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+            //arrButton[0] = displayButton;
+            //arrButton[1] = newButton;
+            //gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
 

@@ -40,6 +40,7 @@ namespace BintangTimur
 
         private List<string> detailRequestQty = new List<string>();
         private List<string> detailHpp = new List<string>();
+        private List<string> subtotalList = new List<string>();
         string previousInput = "";
 
         globalUtilities gUtil = new globalUtilities();
@@ -250,6 +251,7 @@ namespace BintangTimur
                 {
                     detailRequestQty[emptyRowIndex] = "0";
                     detailHpp[emptyRowIndex] = "0";
+                    subtotalList[emptyRowIndex] = "0";
                     rowSelectedIndex = emptyRowIndex;
                 }
                 else
@@ -257,6 +259,7 @@ namespace BintangTimur
                     detailGridView.Rows.Add();
                     detailRequestQty.Add("0");
                     detailHpp.Add("0");
+                    subtotalList.Add("0");
                     rowSelectedIndex = detailGridView.Rows.Count - 1;
                 }
             }
@@ -278,10 +281,11 @@ namespace BintangTimur
                 detailRequestQty[rowSelectedIndex] = currQty.ToString();
             }
 
-            hpp = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+            hpp = Convert.ToDouble(detailHpp[rowSelectedIndex]);
 
             subTotal = Math.Round((hpp * currQty), 2);
-            selectedRow.Cells["subtotal"].Value = subTotal;
+            selectedRow.Cells["subtotal"].Value = subTotal.ToString();
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
@@ -311,6 +315,12 @@ namespace BintangTimur
             durationTextBox.Visible = true;
             label1.Visible = true;
             isLoading = false;
+
+            if (selectedInvoice.Length > 0)
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PO INVOICE TO RECEIVE [" + selectedInvoice + "]");
+                supplierCombo.Enabled = false;
+            }
         }
 
         public void setSelectedMutasi(string mutasiNo)
@@ -336,6 +346,12 @@ namespace BintangTimur
             durationTextBox.Visible = false;
             label1.Visible = false;
             isLoading = false;
+
+            if (selectedMutasi.Length > 0)
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "NO MUTASI TO RECEIVE [" + selectedMutasi + "]");
+                supplierCombo.Enabled = false;
+            }
         }
 
         private void initializeScreen()
@@ -436,6 +452,7 @@ namespace BintangTimur
         {
             MySqlDataReader rdr;
             string sqlCommand = "";
+            double tempVal = 0;
 
             switch (originModuleId)
             {
@@ -450,8 +467,9 @@ namespace BintangTimur
                             {
                                 detailGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PM_SUBTOTAL"));
 
-                                detailRequestQty.Add(rdr.GetString("PRODUCT_QTY"));
-                                detailHpp.Add(rdr.GetString("PRODUCT_BASE_PRICE"));
+                                detailRequestQty[detailGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_QTY");
+                                detailHpp[detailGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
+                                subtotalList[detailGridView.Rows.Count - 1] = rdr.GetString("PM_SUBTOTAL");
                             }
                         }
                     }
@@ -468,8 +486,9 @@ namespace BintangTimur
                             {
                                 detailGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PRODUCT_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PURCHASE_SUBTOTAL"));
 
-                                detailRequestQty.Add(rdr.GetString("PRODUCT_QTY"));
-                                detailHpp.Add(rdr.GetString("PRODUCT_PRICE"));
+                                detailRequestQty[detailGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_QTY");
+                                detailHpp[detailGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_PRICE");
+                                subtotalList[detailGridView.Rows.Count - 1] = rdr.GetString("PURCHASE_SUBTOTAL");
                             }
                         }
                     }
@@ -558,6 +577,7 @@ namespace BintangTimur
             {
                 detailRequestQty.Add("0");
                 detailHpp.Add("0");
+                subtotalList.Add("0");
             }
 
             hpp_textBox.Name = "hpp";
@@ -622,6 +642,11 @@ namespace BintangTimur
             
             gUtil.reArrangeTabOrder(this);
 
+            detailHpp.Add("0");
+            detailRequestQty.Add("0");
+            subtotalList.Add("0");
+
+            prInvoiceTextBox.Select();
         }
 
         private double getHPPValue(string productID)
@@ -671,7 +696,7 @@ namespace BintangTimur
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
 
-            if ((detailGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -690,6 +715,7 @@ namespace BintangTimur
             selectedRow.Cells["hpp"].Value = "0";
             detailHpp[rowSelectedIndex] = "0";
             selectedRow.Cells["subtotal"].Value = "0";
+            subtotalList[rowSelectedIndex] = "0";
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             { 
                 selectedRow.Cells["qtyRequest"].Value = "0";
@@ -748,6 +774,7 @@ namespace BintangTimur
                 detailRequestQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subtotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total");
 
@@ -812,6 +839,7 @@ namespace BintangTimur
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailRequestQty.Count >= rowSelectedIndex + 1)
                     if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
@@ -885,18 +913,19 @@ namespace BintangTimur
                 {
                     //changes on hpp
                     hppValue = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
-                    productQty = Convert.ToDouble(selectedRow.Cells["qtyReceived"].Value);
+                    productQty = Convert.ToDouble(detailRequestQty[rowSelectedIndex]);
                 }
                 else
                 {
                     //changes on qty
                     productQty = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
-                    hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+                    hppValue = Convert.ToDouble(detailHpp[rowSelectedIndex]);
                 }
 
                 subTotal = Math.Round((hppValue * productQty), 2);
 
                 selectedRow.Cells["subtotal"].Value = subTotal;
+                subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                 calculateTotal();
             }
@@ -914,8 +943,7 @@ namespace BintangTimur
             double total = 0;
             for (int i =0;i<detailGridView.Rows.Count;i++)
             {
-                if (null != detailGridView.Rows[i].Cells["subtotal"].Value)
-                    total = total + Convert.ToDouble(detailGridView.Rows[i].Cells["subtotal"].Value);
+                total = total + Convert.ToDouble(subtotalList[i]);
             }
 
             globalTotalValue = total;
@@ -965,7 +993,7 @@ namespace BintangTimur
 
             if (detailGridView.Rows.Count <= 0)
             {
-                errorLabel.Text = "TIDAK ADA PRODUK YANG DITERIMA";
+                errorLabel.Text = "TIDAK ADA PRODUCT YANG DITERIMA";
                 return false;
             }
 
@@ -1494,11 +1522,21 @@ namespace BintangTimur
                 int rowSelectedIndex = detailGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailGridView.Rows[rowSelectedIndex];
 
-                if (null != selectedRow)
+                if (null != selectedRow && rowSelectedIndex != detailGridView.Rows.Count - 1)
                 {
+                    for (int i = rowSelectedIndex; i < detailGridView.Rows.Count; i++)
+                    {
+                        detailRequestQty[i] = detailRequestQty[i + 1];
+                        detailHpp[i] = detailHpp[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
                     isLoading = true;
-                    detailGridView.Rows.Remove(selectedRow);
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
+                    if (selectedRow.Index >= 0)
+                    { 
+                        detailGridView.Rows.Remove(detailGridView.Rows[rowSelectedIndex]);
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
+                    }
                     isLoading = false;
                 }
             }
@@ -1585,6 +1623,9 @@ namespace BintangTimur
 
         private void detailGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
+            detailHpp.Add("0");
+            detailRequestQty.Add("0");
+            subtotalList.Add("0");
         }
 
         private void durationTextBox_Enter(object sender, EventArgs e)
@@ -1695,6 +1736,7 @@ namespace BintangTimur
                     isLoading = true;
                     // reset subTotal Value and recalculate total
                     selectedRow.Cells["subTotal"].Value = 0;
+                    subtotalList[rowSelectedIndex] = "0";
 
                     if (detailRequestQty.Count >= rowSelectedIndex + 1)
                         if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
@@ -1765,18 +1807,19 @@ namespace BintangTimur
                     {
                         //changes on hpp
                         hppValue = Convert.ToDouble(cellValue);
-                        productQty = Convert.ToDouble(selectedRow.Cells["qtyReceived"].Value);
+                        productQty = Convert.ToDouble(detailRequestQty[rowSelectedIndex]);
                     }
                     else
                     {
                         //changes on qty
                         productQty = Convert.ToDouble(cellValue);
-                        hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+                        hppValue = Convert.ToDouble(detailHpp[rowSelectedIndex]);
                     }
 
                     subTotal = Math.Round((hppValue * productQty), 2);
 
                     selectedRow.Cells["subtotal"].Value = subTotal;
+                    subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                     calculateTotal();
                 }

@@ -373,7 +373,6 @@ namespace BintangTimur
 
             gutil.reArrangeTabOrder(this);
 
-            textBox1.Focus();
 
             namaProdukTextBox.Select();
         }

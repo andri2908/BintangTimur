@@ -305,6 +305,7 @@ namespace BintangTimur
                     gutil.setReadOnlyAllControls(this);
                 }
             }
+            userNameTextBox.Select();
         }
 
         private void resetbutton_Click(object sender, EventArgs e)
@@ -313,6 +314,14 @@ namespace BintangTimur
             options = gutil.INS;
             gutil.ResetAllControls(this);
             errorLabel.Text = "";
+        }
+
+        private void groupNameTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F11)
+            {
+                searchButton.PerformClick();
+            }
         }
     }
 }

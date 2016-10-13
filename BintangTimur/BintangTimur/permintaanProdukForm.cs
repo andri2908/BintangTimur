@@ -39,7 +39,9 @@ namespace BintangTimur
 
         private Data_Access DS = new Data_Access();
         private List<string> detailRequestQty = new List<string>();
-        
+        private List<string> productPriceList = new List<string>();
+        private List<string> subtotalList = new List<string>();
+
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
         private Button[] arrButton = new Button[3];
@@ -336,6 +338,9 @@ namespace BintangTimur
                 {
                     productName = rdr.GetString("PRODUCT_NAME");
                     detailRequestOrderDataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), productName, rdr.GetString("RO_QTY"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("RO_SUBTOTAL"));
+                    subtotalList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("RO_SUBTOTAL");
+                    productPriceList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
+                    detailRequestQty[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("RO_QTY");
                 }
 
                 rdr.Close();
@@ -348,6 +353,7 @@ namespace BintangTimur
 
             for (int i = 0; i<detailRequestOrderDataGridView.Rows.Count;i++)
             {
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value)
                 total = total + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
@@ -839,7 +845,11 @@ namespace BintangTimur
             arrButton[2] = exportButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
-            gUtil.reArrangeTabOrder(this);            
+            gUtil.reArrangeTabOrder(this);
+
+            subtotalList.Add("0");
+            productPriceList.Add("0");
+            detailRequestQty.Add("0");
         }
 
         private bool invoiceExist()
@@ -941,7 +951,7 @@ namespace BintangTimur
 
             if (selectedBranchToID == 0)
             {
-                errorLabel.Text = "INFORMASI CABANG BELUM DI ISI";
+                errorLabel.Text = "SYSTEM BRANCH ID BELUM DIISI";
                 return false;
             }
 
@@ -1164,8 +1174,22 @@ namespace BintangTimur
             {
                 int rowSelectedIndex = detailRequestOrderDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];    
+                detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                detailRequestOrderDataGridView.Rows.Remove(selectedRow);
+                if (null != selectedRow && rowSelectedIndex != detailRequestOrderDataGridView.Rows.Count - 1)
+                {
+                    for (int i = rowSelectedIndex; i < detailRequestOrderDataGridView.Rows.Count; i++)
+                    {
+                        detailRequestQty[i] = detailRequestQty[i + 1];
+                        productPriceList[i] = productPriceList[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
+                    isLoading = true;
+                    detailRequestOrderDataGridView.Rows.Remove(selectedRow);
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
+                    isLoading = false;
+                }
             }
         }
 
@@ -1484,8 +1508,19 @@ namespace BintangTimur
             unregisterGlobalHotkey();
         }
 
+
+        private void detailRequestOrderDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            subtotalList.Add("0");
+            productPriceList.Add("0");
+            detailRequestQty.Add("0");
+
+        }
+
         private void detailRequestOrderDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
+
+       
             var cell = detailRequestOrderDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[e.RowIndex];
 
