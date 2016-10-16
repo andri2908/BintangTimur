@@ -483,7 +483,7 @@ namespace BintangTimur
         {
             double total = 0;
 
-            for (int i = 0; i < detailPODataGridView.Rows.Count-1; i++)
+            for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
             {
                 total = total + Convert.ToDouble(subtotalList[i]);
             }
@@ -1439,7 +1439,7 @@ namespace BintangTimur
                     //forceUpOneLevel = true;
                 }
             }
-            else if (columnName == "HPP" && columnName == "qty")
+            else if (columnName == "HPP" || columnName == "qty")
             { 
                 if (cellValue.Length <= 0)
                 {

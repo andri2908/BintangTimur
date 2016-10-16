@@ -228,6 +228,7 @@
             // 
             // detailPODataGridView
             // 
+            this.detailPODataGridView.AllowUserToAddRows = false;
             this.detailPODataGridView.AllowUserToDeleteRows = false;
             this.detailPODataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
