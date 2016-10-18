@@ -3097,6 +3097,9 @@ namespace BintangTimur
             var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
 
+            if (isLoading)
+                return;
+
             rowSelectedIndex = e.RowIndex;
             columnName = cell.OwningColumn.Name;
 
@@ -3120,7 +3123,7 @@ namespace BintangTimur
                     //forceUpOneLevel = true;
                 }
             }
-            else if (columnName == "hpp" ||
+            else if (columnName == "productPrice" ||
                 columnName == "qty" ||
                 columnName == "disc1" ||
                 columnName == "disc2" ||
@@ -3131,8 +3134,6 @@ namespace BintangTimur
                     // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierDataGridView_CellValueChanged , empty texbox, reset [" + cashierDataGridView.CurrentCell.OwningColumn.Name + "] value to 0");
                     isLoading = true;
-                    // reset subTotal Value and recalculate total
-                    selectedRow.Cells["jumlah"].Value = 0;
 
                     //if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
                     //    detailRequestQtyApproved[rowSelectedIndex] = "0";
@@ -3153,8 +3154,23 @@ namespace BintangTimur
                     }
 
                     selectedRow.Cells[columnName].Value = "0";
+
+                    // reset subTotal Value and recalculate total
+                    if (columnName == "qty" || columnName == "productPrice")
+                        selectedRow.Cells["jumlah"].Value = 0;
+                    else
+                    {
+                        productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+
+                        subTotal = calculateSubTotal(rowSelectedIndex, productPrice);
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, subtotal value [" + subTotal + "]");
+                        selectedRow.Cells["jumlah"].Value = subTotal;
+                    }
+
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, recalculate total value");
                     calculateTotal();
+
+                    isLoading = false;
 
                     return;
                 }
@@ -3229,6 +3245,8 @@ namespace BintangTimur
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, attempt to calculate total value");
                 calculateTotal();
             }
+
+            isLoading = false;
         }
 
         private void cashierDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
