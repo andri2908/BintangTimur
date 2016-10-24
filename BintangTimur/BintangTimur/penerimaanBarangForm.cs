@@ -28,6 +28,7 @@ namespace BintangTimur
 
         private Hotkeys.GlobalHotkey ghk_F1;
         private Hotkeys.GlobalHotkey ghk_F2;
+        private Hotkeys.GlobalHotkey ghk_F3;
         private Hotkeys.GlobalHotkey ghk_F8;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F11;
@@ -70,6 +71,14 @@ namespace BintangTimur
                         displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
 
                         displayBarcodeForm.ShowDialog(this);
+                    }
+                    break;
+
+                case Keys.F3:
+                    if (detailGridView.ReadOnly == false)
+                    {
+                        dataProdukDetailForm displayedForm = new dataProdukDetailForm(globalConstants.PENERIMAAN_BARANG, this);
+                        displayedForm.ShowDialog(this);
                     }
                     break;
 
@@ -145,6 +154,9 @@ namespace BintangTimur
             //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
             //ghk_F2.Register();
 
+            ghk_F3 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F3, this);
+            ghk_F3.Register();
+
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
 
@@ -153,7 +165,6 @@ namespace BintangTimur
 
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
-
 
             ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
             ghk_CTRL_DEL.Register();
@@ -167,6 +178,7 @@ namespace BintangTimur
         {
             ghk_F1.Unregister();
             //ghk_F2.Unregister();
+            ghk_F3.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
@@ -175,7 +187,7 @@ namespace BintangTimur
             ghk_CTRL_ENTER.Unregister();
         }
 
-        public void addNewRow()
+        public void addNewRow(bool isActive = true)
         {
             int newRowIndex = 0;
             bool allowToAdd = true;
@@ -210,7 +222,10 @@ namespace BintangTimur
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailGridView.CurrentCell = detailGridView.Rows[newRowIndex].Cells["productID"];
+            if (isActive)
+            {
+                //detailGridView.CurrentCell = detailGridView.Rows[newRowIndex].Cells["productID"];
+            }
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -255,17 +270,18 @@ namespace BintangTimur
                     rowSelectedIndex = emptyRowIndex;
                 }
                 else
-                { 
-                    detailGridView.Rows.Add();
-                    detailRequestQty.Add("0");
-                    detailHpp.Add("0");
-                    subtotalList.Add("0");
+                {
+                    //detailGridView.Rows.Add();
+                    //detailRequestQty.Add("0");
+                    //detailHpp.Add("0");
+                    //subtotalList.Add("0");
+                    addNewRow();
                     rowSelectedIndex = detailGridView.Rows.Count - 1;
                 }
             }
 
             DataGridViewRow selectedRow = detailGridView.Rows[rowSelectedIndex];
-            updateSomeRowContents(selectedRow, rowSelectedIndex, productID);
+            updateSomeRowContents(selectedRow, rowSelectedIndex, productName);
 
             if (!found)
             {
@@ -555,15 +571,14 @@ namespace BintangTimur
             productID_textBox.Name = "productID";
             productID_textBox.HeaderText = "KODE PRODUK";
             productID_textBox.Width = 150;
-            productID_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
+            productID_textBox.Visible = false;
             detailGridView.Columns.Add(productID_textBox);
 
-                namaProduct_textBox.Name = "productName";
-                namaProduct_textBox.HeaderText = "NAMA PRODUK";
-                namaProduct_textBox.ReadOnly = true;
-                namaProduct_textBox.Width = 200;
-                detailGridView.Columns.Add(namaProduct_textBox);
-
+            namaProduct_textBox.Name = "productName";
+            namaProduct_textBox.HeaderText = "NAMA PRODUK";
+            namaProduct_textBox.Width = 200;
+            namaProduct_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
+            detailGridView.Columns.Add(namaProduct_textBox);
 
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             {
@@ -667,14 +682,14 @@ namespace BintangTimur
             string[] arr = null;
             List<string> arrList = new List<string>();
 
-            sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             rdr = DS.getData(sqlCommand);
 
             if (rdr.HasRows)
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -739,11 +754,11 @@ namespace BintangTimur
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -751,7 +766,7 @@ namespace BintangTimur
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -1715,20 +1730,21 @@ namespace BintangTimur
             else
                 cellValue = "";
 
-            if (columnName == "productName")
-            {
-                if (cellValue.Length > 0)
-                {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
-                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+            //if (columnName == "productName")
+            //{
+            //    if (cellValue.Length > 0)
+            //    {
+            //        updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+            //        //int pos = cashierDataGridView.CurrentCell.RowIndex;
 
-                    //if (pos > 0)
-                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+            //        //if (pos > 0)
+            //        //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
 
-                    //forceUpOneLevel = true;
-                }
-            }
-            else if (detailGridView.CurrentCell.OwningColumn.Name == "hpp" || detailGridView.CurrentCell.OwningColumn.Name == "qtyReceived")
+            //        //forceUpOneLevel = true;
+            //    }
+            //}
+            //else 
+            if (columnName == "hpp" || columnName == "qtyReceived")
             { 
                 if (cellValue.Length <= 0)
                 {
@@ -1739,7 +1755,7 @@ namespace BintangTimur
                     subtotalList[rowSelectedIndex] = "0";
 
                     if (detailRequestQty.Count >= rowSelectedIndex + 1)
-                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                        if (columnName == "hpp")
                             detailHpp[rowSelectedIndex] = "0";
                         else
                             detailRequestQty[rowSelectedIndex] = "0";
@@ -1752,7 +1768,7 @@ namespace BintangTimur
                 }
 
                 if (detailRequestQty.Count >= rowSelectedIndex + 1)
-                    if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                    if (columnName == "hpp")
                         previousInput = detailHpp[rowSelectedIndex];
                     else
                         previousInput = detailRequestQty[rowSelectedIndex];
@@ -1772,7 +1788,7 @@ namespace BintangTimur
                     if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
                         && (cellValue.Length > 0))
                     {
-                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                        if (columnName == "hpp")
                             detailHpp.Add(cellValue);
                         else
                             detailRequestQty.Add(cellValue);
@@ -1787,14 +1803,14 @@ namespace BintangTimur
                     if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
                         && (cellValue.Length > 0))
                     {
-                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                        if (columnName == "hpp")
                             detailHpp[rowSelectedIndex] = cellValue;
                         else
                             detailRequestQty[rowSelectedIndex] = cellValue;
                     }
                     else
                     {
-                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                        if (columnName == "hpp")
                             selectedRow.Cells[columnName].Value = detailHpp[rowSelectedIndex];
                         else
                             selectedRow.Cells[columnName].Value = detailRequestQty[rowSelectedIndex];
@@ -1803,7 +1819,7 @@ namespace BintangTimur
 
                 try
                 {
-                    if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                    if (columnName == "hpp")
                     {
                         //changes on hpp
                         hppValue = Convert.ToDouble(cellValue);

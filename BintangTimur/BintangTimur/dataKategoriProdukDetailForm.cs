@@ -89,9 +89,10 @@ namespace BintangTimur
 
             arrButton[0] = saveButton;
             arrButton[1] = button1;
-            gutil.reArrangeButtonPosition(arrButton, 167, this.Width);
+            gutil.reArrangeButtonPosition(arrButton, saveButton.Top, this.Width);
 
             gutil.reArrangeTabOrder(this);
+            categoryNameTextBox.Select();
         }
 
         private bool dataValidated()

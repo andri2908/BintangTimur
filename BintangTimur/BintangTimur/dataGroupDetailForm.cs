@@ -79,11 +79,12 @@ namespace BintangTimur
         {
             Button[] arrButton = new Button[2];
 
-            arrButton[0] = saveButton;
-            arrButton[1] = button1;
-            gutil.reArrangeButtonPosition(arrButton, 184, this.Width);
+            arrButton[0] = SaveButton;
+            arrButton[1] = ResetButton;
+            gutil.reArrangeButtonPosition(arrButton, SaveButton.Top, this.Width);
 
             gutil.reArrangeTabOrder(this);
+            namaGroupTextBox.Select();
         }
 
         private bool dataValidated()
@@ -192,7 +193,7 @@ namespace BintangTimur
             return result;
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {           
             if (saveData())
             {
@@ -227,7 +228,7 @@ namespace BintangTimur
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ResetButton_Click(object sender, EventArgs e)
         {
             gutil.ResetAllControls(this);
         }

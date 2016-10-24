@@ -1508,7 +1508,6 @@ namespace BintangTimur
             unregisterGlobalHotkey();
         }
 
-
         private void detailRequestOrderDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             subtotalList.Add("0");

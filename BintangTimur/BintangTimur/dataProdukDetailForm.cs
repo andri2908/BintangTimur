@@ -39,7 +39,8 @@ namespace BintangTimur
         private string selectedPhoto = "";
         private int options = 0;
         private stokPecahBarangForm parentForm;
-        
+        private penerimaanBarangForm penerimaanForm;
+
         public dataProdukDetailForm()
         {
             InitializeComponent();
@@ -58,6 +59,14 @@ namespace BintangTimur
 
             originModuleID = moduleID;
             parentForm = thisParentForm;
+        }
+
+        public dataProdukDetailForm(int moduleID, penerimaanBarangForm thisParentForm)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            penerimaanForm = thisParentForm;
         }
 
         private void calculateTotal()
@@ -936,11 +945,17 @@ namespace BintangTimur
                     case globalConstants.NEW_PRODUK:
                         gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_INSERT, "INSERT NEW PRODUK [" + namaProdukTextBox.Text + "]");
                         break;
+
                     case globalConstants.EDIT_PRODUK:
                         if (nonAktifCheckbox.Checked == true)
                             gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PRODUK [" + namaProdukTextBox.Text + "] STATUS PRODUK NON-AKTIF");
                         else
                             gUtil.saveUserChangeLog(globalConstants.MENU_PRODUK, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PRODUK [" + namaProdukTextBox.Text + "] STATUS PRODUK AKTIF");
+                        break;
+
+                    case globalConstants.PENERIMAAN_BARANG:
+                        penerimaanForm.addNewRowFromBarcode(selectedProductID, namaProdukTextBox.Text.Trim());
+                        this.Close();
                         break;
                 }
 

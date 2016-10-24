@@ -266,18 +266,11 @@ namespace BintangTimur
             }
 
             arrButton[0] = saveButton;
-            arrButton[1] = resetbutton;
+            arrButton[1] = ResetButton;
             gUtil.reArrangeButtonPosition(arrButton, 343, this.Width);
 
             gUtil.reArrangeTabOrder(this);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            gUtil.ResetAllControls(this);
-
-            originModuleID = globalConstants.NEW_BRANCH;
-            options = gUtil.INS;
+            branchNameTextBox.Select();
         }
 
         private void dataCabangDetailForm_Activated(object sender, EventArgs e)
@@ -314,5 +307,14 @@ namespace BintangTimur
             if (e.KeyChar == '.')
                 ip4Textbox.Focus();
         }
+		
+		private void ResetButton_Click(object sender, EventArgs e)
+        {
+            gUtil.ResetAllControls(this);
+
+            originModuleID = globalConstants.NEW_BRANCH;
+            options = gUtil.INS;
+        }
+		
     }
 }

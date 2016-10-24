@@ -62,7 +62,7 @@ namespace BintangTimur
             }
         }
 
-        private void loadAccountData(string accountnameParam)
+        private void loadAccountData(string accountnameParam, int options = 0)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
@@ -170,5 +170,11 @@ namespace BintangTimur
             if (dataAccountGridView.Rows.Count > 0)
                 displaySpecificForm();
         }
+
+		private void AllButton_Click(object sender, EventArgs e)
+        {
+            loadAccountData("",1);
+        }
+		
     }
 }
