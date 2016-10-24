@@ -65,3 +65,4 @@ C:\Users\alpha\Documents\GitHub\BintangTimur\BintangTimur\BintangTimur\obj\Debug
 C:\Users\alpha\Documents\GitHub\BintangTimur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.csproj.GenerateResource.Cache
 C:\Users\alpha\Documents\GitHub\BintangTimur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.exe
 C:\Users\alpha\Documents\GitHub\BintangTimur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.pdb
+D:\Project\BintangTimur\BintangTimur\BintangTimur\bin\Debug\BintangTimur.exe.config
