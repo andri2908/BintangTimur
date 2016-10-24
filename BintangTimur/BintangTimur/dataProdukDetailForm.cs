@@ -1084,9 +1084,9 @@ namespace BintangTimur
 
             arrButton[0] = saveButton;
             arrButton[1] = resetbutton;
-            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+            //gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
-            gUtil.reArrangeTabOrder(this);            
+            gUtil.reArrangeTabOrder(this,1);            
         }
 
         private void barcodeTextBox_Validated(object sender, EventArgs e)

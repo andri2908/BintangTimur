@@ -124,7 +124,7 @@ namespace BintangTimur
         private void dataCabangForm_Load(object sender, EventArgs e)
         {
             int userAccessOption = 0;
-            gutil.reArrangeTabOrder(this);
+            gutil.reArrangeTabOrder(this,1);
 
             userAccessOption = DS.getUserAccessRight(globalConstants.MENU_MANAJEMEN_CABANG, gutil.getUserGroupID());
 
