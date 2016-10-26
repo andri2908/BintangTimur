@@ -297,9 +297,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.groupBox1.Location = new System.Drawing.Point(9, 12);
+            this.groupBox1.Location = new System.Drawing.Point(61, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(899, 180);
+            this.groupBox1.Size = new System.Drawing.Size(798, 180);
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "FILTER";
@@ -321,7 +321,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DATA PERMINTAAN";
             this.Activated += new System.EventHandler(this.dataPermintaanForm_Activated);
-            //this.Deactivate += new System.EventHandler(this.dataPermintaanForm_Deactivate);
             this.Load += new System.EventHandler(this.dataPermintaanForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataRequestOrderGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -143,7 +143,7 @@
             // saveButton
             // 
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(159, 125);
+            this.saveButton.Location = new System.Drawing.Point(157, 125);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(95, 37);
             this.saveButton.TabIndex = 16;
@@ -154,7 +154,7 @@
             // resetbutton
             // 
             this.resetbutton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetbutton.Location = new System.Drawing.Point(300, 125);
+            this.resetbutton.Location = new System.Drawing.Point(302, 125);
             this.resetbutton.Name = "resetbutton";
             this.resetbutton.Size = new System.Drawing.Size(95, 37);
             this.resetbutton.TabIndex = 19;

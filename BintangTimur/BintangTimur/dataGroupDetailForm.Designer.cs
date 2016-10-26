@@ -117,7 +117,6 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.panel1.BackColor = System.Drawing.Color.SteelBlue;
             this.panel1.Controls.Add(this.errorLabel);
             this.panel1.Location = new System.Drawing.Point(1, 1);
@@ -186,7 +185,7 @@
             // 
             this.ResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ResetButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResetButton.Location = new System.Drawing.Point(301, 158);
+            this.ResetButton.Location = new System.Drawing.Point(297, 158);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(95, 37);
             this.ResetButton.TabIndex = 55;
@@ -211,7 +210,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(546, 246);
+            this.ClientSize = new System.Drawing.Size(546, 242);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -221,7 +220,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DETAIL DATA GROUP USER";
             this.Activated += new System.EventHandler(this.dataGroupDetailForm_Activated);
-            //this.Deactivate += new System.EventHandler(this.dataGroupDetailForm_Deactivate);
             this.Load += new System.EventHandler(this.dataGroupDetailForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

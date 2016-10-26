@@ -365,7 +365,7 @@
             // ResetButton
             // 
             this.ResetButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResetButton.Location = new System.Drawing.Point(413, 284);
+            this.ResetButton.Location = new System.Drawing.Point(412, 284);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(95, 37);
             this.ResetButton.TabIndex = 31;

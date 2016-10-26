@@ -30,7 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -46,40 +45,17 @@
             this.featureID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newGroupButton = new System.Windows.Forms.Button();
             this.checkAll = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.groupAccessDataGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.0597F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.9403F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 355F));
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.namaGroupTextBox, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.deskripsiTextBox, 2, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 37);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(547, 83);
-            this.tableLayoutPanel1.TabIndex = 20;
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(3, 12);
+            this.label3.Location = new System.Drawing.Point(14, 22);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(130, 18);
             this.label3.TabIndex = 8;
@@ -87,11 +63,10 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(3, 54);
+            this.label1.Location = new System.Drawing.Point(14, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 18);
             this.label1.TabIndex = 9;
@@ -99,11 +74,10 @@
             // 
             // label6
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(172, 12);
+            this.label6.Location = new System.Drawing.Point(153, 22);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(14, 18);
             this.label6.TabIndex = 12;
@@ -111,11 +85,10 @@
             // 
             // label7
             // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(172, 54);
+            this.label7.Location = new System.Drawing.Point(153, 55);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(14, 18);
             this.label7.TabIndex = 13;
@@ -123,9 +96,8 @@
             // 
             // namaGroupTextBox
             // 
-            this.namaGroupTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.namaGroupTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.namaGroupTextBox.Location = new System.Drawing.Point(194, 8);
+            this.namaGroupTextBox.Location = new System.Drawing.Point(173, 19);
             this.namaGroupTextBox.Name = "namaGroupTextBox";
             this.namaGroupTextBox.ReadOnly = true;
             this.namaGroupTextBox.Size = new System.Drawing.Size(346, 27);
@@ -133,9 +105,8 @@
             // 
             // deskripsiTextBox
             // 
-            this.deskripsiTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.deskripsiTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deskripsiTextBox.Location = new System.Drawing.Point(194, 49);
+            this.deskripsiTextBox.Location = new System.Drawing.Point(173, 52);
             this.deskripsiTextBox.Name = "deskripsiTextBox";
             this.deskripsiTextBox.ReadOnly = true;
             this.deskripsiTextBox.Size = new System.Drawing.Size(346, 27);
@@ -145,16 +116,15 @@
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.panel1.BackColor = System.Drawing.Color.SteelBlue;
-            this.panel1.Location = new System.Drawing.Point(1, 2);
+            this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(569, 29);
+            this.panel1.Size = new System.Drawing.Size(568, 29);
             this.panel1.TabIndex = 23;
             // 
             // saveButton
             // 
-            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(130, 136);
+            this.saveButton.Location = new System.Drawing.Point(161, 100);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(95, 37);
             this.saveButton.TabIndex = 25;
@@ -224,9 +194,8 @@
             // 
             // newGroupButton
             // 
-            this.newGroupButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.newGroupButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newGroupButton.Location = new System.Drawing.Point(231, 136);
+            this.newGroupButton.Location = new System.Drawing.Point(262, 100);
             this.newGroupButton.Name = "newGroupButton";
             this.newGroupButton.Size = new System.Drawing.Size(151, 37);
             this.newGroupButton.TabIndex = 30;
@@ -237,7 +206,7 @@
             // checkAll
             // 
             this.checkAll.AutoSize = true;
-            this.checkAll.Location = new System.Drawing.Point(478, 156);
+            this.checkAll.Location = new System.Drawing.Point(448, 85);
             this.checkAll.Name = "checkAll";
             this.checkAll.Size = new System.Drawing.Size(71, 17);
             this.checkAll.TabIndex = 31;
@@ -245,18 +214,32 @@
             this.checkAll.UseVisualStyleBackColor = true;
             this.checkAll.CheckedChanged += new System.EventHandler(this.checkAll_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.checkAll);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.newGroupButton);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.saveButton);
+            this.groupBox1.Controls.Add(this.namaGroupTextBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.deskripsiTextBox);
+            this.groupBox1.Location = new System.Drawing.Point(19, 30);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(533, 148);
+            this.groupBox1.TabIndex = 32;
+            this.groupBox1.TabStop = false;
+            // 
             // groupAccessModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(570, 661);
-            this.Controls.Add(this.checkAll);
-            this.Controls.Add(this.newGroupButton);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupAccessDataGridView);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "groupAccessModuleForm";
@@ -265,17 +248,14 @@
             this.Text = "PENGATURAN GROUP AKSES";
             this.Activated += new System.EventHandler(this.groupAccessModuleForm_Activated);
             this.Load += new System.EventHandler(this.groupAccessModuleForm_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupAccessDataGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
@@ -291,5 +271,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn moduleID;
         private System.Windows.Forms.DataGridViewTextBoxColumn featureID;
         private System.Windows.Forms.CheckBox checkAll;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

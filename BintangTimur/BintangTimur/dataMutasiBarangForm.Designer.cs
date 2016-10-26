@@ -102,7 +102,7 @@
             this.noMutasiTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noMutasiTextBox.Location = new System.Drawing.Point(186, 21);
             this.noMutasiTextBox.Name = "noMutasiTextBox";
-            this.noMutasiTextBox.Size = new System.Drawing.Size(260, 27);
+            this.noMutasiTextBox.Size = new System.Drawing.Size(330, 27);
             this.noMutasiTextBox.TabIndex = 36;
             // 
             // label2
@@ -147,7 +147,7 @@
             this.branchToCombo.FormattingEnabled = true;
             this.branchToCombo.Location = new System.Drawing.Point(186, 119);
             this.branchToCombo.Name = "branchToCombo";
-            this.branchToCombo.Size = new System.Drawing.Size(321, 26);
+            this.branchToCombo.Size = new System.Drawing.Size(330, 26);
             this.branchToCombo.TabIndex = 42;
             this.branchToCombo.SelectedIndexChanged += new System.EventHandler(this.branchToCombo_SelectedIndexChanged);
             // 
@@ -159,12 +159,10 @@
             this.branchFromCombo.FormattingEnabled = true;
             this.branchFromCombo.Location = new System.Drawing.Point(186, 87);
             this.branchFromCombo.Name = "branchFromCombo";
-            this.branchFromCombo.Size = new System.Drawing.Size(321, 26);
+            this.branchFromCombo.Size = new System.Drawing.Size(330, 26);
             this.branchFromCombo.TabIndex = 40;
             this.branchFromCombo.Visible = false;
             this.branchFromCombo.SelectedIndexChanged += new System.EventHandler(this.branchFromCombo_SelectedIndexChanged);
-            // 
-            // tableLayoutPanel2
             // 
             // PMDtPicker_1
             // 

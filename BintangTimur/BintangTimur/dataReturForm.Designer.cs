@@ -133,7 +133,7 @@
             // 
             this.newButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.newButton.Location = new System.Drawing.Point(449, 140);
+            this.newButton.Location = new System.Drawing.Point(439, 140);
             this.newButton.Name = "newButton";
             this.newButton.Size = new System.Drawing.Size(154, 37);
             this.newButton.TabIndex = 60;
@@ -179,7 +179,7 @@
             // 
             this.displayButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.displayButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.displayButton.Location = new System.Drawing.Point(296, 140);
+            this.displayButton.Location = new System.Drawing.Point(286, 140);
             this.displayButton.Name = "displayButton";
             this.displayButton.Size = new System.Drawing.Size(95, 37);
             this.displayButton.TabIndex = 59;
@@ -243,7 +243,7 @@
             this.comboPrintOut.Items.AddRange(new object[] {
             "POS Receipt",
             "Kuarto"});
-            this.comboPrintOut.Location = new System.Drawing.Point(705, 21);
+            this.comboPrintOut.Location = new System.Drawing.Point(676, 21);
             this.comboPrintOut.Name = "comboPrintOut";
             this.comboPrintOut.Size = new System.Drawing.Size(188, 26);
             this.comboPrintOut.TabIndex = 63;
@@ -254,7 +254,7 @@
             this.labelPrintOut.AutoSize = true;
             this.labelPrintOut.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPrintOut.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelPrintOut.Location = new System.Drawing.Point(554, 24);
+            this.labelPrintOut.Location = new System.Drawing.Point(525, 24);
             this.labelPrintOut.Name = "labelPrintOut";
             this.labelPrintOut.Size = new System.Drawing.Size(145, 18);
             this.labelPrintOut.TabIndex = 64;
@@ -278,9 +278,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.groupBox1.Location = new System.Drawing.Point(9, 11);
+            this.groupBox1.Location = new System.Drawing.Point(21, 11);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(899, 193);
+            this.groupBox1.Size = new System.Drawing.Size(878, 193);
             this.groupBox1.TabIndex = 65;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "FILTER";

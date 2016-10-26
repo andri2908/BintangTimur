@@ -228,9 +228,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.groupBox1.Location = new System.Drawing.Point(9, 12);
+            this.groupBox1.Location = new System.Drawing.Point(60, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(899, 150);
+            this.groupBox1.Size = new System.Drawing.Size(801, 150);
             this.groupBox1.TabIndex = 58;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "FILTER";
