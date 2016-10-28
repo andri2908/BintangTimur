@@ -35,8 +35,6 @@
             this.newButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.produknonactiveoption = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataProdukGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -64,12 +62,12 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataProdukGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataProdukGridView.Location = new System.Drawing.Point(0, 146);
+            this.dataProdukGridView.Location = new System.Drawing.Point(0, 116);
             this.dataProdukGridView.MultiSelect = false;
             this.dataProdukGridView.Name = "dataProdukGridView";
             this.dataProdukGridView.ReadOnly = true;
             this.dataProdukGridView.RowHeadersVisible = false;
-            this.dataProdukGridView.Size = new System.Drawing.Size(669, 402);
+            this.dataProdukGridView.Size = new System.Drawing.Size(669, 432);
             this.dataProdukGridView.TabIndex = 0;
             this.dataProdukGridView.DoubleClick += new System.EventHandler(this.tagProdukDataGridView_DoubleClick);
             this.dataProdukGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataProdukGridView_KeyDown);
@@ -79,7 +77,7 @@
             // 
             this.namaProdukTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.namaProdukTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.namaProdukTextBox.Location = new System.Drawing.Point(139, 56);
+            this.namaProdukTextBox.Location = new System.Drawing.Point(139, 23);
             this.namaProdukTextBox.Name = "namaProdukTextBox";
             this.namaProdukTextBox.Size = new System.Drawing.Size(260, 27);
             this.namaProdukTextBox.TabIndex = 6;
@@ -103,7 +101,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(6, 59);
+            this.label1.Location = new System.Drawing.Point(6, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 18);
             this.label1.TabIndex = 5;
@@ -113,7 +111,7 @@
             // 
             this.produknonactiveoption.AutoSize = true;
             this.produknonactiveoption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.produknonactiveoption.Location = new System.Drawing.Point(139, 88);
+            this.produknonactiveoption.Location = new System.Drawing.Point(139, 55);
             this.produknonactiveoption.Name = "produknonactiveoption";
             this.produknonactiveoption.Size = new System.Drawing.Size(184, 19);
             this.produknonactiveoption.TabIndex = 35;
@@ -121,33 +119,9 @@
             this.produknonactiveoption.UseVisualStyleBackColor = true;
             this.produknonactiveoption.CheckedChanged += new System.EventHandler(this.produknonactiveoption_CheckedChanged);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(6, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(121, 18);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "Kode Produk";
-            // 
-            // textBox1
-            // 
-            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(139, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(260, 27);
-            this.textBox1.TabIndex = 37;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.namaProdukTextBox);
-            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.produknonactiveoption);
             this.groupBox1.Controls.Add(this.newButton);
@@ -155,7 +129,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.FloralWhite;
             this.groupBox1.Location = new System.Drawing.Point(89, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(491, 117);
+            this.groupBox1.Size = new System.Drawing.Size(491, 87);
             this.groupBox1.TabIndex = 38;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "FILTER";
@@ -190,8 +164,6 @@
         private System.Windows.Forms.Button newButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox produknonactiveoption;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox1;
     }
 }

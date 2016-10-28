@@ -824,15 +824,15 @@ namespace BintangTimur
                     return false;
                 }
 
-                if (null == cashierDataGridView.Rows[i].Cells["productID"].Value)
-                {
-                    errorLabel.Text = "KODE PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
-                    return false;
-                }
+                //if (null == cashierDataGridView.Rows[i].Cells["productID"].Value)
+                //{
+                //    errorLabel.Text = "KODE PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
+                //    return false;
+                //}
 
-                if (!productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                if (null != cashierDataGridView.Rows[i].Cells["productID"].Value && !productIDValid(cashierDataGridView.Rows[i].Cells["productID"].Value.ToString()))
                 {
-                    errorLabel.Text = "KODE PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
+                    errorLabel.Text = "PRODUK DI BARIS " + (i + 1) + " TIDAK VALID";
                     return false;
                 }
             }
@@ -1312,7 +1312,7 @@ namespace BintangTimur
         {
             string message = "";
 
-            if (printoutCheckBox.Checked == true)
+            if (printoutCheckBox.Checked == false)
                 message = "SAVE AND PRINT OUT ?";
             else
                 message = "SAVE DATA ?";
@@ -1328,7 +1328,7 @@ namespace BintangTimur
 
                     gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "NEW TRANSAKSI PENJUALAN [" + selectedsalesinvoice + "]");
 
-                    if (printoutCheckBox.Checked == true)
+                    if (printoutCheckBox.Checked == false)
                     { 
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "PRINT OUT INVOICE");
                         PrintReceipt();
@@ -2433,22 +2433,22 @@ namespace BintangTimur
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == globalUtilities.PAPER_POS_RECEIPT) //kertas POS
-            {
-                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
-                //width, height
-                paperLength = calculatePageLength();
-                PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
-                printDocument1.DefaultPageSettings.PaperSize = psize;
-                DialogResult result;
-                printPreviewDialog1.Width = 512;
-                printPreviewDialog1.Height = 768;
-                result = printPreviewDialog1.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    printDocument1.Print();
-                }
-            } else
+            //if (papermode == globalUtilities.PAPER_POS_RECEIPT) //kertas POS
+            //{
+            //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
+            //    //width, height
+            //    paperLength = calculatePageLength();
+            //    PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
+            //    printDocument1.DefaultPageSettings.PaperSize = psize;
+            //    DialogResult result;
+            //    printPreviewDialog1.Width = 512;
+            //    printPreviewDialog1.Height = 768;
+            //    result = printPreviewDialog1.ShowDialog();
+            //    if (result == DialogResult.OK)
+            //    {
+            //        printDocument1.Print();
+            //    }
+            //} else
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, papermode [" + papermode + "]");
 

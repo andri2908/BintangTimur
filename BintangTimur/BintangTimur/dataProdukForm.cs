@@ -235,7 +235,7 @@ namespace BintangTimur
             //if (namaProdukTextBox.Text.Equals(""))
             //    return;
             namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
-            kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
+            //kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
             locationID = gutil.loadlocationID(2);
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
@@ -243,16 +243,18 @@ namespace BintangTimur
                 sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
                                     "FROM MASTER_PRODUCT M, SALES_DETAIL SD " +
                                     "WHERE SD.SALES_INVOICE = '" + returJualSearchParam + "' AND SD.PRODUCT_ID = M.PRODUCT_ID AND PRODUCT_IS_SERVICE = 0 " +
-                                    "AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
-                                    " GROUP BY M.PRODUCT_ID";
+                                    //"AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' 
+                                    "AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
+                                    " GROUP BY M.PRODUCT_NAME";
             }
             else if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
             {
                 sqlCommand = "SELECT M.ID, M.PRODUCT_ID AS 'PRODUK ID', M.PRODUCT_NAME AS 'NAMA PRODUK', M.PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' " +
                                     "FROM MASTER_PRODUCT M, SALES_DETAIL SD, SALES_HEADER SH " +
                                     "WHERE PRODUCT_ACTIVE = 1 AND SH.SALES_INVOICE = SD.SALES_INVOICE AND SD.PRODUCT_ID = M.PRODUCT_ID AND SH.CUSTOMER_ID = " + Convert.ToInt32(returJualSearchParam) + " AND PRODUCT_IS_SERVICE = 0 " +
-                                    "AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
-                                    " GROUP BY M.PRODUCT_ID";
+                                    //"AND M.PRODUCT_ID LIKE '%" + kodeProductParam + "%' 
+                                    "AND M.PRODUCT_NAME LIKE '%" + namaProductParam + "%'" +
+                                    " GROUP BY M.PRODUCT_NAME";
             }
             else if (originModuleID == globalConstants.RETUR_PEMBELIAN)
             {
@@ -260,7 +262,7 @@ namespace BintangTimur
             }
             else
             {
-                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
+                sqlCommand = "SELECT ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
             }
 
             if (originModuleID == globalConstants.STOK_PECAH_BARANG)
