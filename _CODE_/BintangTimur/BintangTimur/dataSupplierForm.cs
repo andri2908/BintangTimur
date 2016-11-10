@@ -60,6 +60,9 @@ namespace BintangTimur
             }
             else
             {
+                if (namaSupplierTextbox.Text.Equals(""))
+                    return;
+
                 if (suppliernonactiveoption.Checked == true)
                 {
                     sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER WHERE SUPPLIER_FULL_NAME LIKE '%" + namaSupplierParam + "%'";

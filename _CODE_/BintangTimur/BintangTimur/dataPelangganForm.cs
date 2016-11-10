@@ -82,8 +82,6 @@ namespace BintangTimur
 
             DS.mySqlConnect();
 
-            if (namaPelangganTextbox.Text.Equals(""))
-                return;
 
             namaPelangganParam = MySqlHelper.EscapeString(namaPelangganTextbox.Text);
             if (options == 1)
@@ -91,6 +89,8 @@ namespace BintangTimur
                 sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER";
             } else
             {
+                if (namaPelangganTextbox.Text.Equals(""))
+                    return;
                 if (pelanggangnonactiveoption.Checked == true)
                 {
                     sqlCommand = "SELECT CUSTOMER_ID, CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', DATE_FORMAT(CUSTOMER_JOINED_DATE,'%d-%M-%Y') AS 'TANGGAL BERGABUNG', IF(CUSTOMER_GROUP = 1,'ECER', IF(CUSTOMER_GROUP = 2,'PARTAI', 'GROSIR')) AS 'GROUP CUSTOMER' FROM MASTER_CUSTOMER WHERE CUSTOMER_FULL_NAME LIKE '%" + namaPelangganParam + "%'";
