@@ -187,6 +187,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -399,6 +400,7 @@
             // 
             this.MAINMENU_gudang.BackColor = System.Drawing.Color.SteelBlue;
             this.MAINMENU_gudang.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem13,
             this.MENU_produk,
             this.MENU_kategori,
             this.MENU_satuan,
@@ -1783,6 +1785,16 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // toolStripMenuItem13
+            // 
+            this.toolStripMenuItem13.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem13.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.ShowShortcutKeys = false;
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(254, 22);
+            this.toolStripMenuItem13.Text = "Pengaturan Lokasi";
+            this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1978,6 +1990,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_tambahRegion;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

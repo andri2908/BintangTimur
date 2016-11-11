@@ -1384,5 +1384,11 @@ namespace BintangTimur
             ReportSalesSummaryRegionSearchForm displayedForm = new ReportSalesSummaryRegionSearchForm();
             displayedForm.ShowDialog(this);
         }
+
+        private void toolStripMenuItem13_Click_1(object sender, EventArgs e)
+        {
+            dataLokasi displayedForm = new dataLokasi();
+            displayedForm.ShowDialog(this);
+        }
     }
 }
