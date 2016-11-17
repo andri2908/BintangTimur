@@ -174,15 +174,15 @@ namespace BintangTimur
             userAccessOption = DS.getUserAccessRight(globalConstants.MENU_SALES_QUOTATION, gUtil.getUserGroupID());
 
             if (userAccessOption == 1)
-                newButton.Visible = true;
+                newInvoiceButton.Visible = true;
             else
-                newButton.Visible = false;
+                newInvoiceButton.Visible = false;
 
             if (originModuleID == globalConstants.DELIVERY_ORDER)
-                newButton.Visible = false;
+                newInvoiceButton.Visible = false;
 
             arrButton[0] = displayButton;
-            arrButton[1] = newButton;
+            arrButton[1] = newInvoiceButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);

@@ -31,27 +31,71 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.customerHiddenCombo = new System.Windows.Forms.ComboBox();
+            this.newButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.noInvoiceTextBox = new System.Windows.Forms.TextBox();
             this.PODtPicker_1 = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.PODtPicker_2 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.customerHiddenCombo = new System.Windows.Forms.ComboBox();
-            this.showAllCheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.customerCombo = new System.Windows.Forms.ComboBox();
             this.displayButton = new System.Windows.Forms.Button();
-            this.newButton = new System.Windows.Forms.Button();
-            this.dataPenerimaanBarang = new System.Windows.Forms.DataGridView();
+            this.customerCombo = new System.Windows.Forms.ComboBox();
+            this.showAllCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).BeginInit();
+            this.dataPenerimaanBarang = new System.Windows.Forms.DataGridView();
+            this.newInvoiceButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // customerHiddenCombo
+            // 
+            this.customerHiddenCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customerHiddenCombo.FormattingEnabled = true;
+            this.customerHiddenCombo.Location = new System.Drawing.Point(566, 273);
+            this.customerHiddenCombo.Name = "customerHiddenCombo";
+            this.customerHiddenCombo.Size = new System.Drawing.Size(311, 26);
+            this.customerHiddenCombo.TabIndex = 66;
+            this.customerHiddenCombo.Visible = false;
+            // 
+            // newButton
+            // 
+            this.newButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newButton.Location = new System.Drawing.Point(400, 95);
+            this.newButton.Name = "newButton";
+            this.newButton.Size = new System.Drawing.Size(187, 37);
+            this.newButton.TabIndex = 65;
+            this.newButton.Text = "NEW INVOICE";
+            this.newButton.UseVisualStyleBackColor = true;
+            this.newButton.Click += new System.EventHandler(this.newButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(421, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(148, 18);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Tanggal Invoice";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 18);
+            this.label1.TabIndex = 35;
+            this.label1.Text = "No Invoice";
             // 
             // noInvoiceTextBox
             // 
@@ -91,50 +135,6 @@
             this.PODtPicker_2.Size = new System.Drawing.Size(145, 27);
             this.PODtPicker_2.TabIndex = 43;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(6, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 18);
-            this.label1.TabIndex = 35;
-            this.label1.Text = "No Invoice";
-            // 
-            // customerHiddenCombo
-            // 
-            this.customerHiddenCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerHiddenCombo.FormattingEnabled = true;
-            this.customerHiddenCombo.Location = new System.Drawing.Point(566, 273);
-            this.customerHiddenCombo.Name = "customerHiddenCombo";
-            this.customerHiddenCombo.Size = new System.Drawing.Size(311, 26);
-            this.customerHiddenCombo.TabIndex = 66;
-            this.customerHiddenCombo.Visible = false;
-            // 
-            // showAllCheckBox
-            // 
-            this.showAllCheckBox.AutoSize = true;
-            this.showAllCheckBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.showAllCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.showAllCheckBox.Location = new System.Drawing.Point(130, 75);
-            this.showAllCheckBox.Name = "showAllCheckBox";
-            this.showAllCheckBox.Size = new System.Drawing.Size(101, 22);
-            this.showAllCheckBox.TabIndex = 47;
-            this.showAllCheckBox.Text = "Show All";
-            this.showAllCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(421, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(148, 18);
-            this.label2.TabIndex = 37;
-            this.label2.Text = "Tanggal Invoice";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -145,6 +145,17 @@
             this.label3.Size = new System.Drawing.Size(93, 18);
             this.label3.TabIndex = 39;
             this.label3.Text = "Customer";
+            // 
+            // displayButton
+            // 
+            this.displayButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.displayButton.Location = new System.Drawing.Point(393, 95);
+            this.displayButton.Name = "displayButton";
+            this.displayButton.Size = new System.Drawing.Size(95, 37);
+            this.displayButton.TabIndex = 64;
+            this.displayButton.Text = "DISPLAY";
+            this.displayButton.UseVisualStyleBackColor = true;
+            this.displayButton.Click += new System.EventHandler(this.displayButton_Click);
             // 
             // customerCombo
             // 
@@ -158,27 +169,36 @@
             this.customerCombo.TabIndex = 40;
             this.customerCombo.SelectedIndexChanged += new System.EventHandler(this.customerCombo_SelectedIndexChanged);
             // 
-            // displayButton
+            // showAllCheckBox
             // 
-            this.displayButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayButton.Location = new System.Drawing.Point(401, 98);
-            this.displayButton.Name = "displayButton";
-            this.displayButton.Size = new System.Drawing.Size(95, 37);
-            this.displayButton.TabIndex = 64;
-            this.displayButton.Text = "DISPLAY";
-            this.displayButton.UseVisualStyleBackColor = true;
-            this.displayButton.Click += new System.EventHandler(this.displayButton_Click);
+            this.showAllCheckBox.AutoSize = true;
+            this.showAllCheckBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.showAllCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
+            this.showAllCheckBox.Location = new System.Drawing.Point(130, 75);
+            this.showAllCheckBox.Name = "showAllCheckBox";
+            this.showAllCheckBox.Size = new System.Drawing.Size(101, 22);
+            this.showAllCheckBox.TabIndex = 47;
+            this.showAllCheckBox.Text = "Show All";
+            this.showAllCheckBox.UseVisualStyleBackColor = true;
             // 
-            // newButton
+            // groupBox1
             // 
-            this.newButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newButton.Location = new System.Drawing.Point(508, 149);
-            this.newButton.Name = "newButton";
-            this.newButton.Size = new System.Drawing.Size(187, 37);
-            this.newButton.TabIndex = 65;
-            this.newButton.Text = "NEW INVOICE";
-            this.newButton.UseVisualStyleBackColor = true;
-            this.newButton.Click += new System.EventHandler(this.newButton_Click);
+            this.groupBox1.Controls.Add(this.newInvoiceButton);
+            this.groupBox1.Controls.Add(this.showAllCheckBox);
+            this.groupBox1.Controls.Add(this.customerCombo);
+            this.groupBox1.Controls.Add(this.displayButton);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.PODtPicker_2);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.PODtPicker_1);
+            this.groupBox1.Controls.Add(this.noInvoiceTextBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(896, 150);
+            this.groupBox1.TabIndex = 68;
+            this.groupBox1.TabStop = false;
             // 
             // dataPenerimaanBarang
             // 
@@ -211,23 +231,16 @@
             this.dataPenerimaanBarang.DoubleClick += new System.EventHandler(this.dataPenerimaanBarang_DoubleClick);
             this.dataPenerimaanBarang.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataPenerimaanBarang_KeyDown);
             // 
-            // groupBox1
+            // newInvoiceButton
             // 
-            this.groupBox1.Controls.Add(this.showAllCheckBox);
-            this.groupBox1.Controls.Add(this.customerCombo);
-            this.groupBox1.Controls.Add(this.displayButton);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.PODtPicker_2);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.PODtPicker_1);
-            this.groupBox1.Controls.Add(this.noInvoiceTextBox);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(896, 150);
-            this.groupBox1.TabIndex = 68;
-            this.groupBox1.TabStop = false;
+            this.newInvoiceButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newInvoiceButton.Location = new System.Drawing.Point(504, 95);
+            this.newInvoiceButton.Name = "newInvoiceButton";
+            this.newInvoiceButton.Size = new System.Drawing.Size(146, 37);
+            this.newInvoiceButton.TabIndex = 65;
+            this.newInvoiceButton.Text = "NEW INVOICE";
+            this.newInvoiceButton.UseVisualStyleBackColor = true;
+            this.newInvoiceButton.Click += new System.EventHandler(this.newButton_Click);
             // 
             // dataSalesInvoice
             // 
@@ -235,18 +248,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(920, 637);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.customerHiddenCombo);
             this.Controls.Add(this.dataPenerimaanBarang);
+            this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.Name = "dataSalesInvoice";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DATA SALES INVOICE";
             this.Load += new System.EventHandler(this.dataSalesInvoice_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -254,19 +267,20 @@
         #endregion
 
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ComboBox customerHiddenCombo;
+        private System.Windows.Forms.Button newButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox noInvoiceTextBox;
         private System.Windows.Forms.DateTimePicker PODtPicker_1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker PODtPicker_2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox customerHiddenCombo;
-        private System.Windows.Forms.CheckBox showAllCheckBox;
-        private System.Windows.Forms.Button newButton;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox customerCombo;
         private System.Windows.Forms.Button displayButton;
-        private System.Windows.Forms.DataGridView dataPenerimaanBarang;
+        private System.Windows.Forms.ComboBox customerCombo;
+        private System.Windows.Forms.CheckBox showAllCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button newInvoiceButton;
+        private System.Windows.Forms.DataGridView dataPenerimaanBarang;
     }
 }
