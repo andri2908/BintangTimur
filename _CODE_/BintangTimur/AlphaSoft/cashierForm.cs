@@ -756,7 +756,7 @@ namespace AlphaSoft
             maxCredit = maxCredit + creditTolerance;
             totalOutstandingCredit = totalOutstandingCredit + newCreditAmount;
 
-            if (maxCredit <= totalOutstandingCredit)
+            if ((totalOutstandingCredit>0) && (maxCredit <= totalOutstandingCredit))
                 result = true;
 
             return result;
@@ -2976,24 +2976,24 @@ namespace AlphaSoft
 
         private void cashierDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            //var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
-            //DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
+            var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
 
-            //if (cell.OwningColumn.Name == "productName")
-            //{
-            //    if (null != cell.Value)
-            //    {
-            //        if (cell.Value.ToString().Length > 0)
-            //        {
-            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
-            //            //cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            //        }
-            //        else
-            //        {
-            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
-            //        }
-            //    }
-            //}
+            if (cell.OwningColumn.Name == "productName")
+            {
+                if (null != cell.Value)
+                {
+                    if (cell.Value.ToString().Length > 0)
+                    {
+                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                        //cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    }
+                    else
+                    {
+                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                    }
+                }
+            }
         }
 
         private void rejectSQ(string selectedSO)
@@ -3116,16 +3116,16 @@ namespace AlphaSoft
 
             if (columnName == "productName")
             {
-                if (cellValue.Length > 0)
-                {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
-                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+                //if (cellValue.Length > 0)
+                //{
+                //    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+                //    //int pos = cashierDataGridView.CurrentCell.RowIndex;
 
-                    //if (pos > 0)
-                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+                //    //if (pos > 0)
+                //    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
 
-                    //forceUpOneLevel = true;
-                }
+                //    //forceUpOneLevel = true;
+                //}
             }
             else if (columnName == "productPrice" ||
                 columnName == "qty" ||
@@ -3141,7 +3141,7 @@ namespace AlphaSoft
 
                     //if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
                     //    detailRequestQtyApproved[rowSelectedIndex] = "0";
-                    switch (cashierDataGridView.CurrentCell.OwningColumn.Name)
+                    switch (columnName)
                     {
                         case "qty":
                             salesQty[rowSelectedIndex] = "0";
@@ -3182,7 +3182,7 @@ namespace AlphaSoft
                 if (null != selectedRow.Cells["productID"].Value)
                     productID = selectedRow.Cells["productID"].Value.ToString();
 
-                switch (cashierDataGridView.CurrentCell.OwningColumn.Name)
+                switch (columnName)
                 {
                     case "qty":
                         previousInput = salesQty[rowSelectedIndex];
@@ -3215,7 +3215,7 @@ namespace AlphaSoft
                     )
                 {
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking");
-                    switch (cashierDataGridView.CurrentCell.OwningColumn.Name)
+                    switch (columnName)
                     {
                         case "qty":
                             if (stockIsEnough(productID, Convert.ToDouble(cellValue)))
