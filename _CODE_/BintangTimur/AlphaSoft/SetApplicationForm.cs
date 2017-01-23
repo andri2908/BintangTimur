@@ -89,6 +89,10 @@ namespace AlphaSoft
                     while (rdr.Read())
                     {
                         BranchIDTextbox.Text = rdr.GetString("BRANCH_ID");
+
+                        branchCombo.SelectedIndex = rdr.GetInt32("BRANCH_ID");
+                        locationCombo.SelectedIndex = rdr.GetInt32("LOCATION_ID") - 1;
+
                         string tmp = rdr.GetString("IP");
                         int pos = tmp.IndexOf(".");
                         string tmp2 = tmp.Substring(0, pos);
@@ -132,9 +136,62 @@ namespace AlphaSoft
             }
         }
 
+        private void fillInLocationCombo()
+        {
+            MySqlDataReader rdr;
+            string sqlCommand = "";
+            DataTable dt = new DataTable();
+
+            sqlCommand = "SELECT ID, LOCATION_NAME FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1";
+
+            locationCombo.Items.Clear();
+            locationComboHidden.Items.Clear();
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        locationCombo.Items.Add(rdr.GetString("LOCATION_NAME"));
+                        locationComboHidden.Items.Add(rdr.GetString("ID"));
+                    }
+                }
+            }
+        }
+
+        private void fillInBranchCombo()
+        {
+            MySqlDataReader rdr;
+            string sqlCommand = "";
+            DataTable dt = new DataTable();
+
+            sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1";
+
+            branchCombo.Items.Clear();
+            branchComboHidden.Items.Clear();
+
+            branchCombo.Items.Add("PUSAT");
+            branchComboHidden.Items.Add("0");
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        branchCombo.Items.Add(rdr.GetString("BRANCH_NAME"));
+                        branchComboHidden.Items.Add(rdr.GetString("BRANCH_ID"));
+                    }
+                }
+            }
+        }
+
         private void setDatabaseLocationForm_Load(object sender, EventArgs e)
         {
             gutil.reArrangeTabOrder(this);
+
+            fillInLocationCombo();
+            fillInBranchCombo();
 
             errorLabel.Text = "";
             if (checkconfig())
@@ -324,8 +381,10 @@ namespace AlphaSoft
             string sqlCommand = "";
             MySqlException internalEX = null;
             string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim(); ;
-            String branchID = BranchIDTextbox.Text;
-            String locationID = locationIDTextBox.Text;
+
+            String branchID = branchComboHidden.Text;//BranchIDTextbox.Text;
+            String locationID = locationComboHidden.Text;//locationIDTextBox.Text;
+            
             //String no_faktur = "";
             String nama_toko = MySqlHelper.EscapeString(NamaTokoTextbox.Text);
             String alamat_toko = MySqlHelper.EscapeString(AlamatTextbox.Text);
@@ -568,6 +627,16 @@ namespace AlphaSoft
             {
                 BranchIDTextbox.SelectAll();
             });
+        }
+
+        private void locationCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            locationComboHidden.Text = locationComboHidden.Items[locationCombo.SelectedIndex].ToString();
+        }
+
+        private void branchCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            branchComboHidden.Text = branchComboHidden.Items[branchCombo.SelectedIndex].ToString();
         }
 
         private void ip1Textbox_KeyPress(object sender, KeyPressEventArgs e)

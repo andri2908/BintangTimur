@@ -103,10 +103,10 @@ namespace AlphaSoft
         }
 
         // TO HANDLE SALES REVISION
-        public cashierForm(string noInvoice, string revNo)
+        public cashierForm(string noInvoice, string revNo, int moduleID = globalConstants.SALES_ORDER_REVISION)
         {
             InitializeComponent();
-            originModuleID = globalConstants.SALES_ORDER_REVISION;
+            originModuleID = moduleID;
             selectedsalesinvoiceRevNo = revNo;
             selectedsalesinvoice = noInvoice;
             titleLabel.Text = posTitle;
@@ -938,15 +938,8 @@ namespace AlphaSoft
             string salesDateValue = "";
             bool addToTaxTable = false;
 
-            int salesPersonID = 0;
-            double commissionPercentage = 0;
-            double commissionValue = 0;
-            string currentYear = "0";
-            int numericCurrentYear = 0;
-            string currentMonth = "0";
-            int numericCurrentMonth = 0;
             int numRows = 0;
-
+ 
             SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO SAVE SALES DATA [" + SODateTime + "]");
@@ -1050,7 +1043,7 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
-                else if (originModuleID == globalConstants.SALES_ORDER_REVISION)   // SALES ORDER REVISION
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.PRE_ORDER_SALES_REVISION)   // SALES ORDER REVISION
                 {
                     salesInvoice = selectedsalesinvoice;
                     salesRevNo = gutil.getLatestRevisionNo(salesInvoice);
@@ -1062,15 +1055,24 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
-                    // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
-                                        "VALUES " +
-                                        "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "')";
+                    if (originModuleID == globalConstants.SALES_ORDER_REVISION)
+                    { 
+                        // SAVE HEADER TABLE
+                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
+                                            "VALUES " +
+                                            "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "')";
+                    }
+                    else if (originModuleID == globalConstants.PRE_ORDER_SALES_REVISION)
+                    {
+                        // SAVE HEADER TABLE
+                        sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE, IS_PREORDER) " +
+                                            "VALUES " +
+                                            "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "', 1)";
+                    }
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
-
                 }
                 else if (originModuleID == globalConstants.SALES_QUOTATION)
                 {
@@ -1107,6 +1109,20 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
+                else if (originModuleID == globalConstants.PRE_ORDER_SALES)   // NORMAL TRANSACTION
+                {
+                    salesInvoice = getSalesInvoiceID();
+                    //pass thru to receipt generator
+                    selectedsalesinvoice = salesInvoice;
+                    // SAVE HEADER TABLE
+                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, IS_PREORDER) " +
+                                        "VALUES " +
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", 1)";
+
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "] SET PREORDER = 1");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
 
                 if (addToTaxTable)
                 {
@@ -1132,7 +1148,7 @@ namespace AlphaSoft
                         discRP = Convert.ToDouble(cashierDataGridView.Rows[i].Cells["discRP"].Value);
                         productID = cashierDataGridView.Rows[i].Cells["productID"].Value.ToString();
 
-                        if (originModuleID == 0) // NORMAL TRANSACTION
+                        if (originModuleID == 0 || originModuleID == globalConstants.PRE_ORDER_SALES) // NORMAL TRANSACTION
                         {
                             sqlCommand = "INSERT INTO SALES_DETAIL (SALES_INVOICE, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_SALES_PRICE, PRODUCT_QTY, PRODUCT_DISC1, PRODUCT_DISC2, PRODUCT_DISC_RP, SALES_SUBTOTAL) " +
                                                 "VALUES " +
@@ -1145,7 +1161,7 @@ namespace AlphaSoft
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
-                        else if (originModuleID == globalConstants.SALES_ORDER_REVISION) // SALES ORDER REVISION
+                        else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.PRE_ORDER_SALES_REVISION) // SALES ORDER REVISION
                         {
                             sqlCommand = "INSERT INTO SALES_DETAIL (SALES_INVOICE, REV_NO, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_SALES_PRICE, PRODUCT_QTY, PRODUCT_DISC1, PRODUCT_DISC2, PRODUCT_DISC_RP, SALES_SUBTOTAL) " +
                                                 "VALUES " +
@@ -1219,7 +1235,7 @@ namespace AlphaSoft
                     }
                 }
 
-                if (originModuleID == 0 || originModuleID == globalConstants.SALES_ORDER_REVISION)  // NORMAL TRANSACTION
+                if (originModuleID == 0 || originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.PRE_ORDER_SALES)  // NORMAL TRANSACTION
                 {
                     // CHECK WHETHER AN ENTRY FOR CREDIT HAS BEEN CREATED OR NOT
                     numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM CREDIT WHERE SALES_INVOICE = '" + salesInvoice + "'"));
@@ -1549,6 +1565,12 @@ namespace AlphaSoft
         private bool stockIsEnough(string productID, double qtyRequested)
         {
             bool result = false;
+
+            if (originModuleID == globalConstants.PRE_ORDER_SALES)
+            {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PRE ORDER SALES, CHECK STOCK QTY ALWAYS TRUE");
+                return true;
+            }
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CHECK STOCK QTY IS ENOUGH [" + productID + "]");
 
@@ -2029,6 +2051,7 @@ namespace AlphaSoft
                     rdr.Close();
                     break;
                 case globalConstants.SALES_ORDER_REVISION:
+                case globalConstants.PRE_ORDER_SALES_REVISION:
                     // PULL HEADER DATA
                     sqlCommand = "SELECT SH.SQ_INVOICE, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.SALES_TOTAL AS TOTAL, SH.SALES_DISCOUNT_FINAL AS DISC_FINAL, SH.SALES_TOP AS TOP, DATEDIFF(SH.SALES_TOP_DATE, SH.SALES_DATE) AS TOP_DURATION " +
                                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "' AND SH.REV_NO = " + selectedsalesinvoiceRevNo;
@@ -2133,13 +2156,13 @@ namespace AlphaSoft
                 bayarTextBox.Visible = false;
                 uangKembaliTextBox.Visible = false;
             }
-            else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.PRE_ORDER_SALES_REVISION)
             {
                 noFakturLabel.Text = "";
                 approvalButton.Visible = false;
                 //rejectButton.Visible = false;
             }
-            else if (originModuleID == 0) // NORMAL TRANSACTION
+            else if (originModuleID == 0 || originModuleID == globalConstants.PRE_ORDER_SALES) // NORMAL TRANSACTION
             { 
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR");
                 loadNoFaktur();
@@ -2461,7 +2484,7 @@ namespace AlphaSoft
                 DS.mySqlConnect();
                 string sqlCommandx = "";
                     
-                if (originModuleID == 0)
+                if (originModuleID == 0 || originModuleID == globalConstants.PRE_ORDER_SALES)
                 {
                     // NORMAL TRANSACTION
                     sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +

@@ -840,14 +840,19 @@ namespace AlphaSoft
             displayedForm.ShowDialog(this);
         }
 
-        private void setAccessibility(int moduleID, ToolStripMenuItem  menuItem)
+        private bool setAccessibility(int moduleID, ToolStripMenuItem  menuItem)
         {
             int userAccessRight = 0;
-
+            bool isVisible = true;
             userAccessRight = DS.getUserAccessRight(moduleID, selectedUserGroupID);
 
             if (userAccessRight <= 0)
+            { 
                 menuItem.Visible = false;
+                isVisible = false;
+            }
+
+            return isVisible;
         }
 
         private void setAccessibility(int moduleID, ToolStripButton menuItem)
@@ -862,6 +867,8 @@ namespace AlphaSoft
         
         private void activateUserAccessRight()
         {
+            bool subMenuExist = false;
+
             if (selectedUserGroupID == 0)
                 return;
 
@@ -917,28 +924,37 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_PEMBELIAN, MAINMENU_pembelian);
             setAccessibility(globalConstants.MENU_PEMBELIAN, SHORTCUT_beli);
             setAccessibility(globalConstants.MENU_PEMBELIAN, SHORTCUT_returBeli);
+            
             // SUB MENU SUPPLIER
             setAccessibility(globalConstants.MENU_SUPPLIER, MENU_supplier);
+            
             // SUB MENU PERMINTAAN PRODUK
-            setAccessibility(globalConstants.MENU_REQUEST_ORDER, MENU_requestOrder);
-            setAccessibility(globalConstants.MENU_PURCHASE_ORDER, MENU_purchaseOrder);
+            subMenuExist |= setAccessibility(globalConstants.MENU_REQUEST_ORDER, MENU_requestOrder);
+            subMenuExist |= setAccessibility(globalConstants.MENU_PURCHASE_ORDER, MENU_purchaseOrder);
+            subMenuExist |= setAccessibility(globalConstants.MENU_REPRINT_REQUEST_ORDER, MENU_reprintRequestOrder);
+            MENU_permintaanProduk.Visible = subMenuExist;
+
             setAccessibility(globalConstants.MENU_PURCHASE_ORDER, SHORTCUT_beli);
-            setAccessibility(globalConstants.MENU_REPRINT_REQUEST_ORDER, MENU_reprintRequestOrder);
+
             // SUB MENU RETUR PRODUK
             setAccessibility(globalConstants.MENU_RETUR_PEMBELIAN, MENU_returPembelianKeSupplier);
-            setAccessibility(globalConstants.MENU_RETUR_PEMBELIAN, SHORTCUT_returBeli);
             setAccessibility(globalConstants.MENU_RETUR_PERMINTAAN, MENU_returPermintaanKePusat);
+            setAccessibility(globalConstants.MENU_RETUR_PEMBELIAN, SHORTCUT_returBeli);
 
             // SET ACCESSIBILITY FOR PENJUALAN MAIN MENU
             setAccessibility(globalConstants.MENU_PENJUALAN, MAINMENU_penjualan);
             setAccessibility(globalConstants.MENU_PENJUALAN, SHORTCUT_jual);
             setAccessibility(globalConstants.MENU_PENJUALAN, SHORTCUT_returJual);
+            
             // SUB MENU PELANGGAN
             setAccessibility(globalConstants.MENU_PELANGGAN, MENU_pelanggan);
+            
             // SUB MENU TRANSAKSI PENJUALAN
             setAccessibility(globalConstants.MENU_TRANSAKSI_PENJUALAN, MENU_transaksiPenjualan);
             setAccessibility(globalConstants.MENU_TRANSAKSI_PENJUALAN, SHORTCUT_jual);
             setAccessibility(globalConstants.MENU_SET_NO_FAKTUR, MENU_setNoFaktur);
+            setAccessibility(globalConstants.MENU_PRE_ORDER_SALES, MENU_preOrderSales);
+
             // SUB MENU RETUR PENJUALAN
             setAccessibility(globalConstants.MENU_RETUR_PENJUALAN, MENU_returPenjualan);
             setAccessibility(globalConstants.MENU_RETUR_PENJUALAN_INVOICE, MENU_returByInvoice);
@@ -965,6 +981,29 @@ namespace AlphaSoft
             // SUB MENU PENGATURAN LIMIT PAJAK
             setAccessibility(globalConstants.MENU_PENGATURAN_LIMIT_PAJAK, MENU_pengaturanLimitPajak);
             setAccessibility(globalConstants.MENU_TAX_MODULE, MAINMENU_TaxModule);
+
+            // SET ACCESSIBILITY FOR LAPORAN MAIN MENU
+            if (setAccessibility(globalConstants.MENU_LAPORAN, MAINMENU_laporan))
+            {
+                setAccessibility(globalConstants.MENU_LAPORAN_PEMBELIAN_BARANG, MENU_laporanPembelianBarang);
+                setAccessibility(globalConstants.MENU_LAPORAN_HUTANG_AKAN_JATUH_TEMPO, MENU_laporanHutangAkanJatuhTempo);
+                setAccessibility(globalConstants.MENU_LAPORAN_HUTANG_LEWAT_JATUH_TEMPO, MENU_laporanHutangLewatJatuhTempo);
+                setAccessibility(globalConstants.MENU_LAPORAN_PEMBAYARAN_HUTANG, MENU_laporanPembayaranHutang);
+                setAccessibility(globalConstants.MENU_LAPORAN_PENJUALAN_PRODUK, MENU_laporanPenjualanProduk);
+                setAccessibility(globalConstants.MENU_LAPORAN_OMZET_PENJUALAN, MENU_laporanOmzetPenjualan);
+                setAccessibility(globalConstants.MENU_LAPORAN_TOP_SALE, MENU_laporanTopSale);
+                setAccessibility(globalConstants.MENU_LAPORAN_PENJUALAN_KASIR, MENU_laporanPenjualanKasir);
+                setAccessibility(globalConstants.MENU_LAPORAN_KEUANGAN, MENU_laporanKeuangan);
+                setAccessibility(globalConstants.MENU_LAPORAN_PIUTANG_AKAN_JATUH_TEMPO, MENU_laporanPiutangAkanJatuhTempo);
+                setAccessibility(globalConstants.MENU_LAPORAN_PIUTANG_LEWAT_JATUH_TEMPO, MENU_laporanPiutangLewatJatuhTempo);
+                setAccessibility(globalConstants.MENU_LAPORAN_PEMBAYARAN_PIUTANG, MENU_laporanPembayaranPiutang);
+                setAccessibility(globalConstants.MENU_LAPORAN_DEVIASI_STOK, MENU_laporanDeviasiStok);
+                setAccessibility(globalConstants.MENU_LAPORAN_STOK_DIBAWAH_LIMIT, MENU_laporanStokDibawahLimit);
+                setAccessibility(globalConstants.MENU_LAPORAN_RETUR_BARANG, MENU_laporanReturBarang);
+                setAccessibility(globalConstants.MENU_LAPORAN_MUTASI_BARANG, MENU_laporanMutasiBarang);
+                setAccessibility(globalConstants.MENU_LAPORAN_PEMBAYARAN_MUTASI, MENU_laporanPembayaranMutasi);
+            }
+
         }
 
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
@@ -1388,6 +1427,12 @@ namespace AlphaSoft
         private void toolStripMenuItem13_Click_1(object sender, EventArgs e)
         {
             dataLokasi displayedForm = new dataLokasi();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_preOrderSales_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.PRE_ORDER_SALES);
             displayedForm.ShowDialog(this);
         }
     }

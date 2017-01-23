@@ -48,7 +48,7 @@ namespace AlphaSoft
 
             //localDate = String.Format(culture, "{0:dd-MMM-yyyy}", DateTime.Now);
 
-            sqlCommand = "SELECT PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_STOCK_QTY, 0 AS PRODUCT_ACTUAL_QTY, '' AS DESCRIPTION FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
+            sqlCommand = "SELECT PRODUCT_ID, IFNULL(PRODUCT_BARCODE, ''), IFNULL(PRODUCT_NAME, ''), PRODUCT_STOCK_QTY, 0 AS PRODUCT_ACTUAL_QTY, '' AS DESCRIPTION FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY ID";
 
             using (rdr = DS.getData(sqlCommand))
             {

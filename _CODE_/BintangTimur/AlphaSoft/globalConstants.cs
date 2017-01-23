@@ -91,6 +91,8 @@ namespace AlphaSoft
         public const int EDIT_DJ = 504;
         public const int SALES_COMMISSION = 505;
         public const int MEMBERSHIP_POINT = 506;
+        public const int PRE_ORDER_SALES = 506;
+        public const int PRE_ORDER_SALES_REVISION = 507;
 
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
@@ -160,6 +162,30 @@ namespace AlphaSoft
 
         public const int MENU_SALES_QUOTATION = 52;
         public const int APPROVAL_SALES_QUOTATION = 53;
+        public const int MENU_PRE_ORDER_SALES = 53;
+
+
+        // MAIN MENU LAPORAN
+        public const int MENU_LAPORAN = 200;
+        public const int MENU_LAPORAN_PEMBELIAN_BARANG = 201;
+        public const int MENU_LAPORAN_HUTANG_AKAN_JATUH_TEMPO = 202;
+        public const int MENU_LAPORAN_HUTANG_LEWAT_JATUH_TEMPO = 203;
+        public const int MENU_LAPORAN_PEMBAYARAN_HUTANG = 204;
+        public const int MENU_LAPORAN_PENJUALAN_PRODUK = 205;
+        public const int MENU_LAPORAN_OMZET_PENJUALAN = 206;
+        public const int MENU_LAPORAN_TOP_SALE = 207;
+        public const int MENU_LAPORAN_PENJUALAN_KASIR = 208;
+        public const int MENU_LAPORAN_KEUANGAN = 209;
+        public const int MENU_LAPORAN_PIUTANG_AKAN_JATUH_TEMPO = 210;
+        public const int MENU_LAPORAN_PIUTANG_LEWAT_JATUH_TEMPO = 211;
+        public const int MENU_LAPORAN_PEMBAYARAN_PIUTANG = 212;
+        public const int MENU_LAPORAN_DEVIASI_STOK = 213;
+        public const int MENU_LAPORAN_STOK_DIBAWAH_LIMIT = 214;
+        public const int MENU_LAPORAN_RETUR_BARANG = 215;
+        public const int MENU_LAPORAN_MUTASI_BARANG = 216;
+        public const int MENU_LAPORAN_PEMBAYARAN_MUTASI = 217;
+        
+
 
         // CONSTANTS FOR USER CHANGE LOG
         public const int CHANGE_LOG_LOGIN = 1;

@@ -84,11 +84,11 @@ namespace AlphaSoft
             {
                 sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
-                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1 AND SH.IS_PREORDER = 0";
 
                 sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH " +
-                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1 AND SH.IS_PREORDER = 0";
             }
             else if (originModuleID == globalConstants.DELIVERY_ORDER)
             {
@@ -99,6 +99,16 @@ namespace AlphaSoft
                 sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH " +
                                        "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
+            }
+            else if (originModuleID == globalConstants.PRE_ORDER_SALES)
+            {
+                sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1 AND SH.IS_PREORDER = 1";
+
+                sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH " +
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1 AND SH.IS_PREORDER = 1";
             }
 
             if (!showAllCheckBox.Checked)
@@ -117,14 +127,18 @@ namespace AlphaSoft
 
                 if (originModuleID == globalConstants.SALES_QUOTATION)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
-                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || 
+                            originModuleID == globalConstants.DELIVERY_ORDER ||
+                            originModuleID == globalConstants.PRE_ORDER_SALES)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
-                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || 
+                                originModuleID == globalConstants.DELIVERY_ORDER ||
+                                originModuleID == globalConstants.PRE_ORDER_SALES)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
@@ -309,10 +323,16 @@ namespace AlphaSoft
 
                     if (DialogResult.Yes == MessageBox.Show(dialogMessage, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
-                        // UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
-                        if (processSalesOrderToDO(noInvoice, revNo, salesActiveStatus))
-                            printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
+                        //// UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
+                        //if (processSalesOrderToDO(noInvoice, revNo, salesActiveStatus))
+                        //    printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
+                        deliveryOrderForm DOForm = new deliveryOrderForm(noInvoice, revNo);
+                        DOForm.ShowDialog(this);
                     }
+                    break;
+                case globalConstants.PRE_ORDER_SALES:
+                    cashierForm cashierFormDisplayPreOrder = new cashierForm(noInvoice, revNo, globalConstants.PRE_ORDER_SALES_REVISION);
+                    cashierFormDisplayPreOrder.ShowDialog(this);
                     break;
 
             }
@@ -338,7 +358,9 @@ namespace AlphaSoft
                 if (status == "0")
                     displaySpecificForm(noInvoice);
             }
-            else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION || 
+                originModuleID == globalConstants.DELIVERY_ORDER || 
+                originModuleID == globalConstants.PRE_ORDER_SALES)
             {
                 revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                 displaySpecificForm(noInvoice, revNo);
@@ -364,7 +386,9 @@ namespace AlphaSoft
                     if (status == "0")
                         displaySpecificForm(noInvoice);
                 }
-                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || 
+                    originModuleID == globalConstants.DELIVERY_ORDER || 
+                    originModuleID == globalConstants.PRE_ORDER_SALES)
                 {
                     revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                     displaySpecificForm(noInvoice, revNo);
@@ -374,7 +398,7 @@ namespace AlphaSoft
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            if (originModuleID == globalConstants.SALES_QUOTATION)
+            if (originModuleID == globalConstants.SALES_QUOTATION || originModuleID == globalConstants.PRE_ORDER_SALES)
             { 
                 cashierForm displayedForm = new cashierForm(originModuleID, true);
                 displayedForm.ShowDialog(this);
