@@ -700,5 +700,34 @@ namespace AlphaSoft
 
             return result;
         }
+
+        public bool stockIsEnough(string productID, double qtyRequested)
+        {
+            bool result = false;
+            int locationID;
+
+            saveSystemDebugLog(0, "CHECK STOCK QTY IS ENOUGH [" + productID + "]");
+
+            if (productIsService(productID))
+                result = true;
+            else
+            {
+                if (productID.Length <= 0)
+                    result = true; // NO PRODUCT SELECTED YET
+                else
+                {
+                    double stockQty = 0;
+                    locationID = loadlocationID(2);
+
+                    stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PL.PRODUCT_LOCATION_QTY - MP.PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE PL.PRODUCT_ID = MP.PRODUCT_ID AND MP.PRODUCT_ID = '" + productID + "' AND PL.LOCATION_ID = " + locationID));
+
+                    if (stockQty >= qtyRequested)
+                        result = true;
+
+                    saveSystemDebugLog(0, "CHECK STOCK QTY IS ENOUGH [" + stockQty + ", " + qtyRequested + "]");
+                }
+            }
+            return result;
+        }
     }
 }

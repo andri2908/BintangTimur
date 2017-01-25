@@ -1,0 +1,129 @@
+[] [1/25/2017 15:37] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/25/2017 15:37] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/25/2017 15:37] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/25/2017 15:37] [] DISPLAY ADMIN FORM
+[ADMIN] [1/25/2017 15:37] [] adminForm Load
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [2]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [600, 2]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:38] [] CHECK STOCK QTY IS ENOUGH [600, 200]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:38] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2002]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 20000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 200000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 20000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 200]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 200]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:39] [] CHECK STOCK QTY IS ENOUGH [600, 200]
+[ADMIN] [1/25/2017 15:39] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:40] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:40] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:40] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:43] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:43] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:43] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:43] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:43] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:43] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:43] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:43] [] CHECK STOCK QTY IS ENOUGH [600, 2]
+[ADMIN] [1/25/2017 15:43] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [600, 20]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [600, 200]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [600, 20000]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 15:44] [] CHECK STOCK QTY IS ENOUGH [600, 2000]
+[ADMIN] [1/25/2017 15:44] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[] [1/25/2017 15:45] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/25/2017 15:46] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/25/2017 15:46] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/25/2017 15:46] [] DISPLAY ADMIN FORM
+[ADMIN] [1/25/2017 15:46] [] adminForm Load
+[ADMIN] [1/25/2017 15:46] [] USER ID = 1LOGOUT

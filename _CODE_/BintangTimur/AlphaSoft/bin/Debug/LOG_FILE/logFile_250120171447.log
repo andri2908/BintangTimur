@@ -1,0 +1,590 @@
+[] [1/25/2017 14:21] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/25/2017 14:21] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/25/2017 14:21] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/25/2017 14:21] [] DISPLAY ADMIN FORM
+[ADMIN] [1/25/2017 14:21] [] adminForm Load
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [a]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [qty] value to 0
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 122]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1222]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 12222]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1222]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [qty] value to 0
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 122]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 1222]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:22] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:22] [] CHECK STOCK QTY IS ENOUGH [1000, 122]
+[] [1/25/2017 14:25] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/25/2017 14:25] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/25/2017 14:25] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/25/2017 14:25] [] DISPLAY ADMIN FORM
+[ADMIN] [1/25/2017 14:25] [] adminForm Load
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 10]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [qty] value to 0
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 10]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 100]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 1000]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:26] [] CHECK STOCK QTY IS ENOUGH [1000, 10000]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:26] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:27] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[] [1/25/2017 14:27] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/25/2017 14:27] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/25/2017 14:27] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/25/2017 14:27] [] DISPLAY ADMIN FORM
+[ADMIN] [1/25/2017 14:27] [] adminForm Load
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [a]
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [aa]
+[ADMIN] [1/25/2017 14:28] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:29] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:29] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [a]
+[ADMIN] [1/25/2017 14:29] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : MULTIPLE CASHIER INSTANCE [1]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [A]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [AA]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [AAS]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [AASS]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [AASSX]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [G]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [GG]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [GGG]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:30] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:31] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:31] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:31] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:31] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:31] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [a]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [aa]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [aaa]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [aaaa]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [1000, 1]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [1000, 120]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:32] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:32] [] CHECK STOCK QTY IS ENOUGH [1000, 1200]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [1000, 12]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [1000, 120]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:37] [] CHECK STOCK QTY IS ENOUGH [1000, 1200]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:37] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [qty] value to 0
+[ADMIN] [1/25/2017 14:41] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:41] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [2]
+[ADMIN] [1/25/2017 14:42] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [1000, 2]
+[ADMIN] [1/25/2017 14:42] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:42] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [1000, 20]
+[ADMIN] [1/25/2017 14:42] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:42] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:42] [] CHECK STOCK QTY IS ENOUGH [1000, 200]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productID]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_BASE_PRICE]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [208500]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [208500]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_RETAIL_PRICE]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [800, 0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [1]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [800, 1]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [210000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [1]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [800, 15]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [3150000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [3150000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [3150000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [3150000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [15]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [800, 150]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput [150]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:46] [] CHECK STOCK QTY IS ENOUGH [800, 1500]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SUBTOTAL [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [3]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [31]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [315]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [3150]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [31500]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [315000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [3150000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : ATTEMPT TO SAVE SALES DATA [25-01-2017 14:46]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : CASH SALES
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : NO FAKTUR [SLO001]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : MAX SALES INVOICE [6]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : SALES INVOICE [SLO001-7]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] INSERT INTO SALES HEADER [SLO001-7] SET PREORDER = 1
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] INSERT INTO SALES DETAIL[19, 210000, 150]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] INSERT TO CREDIT TABLE [SLO001-7]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] INSERT TO DAILY JOURNAL TABLE [31500000]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] TRANSACTION SAVED
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] PRINT OUT INVOICE
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [1/25/2017 14:46] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] VALIDATE USER CREDIT STATUS
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [2]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [800, 2]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [800, 20]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [800, 200]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [800, 2000]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : detailGridView_CellValueChanged [qty]
+[ADMIN] [1/25/2017 14:47] [PENJUALAN] DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [19]
+[ADMIN] [1/25/2017 14:47] [] CHECK STOCK QTY IS ENOUGH [800, 20000]
+[ADMIN] [1/25/2017 14:47] [] USER ID = 1LOGOUT

@@ -25,4 +25,17 @@
       </xs:complexType>
     </xs:element>
   </xs:schema>
+  <Table>
+    <ID>9</ID>
+    <DATE>2017-01-25T15:05:00+07:00</DATE>
+    <INVOICE>SLO001-9</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>ALUMUNIUM 0.8 (120 X 240)</PRODUCT>
+    <QTY>200</QTY>
+    <PRICE>210000</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>42000000</SUBTOTAL>
+    <PAYMENT>42000000</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
 </NewDataSet>

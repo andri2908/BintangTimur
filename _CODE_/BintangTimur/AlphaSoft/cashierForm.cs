@@ -433,7 +433,8 @@ namespace AlphaSoft
         {
             int result = 0;
 
-            result = Convert.ToInt32(DS.getDataSingleValue("SELECT CUSTOMER_BLOCKED FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + ID));
+            if (ID > 0)
+                result = Convert.ToInt32(DS.getDataSingleValue("SELECT CUSTOMER_BLOCKED FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + ID));
 
             return result;
         }
@@ -482,6 +483,18 @@ namespace AlphaSoft
                     customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
                     customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CUSTOMER GROUP [" + customerComboBox.Text + "]");
+                    isLoading = false;
+                }
+                else
+                {
+                    // RESET CUSTOMER 
+                    pelangganTextBox.Text = "";
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : RESET CUSTOMER PROFILE");
+
+                    isLoading = true;
+                    customerComboBox.SelectedIndex = 0;
+                    customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : RESET CUSTOMER GROUP [" + customerComboBox.Text + "]");
                     isLoading = false;
                 }
             }
@@ -679,7 +692,7 @@ namespace AlphaSoft
 
             if (!found)
             {
-                if (stockIsEnough(productID, 1))
+                if (gutil.stockIsEnough(productID, 1))
                 {
                     selectedRow.Cells["qty"].Value = 1;
                     salesQty[rowSelectedIndex] = "1";
@@ -696,7 +709,7 @@ namespace AlphaSoft
             {
                 currQty = Convert.ToDouble(salesQty[rowSelectedIndex]) + 1;
 
-                if (stockIsEnough(productID, currQty))
+                if (gutil.stockIsEnough(productID, currQty))
                 {
                     selectedRow.Cells["qty"].Value = currQty;
                     salesQty[rowSelectedIndex] = currQty.ToString();
@@ -1917,7 +1930,7 @@ namespace AlphaSoft
                 switch (cashierDataGridView.CurrentCell.OwningColumn.Name)
                 {
                     case "qty":                            
-                        if (stockIsEnough(productID, Convert.ToDouble(dataGridViewTextBoxEditingControl.Text)))
+                        if (gutil.stockIsEnough(productID, Convert.ToDouble(dataGridViewTextBoxEditingControl.Text)))
                             salesQty[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
                         else
                             dataGridViewTextBoxEditingControl.Text = salesQty[rowSelectedIndex];
@@ -3241,7 +3254,7 @@ namespace AlphaSoft
                     switch (columnName)
                     {
                         case "qty":
-                            if (stockIsEnough(productID, Convert.ToDouble(cellValue)))
+                            if (gutil.stockIsEnough(productID, Convert.ToDouble(cellValue)))
                                 salesQty[rowSelectedIndex] = cellValue;
                             else
                                 selectedRow.Cells[columnName].Value = salesQty[rowSelectedIndex];
@@ -3291,6 +3304,17 @@ namespace AlphaSoft
             if (cashierDataGridView.IsCurrentCellDirty)
             {
                 cashierDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void pelangganTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (DialogResult.OK == MessageBox.Show("HAPUS PELANGGAN ?"))
+                {
+                    setCustomerID(0);
+                }
             }
         }
     }

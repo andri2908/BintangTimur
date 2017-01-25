@@ -58,6 +58,7 @@ namespace AlphaSoft
                 serverIPRadioButton.Checked = true;
             }*/
         }
+
         private bool checkActiveSetting(int opt)
         {
             bool rslt = false;
@@ -75,6 +76,7 @@ namespace AlphaSoft
             }
             return rslt;
         }
+
         private void loadSettingDB(int opt)
         {
             MySqlDataReader rdr;
@@ -474,6 +476,7 @@ namespace AlphaSoft
 
             return result;
         }
+
         private void saveButton_Click_1(object sender, EventArgs e)
         {
             //save to setting 

@@ -22,6 +22,8 @@ namespace AlphaSoft
         private CultureInfo culture = new CultureInfo("id-ID");
         private globalUtilities gUtil = new globalUtilities();
         private bool isPreOrderSales = false;
+        private bool isLoading = false;
+        private List<string> deliveryQty = new List<string>();
 
         public deliveryOrderForm()
         {
@@ -45,7 +47,7 @@ namespace AlphaSoft
             DataGridViewTextBoxColumn qtyColumn = new DataGridViewTextBoxColumn();
 
             // LOAD DATA HEADER
-            sqlCommand = "SELECT SH.IS_PREORDER, SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, '') AS CUSTOMER_NAME FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SH.REV_NO = " + salesRevNo;
+            sqlCommand = "SELECT SH.IS_PREORDER, SH.SALES_INVOICE, IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS CUSTOMER_NAME FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SH.REV_NO = " + salesRevNo;
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -70,6 +72,7 @@ namespace AlphaSoft
                                     ", MASTER_PRODUCT MP " +
                                     "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = '" + selectedSalesInvoice + "' AND SD.REV_NO = " + salesRevNo;
 
+            isLoading = true;
             using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -103,13 +106,100 @@ namespace AlphaSoft
                             detailGridView.Rows[i].Cells["QTY"].Style.BackColor = Color.LightBlue;
 
                         detailGridView.Rows[i].Cells["QTY"].Value = 0;
+                        deliveryQty.Add("0");
                     }
 
                 }
             }
             rdr.Close();
 
+            isLoading = false;
         }
+
+        private void detailGridViewEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if ((detailGridView.CurrentCell.OwningColumn.Name == "qty")
+                && e.Control is TextBox)
+            {
+                TextBox qtyTextBox = e.Control as TextBox;
+                //qtyTextBox.TextChanged -= qtyTextBox_TextChanged;
+                //qtyTextBox.TextChanged += qtyTextBox_TextChanged;
+            }
+        }
+
+        private void qtyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            string cellValue = "";
+            string previousInput = "";
+            string tempString = "";
+            string columnName = "qty";
+            string productID = "";
+
+            DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
+
+            rowSelectedIndex = detailGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = detailGridView.Rows[rowSelectedIndex];
+
+            if (isLoading)
+                return;
+
+            cellValue = dataGridViewTextBoxEditingControl.Text;
+
+            if (cellValue.Length <= 0)
+            {
+                // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [" + columnName + "] value to 0");
+                isLoading = true;
+
+                deliveryQty[rowSelectedIndex] = "0";
+                selectedRow.Cells[columnName].Value = "0";
+
+                isLoading = false;
+
+                return;
+            }
+
+            previousInput = deliveryQty[rowSelectedIndex];
+
+            isLoading = true;
+            if (previousInput == "0")
+            {
+                tempString = cellValue;
+                if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                    selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [" + cellValue + "]");
+            }
+
+            if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                && (cellValue.Length > 0 && cellValue != ".")
+                )
+            {
+                productID = selectedRow.Cells["PRODUCT_ID"].Value.ToString();
+
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking");
+                if (gUtil.stockIsEnough(productID, Convert.ToDouble(cellValue)))
+                {
+                    deliveryQty[rowSelectedIndex] = cellValue;
+                    errorLabel.Text = "";
+                }
+                else
+                {
+                    selectedRow.Cells[columnName].Value = deliveryQty[rowSelectedIndex];
+                    errorLabel.Text = "STOK TIDAK CUKUP";
+                }
+            }
+            else
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking");
+                selectedRow.Cells[columnName].Value = previousInput;
+                dataGridViewTextBoxEditingControl.Text = previousInput;
+            }
+
+            isLoading = false;
+        }
+
 
         private void deliveryOrderForm_Load(object sender, EventArgs e)
         {
@@ -128,10 +218,59 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
+
+            detailGridView.EditingControlShowing += detailGridViewEditingControlShowing;
         }
 
         private bool dataValidated()
         {
+            if (noInvoiceTextBox.Text.Length <= 0)
+            {
+                errorLabel.Text = "NO DO TIDAK BOLEH KOSONG";
+                return false;
+            }
+
+            bool validInput = true;
+            double orderQty = 0, deliveredQty = 0, qty = 0;
+            int i = 0;
+            string productID = "";
+            string reason = "";
+            for (i = 0; i < detailGridView.Rows.Count && validInput; i++)
+            {
+                // CHECK REGEX
+                if (!gUtil.matchRegEx(detailGridView.Rows[i].Cells["QTY"].Value.ToString(), globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
+                { 
+                    validInput = false;
+                    reason = "HARUS BERUPA ANGKA";
+                }
+
+                // CHECK STOCK
+                qty = Convert.ToDouble(detailGridView.Rows[i].Cells["QTY"].Value);
+                productID = detailGridView.Rows[i].Cells["PRODUCT_ID"].Value.ToString();
+
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking");
+                if (!gUtil.stockIsEnough(productID, qty))
+                {
+                    validInput = false;
+                    reason = "MELEBIHI JUMLAH STOK";
+                }
+
+                // CHECK ORDER AND DELIVERY
+                orderQty = Convert.ToDouble(detailGridView.Rows[i].Cells["ORDER QTY"].Value);
+                deliveredQty = Convert.ToDouble(detailGridView.Rows[i].Cells["DELIVERED QTY"].Value);
+
+                if (qty > (orderQty - deliveredQty))
+                { 
+                    validInput = false;
+                    reason = "MELEBIHI JUMLAH PESANAN";
+                }
+            }
+            if (!validInput)
+            {
+                errorLabel.Text = "INPUT QTY PADA BARIS [" + i + "] " + reason;
+                return false;
+            }
+
             return true;
         }
 
@@ -149,6 +288,9 @@ namespace AlphaSoft
             int lineItemID = 0;
             int locationID = gUtil.loadlocationID(2);
 
+            string selectedDate = DODtPicker.Value.ToShortDateString();
+            string DODateTime = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
+
             DS.beginTransaction();
 
             try
@@ -156,7 +298,7 @@ namespace AlphaSoft
                 DS.mySqlConnect();
 
                 // INSERT DATA HEADER
-                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, REV_NO, DO_DATE) VALUES ('" + noInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', " + salesRevNo + ", STR_TO_DATE('" + DODtPicker.Value + "', '%d-%m-%Y'))";
+                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, REV_NO, DO_DATE) VALUES ('" + doInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', " + salesRevNo + ", STR_TO_DATE('" + DODateTime + "', '%d-%m-%Y'))";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -173,7 +315,7 @@ namespace AlphaSoft
                     if (status == 0 && qty > 0)
                     {
                         // INSERT INTO DETAIL
-                        sqlCommand = "INSERT INTO DELIVERY_ORDER_DETAIL (DO_ID, PRODUCT_ID, PRODUCT_QTY) VALUES ('" + noInvoiceTextBox.Text + "', '" + productID + "', " + qty + ")";
+                        sqlCommand = "INSERT INTO DELIVERY_ORDER_DETAIL (DO_ID, PRODUCT_ID, PRODUCT_QTY) VALUES ('" + doInvoiceTextBox.Text + "', '" + productID + "', " + qty + ")";
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
 
@@ -205,8 +347,7 @@ namespace AlphaSoft
                         fullfilledItem++;
                 }
 
-
-                if (fullfilledItem == detailGridView.Rows.Count - 1)
+                if (fullfilledItem == detailGridView.Rows.Count)
                 {
                     // WHOLE ORDER COMPLETED
                     // UPDATE SALES HEADER SET SALES ACTIVE TO 0
@@ -236,20 +377,149 @@ namespace AlphaSoft
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (saveData())
-            {
-                MessageBox.Show("SUCCESS");
+            saveButton.Focus();
+            if (DialogResult.Yes == MessageBox.Show("SAVE DAN PRINT OUT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (saveData())
+                {
+                    MessageBox.Show("SUCCESS");
 
-                gUtil.setReadOnlyAllControls(this);
-                reprintButton.Enabled = true;
-            }
+                    gUtil.setReadOnlyAllControls(this);
+                    reprintButton.Enabled = true;
+
+                    doInvoiceTextBox.ReadOnly = true;
+                    DODtPicker.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("FAIL");
+                }
+        }
+
+        private bool isNoPRExist()
+        {
+            bool result = false;
+
+            if (Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM DELIVERY_ORDER_HEADER WHERE DO_ID = '" + MySqlHelper.EscapeString(doInvoiceTextBox.Text) + "'")) > 0)
+                result = true;
+
+            return result;
+        }
+
+        private void doInvoiceTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (doInvoiceTextBox.Text.Length > 0)
+                if (isNoPRExist())
+                {
+                    errorLabel.Text = "NO PENGIRIMAN SUDAH ADA";
+                }
+                else
+                    errorLabel.Text = "";
+        }
+
+        private void checkQtyContent(DataGridViewCellEventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            string cellValue = "";
+            string columnName = "";
+            string productID = "";
+            string tempString = "", previousInput = "";
+            var cell = detailGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = detailGridView.Rows[e.RowIndex];
+
+            if (isLoading)
+                return;
+
+            rowSelectedIndex = e.RowIndex;
+            columnName = cell.OwningColumn.Name;
+
+            gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : detailGridView_CellValueChanged [" + columnName + "]");
+
+            if (null != selectedRow.Cells[columnName].Value)
+                cellValue = selectedRow.Cells[columnName].Value.ToString();
             else
+                cellValue = "";
+
+            if (columnName == "qty")
             {
-                MessageBox.Show("FAIL");
+                //if (cellValue.Length <= 0)
+                //{
+                //    // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+                //    gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : detailGridView_CellValueChanged , empty texbox, reset [" + columnName + "] value to 0");
+                //    isLoading = true;
+
+                //    deliveryQty[rowSelectedIndex] = "0";
+                //    selectedRow.Cells[columnName].Value = "0";
+
+                //    isLoading = false;
+
+                //    return;
+                //}
+
+                //previousInput = deliveryQty[rowSelectedIndex];
+
+                //isLoading = true;
+                //if (previousInput == "0")
+                //{
+                //    tempString = cellValue;
+                //    if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                //        selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+
+                //    gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text [" + cellValue + "]");
+                //}
+
+                if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (cellValue.Length > 0 && cellValue != ".")
+                    )
+                {
+                    productID = selectedRow.Cells["PRODUCT_ID"].Value.ToString();
+
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking");
+                    if (gUtil.stockIsEnough(productID, Convert.ToDouble(cellValue)))
+                    {
+   //                     deliveryQty[rowSelectedIndex] = cellValue;
+                        errorLabel.Text = "";
+                    }
+                    else
+                    {
+   //                     selectedRow.Cells[columnName].Value = deliveryQty[rowSelectedIndex];
+                        errorLabel.Text = "STOK TIDAK CUKUP PADA BARIS [" + rowSelectedIndex + "]";
+                    }
+                }
+                else
+                {
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "DELIVERY ORDER : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text did not pass REGEX Checking");
+                    //              selectedRow.Cells[columnName].Value = previousInput;
+                    errorLabel.Text = "INPUT QTY PADA BARIS [" + rowSelectedIndex +"] SALAH";
+                }
+            }
+
+            isLoading = false;
+        }
+
+        private void detailGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            checkQtyContent(e);
+        }
+
+        private void detailGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (detailGridView.IsCurrentCellDirty)
+            {
+                detailGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
 
-        private void resetButton_Click(object sender, EventArgs e)
+        private void detailGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            detailGridView.SuspendLayout();
+        }
+
+        private void detailGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            detailGridView.ResumeLayout();
+        }
+
+        private void reprintButton_Click(object sender, EventArgs e)
         {
 
         }

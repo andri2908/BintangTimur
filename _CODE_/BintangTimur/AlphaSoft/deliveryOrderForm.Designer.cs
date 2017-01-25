@@ -28,16 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.errorLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.customerNameTextBox = new System.Windows.Forms.TextBox();
-            this.labelTotal_1 = new System.Windows.Forms.Label();
-            this.labelTotal = new System.Windows.Forms.Label();
-            this.labelTotalValue = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.labelAsal_1 = new System.Windows.Forms.Label();
@@ -82,9 +79,6 @@
             // 
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.customerNameTextBox);
-            this.groupBox1.Controls.Add(this.labelTotal_1);
-            this.groupBox1.Controls.Add(this.labelTotal);
-            this.groupBox1.Controls.Add(this.labelTotalValue);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.labelAsal_1);
@@ -97,7 +91,7 @@
             this.groupBox1.Controls.Add(this.labelNo);
             this.groupBox1.Location = new System.Drawing.Point(2, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(932, 201);
+            this.groupBox1.Size = new System.Drawing.Size(932, 157);
             this.groupBox1.TabIndex = 59;
             this.groupBox1.TabStop = false;
             // 
@@ -121,40 +115,6 @@
             this.customerNameTextBox.ReadOnly = true;
             this.customerNameTextBox.Size = new System.Drawing.Size(346, 27);
             this.customerNameTextBox.TabIndex = 55;
-            this.customerNameTextBox.Visible = false;
-            // 
-            // labelTotal_1
-            // 
-            this.labelTotal_1.AutoSize = true;
-            this.labelTotal_1.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTotal_1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelTotal_1.Location = new System.Drawing.Point(281, 153);
-            this.labelTotal_1.Name = "labelTotal_1";
-            this.labelTotal_1.Size = new System.Drawing.Size(23, 29);
-            this.labelTotal_1.TabIndex = 49;
-            this.labelTotal_1.Text = ":";
-            // 
-            // labelTotal
-            // 
-            this.labelTotal.AutoSize = true;
-            this.labelTotal.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTotal.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelTotal.Location = new System.Drawing.Point(2, 153);
-            this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(287, 29);
-            this.labelTotal.TabIndex = 49;
-            this.labelTotal.Text = "TOTAL PENGIRIMAN";
-            // 
-            // labelTotalValue
-            // 
-            this.labelTotalValue.AutoSize = true;
-            this.labelTotalValue.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTotalValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelTotalValue.Location = new System.Drawing.Point(308, 153);
-            this.labelTotalValue.Name = "labelTotalValue";
-            this.labelTotalValue.Size = new System.Drawing.Size(83, 29);
-            this.labelTotalValue.TabIndex = 51;
-            this.labelTotalValue.Text = "Rp. 0";
             // 
             // label11
             // 
@@ -208,6 +168,7 @@
             this.doInvoiceTextBox.Name = "doInvoiceTextBox";
             this.doInvoiceTextBox.Size = new System.Drawing.Size(158, 27);
             this.doInvoiceTextBox.TabIndex = 16;
+            this.doInvoiceTextBox.TextChanged += new System.EventHandler(this.doInvoiceTextBox_TextChanged);
             // 
             // noInvoiceTextBox
             // 
@@ -266,29 +227,33 @@
             this.detailGridView.AllowUserToAddRows = false;
             this.detailGridView.AllowUserToDeleteRows = false;
             this.detailGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.detailGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.detailGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.detailGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.detailGridView.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.detailGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.detailGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.detailGridView.Location = new System.Drawing.Point(2, 241);
+            this.detailGridView.Location = new System.Drawing.Point(2, 197);
             this.detailGridView.Name = "detailGridView";
             this.detailGridView.RowHeadersVisible = false;
-            this.detailGridView.Size = new System.Drawing.Size(932, 359);
+            this.detailGridView.Size = new System.Drawing.Size(932, 403);
             this.detailGridView.TabIndex = 60;
+            this.detailGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailGridView_CellBeginEdit);
+            this.detailGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailGridView_CellEndEdit);
+            this.detailGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailGridView_CellValueChanged);
+            this.detailGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailGridView_CurrentCellDirtyStateChanged);
             // 
             // reprintButton
             // 
@@ -301,6 +266,7 @@
             this.reprintButton.Text = "REPRINT";
             this.reprintButton.UseVisualStyleBackColor = true;
             this.reprintButton.Visible = false;
+            this.reprintButton.Click += new System.EventHandler(this.reprintButton_Click);
             // 
             // saveButton
             // 
@@ -345,9 +311,6 @@
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label labelTotal_1;
-        private System.Windows.Forms.Label labelTotal;
-        private System.Windows.Forms.Label labelTotalValue;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labelAsal_1;
