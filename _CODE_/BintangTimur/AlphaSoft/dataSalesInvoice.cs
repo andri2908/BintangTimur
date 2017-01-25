@@ -214,11 +214,16 @@ namespace AlphaSoft
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
-        private void printOutDeliveryOrder(string SONo, string revNo, int salesActiveStatus)
+        private void printOutDeliveryOrder(string SONo, string revNo)
         {
-            string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
-                                        "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
-                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
+            //string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
+            //                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
+            //                            "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
+
+            string sqlCommandx = "SELECT '0' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
+                            "FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD, SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , MASTER_PRODUCT MP " +
+                            "WHERE DH.SALES_INVOICE = '" + SONo + "' AND DD.DO_ID = DH.DO_ID AND DD.PRODUCT_ID = MP.PRODUCT_ID AND DH.REV_NO = '" + revNo + "' AND SH.SALES_INVOICE = '" + SONo + "' AND SH.REV_NO = '" + revNo + "'";
+
 
             DS.writeXML(sqlCommandx, globalConstants.deliveryOrderXML);
             deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
@@ -326,8 +331,15 @@ namespace AlphaSoft
                         //// UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
                         //if (processSalesOrderToDO(noInvoice, revNo, salesActiveStatus))
                         //    printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
-                        deliveryOrderForm DOForm = new deliveryOrderForm(noInvoice, revNo);
-                        DOForm.ShowDialog(this);
+                        if (salesActiveStatus == 1)
+                        { 
+                            deliveryOrderForm DOForm = new deliveryOrderForm(noInvoice, revNo);
+                            DOForm.ShowDialog(this);
+                        }
+                        else
+                        {
+                            printOutDeliveryOrder(noInvoice, revNo);
+                        }
                     }
                     break;
                 case globalConstants.PRE_ORDER_SALES:
