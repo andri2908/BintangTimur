@@ -167,6 +167,7 @@ namespace AlphaSoft
             gutil.reArrangeButtonPosition(arrButton, 187, this.Width);
 
             gutil.reArrangeTabOrder(this);
+            oldPasswordTextBox.Select();
         }
 
         private void button1_Click(object sender, EventArgs e)

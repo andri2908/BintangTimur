@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Globalization;
 
 using System.Text.RegularExpressions;
 
@@ -40,6 +41,7 @@ namespace AlphaSoft
         private int options = 0;
         private stokPecahBarangForm parentForm;
         private penerimaanBarangForm penerimaanForm;
+        private CultureInfo culture = new CultureInfo("id-ID");
 
         public dataProdukDetailForm()
         {
@@ -582,6 +584,12 @@ namespace AlphaSoft
             }
 
             produkKategoriTextBox.Text = kategoriName;
+        }
+
+        private void clearUpProductCategory()
+        {
+            produkKategoriTextBox.Clear();
+            currentSelectedKategoriID.Clear();
         }
 
         private void searchUnitButton_Click(object sender, EventArgs e)

@@ -140,7 +140,7 @@ namespace AlphaSoft
                     BranchconfigFileConnectionString = BranchconnectionString;
                     return true;
                 }
-                catch (MySql.Data.MySqlClient.MySqlException ex)
+                catch (Exception ex)
                 {
                     return false;
                 }

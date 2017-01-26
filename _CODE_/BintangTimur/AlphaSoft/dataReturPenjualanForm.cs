@@ -69,8 +69,9 @@ namespace AlphaSoft
                 invoiceTotalLabelValue.Visible = false;
                 invoiceSignLabel.Visible = false;
                 selectedCustomerID = customerID;
+                label2.Visible = false;
 
-                invoiceInfoLabel.Text = "NAMA PELANGGAN";
+                invoiceInfoLabel.Text = "PELANGGAN";
             }
             else
             {
@@ -317,6 +318,8 @@ namespace AlphaSoft
             calculateTotal();
 
             detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailReturDataGridView.BeginEdit(true);
+
             detailReturDataGridView.Select();
         }
 
@@ -1211,7 +1214,10 @@ namespace AlphaSoft
                                 rowCounter += 1;
                                 gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "rowCounter [" + rowCounter + "]");
                             }
+                            extraAmount = returNominal;
                         }
+                        else
+                            extraAmount = globalTotalValue;
                     }
                 }
 
@@ -1352,22 +1358,21 @@ namespace AlphaSoft
             string nm, almt, tlpn, email;
             //event printing
 
-            int startY = 5;
-            int Offset = 15;
+            int startY = 0;
+            int Offset = 5;
             int offset_plus = 3;
+            Font font = new Font("Courier New", 9);
+            int rowheight = (int)Math.Ceiling(font.GetHeight());
+            int add_offset = rowheight;
+            int totalLengthPage = startY + Offset;
             string sqlCommand = "";
-            int totalLengthPage = startY + Offset; ;
 
             String ucapan = "";
 
             //event printing
 
             gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "printDocument1_PrintPage, print POS size receipt");
-
-            int startX = 5;
-            int colxwidth = 93; //31x3
-            int totrowwidth = 310; //310/10=31
-            int totrowheight = 20;
+                   
             string customer = "";
             string tgl = "";
             string group = "";
@@ -1380,9 +1385,9 @@ namespace AlphaSoft
 
             loadInfoToko(2, out nm, out almt, out tlpn, out email);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 10;
+            Offset = Offset + add_offset;
 
             if (!email.Equals(""))
             {
@@ -1514,7 +1519,12 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
             {
-                if (DialogResult.Yes == MessageBox.Show("RETUR BERUPA UANG CASH?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (selectedCustomerID != 0)
+                {
+                    if (DialogResult.Yes == MessageBox.Show("RETUR BERUPA UANG CASH?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        returnCash = true;
+                }
+                else
                     returnCash = true;
 
                 gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN_STOK, "RETURN CASH [" + returnCash.ToString() + "]");
@@ -1602,15 +1612,20 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "printDocument1_PrintPage, print POS size receipt");
 
             Graphics graphics = e.Graphics;
-            Font font = new Font("Courier New", 10);
-            float fontHeight = font.GetHeight();
             int startX = 5;
             int colxwidth = 93; //31x3
             int totrowwidth = 310; //310/10=31
-            int totrowheight = 20;
-            int startY = 5;
-            int Offset = 15;
+
+            int startY = 0;
+            int Offset = 5;
             int offset_plus = 3;
+
+            Font font = new Font("Courier New", 9);
+            float fontHeight = font.GetHeight();
+            int rowheight = (int)Math.Ceiling(font.GetHeight());
+            int add_offset = rowheight;
+            int totalLengthPage = startY + Offset;
+
             string sqlCommand = "";
             string customer = "";
             string tgl = "";
@@ -1626,24 +1641,24 @@ namespace AlphaSoft
             sf.Alignment = StringAlignment.Center;
 
             //set whole printing area
-            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(startX, startY + Offset, totrowwidth, totrowheight);
+            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(startX, startY + Offset, totrowwidth, rowheight);
             //set right print area
-            System.Drawing.RectangleF rectright = new System.Drawing.RectangleF(totrowwidth - colxwidth - startX, startY + Offset, colxwidth, totrowheight);
+            System.Drawing.RectangleF rectright = new System.Drawing.RectangleF(totrowwidth - colxwidth - startX, startY + Offset, colxwidth, rowheight);
             //set middle print area
-            System.Drawing.RectangleF rectcenter = new System.Drawing.RectangleF((startX + (totrowwidth / 2) - colxwidth - startX), startY + Offset, (totrowwidth / 2) - startX, totrowheight);
+            System.Drawing.RectangleF rectcenter = new System.Drawing.RectangleF((startX + (totrowwidth / 2) - colxwidth - startX), startY + Offset, (totrowwidth / 2) - startX, rowheight);
 
             loadInfoToko(2, out nm, out almt, out tlpn, out email);
 
             graphics.DrawString(nm, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             graphics.DrawString(almt,
                      new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 10;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             graphics.DrawString(tlpn,
                      new Font("Courier New", 7),
@@ -1651,14 +1666,14 @@ namespace AlphaSoft
 
             if (!email.Equals(""))
             {
-                Offset = Offset + 10;
+                Offset = Offset + add_offset;
                 rect.Y = startY + Offset;
                 graphics.DrawString(email,
                          new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
             }
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             String underLine = "-------------------------------------";  //37 character
             graphics.DrawString(underLine, new Font("Courier New", 9),
@@ -1673,7 +1688,7 @@ namespace AlphaSoft
             //load customer id
             sqlCommand = "SELECT RS.RS_INVOICE, IFNULL(RS.SALES_INVOICE, '') AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER',DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE',RS.RS_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' FROM RETURN_SALES_HEADER RS,MASTER_CUSTOMER C WHERE RS.CUSTOMER_ID = C.CUSTOMER_ID AND RS.RS_INVOICE = '" + returID + "'" +
                 " UNION " +
-                "SELECT RS.RS_INVOICE, RS.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE', RS.RS_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' FROM RETURN_SALES_HEADER RS WHERE RS.CUSTOMER_ID = 0 AND RS.RS_INVOICE = '" + returID+ "'" +
+                "SELECT RS.RS_INVOICE, IFNULL(RS.SALES_INVOICE, ' ') AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE', RS.RS_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' FROM RETURN_SALES_HEADER RS WHERE RS.CUSTOMER_ID = 0 AND RS.RS_INVOICE = '" + returID+ "'" +
                 "ORDER BY DATE ASC";
             using (rdr = DS.getData(sqlCommand))
             {
@@ -1689,9 +1704,9 @@ namespace AlphaSoft
             }
             DS.mySqlClose();
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
+            Offset = Offset + add_offset;
             rect.Width = 280;
             //SET TO LEFT MARGIN
             sf.LineAlignment = StringAlignment.Near;
@@ -1701,13 +1716,13 @@ namespace AlphaSoft
                      new SolidBrush(Color.Black), rect, sf);
 
             //2. CUSTOMER NAME
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "PELANGGAN : " + customer + " [" + group + "]";
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -1716,14 +1731,14 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.Width = totrowwidth;
             ucapan = "BUKTI RETUR     ";
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15 + offset_plus;
+            Offset = Offset + add_offset + offset_plus;
             rect.Y = startY + Offset;
             rect.X = startX + 15;
             rect.Width = 280;
@@ -1733,9 +1748,9 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15 + offset_plus;
+            Offset = Offset + add_offset + offset_plus;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
+            rect.X = startX + add_offset;
             rect.Width = 280;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
@@ -1743,19 +1758,19 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TOTAL    : " + total.ToString("C2", culture);
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TANGGAL  : " + tgl;
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             string nama = "";
             loadNamaUser(gutil.getUserID(), out nama);
@@ -1763,7 +1778,7 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -1799,7 +1814,7 @@ namespace AlphaSoft
                         product_qty = rdr.GetDouble("PRODUCT_RETURN_QTY");
                         product_price = rdr.GetDouble("PRODUCT_SALES_PRICE");
                         product_desc = rdr.GetString("RS_DESCRIPTION");
-                        Offset = Offset + 15;
+                        Offset = Offset + add_offset;
                         rect.Y = startY + Offset;
                         rect.X = startX + 15;
                         rect.Width = 280;
@@ -1823,9 +1838,9 @@ namespace AlphaSoft
 
                         if (product_desc.Length>0)
                         {
-                            Offset = Offset + 15;
+                            Offset = Offset + add_offset;
                             rect.Y = startY + Offset;
-                            rect.X = startX + 15;
+                            rect.X = startX + add_offset;
                             rect.Width = 280;
                             sf.LineAlignment = StringAlignment.Near;
                             sf.Alignment = StringAlignment.Near;
@@ -1843,7 +1858,7 @@ namespace AlphaSoft
             }
 
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -1852,9 +1867,9 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
+            rect.X = startX + add_offset;
             rect.Width = 260;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
@@ -1871,9 +1886,9 @@ namespace AlphaSoft
 
             total_qty = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(SUM(PRODUCT_RETURN_QTY), 0) FROM RETURN_SALES_DETAIL RD, MASTER_PRODUCT MP WHERE RD.PRODUCT_ID = MP.PRODUCT_ID AND RD.RS_INVOICE = '" + returID+ "'"));
 
-            Offset = Offset + 25 + offset_plus;
+            Offset = Offset + add_offset + offset_plus;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
+            rect.X = startX + add_offset;
             rect.Width = 280;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
@@ -1884,7 +1899,7 @@ namespace AlphaSoft
 
             //FOOTER
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -1893,19 +1908,19 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TERIMA KASIH ATAS KUNJUNGAN ANDA";
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "MAAF BARANG YANG SUDAH DIBELI";
             graphics.DrawString(ucapan, new Font("Courier New", 7),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TIDAK DAPAT DITUKAR/ DIKEMBALIKKAN";
             graphics.DrawString(ucapan, new Font("Courier New", 7),

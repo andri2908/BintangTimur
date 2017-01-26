@@ -43,6 +43,8 @@ namespace AlphaSoft
 
         private Data_Access DS = new Data_Access();
         private List<string> detailRequestQtyApproved = new List<string>();
+        private List<string> productPriceList = new List<string>();
+        private List<string> subtotalList = new List<string>();
 
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
@@ -129,6 +131,7 @@ namespace AlphaSoft
                 case Keys.F2:
                     if (directMutasiBarang)
                     {
+                        ROInvoiceTextBox.Focus();
                         barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.MUTASI_BARANG);
 
                         displayBarcodeForm.Top = this.Top + 5;
@@ -154,6 +157,7 @@ namespace AlphaSoft
                 case Keys.F11:
                     if (directMutasiBarang)
                     {
+                        ROInvoiceTextBox.Focus();
                         dataProdukForm displayProdukForm = new dataProdukForm(globalConstants.MUTASI_BARANG, this);
                         displayProdukForm.ShowDialog(this);
                     }
@@ -347,10 +351,14 @@ namespace AlphaSoft
 
             subTotal = Math.Round((hpp * currQty), 2);
             selectedRow.Cells["subTotal"].Value = subTotal;
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
             detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailRequestOrderDataGridView.BeginEdit(true);
+
+            detailRequestOrderDataGridView.Select();
         }
 
         private void calculateTotal()
@@ -359,7 +367,7 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count; i++)
             {
-                total = total + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subtotal"].Value);
+                total = total + Convert.ToDouble(subtotalList[i]);// Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subtotal"].Value);
             }
 
             globalTotalValue = total;
@@ -454,7 +462,11 @@ namespace AlphaSoft
             isLoading = true;
             selectedRow.Cells["productName"].Value = "";
             selectedRow.Cells["HPP"].Value = "0";
+            productPriceList[rowSelectedIndex] = "0";
+
             selectedRow.Cells["subTotal"].Value = "0";
+            subtotalList[rowSelectedIndex] = "0";
+
             selectedRow.Cells["qty"].Value = "0";
             detailRequestQtyApproved[rowSelectedIndex] = "0";
 
@@ -502,11 +514,13 @@ namespace AlphaSoft
                 hpp = getHPP(selectedProductID);
                 gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "updateSomeRowsContent, PRODUCT_BASE_PRICE [" + hpp + "]");
                 selectedRow.Cells["HPP"].Value = hpp.ToString();
+                productPriceList[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qty"].Value = 0;
                 detailRequestQtyApproved[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "updateSomeRowsContent, attempt to calculate total");
 
@@ -764,12 +778,17 @@ namespace AlphaSoft
                         subTotal = Math.Round((hpp*qtyApproved),2);
 
                         detailRequestOrderDataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), productName, rdr.GetString("RO_QTY"), qtyApproved.ToString(), hpp.ToString(), subTotal.ToString());
-                        detailRequestQtyApproved.Add(qtyApproved.ToString());
+                        //detailRequestQtyApproved.Add(qtyApproved.ToString());
+                        detailRequestQtyApproved[detailRequestOrderDataGridView.Rows.Count - 1] = qtyApproved.ToString();
+                        productPriceList[detailRequestOrderDataGridView.Rows.Count - 1] = hpp.ToString();
+                        subtotalList[detailRequestOrderDataGridView.Rows.Count - 1] = subTotal.ToString();
                     }
                     else
                     {
                         detailRequestOrderDataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), productName, "0", rdr.GetString("PRODUCT_QTY"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("PM_SUBTOTAL"));
-                        detailRequestQtyApproved.Add(rdr.GetString("PRODUCT_QTY"));
+                        detailRequestQtyApproved[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_QTY");
+                        productPriceList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
+                        subtotalList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("PM_SUBTOTAL");
                     }
                 }
 
@@ -1045,6 +1064,10 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
+
+            detailRequestQtyApproved.Add("0");
+            productPriceList.Add("0");
+            subtotalList.Add("0");
         }
 
         private string getNewNoMutasi()
@@ -1453,7 +1476,7 @@ namespace AlphaSoft
 
         private void dataMutasiBarangDetailForm_Activated(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
+            //errorLabel.Text = "";
             registerGlobalHotkey();
         }
 
@@ -1463,9 +1486,17 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailRequestOrderDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];
+                detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                if (null != selectedRow)
+                if (null != selectedRow && rowSelectedIndex != detailRequestOrderDataGridView.Rows.Count - 1)
                 {
+                    for (int i = rowSelectedIndex; i < detailRequestOrderDataGridView.Rows.Count - 1; i++)
+                    {
+                        detailRequestQtyApproved[i] = detailRequestQtyApproved[i + 1];
+                        productPriceList[i] = productPriceList[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
                     isLoading = true;
                     detailRequestOrderDataGridView.Rows.Remove(selectedRow);
                     gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
@@ -1578,7 +1609,7 @@ namespace AlphaSoft
                     if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
                     {
                         sqlCommand = "INSERT INTO PRODUCTS_MUTATION_DETAIL (PM_INVOICE, PRODUCT_ID, PRODUCT_BASE_PRICE, PRODUCT_QTY, PM_SUBTOTAL) VALUES " +
-                                            "('" + noMutasi + "', '" + detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString() + "', " + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["hpp"].Value) + ", " + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["qty"].Value) + ", " + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value) + ")";
+                                                "('" + noMutasi + "', '" + detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString() + "', " + Convert.ToDouble(productPriceList[i]) + ", " + Convert.ToDouble(detailRequestQtyApproved[i]) + ", " + Convert.ToDouble(subtotalList[i]) + ")";
 
                         using (StreamWriter outputFile = new StreamWriter(exportedFileName, true))
                         {

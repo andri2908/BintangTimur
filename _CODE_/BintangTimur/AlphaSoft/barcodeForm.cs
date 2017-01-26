@@ -72,7 +72,7 @@ namespace AlphaSoft
 
         private void barcodeForm_Load(object sender, EventArgs e)
         {
-            barcodeTextBox.Focus();
+            barcodeTextBox.Select();
         }
 
         private void barcodeTextBox_KeyPress(object sender, KeyPressEventArgs e)

@@ -186,26 +186,29 @@ namespace AlphaSoft
             DS.mySqlConnect();
 
             selectClause1 = "SELECT ID, PR_INVOICE AS 'NO PENERIMAAN', DATE_FORMAT(PR_DATE, '%d-%M-%Y')  AS 'TANGGAL PENERIMAAN', " +
-                                "M.SUPPLIER_FULL_NAME AS 'ASAL', P.PR_TOTAL AS 'TOTAL', PURCHASE_INVOICE, PM_INVOICE " +
-                                "FROM PRODUCTS_RECEIVED_HEADER P, MASTER_SUPPLIER M " +
-                                "WHERE P.PR_FROM = M.SUPPLIER_ID ";
+                                "IFNULL(M.SUPPLIER_FULL_NAME, 'GUDANG PUSAT') AS 'ASAL', P.PR_TOTAL AS 'TOTAL', PURCHASE_INVOICE, PM_INVOICE " +
+                                "FROM PRODUCTS_RECEIVED_HEADER P LEFT OUTER JOIN MASTER_SUPPLIER M ON (PR_FROM = M.SUPPLIER_ID) " +
+                                "WHERE 1 = 1 ";
 
-            selectClause2 = "SELECT ID, PR_INVOICE AS 'NO PENERIMAAN', DATE_FORMAT(PR_DATE, '%d-%M-%Y')  AS 'TANGGAL PENERIMAAN', " +
-                                "'GUDANG PUSAT' AS 'ASAL', P.PR_TOTAL AS 'TOTAL', PURCHASE_INVOICE, PM_INVOICE " +
-                                "FROM PRODUCTS_RECEIVED_HEADER P ";
+                                //"WHERE P.PR_FROM = M.SUPPLIER_ID ";
+
+            //selectClause2 = "SELECT ID, PR_INVOICE AS 'NO PENERIMAAN', DATE_FORMAT(PR_DATE, '%d-%M-%Y')  AS 'TANGGAL PENERIMAAN', " +
+            //                    "'GUDANG PUSAT' AS 'ASAL', P.PR_TOTAL AS 'TOTAL', PURCHASE_INVOICE, PM_INVOICE " +
+            //                    "FROM PRODUCTS_RECEIVED_HEADER P ";
+
+            sqlCommand = selectClause1;
 
             if (!showAllCheckBox.Checked)
             {
                 if (supplierID > 0)
                 {
-                    sqlCommand = selectClause1;
                     whereClause1 = whereClause1 + " AND P.PR_FROM = " + supplierID;
                 }
-                else
-                { 
-                    sqlCommand = selectClause2;
-                    whereClause1 = "WHERE 1=1";
-                }
+                //else
+                //{ 
+                //    whereClause1 = "WHERE 1=1";
+                //}
+
                 if (noPOInvoiceTextBox.Text.Length > 0)
                 {
                     noPOInvoiceParam = MySqlHelper.EscapeString(noPOInvoiceTextBox.Text);
@@ -218,10 +221,10 @@ namespace AlphaSoft
 
                 sqlCommand = sqlCommand + whereClause1;
             }
-            else
-            {
-                sqlCommand = selectClause1 + " UNION " + selectClause2 + " WHERE P.PR_FROM = 0";                
-            }
+            //else
+            //{
+            //    //sqlCommand = selectClause1 + " UNION " + selectClause2 + " WHERE P.PR_FROM = 0";                
+            //}
 
 
             using (rdr = DS.getData(sqlCommand))
@@ -238,6 +241,9 @@ namespace AlphaSoft
                     dataPenerimaanBarang.Columns["TANGGAL PENERIMAAN"].Width = 200;
                     dataPenerimaanBarang.Columns["ASAL"].Width = 200;
                     dataPenerimaanBarang.Columns["TOTAL"].Width = 200;
+
+                    dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.FormatProvider = culture;
+                    dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.Format = "C2"; 
                 }
 
                 rdr.Close();

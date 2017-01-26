@@ -43,6 +43,8 @@ namespace AlphaSoft
         private globalUtilities gutil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
         private List<string> salesQty = new List<string>();
+        private List<string> productPriceList = new List<string>();
+        private List<string> jumlahList = new List<string>();
         private List<string> disc1 = new List<string>();
         private List<string> disc2 = new List<string>();
         private List<string> discRP = new List<string>();
@@ -616,6 +618,8 @@ namespace AlphaSoft
                 disc1.Add("0");
                 disc2.Add("0");
                 discRP.Add("0");
+                productPriceList.Add("0");
+                jumlahList.Add("0");
 
                 cashierDataGridView.Rows[cashierDataGridView.Rows.Count - 1].Cells["F8"].Value = prevValue + 1;
                 cashierDataGridView.Rows[cashierDataGridView.Rows.Count - 1].Cells["hpp"].Value = "0";
@@ -722,13 +726,14 @@ namespace AlphaSoft
             }
 
             selectedRow.Cells["jumlah"].Value = calculateSubTotal(rowSelectedIndex, Convert.ToDouble(selectedRow.Cells["productPrice"].Value));
-            
+            jumlahList[rowSelectedIndex] = selectedRow.Cells["jumlah"].Value.ToString();
             calculateTotal();
             cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
             //comboSelectedIndexChangeMethod(rowSelectedIndex, i, selectedRow);
             //cashierDataGridView.CurrentCell = cashierDataGridView.Rows[rowSelectedIndex].Cells["qty"];
 
             cashierDataGridView.Select();
+            cashierDataGridView.BeginEdit(true);
         }
 
         private bool productIDValid(string productID)
@@ -897,9 +902,9 @@ namespace AlphaSoft
                         return false;
                     }
 
-                    // CHECK PAYMENT AMOUNT MUST BE MORE OR EQUALS THAN THE BILL
-                    paymentAmount = Convert.ToDouble(bayarTextBox.Text);
-                    if (paymentAmount < globalTotalValue)
+                // CHECK PAYMENT AMOUNT MUST BE MORE OR EQUALS THAN THE BILL
+                paymentAmount = Convert.ToDouble(bayarAmount);
+                if (paymentAmount < globalTotalValue - discValue)
                     {
                         errorLabel.Text = "JUMLAH PEMBAYARAN LEBIH KECIL DARI NOTA";
                         return false;
@@ -959,7 +964,7 @@ namespace AlphaSoft
 
             if (discJualMaskedTextBox.Text.Length > 0)
             { 
-                salesDiscountFinal = discJualMaskedTextBox.Text;
+                salesDiscountFinal = discValue.ToString();
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : SALES DISC FINAL [" + discJualMaskedTextBox.Text + "]");
             }
 
@@ -1534,7 +1539,8 @@ namespace AlphaSoft
             for (int i = 0; i < cashierDataGridView.Rows.Count; i++)
             {
                 if (null != cashierDataGridView.Rows[i].Cells["jumlah"].Value)
-                    total = total + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["jumlah"].Value);
+                    total = total + Convert.ToDouble(jumlahList[i]);
+                //total = total + Convert.ToDouble(cashierDataGridView.Rows[i].Cells["jumlah"].Value);
             }
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateTotal [" + total + "]");
@@ -1547,7 +1553,7 @@ namespace AlphaSoft
 
             if (discJualMaskedTextBox.Text.Length > 0)
             {
-                discJual = Convert.ToDouble(discJualMaskedTextBox.Text);
+                discJual = discValue;// Convert.ToDouble(discJualMaskedTextBox.Text);
                 totalAfterDisc = Math.Round(totalAfterDisc - discJual, 2);
             }
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateTotal, totalAfterDisc [" + totalAfterDisc + "]");
@@ -1563,7 +1569,7 @@ namespace AlphaSoft
             if (bayarTextBox.Text.Length > 0)
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateChangeValue, bayarTextBox.Text [" + bayarTextBox.Text + "]");
-                bayarAmount = Convert.ToDouble(bayarTextBox.Text);
+                //bayarAmount = Convert.ToDouble(bayarTextBox.Text);
                 totalAfterDisc = globalTotalValue - discValue;
                 if (bayarAmount > totalAfterDisc)
                     sisaBayar = bayarAmount - totalAfterDisc;
@@ -1676,6 +1682,8 @@ namespace AlphaSoft
 
             discRP[rowSelectedIndex] = "0";
             selectedRow.Cells["jumlah"].Value = "0";
+            productPriceList[rowSelectedIndex] = "0";
+            jumlahList[rowSelectedIndex] = "0";
 
             calculateTotal();
         }
@@ -1740,6 +1748,7 @@ namespace AlphaSoft
                 hpp = getProductPriceValue(selectedProductID, customerComboBox.SelectedIndex);
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [" + hpp + "]");
                 selectedRow.Cells["productPrice"].Value = hpp;
+                productPriceList[rowSelectedIndex] = hpp.ToString();
 
                 //if (null == selectedRow.Cells["qty"].Value)
                 selectedRow.Cells["qty"].Value = 0;
@@ -1787,7 +1796,9 @@ namespace AlphaSoft
 
                 //subTotal = calculateSubTotal(rowSelectedIndex, hpp);
                 //gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, subTotal [" + subTotal + "]");
-                selectedRow.Cells["jumlah"].Value = subTotal;
+                selectedRow.Cells["jumlah"].Value = "0";
+                jumlahList[rowSelectedIndex] = "0";
+
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total");
 
                 calculateTotal();
@@ -2110,6 +2121,12 @@ namespace AlphaSoft
                         while (rdr.Read())
                         {
                             addNewRow();
+                        salesQty.Add("0");
+                        disc1.Add("0");
+                        disc2.Add("0");
+                        discRP.Add("0");
+                        productPriceList.Add("0");
+                        jumlahList.Add("0");
                             cashierDataGridView.Rows[rowPos].Cells["productID"].Value = rdr.GetString("KODE_PRODUK");
                             cashierDataGridView.Rows[rowPos].Cells["productName"].Value = rdr.GetString("NAMA_PRODUK");
                             cashierDataGridView.Rows[rowPos].Cells["productPrice"].Value = rdr.GetString("HARGA_PRODUK");
@@ -2120,6 +2137,11 @@ namespace AlphaSoft
                             cashierDataGridView.Rows[rowPos].Cells["hpp"].Value = rdr.GetString("HPP");
 
                             salesQty[rowPos] = rdr.GetString("QTY");
+                        productPriceList[rowPos] = rdr.GetString("HARGA_PRODUK");
+                        jumlahList[rowPos] = rdr.GetString("SUBTOTAL");
+                        disc1[rowPos] = rdr.GetString("PRODUCT_DISC1");
+                        disc2[rowPos] = rdr.GetString("PRODUCT_DISC2");
+                        discRP[rowPos] = rdr.GetString("PRODUCT_DISC_RP");
                             cashierDataGridView.Rows[rowPos].Cells["jumlah"].Value = rdr.GetString("SUBTOTAL");
 
                             rowPos += 1;
@@ -2136,6 +2158,13 @@ namespace AlphaSoft
             int userAccessOption = 0;
 
             registerGlobalHotkey();
+
+            salesQty.Add("0");
+            disc1.Add("0");
+            disc2.Add("0");
+            discRP.Add("0");
+            productPriceList.Add("0");
+            jumlahList.Add("0");
 
             if (originModuleID == globalConstants.SALES_QUOTATION)
             {
@@ -2199,6 +2228,9 @@ namespace AlphaSoft
             errorLabel.Text = "";
 
             userStatusLabel.Text = "Welcome, " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + gutil.getUserID()).ToString();
+
+            //add double buffer
+            //typeof(Control).GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(cashierDataGridView, true, null);
         }
 
         private void cashierForm_Activated(object sender, EventArgs e)
@@ -2333,6 +2365,16 @@ namespace AlphaSoft
 
                 if (null != selectedRow)
                 {
+                    for (int i = rowSelectedIndex; i < cashierDataGridView.Rows.Count - 1; i++)
+                    {
+                        salesQty[i] = salesQty[i + 1];
+                        productPriceList[i] = productPriceList[i + 1];
+                        jumlahList[i] = jumlahList[i + 1];
+                        disc1[i] = disc1[i + 1];
+                        disc2[i] = disc2[i + 1];
+                        discRP[i] = discRP[i + 1];
+                    }
+
                     isLoading = true;
                     cashierDataGridView.Rows.Remove(selectedRow);
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : deleteCurrentRow [" + rowSelectedIndex + "]");
@@ -2539,44 +2581,47 @@ namespace AlphaSoft
        
         private int calculatePageLength()
         {
-            int startY = 10;
-            int Offset = 15;
+            int startY = 0;
+            int Offset = 5;
             int Offsetplus = 3;
+            Font font = new Font("Courier New", 9);
+            int rowheight = (int)Math.Ceiling(font.GetHeight());
+            int add_offset = rowheight;
             int totalLengthPage = startY + Offset;
             string nm, almt, tlpn, email;
 
             loadInfoToko(2, out nm, out almt, out tlpn, out email);
 
             //set printing area
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 10;
+            Offset = Offset + add_offset;
 
             if (!email.Equals(""))
-                Offset = Offset + 10;
+                Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             //end of header
 
             //start of content
 
             //1. PAYMENT METHOD
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
             //2. CUSTOMER NAME
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15 + Offsetplus;
+            Offset = Offset + add_offset + Offsetplus;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
             //DETAIL PENJUALAN
             
@@ -2586,35 +2631,49 @@ namespace AlphaSoft
             {
                 if (rdr.HasRows)
                 {
+                    int i = 0;
                     while (rdr.Read())
-                        Offset = Offset + 15;
+                    {
+                        if (i == 0)
+                        {
+                            Offset = Offset + add_offset;
+                        }
+                        else
+                        {
+                            i = 1;
+                            Offset = Offset + add_offset + Offsetplus;
+                        }
+                    
+                        Offset = Offset + add_offset;
+                        Offset = Offset + add_offset;
+                    }
                 }
             }
             DS.mySqlClose();
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 25;
+            Offset = Offset + add_offset;
             //end of content
 
             //FOOTER
 
-            Offset = Offset + 15 + Offsetplus;
+            Offset = Offset + add_offset + Offsetplus;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset + Offsetplus; ;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             //end of footer
 
-            totalLengthPage = totalLengthPage + Offset + 15;
+            totalLengthPage = totalLengthPage + Offset + add_offset;
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculatePageLength, totalLengthPage [" + totalLengthPage + "]");
             return totalLengthPage;
@@ -2630,18 +2689,18 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : printDocument1_PrintPage, print POS size receipt");
 
             Graphics graphics = e.Graphics;
-            Font font = new Font("Courier New", 12);
-            float fontHeight = font.GetHeight();
-            int startX = 2;
-            int colxwidth = 93; //31x3
-            int totrowwidth = 310; //310/10=31
-            int totrowheight = 20;
-            int inlineheader = 12;
-            int inlinetext = 10;
-            int startY = 5;
-            int Offset = 15;
+            int startX = 0;
+            int startY = 0;
+            int colxwidth = 85; //old 75
+            int totrowwidth = 255; //old 250
+            Font font = new Font("Courier New", 9);
+            int rowheight = (int)Math.Ceiling(font.GetHeight());
+            //int inlineheader = 12;
+            //int inlinetext = 10;
+            int add_offset = rowheight;
+            int Offset = 5;
             int offset_plus = 3;
-            int fontSize = 7;
+            int fontSize = 8;
             //HEADER
 
             //set allignemnt
@@ -2650,24 +2709,24 @@ namespace AlphaSoft
             sf.Alignment = StringAlignment.Center;
 
             //set whole printing area
-            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(startX, startY + Offset, totrowwidth, totrowheight);
+            System.Drawing.RectangleF rect = new System.Drawing.RectangleF(startX, startY + Offset, totrowwidth, rowheight);
             //set right print area
-            System.Drawing.RectangleF rectright = new System.Drawing.RectangleF(totrowwidth-colxwidth-startX, startY + Offset, colxwidth, totrowheight);
+            System.Drawing.RectangleF rectright = new System.Drawing.RectangleF(totrowwidth - colxwidth - startX, startY + Offset, colxwidth, rowheight);
             //set middle print area
-            System.Drawing.RectangleF rectcenter = new System.Drawing.RectangleF((startX + (totrowwidth / 2) - colxwidth - startX), startY + Offset, (totrowwidth / 2) - startX, totrowheight);
+            System.Drawing.RectangleF rectcenter = new System.Drawing.RectangleF((startX + totrowwidth), startY + Offset, colxwidth, rowheight);
 
             loadInfoToko(2,out nm, out almt, out tlpn, out email);
 
             graphics.DrawString(nm, new Font("Courier New", 9),
                                 new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             graphics.DrawString(almt,
                      new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 10;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             graphics.DrawString(tlpn,
                      new Font("Courier New", fontSize),
@@ -2675,16 +2734,17 @@ namespace AlphaSoft
 
             if (!email.Equals(""))
             {
-                Offset = Offset + 10;
+                Offset = Offset + add_offset;
                 rect.Y = startY + Offset;
                 graphics.DrawString(email,
                          new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
             }
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            String underLine = "---------------------------------------";  //37 character
+            //String underLine = "--------------------------------";  //32 character
+            String underLine = "------------------------------";  //32 character
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
             //end of header
@@ -2696,11 +2756,11 @@ namespace AlphaSoft
             DS.mySqlConnect();
             //load customer id
             string customer = "";
-            string tgl="";
+            string tgl = "";
             string group = "";
             double total = 0;
             string sqlCommand = "";
-            
+
             if (originModuleID == 0)  // NORMAL TRANSACTION
             { 
             sqlCommand = "SELECT S.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER',DATE_FORMAT(S.SALES_DATE, '%d-%M-%Y') AS 'DATE',S.SALES_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' FROM SALES_HEADER S,MASTER_CUSTOMER C WHERE S.CUSTOMER_ID = C.CUSTOMER_ID AND S.SALES_INVOICE = '" + selectedsalesinvoice + "'" +
@@ -2730,10 +2790,10 @@ namespace AlphaSoft
             DS.mySqlClose();
 
             //1. PAYMENT METHOD
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
-            rect.Width = 280;
+            rect.X = startX + 10;
+            rect.Width = totrowwidth;
             //SET TO LEFT MARGIN
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
@@ -2748,13 +2808,13 @@ namespace AlphaSoft
                      new SolidBrush(Color.Black), rect, sf);
 
             //2. CUSTOMER NAME
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "PELANGGAN : " + customer + " [" + group + "]";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -2763,17 +2823,17 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.Width = totrowwidth;
             ucapan = "BUKTI PEMBAYARAN";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
-            
-            Offset = Offset + 15 + offset_plus;
+
+            Offset = Offset + add_offset + offset_plus;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
-            rect.Width = 280;
+            rect.X = startX + 10;
+            rect.Width = totrowwidth;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
             if (originModuleID == 0)
@@ -2783,21 +2843,21 @@ namespace AlphaSoft
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            ucapan = "TANGGAL  : "+ tgl;
+            ucapan = "TANGGAL  : " + tgl;
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 12;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             string nama = "";
             loadNamaUser(gutil.getUserID(), out nama);
-            ucapan = "OPERATOR : " +  nama;
+            ucapan = "OPERATOR : " + nama;
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -2817,6 +2877,7 @@ namespace AlphaSoft
             double total_qty = 0;
             double product_qty = 0;
             double product_price = 0;
+            float startRightX = totrowwidth - colxwidth - startX;
             
             if (originModuleID == 0)
             {
@@ -2833,19 +2894,30 @@ namespace AlphaSoft
             {
                 if (rdr.HasRows)
                 {
+                    int i = 0;
                     while (rdr.Read())
                     {
                         product_id = rdr.GetString("P-ID");
                         product_name = rdr.GetString("NAME");
                         product_qty = rdr.GetDouble("QTY");
                         product_price = rdr.GetDouble("PRICE");
-                        Offset = Offset + 15;
+                        double subtotal = rdr.GetDouble("SALES_SUBTOTAL");
+                        if (i == 0)
+                        {
+                            Offset = Offset + add_offset;
+                        }
+                        else
+                        {
+                            i = 1;
+                            Offset = Offset + add_offset + offset_plus;
+                        }
                         rect.Y = startY + Offset;
-                        rect.X = startX + 15;
-                        rect.Width = 280;
+                        rect.X = startX + 10;
+                        rect.Width = totrowwidth;
                         sf.LineAlignment = StringAlignment.Near;
                         sf.Alignment = StringAlignment.Near;
-                        ucapan = product_qty + " X [" + product_id + "] " + product_name;
+                        //ucapan = product_qty + "X " + product_name;
+                        ucapan = product_name;
                         if (ucapan.Length > 30 )
                         {
                             ucapan = ucapan.Substring(0, 30); //maximum 30 character
@@ -2854,10 +2926,36 @@ namespace AlphaSoft
                         graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                                  new SolidBrush(Color.Black), rect, sf);
 
-                        rectright.Y = Offset-startY;
+                        //new line
+                        Offset = Offset + add_offset;
+                        rect.Y = startY + Offset;
+                        rect.X = startX + 20;
+                        rect.Width = totrowwidth;
+                        sf.LineAlignment = StringAlignment.Near;
+                        sf.Alignment = StringAlignment.Near;
+                        ucapan = product_qty + "X";
+                        graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                                 new SolidBrush(Color.Black), rect, sf);
+                        //
+
+                        rect.Y = startY + Offset;
+                        rect.X = startX + 50;
+                        rect.Width = totrowwidth;
+                        sf.LineAlignment = StringAlignment.Near;
+                        sf.Alignment = StringAlignment.Near;
+                        ucapan = product_price.ToString("C2", culture);
+                        graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                                 new SolidBrush(Color.Black), rect, sf);
+
+
+
+                        rectright.X = startRightX - 35;
+                        rectright.Y = rect.Y;
+
+                        rectright.Width = colxwidth;// - 5;
                         sf.LineAlignment = StringAlignment.Far;
                         sf.Alignment = StringAlignment.Far;
-                        ucapan = "@" + product_price.ToString("C2", culture);//" Rp." + product_price;
+                        ucapan = subtotal.ToString("C2", culture);//" Rp." + product_price;
                         graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                                  new SolidBrush(Color.Black), rectright, sf);
                     }
@@ -2865,7 +2963,7 @@ namespace AlphaSoft
             }
             DS.mySqlClose();
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -2874,60 +2972,64 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
-            rect.X = startX + 15;
-            rect.Width = 260;
+            rect.X = rect.X + 70;//95;
+            //rectcenter.X = rectcenter.X + 15;
+            //rectcenter.Width = colxwidth;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
-            ucapan = "               JUMLAH  :";
-            rectcenter.Y = rect.Y;
+            ucapan = "JUMLAH  : " + total.ToString("C2", culture);
+            //rectcenter.Y = rect.Y;
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                     new SolidBrush(Color.Black), rectcenter, sf);
-            sf.LineAlignment = StringAlignment.Far;
-            sf.Alignment = StringAlignment.Far;
-            ucapan = total.ToString("C2", culture);
-            rectright.Y = Offset - startY + 1;
-            graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                     new SolidBrush(Color.Black), rectright, sf);
+                     new SolidBrush(Color.Black), rect, sf);
+            //sf.LineAlignment = StringAlignment.Far;
+            //sf.Alignment = StringAlignment.Far;
+            //ucapan = total.ToString("C2", culture);
+            //rectright.X = rectright.X - 5;
+            //rectright.Y = rect.Y-2;
+            //graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+            //         new SolidBrush(Color.Black), rectright, sf);
 
             if (cashRadioButton.Checked == true)
-            { 
-                Offset = Offset + 15;
+            {
+                Offset = Offset + add_offset;
                 rect.Y = startY + Offset;
-                rect.X = startX + 15;
-                rect.Width = 260;
+                //rectcenter.X = rectcenter.X + 15;
+                //rectcenter.Width = colxwidth;
                 sf.LineAlignment = StringAlignment.Near;
                 sf.Alignment = StringAlignment.Near;
-                ucapan = "               TUNAI   :";
-                rectcenter.Y = rect.Y;
+                double jumlahBayar = Convert.ToDouble(bayarAmount);
+                ucapan = "TUNAI   : " + jumlahBayar.ToString("C2", culture);
+                //rectcenter.Y = rect.Y;
                 graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                         new SolidBrush(Color.Black), rectcenter, sf);
+                         new SolidBrush(Color.Black), rect, sf);
                 sf.LineAlignment = StringAlignment.Far;
                 sf.Alignment = StringAlignment.Far;
 
-                double jumlahBayar = Convert.ToDouble(bayarTextBox.Text);
-                ucapan = jumlahBayar.ToString("C2", culture);//"Rp." + String.Format("{0:C2}", bayarTextBox.Text);
-                rectright.Y = Offset - startY + 1;
-                graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                         new SolidBrush(Color.Black), rectright, sf);
+                //ucapan = jumlahBayar.ToString("C2", culture);//"Rp." + String.Format("{0:C2}", bayarTextBox.Text);
+                //rectright.X = rectright.X - 5;
+                //rectright.Y = rect.Y-2;
+                //graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                //         new SolidBrush(Color.Black), rectright, sf);
 
-                Offset = Offset + 15;
+                Offset = Offset + add_offset;
                 rect.Y = startY + Offset;
-                rect.X = startX + 15;
-                rect.Width = 260;
+                //rectcenter.X = rectcenter.X + 15;
+                //rectcenter.Width = colxwidth;
                 sf.LineAlignment = StringAlignment.Near;
                 sf.Alignment = StringAlignment.Near;
-                ucapan = "               KEMBALI :";
-                rectcenter.Y = rect.Y;
+                ucapan = "KEMBALI : " + uangKembaliTextBox.Text + ",00";
+                //rectcenter.Y = rect.Y;
                 graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                         new SolidBrush(Color.Black), rectcenter, sf);
-                sf.LineAlignment = StringAlignment.Far;
-                sf.Alignment = StringAlignment.Far;
-                ucapan = uangKembaliTextBox.Text;
-                rectright.Y = Offset - startY + 1;
-                graphics.DrawString(ucapan, new Font("Courier New", fontSize),
-                         new SolidBrush(Color.Black), rectright, sf);
+                         new SolidBrush(Color.Black), rect, sf);
+                //sf.LineAlignment = StringAlignment.Far;
+                //sf.Alignment = StringAlignment.Far;
+                //ucapan = uangKembaliTextBox.Text;
+                //rectright.X = rectright.X - 5;
+                //rectright.Y = rect.Y-2;
+                //graphics.DrawString(ucapan, new Font("Courier New", fontSize),
+                //         new SolidBrush(Color.Black), rectright, sf);
             }
 
             if (originModuleID == 0)
@@ -2943,10 +3045,10 @@ namespace AlphaSoft
 
             total_qty = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
 
-            Offset = Offset + 25 + offset_plus;
-            rect.Y = startY + Offset ;
-            rect.X = startX + 15;
-            rect.Width = 280;
+            Offset = Offset + add_offset + offset_plus + offset_plus; ;
+            rect.Y = startY + Offset;
+            rect.X = startX + 10;
+            rect.Width = totrowwidth;
             sf.LineAlignment = StringAlignment.Near;
             sf.Alignment = StringAlignment.Near;
             ucapan = "TOTAL BARANG : " + total_qty;
@@ -2956,7 +3058,7 @@ namespace AlphaSoft
 
             //FOOTER
 
-            Offset = Offset + 13;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             rect.X = startX;
             rect.Width = totrowwidth;
@@ -2965,19 +3067,19 @@ namespace AlphaSoft
             graphics.DrawString(underLine, new Font("Courier New", 9),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TERIMA KASIH ATAS KUNJUNGAN ANDA";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "MAAF BARANG YANG SUDAH DIBELI";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
                      new SolidBrush(Color.Black), rect, sf);
 
-            Offset = Offset + 15;
+            Offset = Offset + add_offset;
             rect.Y = startY + Offset;
             ucapan = "TIDAK DAPAT DITUKAR/ DIKEMBALIKKAN";
             graphics.DrawString(ucapan, new Font("Courier New", fontSize),
@@ -2996,6 +3098,7 @@ namespace AlphaSoft
 
         private void discJualMaskedTextBox_Enter(object sender, EventArgs e)
         {
+            discJualMaskedTextBox.Text = discValue.ToString();
             BeginInvoke((Action)delegate
             {
                 discJualMaskedTextBox.SelectAll();
@@ -3004,10 +3107,34 @@ namespace AlphaSoft
 
         private void bayarTextBox_Enter(object sender, EventArgs e)
         {
+            bayarTextBox.Text = bayarAmount.ToString();
             BeginInvoke((Action)delegate
             {
                 bayarTextBox.SelectAll();
             });
+        }
+
+        private void bayarTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            { 
+                //if (originModuleID != globalConstants.COPY_NOTA)
+                {
+                    bayarAmount = Convert.ToDouble(bayarTextBox.Text);
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TRIGGER SAVE INVOICE FROM BAYAR TEXTBOX");
+
+                    saveAndPrintOutInvoice();
+                }
+            }
+        }
+
+        private void bayarTextBox_Leave(object sender, EventArgs e)
+        {
+            isLoading = true;
+            bayarAmount = Convert.ToDouble(bayarTextBox.Text);
+            bayarTextBox.Text = bayarAmount.ToString("C0", culture);
+            isLoading = false;
+
         }
 
         private void cashierDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
@@ -3191,13 +3318,20 @@ namespace AlphaSoft
                         case "discRP":
                             discRP[rowSelectedIndex] = "0";
                             break;
+                        case "productPrice":
+                            productPriceList[rowSelectedIndex] = "0";
+                            break;
                     }
 
                     selectedRow.Cells[columnName].Value = "0";
 
                     // reset subTotal Value and recalculate total
                     if (columnName == "qty" || columnName == "productPrice")
+                    {
+                        // reset subTotal Value and recalculate total
                         selectedRow.Cells["jumlah"].Value = 0;
+                        jumlahList[rowSelectedIndex] = "0";
+                    }
                     else
                     {
                         productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
@@ -3205,6 +3339,7 @@ namespace AlphaSoft
                         subTotal = calculateSubTotal(rowSelectedIndex, productPrice);
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, subtotal value [" + subTotal + "]");
                         selectedRow.Cells["jumlah"].Value = subTotal;
+                        jumlahList[rowSelectedIndex] = subTotal.ToString();
                     }
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, recalculate total value");
@@ -3232,9 +3367,15 @@ namespace AlphaSoft
                     case "discRP":
                         previousInput = discRP[rowSelectedIndex];
                         break;
+                    case "productPrice":
+                        previousInput = productPriceList[rowSelectedIndex];
+                        break;
                 }
 
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, previousInput [" + previousInput + "]");
+
+                if (previousInput == cellValue)
+                    return;
 
                 isLoading = true;
                 if (previousInput == "0")
@@ -3257,7 +3398,7 @@ namespace AlphaSoft
                             if (gutil.stockIsEnough(productID, Convert.ToDouble(cellValue)))
                                 salesQty[rowSelectedIndex] = cellValue;
                             else
-                                selectedRow.Cells[columnName].Value = salesQty[rowSelectedIndex];
+                                selectedRow.Cells["qty"].Value = salesQty[rowSelectedIndex];
                             break;
                         case "disc1":
                             disc1[rowSelectedIndex] = cellValue;
@@ -3268,6 +3409,9 @@ namespace AlphaSoft
                         case "discRP":
                             discRP[rowSelectedIndex] = cellValue;
                             break;
+                        case "productPrice":
+                            productPriceList[rowSelectedIndex] = cellValue;
+                            break;
                     }
                 }
                 else
@@ -3276,17 +3420,26 @@ namespace AlphaSoft
                     selectedRow.Cells[columnName].Value = previousInput;
                 }
 
-                productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+                productPrice = Convert.ToDouble(productPriceList[rowSelectedIndex]);
 
                 subTotal = calculateSubTotal(rowSelectedIndex, productPrice);
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, subtotal value [" + subTotal + "]");
                 selectedRow.Cells["jumlah"].Value = subTotal;
+                jumlahList[rowSelectedIndex] = subTotal.ToString();
 
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, attempt to calculate total value");
                 calculateTotal();
             }
 
             isLoading = false;
+        }
+
+        private void cashierDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (cashierDataGridView.IsCurrentCellDirty)
+            {
+                cashierDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
 
         private void cashierDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -3297,14 +3450,6 @@ namespace AlphaSoft
         private void cashierDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             cashierDataGridView.ResumeLayout();
-        }
-
-        private void cashierDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (cashierDataGridView.IsCurrentCellDirty)
-            {
-                cashierDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
         }
 
         private void pelangganTextBox_KeyDown(object sender, KeyEventArgs e)

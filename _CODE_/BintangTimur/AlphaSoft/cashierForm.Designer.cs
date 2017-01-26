@@ -433,9 +433,12 @@
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
             this.bayarTextBox.TabIndex = 18;
+            this.bayarTextBox.Text = "0";
             this.bayarTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.bayarTextBox.TextChanged += new System.EventHandler(this.bayarTextBox_TextChanged);
             this.bayarTextBox.Enter += new System.EventHandler(this.bayarTextBox_Enter);
+            this.bayarTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.bayarTextBox_KeyPress);
+            this.bayarTextBox.Leave += new System.EventHandler(this.bayarTextBox_Leave);
             // 
             // discJualMaskedTextBox
             // 

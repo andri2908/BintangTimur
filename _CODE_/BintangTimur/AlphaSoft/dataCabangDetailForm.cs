@@ -267,7 +267,7 @@ namespace AlphaSoft
 
             arrButton[0] = saveButton;
             arrButton[1] = ResetButton;
-            gUtil.reArrangeButtonPosition(arrButton, 343, this.Width);
+            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
             branchNameTextBox.Select();
