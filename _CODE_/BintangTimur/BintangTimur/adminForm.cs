@@ -315,7 +315,7 @@ namespace AlphaSoft
 
             //load last known paper size settings from DB
 
-            activateUserAccessRight();
+            //activateUserAccessRight();
 
             //loadBGimage();
         }

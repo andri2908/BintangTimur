@@ -222,4 +222,3 @@ E:\My Works\Project Bintang Timur\BintangTimur\BintangTimur\obj\Debug\BintangTim
 E:\My Works\Project Bintang Timur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.csproj.GenerateResource.Cache
 E:\My Works\Project Bintang Timur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.exe
 E:\My Works\Project Bintang Timur\BintangTimur\BintangTimur\obj\Debug\BintangTimur.pdb
-D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\Bintang_Timur.exe.config
