@@ -1,0 +1,75 @@
+[] [1/27/2017 22:40] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/27/2017 22:40] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/27/2017 22:40] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/27/2017 22:40] [] DISPLAY ADMIN FORM
+[ADMIN] [1/27/2017 22:40] [] adminForm Load
+[ADMIN] [1/27/2017 22:40] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:44] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 22:44] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 22:44] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 22:47] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[] [1/27/2017 23:01] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/27/2017 23:01] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/27/2017 23:02] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/27/2017 23:02] [] DISPLAY ADMIN FORM
+[ADMIN] [1/27/2017 23:02] [] adminForm Load
+[ADMIN] [1/27/2017 23:02] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/27/2017 23:02] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [PENERIMAAN BARANG] SAVE PENERIMAAN BARANG
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:02] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/27/2017 23:03] [RETUR PENJUALAN] RETUR PENJUALAN : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/27/2017 23:03] [] USER ID = 1LOGOUT

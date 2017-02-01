@@ -1,0 +1,143 @@
+[] [1/28/2017 00:35] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/28/2017 00:35] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/28/2017 00:35] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:35] [] DISPLAY ADMIN FORM
+[ADMIN] [1/28/2017 00:35] [] adminForm Load
+[ADMIN] [1/28/2017 00:35] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:36] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:36] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:36] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:36] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/28/2017 00:36] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/28/2017 00:36] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[] [1/28/2017 00:38] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/28/2017 00:38] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/28/2017 00:38] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:38] [] DISPLAY ADMIN FORM
+[ADMIN] [1/28/2017 00:38] [] adminForm Load
+[ADMIN] [1/28/2017 00:38] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] detailDataGridView_KeyDown ATTEMPT TO DELETE ROW
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] detailDataGridView_KeyDown ATTEMPT TO DELETE ROW
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:38] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/28/2017 00:38] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/28/2017 00:38] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:39] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:39] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:39] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:39] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:39] [PENERIMAAN BARANG] detailDataGridView_KeyDown ATTEMPT TO DELETE ROW
+[ADMIN] [1/28/2017 00:40] [PENERIMAAN BARANG] detailDataGridView_KeyDown ATTEMPT TO DELETE ROW
+[] [1/28/2017 00:41] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/28/2017 00:41] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/28/2017 00:41] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:41] [] DISPLAY ADMIN FORM
+[ADMIN] [1/28/2017 00:41] [] adminForm Load
+[ADMIN] [1/28/2017 00:41] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:41] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/28/2017 00:41] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:41] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [hpp]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] detailDataGridView_KeyDown ATTEMPT TO DELETE ROW
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:42] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [11]
+[ADMIN] [1/28/2017 00:42] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:42] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] updateSomeRowsContent, PRODUCT_BASE_PRICE [1]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] updateSomeRowsContent, attempt to calculate total
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [subTotal]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [subTotal]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [subTotal]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [subTotal]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [HPP]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [HPP]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [HPP]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [HPP]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [HPP]
+[ADMIN] [1/28/2017 00:42] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [subTotal]
+[] [1/28/2017 00:44] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/28/2017 00:44] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/28/2017 00:44] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:44] [] DISPLAY ADMIN FORM
+[ADMIN] [1/28/2017 00:44] [] adminForm Load
+[ADMIN] [1/28/2017 00:44] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:44] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:44] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:44] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:44] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[] [1/28/2017 00:45] [] USER = ADMIN IS ACTIVE
+[ADMIN] [1/28/2017 00:45] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [1/28/2017 00:45] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:45] [] DISPLAY ADMIN FORM
+[ADMIN] [1/28/2017 00:45] [] adminForm Load
+[ADMIN] [1/28/2017 00:45] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [1/28/2017 00:45] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [137500]
+[ADMIN] [1/28/2017 00:45] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [1/28/2017 00:45] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [1/28/2017 00:45] [] USER ID = 1LOGOUT
