@@ -509,7 +509,7 @@ CREATE TABLE `master_location` (
 
 LOCK TABLES `master_location` WRITE;
 /*!40000 ALTER TABLE `master_location` DISABLE KEYS */;
-INSERT INTO `master_location` VALUES (1,'TOKO',0),(2,'GUDANG',0);
+INSERT INTO `master_location` VALUES (1,'TOKO',0,'',1),(2,'GUDANG',0,'',1);
 /*!40000 ALTER TABLE `master_location` ENABLE KEYS */;
 UNLOCK TABLES;
 
