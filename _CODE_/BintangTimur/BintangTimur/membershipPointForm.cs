@@ -179,7 +179,7 @@ namespace AlphaSoft
                                                "(SELECT C.SALES_INVOICE, C.CREDIT_ID, MAX(PC.PAYMENT_CONFIRMED_DATE) AS LAST_PAYMENT " +
                                                 "FROM CREDIT C, PAYMENT_CREDIT PC " +
                                                 "WHERE C.CREDIT_PAID = 1 AND PC.CREDIT_ID = C.CREDIT_ID) TAB1 " +
-                                                "WHERE SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
+                                                "WHERE SH.SALES_ACTIVE = 1 AND SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
                                                 "AND SH.CUSTOMER_ID = " + customerID + " " +
                                                 "AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SALES_DATE, '%Y%m%d')  <= '" + endDate + "'";
             }
@@ -191,7 +191,7 @@ namespace AlphaSoft
                                                "(SELECT C.SALES_INVOICE, C.CREDIT_ID, MAX(PC.PAYMENT_CONFIRMED_DATE) AS LAST_PAYMENT " +
                                                 "FROM CREDIT C, PAYMENT_CREDIT PC " +
                                                 "WHERE C.CREDIT_PAID = 1 AND PC.CREDIT_ID = C.CREDIT_ID) TAB1 " +
-                                                "WHERE SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
+                                                "WHERE SH.SALES_ACTIVE = 1 AND SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
                                                 "AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " " +
                                                 "AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + endDate + "'";
             }
@@ -214,7 +214,7 @@ namespace AlphaSoft
             {
                 sqlCommand = "SELECT IFNULL(SUM(RS_TOTAL), 0) " +
                                        "FROM RETURN_SALES_HEADER RSH, SALES_HEADER SH, SALES_QUOTATION_HEADER SQH " +
-                                       "WHERE SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " AND RSH.SALES_INVOICE = SH.SALES_INVOICE " +
+                                       "WHERE SH.SALES_ACTIVE = 1 AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " AND RSH.SALES_INVOICE = SH.SALES_INVOICE " +
                                        "AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  <= '" + endDate + "'";
             }
 

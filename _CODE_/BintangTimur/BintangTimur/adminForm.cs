@@ -847,13 +847,13 @@ namespace AlphaSoft
 
             bool isVisible = true;
 
-            //moduleActive = Convert.ToInt32(DS.getDataSingleValue("SELECT MODULE_ACTIVE FROM MASTER_MODULE WHERE MODULE_ID = " + moduleID));
-            //if (moduleActive == 0)
-            //{
-            //    menuItem.Visible = false;
-            //    isVisible = false;
-            //}
-            //else
+            moduleActive = Convert.ToInt32(DS.getDataSingleValue("SELECT MODULE_ACTIVE FROM MASTER_MODULE WHERE MODULE_ID = " + moduleID));
+            if (moduleActive == 0)
+            {
+                menuItem.Visible = false;
+                isVisible = false;
+            }
+            else
             {
                 userAccessRight = DS.getUserAccessRight(moduleID, selectedUserGroupID);
 
@@ -872,12 +872,12 @@ namespace AlphaSoft
             int userAccessRight = 0;
             int moduleActive = 1;
 
-            //moduleActive = Convert.ToInt32(DS.getDataSingleValue("SELECT MODULE_ACTIVE FROM MASTER_MODULE WHERE MODULE_ID = " + moduleID));
-            //if (moduleActive == 0)
-            //{
-            //    menuItem.Visible = false;
-            //}
-            //else
+            moduleActive = Convert.ToInt32(DS.getDataSingleValue("SELECT MODULE_ACTIVE FROM MASTER_MODULE WHERE MODULE_ID = " + moduleID));
+            if (moduleActive == 0)
+            {
+                menuItem.Visible = false;
+            }
+            else
             {
                 userAccessRight = DS.getUserAccessRight(moduleID, selectedUserGroupID);
 
