@@ -189,6 +189,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.MENU_copyDO = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -787,6 +788,7 @@
             this.MENU_SalesQuotation,
             this.MENU_SORevision,
             this.MENU_deliveryOrder,
+            this.MENU_copyDO,
             this.MENU_SalesCommission,
             this.MENU_preOrderSales,
             this.MENU_modulKasir,
@@ -1807,6 +1809,15 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // MENU_copyDO
+            // 
+            this.MENU_copyDO.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_copyDO.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_copyDO.Name = "MENU_copyDO";
+            this.MENU_copyDO.Size = new System.Drawing.Size(290, 22);
+            this.MENU_copyDO.Text = "Print Out Copy Delivery Order";
+            this.MENU_copyDO.Click += new System.EventHandler(this.toolStripMenuItem10_Click_2);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2004,6 +2015,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem MENU_preOrderSales;
+        private System.Windows.Forms.ToolStripMenuItem MENU_copyDO;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

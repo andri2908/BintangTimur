@@ -444,10 +444,5 @@ namespace AlphaSoft
         {
             selectedRegionID = regionHiddenCombo.Items[regionCombo.SelectedIndex].ToString();
         }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }

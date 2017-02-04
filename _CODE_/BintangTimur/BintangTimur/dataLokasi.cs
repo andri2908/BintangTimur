@@ -110,7 +110,7 @@ namespace AlphaSoft
                 selectedLocationID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
 
                 gutil.saveSystemDebugLog(0, "CREATE DATA LOKASI DETAIL, LOKASI ID [" + selectedLocationID + "]");
-                dataLokasiDetail displayedForm = new dataLokasiDetail(globalConstants.EDIT_REGION, selectedLocationID);
+                dataLokasiDetail displayedForm = new dataLokasiDetail(globalConstants.EDIT_LOCATION, selectedLocationID);
                 displayedForm.ShowDialog(this);
 
                 if (namaBranchTextbox.Text.Length > 0)
