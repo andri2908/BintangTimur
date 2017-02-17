@@ -1159,7 +1159,7 @@ namespace AlphaSoft
                 errorLabel.Text = "";
                 generateButton.Visible = true;
 
-                saveButton.Visible = false;
+                saveButton.Enabled = false;
                 PODateTimePicker.Enabled = false;
                 supplierCombo.Enabled = false;
                 termOfPaymentCombo.Enabled = false;
