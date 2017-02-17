@@ -487,7 +487,7 @@ namespace AlphaSoft
         private void saveButton_Click_1(object sender, EventArgs e)
         {
             //save to setting 
-            bool success1=false;
+            bool success1 = false;
             bool success2 = false;
             if (serverIPRadioButton.Checked)
             {
@@ -505,7 +505,8 @@ namespace AlphaSoft
                 {
                     //gutil.showSuccess(options);
                     success2 = true;
-                    gutil.ResetAllControls(this);                    
+                    gutil.ResetAllControls(this);
+                    errorLabel.Text = "";                 
                 }
             } else
             {
@@ -515,6 +516,7 @@ namespace AlphaSoft
                     //gutil.showSuccess(options);
                     success2 = true;
                     gutil.ResetAllControls(this);
+                    errorLabel.Text = "";
                 }
             }
             if (success1 && success2)
