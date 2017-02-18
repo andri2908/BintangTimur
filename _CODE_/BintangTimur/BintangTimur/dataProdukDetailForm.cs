@@ -1122,6 +1122,7 @@ namespace AlphaSoft
 
         private void dataProdukDetailForm_Activated(object sender, EventArgs e)
         {
+            namaProdukTextBox.Select();
         }
 
         private void namaProdukTextBox_TextChanged(object sender, EventArgs e)

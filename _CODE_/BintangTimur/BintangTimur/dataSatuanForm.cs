@@ -91,6 +91,7 @@ namespace AlphaSoft
             {
                 loadUnitData();
             }
+            unitNameTextBox.Select();
         }
         
         private void unitNameTextBox_TextChanged(object sender, EventArgs e)
@@ -140,7 +141,6 @@ namespace AlphaSoft
         private void dataSatuanForm_Load(object sender, EventArgs e)
         {
             gutil.reArrangeTabOrder(this);
-            unitNameTextBox.Select();
         }
 
         private void dataUnitGridView_KeyDown(object sender, KeyEventArgs e)

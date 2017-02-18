@@ -232,5 +232,10 @@ namespace AlphaSoft
                 loadLocationData(namaProdukTextBox.Text, asalDataGrid, selectedAsalLocation);
             }
         }
+
+        private void stokTransferForm_Activated(object sender, EventArgs e)
+        {
+            asalCombo.Select();
+        }
     }
 }

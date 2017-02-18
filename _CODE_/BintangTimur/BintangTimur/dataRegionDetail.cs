@@ -196,5 +196,10 @@ namespace AlphaSoft
             }
             errorLabel.Text = "";
         }
+
+        private void dataRegionDetail_Activated(object sender, EventArgs e)
+        {
+            namaGroupTextBox.Select();
+        }
     }
 }

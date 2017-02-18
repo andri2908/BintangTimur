@@ -154,5 +154,15 @@ namespace AlphaSoft
         {
             loadProdukData();
         }
+
+        private void POSSearchProductForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void POSSearchProductForm_Activated(object sender, EventArgs e)
+        {
+            namaProdukTextBox.Select();
+        }
     }
 }

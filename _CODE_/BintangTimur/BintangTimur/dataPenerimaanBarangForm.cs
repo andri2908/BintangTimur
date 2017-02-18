@@ -81,7 +81,7 @@ namespace AlphaSoft
 
             gUtil.reArrangeTabOrder(this);
 
-            noPOInvoiceTextBox.Select();
+            //noPOInvoiceTextBox.Select();
         }
 
         private void dataPenerimaanBarang_DoubleClick(object sender, EventArgs e)
@@ -259,6 +259,11 @@ namespace AlphaSoft
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             supplierID = Convert.ToInt32(supplierHiddenCombo.Items[supplierCombo.SelectedIndex].ToString());
+        }
+
+        private void dataPenerimaanBarangForm_Activated(object sender, EventArgs e)
+        {
+            noPOInvoiceTextBox.Select();
         }
     }
 }

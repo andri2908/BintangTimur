@@ -341,6 +341,7 @@ namespace AlphaSoft
             {
                 loadProdukData();
             }
+            namaProdukTextBox.Select();
         }
 
         private void produknonactiveoption_CheckedChanged(object sender, EventArgs e)
@@ -375,8 +376,7 @@ namespace AlphaSoft
 
             gutil.reArrangeTabOrder(this);
 
-
-            namaProdukTextBox.Select();
+            //namaProdukTextBox.Select();
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)

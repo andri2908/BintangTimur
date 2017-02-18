@@ -2001,6 +2001,7 @@ namespace AlphaSoft
         private void dataReturPenjualanForm_Activated(object sender, EventArgs e)
         {
             registerGlobalHotkey();
+            noReturTextBox.Select();
         }
 
         private void dataReturPenjualanForm_Deactivate(object sender, EventArgs e)

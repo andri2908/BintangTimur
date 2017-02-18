@@ -317,6 +317,7 @@ namespace AlphaSoft
         private void setDatabaseLocationForm_Activated(object sender, EventArgs e)
         {
             //if need something
+            HQIP1.Select();
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)

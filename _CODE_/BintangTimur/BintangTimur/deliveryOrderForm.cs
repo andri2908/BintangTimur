@@ -537,5 +537,10 @@ namespace AlphaSoft
             deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
             displayForm.ShowDialog(this);
         }
+
+        private void deliveryOrderForm_Activated(object sender, EventArgs e)
+        {
+            doInvoiceTextBox.Select();
+        }
     }
 }

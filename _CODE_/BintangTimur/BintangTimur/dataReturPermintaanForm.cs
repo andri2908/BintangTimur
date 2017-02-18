@@ -1018,6 +1018,7 @@ namespace AlphaSoft
         private void dataReturPermintaanForm_Activated(object sender, EventArgs e)
         {
             registerGlobalHotkey();
+            noReturTextBox.Select();
         }
 
         private void dataReturPermintaanForm_Deactivate(object sender, EventArgs e)

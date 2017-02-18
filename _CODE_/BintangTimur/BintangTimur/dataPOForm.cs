@@ -191,7 +191,7 @@ namespace AlphaSoft
 
             gUtil.reArrangeTabOrder(this);
 
-            noPOInvoiceTextBox.Select();
+            //noPOInvoiceTextBox.Select();
         }
 
         private void printOutPurchaseOrder(string PONo)
@@ -302,6 +302,7 @@ namespace AlphaSoft
         {
             if (noPOInvoiceTextBox.Text.Length > 0)
                 displayButton.PerformClick();
+            noPOInvoiceTextBox.Select();
         }
 
         private void dataPurchaseOrder_CellContentClick(object sender, DataGridViewCellEventArgs e)

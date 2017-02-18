@@ -316,7 +316,6 @@ namespace AlphaSoft
         {
             /*if (selectedSupplierID != 0)  //old code
                 loadSupplierData(); */
-            errorLabel.Text = "";
             switch (originModuleID)
             {
                 case globalConstants.NEW_SUPPLIER:
@@ -329,6 +328,7 @@ namespace AlphaSoft
                     loadSupplierData();
                     break;
             }
+            supplierNameTextBox.Select();
         }
     }
 }

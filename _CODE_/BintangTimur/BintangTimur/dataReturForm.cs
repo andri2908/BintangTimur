@@ -269,8 +269,6 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
-
-            noPOInvoiceTextBox.Select();
         }
 
         private void displayButton_Click(object sender, EventArgs e)
@@ -931,6 +929,11 @@ namespace AlphaSoft
                 dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
                 displayedForm.ShowDialog(this);
             }
+        }
+
+        private void dataReturForm_Activated(object sender, EventArgs e)
+        {
+            noPOInvoiceTextBox.Select();
         }
     }
 }

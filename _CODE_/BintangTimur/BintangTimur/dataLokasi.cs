@@ -35,11 +35,11 @@ namespace AlphaSoft
             DS.mySqlConnect();
             if (locationNonActiveOption.Checked)
             {
-                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI', LOCATION_TOTAL_QTY AS 'TOTAL QTY' FROM MASTER_LOCATION WHERE LOCATION_NAME LIKE '%" + locationName + "%'";
+                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI' FROM MASTER_LOCATION WHERE LOCATION_NAME LIKE '%" + locationName + "%'";
             }
             else
             {
-                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI', LOCATION_TOTAL_QTY AS 'TOTAL QTY' FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1 AND LOCATION_NAME LIKE '%" + locationName + "%'";
+                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI' FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1 AND LOCATION_NAME LIKE '%" + locationName + "%'";
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -98,6 +98,7 @@ namespace AlphaSoft
         {
             if (namaBranchTextbox.Text.Length > 0)
                 loadLocationData(namaBranchTextbox.Text);
+            namaBranchTextbox.Select();
         }
 
         private void dataLokasi_KeyDown(object sender, KeyEventArgs e)

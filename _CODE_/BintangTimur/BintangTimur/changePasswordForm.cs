@@ -167,12 +167,11 @@ namespace AlphaSoft
         private void changePasswordForm_Load(object sender, EventArgs e)
         {
             Button[] arrButton = new Button[2];
-
             arrButton[0] = saveButton;
             arrButton[1] = button1;
             gutil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
-
             gutil.reArrangeTabOrder(this);
+            errorLabel.Text = "";
             oldPasswordTextBox.Select();
         }
 
@@ -184,7 +183,6 @@ namespace AlphaSoft
 
         private void changePasswordForm_Activated(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
             oldPasswordTextBox.Select();
         }
 

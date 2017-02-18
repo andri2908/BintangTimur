@@ -65,6 +65,7 @@ namespace AlphaSoft
         private void konversiSatuanForm_Load(object sender, EventArgs e)
         {
             gUtil.reArrangeTabOrder(this);
+            errorLabel.Text = "";
         }
 
         private void displayCurrentSavedConversion(int selectedID)
@@ -294,8 +295,8 @@ namespace AlphaSoft
 
         private void konversiSatuanForm_Activated(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
             loadUnitData(unit1Combo, unit1ComboHidden);
+            unit1Combo.Select();
         }
 
         private void unit1Combo_Validated(object sender, EventArgs e)

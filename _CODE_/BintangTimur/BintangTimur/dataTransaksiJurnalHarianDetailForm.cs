@@ -254,14 +254,15 @@ namespace AlphaSoft
             loadtypeaccount();
             LoadBranchInfo();
             loadTransaksi();
+            errorLabel.Text = "";
         }
 
         private void dataTransaksiJurnalHarianDetailForm_Activated(object sender, EventArgs e)
         {
             //if need something
-            errorLabel.Text = "";
             //TransaksiAccountGridView.Rows.Clear();
             //loadTransaksi();
+            NamaAkunTextbox.Select();
         }
 
         private bool saveDataTransaction()

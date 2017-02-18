@@ -199,8 +199,8 @@ namespace AlphaSoft
         {
             if (dataInvoiceDataGridView.Rows.Count <= 0)
                 return;
-
             loadData();
+            noInvoiceTextBox.Select();
         }
 
     }
