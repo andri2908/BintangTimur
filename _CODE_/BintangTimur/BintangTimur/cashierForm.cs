@@ -649,7 +649,7 @@ namespace AlphaSoft
             }
         }
 
-        public void addNewRowFromBarcode(string productID, string productName)
+        public void addNewRowFromBarcode(string productID, string productName, int rowIndex = -1)
         {
             int i = 0;
             bool found = false;
@@ -660,38 +660,45 @@ namespace AlphaSoft
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ADD NEW ROW FROM BARCODE [" + productName + "]");
 
-            // CHECK FOR EXISTING SELECTED ITEM
-            for (i = 0;i<cashierDataGridView.Rows.Count && !found && !foundEmptyRow;i++)
+            if (rowIndex >= 0)
             {
-                if (null!= cashierDataGridView.Rows[i].Cells["productName"].Value)
-                { 
-                    if (cashierDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                rowSelectedIndex = rowIndex;
+            }
+            else
+            {
+                // CHECK FOR EXISTING SELECTED ITEM
+                for (i = 0; i < cashierDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
+                {
+                    if (null != cashierDataGridView.Rows[i].Cells["productName"].Value)
                     {
-                        found = true;
-                        rowSelectedIndex = i;
+                        if (cashierDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
+                        {
+                            found = true;
+                            rowSelectedIndex = i;
 
-                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : EXISTING ROW FOUND [" + rowSelectedIndex + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : EXISTING ROW FOUND [" + rowSelectedIndex + "]");
+                        }
+                    }
+                    else
+                    {
+                        foundEmptyRow = true;
+                        emptyRowIndex = i;
                     }
                 }
-                else
-                {
-                    foundEmptyRow = true;
-                    emptyRowIndex = i;
-                }
-            }
 
-            if (!found)
-            {
-                if (!foundEmptyRow)
-                { 
-                    addNewRow(false);
-                    rowSelectedIndex = cashierDataGridView.Rows.Count - 1;
-
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : NEW ROW ADDED [" + rowSelectedIndex + "]");
-                }
-                else
+                if (!found)
                 {
-                    rowSelectedIndex = emptyRowIndex;
+                    if (!foundEmptyRow)
+                    {
+                        addNewRow(false);
+                        rowSelectedIndex = cashierDataGridView.Rows.Count - 1;
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : NEW ROW ADDED [" + rowSelectedIndex + "]");
+                    }
+                    else
+                    {
+                        rowSelectedIndex = emptyRowIndex;
+                    }
                 }
             }
 
@@ -1734,10 +1741,12 @@ namespace AlphaSoft
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 //productIDTextBox.TextChanged -= TextBox_TextChanged;
+                productIDTextBox.PreviewKeyDown -= Combobox_previewKeyDown;
                 productIDTextBox.PreviewKeyDown += Combobox_previewKeyDown;
-                productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                setTextBoxCustomSource(productIDTextBox);
+                //productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                //productIDTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                productIDTextBox.AutoCompleteMode = AutoCompleteMode.None;
+                //setTextBoxCustomSource(productIDTextBox);
             }
 
             if (
@@ -1912,12 +1921,15 @@ namespace AlphaSoft
 
                 if (currentValue.Length > 0)
                 {
-                    updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
-                    cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
+                    //cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
+                    // CALL DATA PRODUK FORM WITH PARAMETER 
+                    POSSearchProductForm browseProduk = new POSSearchProductForm(globalConstants.CASHIER_MODULE, this, currentValue, rowSelectedIndex);
+                    browseProduk.ShowDialog(this);
                 }
                 else
                 {
-                    clearUpSomeRowContents(selectedRow, rowSelectedIndex);
+                    //clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
             }
         }

@@ -1,0 +1,68 @@
+[] [2/23/2017 17:35] [] USER = ADMIN IS ACTIVE
+[ADMIN] [2/23/2017 17:35] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [2/23/2017 17:35] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [2/23/2017 17:35] [] DISPLAY ADMIN FORM
+[ADMIN] [2/23/2017 17:35] [] adminForm Load
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productID]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [2/23/2017 17:35] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/23/2017 17:35] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [qtyReceived]
+[ADMIN] [2/23/2017 17:35] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [subtotal]
+[ADMIN] [2/23/2017 17:35] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:35] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productID]
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [productName]
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] updateSomeRowsContent, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] updateSomeRowsContent, attempt to calculate total
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [2/23/2017 17:36] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [2/23/2017 17:36] [PURCHASE ORDER] PURCHASE ORDER : detailPODataGridView_CellValueChanged [qty]
+[ADMIN] [2/23/2017 17:36] [] USER ID = 1LOGOUT
