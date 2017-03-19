@@ -560,6 +560,9 @@ namespace AlphaSoft
 
             GUTIL.reArrangeTabOrder(this);
             noReturTextBox.Select();
+
+            // AUTO GENERATE NO RETUR
+            noReturTextBox.Text = GUTIL.getAutoGenerateID("RETURN_PURCHASE_HEADER", "RP", "-", "RP_ID");
         }
 
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -676,6 +679,9 @@ namespace AlphaSoft
             string descriptionValue;
             DateTime selectedReturDate;
             MySqlException internalEX = null;
+
+            // RE-GENERATE NO RETUR IN CASE ID CHANGED
+            noReturTextBox.Text = GUTIL.getAutoGenerateID("RETURN_PURCHASE_HEADER", "RP", "-", "RP_ID");
 
             returID = noReturTextBox.Text;
             supplierID = selectedSupplierID;

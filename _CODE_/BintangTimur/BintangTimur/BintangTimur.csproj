@@ -812,6 +812,9 @@
     </Compile>
     <Compile Include="ReportProductStockLimit.cs">
       <SubType>Component</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportProductStockLimit.rpt</DependentUpon>
     </Compile>
     <Compile Include="ReportProductStockLimitForm.cs">
       <SubType>Form</SubType>
@@ -1577,6 +1580,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportProductMutationForm.resx">
       <DependentUpon>ReportProductMutationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportProductStockLimit.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportProductStockLimit.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportProductStockLimitForm.resx">
       <DependentUpon>ReportProductStockLimitForm.cs</DependentUpon>

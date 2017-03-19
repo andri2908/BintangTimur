@@ -675,6 +675,9 @@ namespace AlphaSoft
             //detailRequestQty.Add("0");
             //subtotalList.Add("0");
 
+            // AUTO GENERATE NO RETUR
+            prInvoiceTextBox.Text = gUtil.getAutoGenerateID("PRODUCTS_RECEIVED_HEADER", "PR", "-", "PR_INVOICE");
+
             prInvoiceTextBox.Select();
         }
 
@@ -982,7 +985,10 @@ namespace AlphaSoft
 
             string selectedDate = PRDtPicker.Value.ToShortDateString();
             PRDateTime = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
-            
+
+            // RE-GENERATE NO RETUR
+            prInvoiceTextBox.Text = gUtil.getAutoGenerateID("PRODUCTS_RECEIVED_HEADER", "PR", "-", "PR_INVOICE");
+
             PRInvoice = prInvoiceTextBox.Text;
             branchIDFrom = selectedFromID;
             branchIDTo = selectedToID;

@@ -52,7 +52,14 @@ namespace AlphaSoft
             DS.mySqlConnect();
             if (options == 1)
             {
-                sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT";
+                if (satuannonactiveoption.Checked == true)
+                {
+                    sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT";
+                }
+                else
+                {
+                    sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT WHERE UNIT_ACTIVE = 1";
+                }
             }
             else
             {

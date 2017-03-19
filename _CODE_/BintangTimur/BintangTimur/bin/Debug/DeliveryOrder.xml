@@ -22,9 +22,9 @@
     </xs:element>
   </xs:schema>
   <Table>
-    <DO_ID>DO-3</DO_ID>
+    <DO_ID>DO-4</DO_ID>
     <SALES_STATUS>1</SALES_STATUS>
-    <TGL>2017-03-19T00:00:00+07:00</TGL>
+    <TGL>2017-03-20T00:00:00+07:00</TGL>
     <INVOICE>SLO001-16</INVOICE>
     <CUSTOMER_NAME />
     <PRODUK>BARANG 2</PRODUK>

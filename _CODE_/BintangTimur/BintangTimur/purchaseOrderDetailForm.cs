@@ -779,6 +779,12 @@ namespace AlphaSoft
             //detailHpp.Add("0");
             //detailQty.Add("0");
             //subtotalList.Add("0");
+
+            if (originModuleID != globalConstants.EDIT_PURCHASE_ORDER && originModuleID != globalConstants.PRINTOUT_PURCHASE_ORDER)
+            {
+                // AUTO GENERATE NO RETUR
+                POinvoiceTextBox.Text = gUtil.getAutoGenerateID("PURCHASE_HEADER", "PO", "-", "PURCHASE_INVOICE");
+            }
         }
 
         private void POinvoiceTextBox_TextChanged(object sender, EventArgs e)
@@ -893,6 +899,14 @@ namespace AlphaSoft
             DateTime PODueDate;
             string PODueDateTime = "";
             roInvoice = selectedROInvoice; //ROInvoiceTextBox.Text;
+
+            if (originModuleID != globalConstants.EDIT_PURCHASE_ORDER && originModuleID != globalConstants.PRINTOUT_PURCHASE_ORDER)
+            {
+                // RE-GENERATE NO RETUR
+                POinvoiceTextBox.Text = gUtil.getAutoGenerateID("PURCHASE_HEADER", "PO", "-", "PURCHASE_INVOICE");
+            }
+
+
             POInvoice = POinvoiceTextBox.Text;
             supplierID = selectedSupplierID;
 

@@ -220,21 +220,24 @@ namespace AlphaSoft
             gUtil.reArrangeTabOrder(this);
 
             //detailGridView.EditingControlShowing += detailGridViewEditingControlShowing;
+            // AUTO GENERATE NO RETUR
+            doInvoiceTextBox.Text = gUtil.getAutoGenerateID("DELIVERY_ORDER_HEADER", "DO", "-", "DO_ID");
         }
 
         private bool dataValidated()
         {
+            bool validInput = true;
+            double orderQty = 0, deliveredQty = 0, qty = 0;
+            int i = 0;
+            string productID = "";
+            string reason = "";
+
             if (noInvoiceTextBox.Text.Length <= 0)
             {
                 errorLabel.Text = "NO DO TIDAK BOLEH KOSONG";
                 return false;
             }
 
-            bool validInput = true;
-            double orderQty = 0, deliveredQty = 0, qty = 0;
-            int i = 0;
-            string productID = "";
-            string reason = "";
             for (i = 0; i < detailGridView.Rows.Count && validInput; i++)
             {
                 // CHECK REGEX
@@ -290,6 +293,9 @@ namespace AlphaSoft
 
             string selectedDate = DODtPicker.Value.ToShortDateString();
             string DODateTime = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
+
+            // RE-GENERATE NO RETUR IN CASE CHANGED
+            doInvoiceTextBox.Text = gUtil.getAutoGenerateID("DELIVERY_ORDER_HEADER", "DO", "-", "DO_ID");
 
             DS.beginTransaction();
 

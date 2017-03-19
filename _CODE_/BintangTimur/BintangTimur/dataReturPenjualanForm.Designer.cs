@@ -56,9 +56,9 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detailReturDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -92,6 +92,7 @@
             this.noReturTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noReturTextBox.Location = new System.Drawing.Point(162, 13);
             this.noReturTextBox.Name = "noReturTextBox";
+            this.noReturTextBox.ReadOnly = true;
             this.noReturTextBox.Size = new System.Drawing.Size(225, 27);
             this.noReturTextBox.TabIndex = 16;
             this.noReturTextBox.TextChanged += new System.EventHandler(this.noReturTextBox_TextChanged);
@@ -137,8 +138,6 @@
             this.rsDateTimePicker.Name = "rsDateTimePicker";
             this.rsDateTimePicker.Size = new System.Drawing.Size(178, 27);
             this.rsDateTimePicker.TabIndex = 55;
-            // 
-            // tableLayoutPanel2
             // 
             // invoiceInfoTextBox
             // 
@@ -239,8 +238,6 @@
             this.detailReturDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailReturDataGridView_CurrentCellDirtyStateChanged);
             this.detailReturDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailReturDataGridView_RowsAdded);
             // 
-            // tableLayoutPanel1
-            // 
             // invoiceTotalLabel
             // 
             this.invoiceTotalLabel.AutoSize = true;
@@ -300,7 +297,7 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(374, 617);
+            this.saveButton.Location = new System.Drawing.Point(267, 616);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(122, 37);
             this.saveButton.TabIndex = 52;
@@ -322,6 +319,18 @@
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(407, 616);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(214, 37);
+            this.button1.TabIndex = 53;
+            this.button1.Text = "PRINT LAST RECEIPT";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox1
             // 
@@ -350,6 +359,18 @@
             this.groupBox1.TabIndex = 53;
             this.groupBox1.TabStop = false;
             // 
+            // ChangePrinterButton
+            // 
+            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
+            this.ChangePrinterButton.Location = new System.Drawing.Point(494, 115);
+            this.ChangePrinterButton.Name = "ChangePrinterButton";
+            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
+            this.ChangePrinterButton.TabIndex = 54;
+            this.ChangePrinterButton.Text = "SET PRINTER";
+            this.ChangePrinterButton.UseVisualStyleBackColor = true;
+            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -371,30 +392,6 @@
             this.label1.Size = new System.Drawing.Size(14, 18);
             this.label1.TabIndex = 30;
             this.label1.Text = ":";
-            // 
-            // ChangePrinterButton
-            // 
-            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(494, 115);
-            this.ChangePrinterButton.Name = "ChangePrinterButton";
-            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
-            this.ChangePrinterButton.TabIndex = 54;
-            this.ChangePrinterButton.Text = "SET PRINTER";
-            this.ChangePrinterButton.UseVisualStyleBackColor = true;
-            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(407, 616);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(214, 37);
-            this.button1.TabIndex = 53;
-            this.button1.Text = "PRINT LAST RECEIPT";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataReturPenjualanForm
             // 

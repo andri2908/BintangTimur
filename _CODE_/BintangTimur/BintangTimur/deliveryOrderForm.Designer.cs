@@ -166,6 +166,7 @@
             this.doInvoiceTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.doInvoiceTextBox.Location = new System.Drawing.Point(304, 13);
             this.doInvoiceTextBox.Name = "doInvoiceTextBox";
+            this.doInvoiceTextBox.ReadOnly = true;
             this.doInvoiceTextBox.Size = new System.Drawing.Size(158, 27);
             this.doInvoiceTextBox.TabIndex = 16;
             this.doInvoiceTextBox.TextChanged += new System.EventHandler(this.doInvoiceTextBox_TextChanged);

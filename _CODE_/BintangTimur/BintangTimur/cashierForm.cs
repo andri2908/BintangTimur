@@ -739,6 +739,17 @@ namespace AlphaSoft
         {
             bool result = false;
             string sqlCommand = "";
+            double maxCredit = 0;
+            double creditTolerance = 0;
+
+            // GET MAX CREDIT TOLERANCE
+            maxCredit = Convert.ToDouble(DS.getDataSingleValue("SELECT MAX_CREDIT FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
+
+            if (maxCredit == 0) // 0 MEANS NO LIMIT
+                return false;
+
+            creditTolerance = Math.Round(maxCredit * globalUtilities.MAX_CREDIT_TOLERANCE_PERCENTAGE / 100, 2);
+            maxCredit = maxCredit + creditTolerance;
 
             // CALCULATE TOTAL UNPAID TRANSACTION MINUS THE CURRENT SALES INVOICE FOR SALES ORDER REVISION
             double totalUnpaidTransaction = 0;
@@ -754,13 +765,8 @@ namespace AlphaSoft
 
             // CALCULATE TOTAL CREDIT AT PRESENT
             double totalOutstandingCredit = 0;
-            double maxCredit = 0;
-            double creditTolerance = 0;
             totalOutstandingCredit = totalUnpaidTransaction - totalPaymentTransaction;
-            maxCredit = Convert.ToDouble(DS.getDataSingleValue("SELECT MAX_CREDIT FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID));
-            creditTolerance = Math.Round(maxCredit * globalUtilities.MAX_CREDIT_TOLERANCE_PERCENTAGE / 100, 2);
 
-            maxCredit = maxCredit + creditTolerance;
             totalOutstandingCredit = totalOutstandingCredit + newCreditAmount;
 
             if ((totalOutstandingCredit>0) && (maxCredit <= totalOutstandingCredit))

@@ -902,6 +902,9 @@ namespace AlphaSoft
             
             int selectedCreditID;
 
+            // RE-GENERATE NO RETUR IN CASE THE ID CHANGED
+            noReturTextBox.Text = gutil.getAutoGenerateID("RETURN_SALES_HEADER", "RS", "-", "RS_INVOICE");
+
             returID = MySqlHelper.EscapeString(noReturTextBox.Text);
             customerID = selectedCustomerID;
 
@@ -1496,6 +1499,9 @@ namespace AlphaSoft
 
             detailReturDataGridView.EditingControlShowing += detailReturDataGridView_EditingControlShowing;
             gutil.reArrangeTabOrder(this);
+
+            // AUTO GENERATE NO RETUR
+            noReturTextBox.Text = gutil.getAutoGenerateID("RETURN_SALES_HEADER", "RS", "-", "RS_INVOICE");
         }
 
         private void detailReturDataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
