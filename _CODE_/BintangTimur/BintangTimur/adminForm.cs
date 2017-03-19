@@ -1348,7 +1348,7 @@ namespace AlphaSoft
 
         private void pemasukanKasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_OUT);
+            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_FINANCE_IN);
             displayedForm.ShowDialog(this);
         }
 

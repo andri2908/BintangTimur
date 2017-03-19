@@ -705,6 +705,18 @@
     <Compile Include="ReportDebtUnpaidForm.Designer.cs">
       <DependentUpon>ReportDebtUnpaidForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportFinanceIn.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportFinanceIn.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportFinanceInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportFinanceInForm.Designer.cs">
+      <DependentUpon>ReportFinanceInForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportFinanceOut1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1507,6 +1519,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDebtUnpaidForm.resx">
       <DependentUpon>ReportDebtUnpaidForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportFinanceIn.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportFinanceIn.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportFinanceInForm.resx">
+      <DependentUpon>ReportFinanceInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportFinanceOut.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
