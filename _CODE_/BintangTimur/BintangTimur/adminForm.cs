@@ -297,6 +297,9 @@ namespace AlphaSoft
         
         private void adminForm_Load(object sender, EventArgs e)
         {
+            int locationID = 0;
+            string namaLocation = "PUSAT";
+
             gutil.saveSystemDebugLog(0, "adminForm Load");
 
             if (!System.IO.Directory.Exists(appPath + "\\PRODUCT_PHOTO"))
@@ -308,7 +311,14 @@ namespace AlphaSoft
             //updateLabel();
             //timer1.Start();
 
-            welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString();
+            locationID = gutil.loadlocationID(2);
+
+            if (locationID > 0)
+            {
+                namaLocation = DS.getDataSingleValue("SELECT IFNULL(LOCATION_NAME, '') FROM MASTER_LOCATION WHERE ID = " + locationID).ToString();
+            }
+
+            welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString() + " | LOC [" + namaLocation + "]";
             menuStrip1.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 

@@ -20,12 +20,4 @@
       </xs:complexType>
     </xs:element>
   </xs:schema>
-  <Table>
-    <TYPE>1</TYPE>
-    <MAX_x0028_SC.ID_x0029_>2</MAX_x0028_SC.ID_x0029_>
-    <DATE_START>01-January-2017</DATE_START>
-    <DATE_END>29-January-2017</DATE_END>
-    <NAME>ADMIN</NAME>
-    <AMOUNT>3.9</AMOUNT>
-  </Table>
 </NewDataSet>

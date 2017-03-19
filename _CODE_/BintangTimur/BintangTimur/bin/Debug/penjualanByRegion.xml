@@ -7,13 +7,13 @@
           <xs:element name="Table">
             <xs:complexType>
               <xs:sequence>
-                <xs:element name="DO_ID" type="xs:string" minOccurs="0" />
-                <xs:element name="SALES_STATUS" type="xs:string" minOccurs="0" />
-                <xs:element name="TGL" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="REGION_NAME" type="xs:string" minOccurs="0" />
                 <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
-                <xs:element name="CUSTOMER_NAME" type="xs:string" minOccurs="0" />
-                <xs:element name="PRODUK" type="xs:string" minOccurs="0" />
-                <xs:element name="QTY" type="xs:double" minOccurs="0" />
+                <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
+                <xs:element name="DATE" type="xs:string" minOccurs="0" />
+                <xs:element name="TOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="GROUP" type="xs:string" minOccurs="0" />
+                <xs:element name="STATUS" type="xs:string" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -21,13 +21,4 @@
       </xs:complexType>
     </xs:element>
   </xs:schema>
-  <Table>
-    <DO_ID>DO-3</DO_ID>
-    <SALES_STATUS>1</SALES_STATUS>
-    <TGL>2017-03-19T00:00:00+07:00</TGL>
-    <INVOICE>SLO001-16</INVOICE>
-    <CUSTOMER_NAME />
-    <PRODUK>BARANG 2</PRODUK>
-    <QTY>2</QTY>
-  </Table>
 </NewDataSet>

@@ -603,7 +603,8 @@ namespace AlphaSoft
                 {
                     //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
                     //detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
-                    POSSearchProductForm browseProduk = new POSSearchProductForm(globalConstants.PURCHASE_ORDER_DARI_RO, this, currentValue, rowSelectedIndex);
+                    //POSSearchProductForm browseProduk = new POSSearchProductForm(globalConstants.PURCHASE_ORDER_DARI_RO, this, currentValue, rowSelectedIndex);
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.NEW_PURCHASE_ORDER, this, "", currentValue, rowSelectedIndex);
                     browseProduk.ShowDialog(this);
                 }
                 else
@@ -1391,22 +1392,29 @@ namespace AlphaSoft
         {
             originModuleID = globalConstants.PRINTOUT_PURCHASE_ORDER;
 
-            if (saveData())
+            if (PO_Sent)
             {
-                gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "PRINT OUT PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
-
-                saveButton.Enabled = false;
-                POinvoiceTextBox.ReadOnly = true;
-                PODateTimePicker.Enabled = false;
-                supplierCombo.Enabled = false;
-                termOfPaymentCombo.Enabled = false;
-                durationTextBox.ReadOnly = true;
-                detailPODataGridView.ReadOnly = true;
-                detailPODataGridView.AllowUserToAddRows = false;
-
                 printOutPurchaseOrder();
+            }
+            else if (DialogResult.Yes == MessageBox.Show("SAVE DATA", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            {
+                if (saveData())
+                {
+                    gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "PRINT OUT PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
 
-                gUtil.showSuccess(gUtil.INS);
+                    saveButton.Enabled = false;
+                    POinvoiceTextBox.ReadOnly = true;
+                    PODateTimePicker.Enabled = false;
+                    supplierCombo.Enabled = false;
+                    termOfPaymentCombo.Enabled = false;
+                    durationTextBox.ReadOnly = true;
+                    detailPODataGridView.ReadOnly = true;
+                    detailPODataGridView.AllowUserToAddRows = false;
+
+                    printOutPurchaseOrder();
+
+                    gUtil.showSuccess(gUtil.INS);
+                }
             }
         }
 
@@ -1456,26 +1464,26 @@ namespace AlphaSoft
 
         private void detailPODataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
-            DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
+            //var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
 
-            if (isLoading == true)
-                return;
+            //if (isLoading == true)
+            //    return;
 
-            if (cell.OwningColumn.Name == "productName")
-            {
-                if (null != cell.Value)
-                {
-                    if (cell.Value.ToString().Length > 0)
-                    {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
-                    }
-                    else
-                    {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
-                    }
-                }
-            }
+            //if (cell.OwningColumn.Name == "productName")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
         }
 
         private void detailPODataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)

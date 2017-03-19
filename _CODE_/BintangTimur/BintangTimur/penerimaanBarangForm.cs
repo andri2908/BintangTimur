@@ -837,7 +837,8 @@ namespace AlphaSoft
                 {
                     //updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
                     //detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
-                    POSSearchProductForm browseProduk = new POSSearchProductForm(globalConstants.PENERIMAAN_BARANG, this, currentValue, rowSelectedIndex);
+                    //POSSearchProductForm browseProduk = new POSSearchProductForm(globalConstants.PENERIMAAN_BARANG, this, currentValue, rowSelectedIndex);
+                    dataProdukForm browseProduk = new dataProdukForm(globalConstants.PENERIMAAN_BARANG, this, "", currentValue, rowSelectedIndex);
                     browseProduk.ShowDialog(this);
                 }
                 else
@@ -915,10 +916,13 @@ namespace AlphaSoft
                 else
                     validInput = false;
 
-                if (null != detailGridView.Rows[i].Cells["qtyReceived"].Value)
-                    validInput = gUtil.matchRegEx(detailGridView.Rows[i].Cells["qtyReceived"].Value.ToString(), globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL);
-                else
-                    validInput = false;
+                if (validInput)
+                {
+                    if (null != detailGridView.Rows[i].Cells["qtyReceived"].Value)
+                        validInput = gUtil.matchRegEx(detailGridView.Rows[i].Cells["qtyReceived"].Value.ToString(), globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL);
+                    else
+                        validInput = false;
+                }
 
                 if (null != detailGridView.Rows[i].Cells["productName"].Value)
                     dataExist = gUtil.isProductNameExist(detailGridView.Rows[i].Cells["productName"].Value.ToString());
@@ -988,7 +992,11 @@ namespace AlphaSoft
             {
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "DIRECT PENERIMAAN BARANG, THEREFORE CALCULATE TAX LIMIT");
 
-                termOfPaymentDuration = Convert.ToDouble(durationTextBox.Text);
+                if (durationTextBox.Text.Length > 0)
+                    termOfPaymentDuration = Convert.ToDouble(durationTextBox.Text);
+                else
+                    termOfPaymentDuration = 0;
+
                 PODueDate = PRDtPicker.Value.AddDays(termOfPaymentDuration);
                 PODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", PODueDate);
                 termOfPayment = 1;
@@ -1547,6 +1555,16 @@ namespace AlphaSoft
             PRDtPicker.Enabled = true;
 
             isLoading = false;
+
+            originModuleId = 0;
+
+            labelAsal.Visible = true;
+            labelAsal_1.Visible = true;
+            supplierCombo.Visible = true;
+
+            labelTujuan.Visible = false;
+            labelTujuan_1.Visible = false;
+            branchToTextBox.Visible = false;
         }
 
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1596,23 +1614,23 @@ namespace AlphaSoft
 
         private void detailGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            var cell = detailGridView[e.ColumnIndex, e.RowIndex];
-            DataGridViewRow selectedRow = detailGridView.Rows[e.RowIndex];
+            //var cell = detailGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productName")
-            {
-                if (null != cell.Value)
-                {
-                    if (cell.Value.ToString().Length > 0)
-                    {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
-                    }
-                    else
-                    {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
-                    }
-                }
-            }
+            //if (cell.OwningColumn.Name == "productName")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
         }
 
         private void detailGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -1662,6 +1680,7 @@ namespace AlphaSoft
                     selectedRow.Cells[columnName].Value = "0";
 
                     calculateTotal();
+                    isLoading = false;
 
                     return;
                 }

@@ -95,7 +95,7 @@ namespace AlphaSoft
                             "CL.COMMENT AS 'COMMENT', CL.TOTAL_CASH_TRANSACTION AS 'CASH', CL.TOTAL_NON_CASH_TRANSACTION AS 'NONCASH',CL.TOTAL_OTHER_TRANSACTION AS 'OTHER', " +
                             "SH.SALES_INVOICE AS 'INVOICE', SH.SALES_DATE AS 'TGLTRANS', IF(SH.SALES_TOP = 1, 'TUNAI', IF(SH.SALES_TOP = 0, 'CREDIT', '')) AS 'TOP', SH.SALES_TOTAL AS 'TOTAL' " +
                             "FROM CASHIER_LOG CL LEFT OUTER JOIN SALES_HEADER SH ON (SH.SALES_DATE >= CL.DATE_LOGIN AND SH.SALES_DATE <= CL.DATE_LOGOUT), MASTER_USER MU " +
-                            "WHERE DATE_FORMAT(CL.DATE_LOGIN, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(CL.DATE_LOGIN, '%Y%m%d')  <= '" + dateTo + "' " +
+                                "WHERE SH.SALES_ACTIVE = 1 AND DATE_FORMAT(CL.DATE_LOGIN, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(CL.DATE_LOGIN, '%Y%m%d')  <= '" + dateTo + "' " +
                             "AND CL.USER_ID = MU.ID " + user_id + " " +
                             "GROUP BY INVOICE " +
                             "ORDER BY TGLTRANS ASC";

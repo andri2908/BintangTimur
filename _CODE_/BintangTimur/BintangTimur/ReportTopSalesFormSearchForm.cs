@@ -118,7 +118,8 @@ namespace AlphaSoft
             {
                 case globalConstants.REPORT_TOPSALES_GLOBAL:
                     sqlCommandx = "SELECT MP.PRODUCT_NAME AS 'PRODUCT', SUM(SD.PRODUCT_QTY) AS 'QTY' " +
-                                    "FROM SALES_DETAIL SD, MASTER_PRODUCT MP " +
+                                        "FROM SALES_DETAIL SD INNER JOIN (SELECT SALES_INVOICE, MAX(REV_NO) AS MAX FROM SALES_DETAIL GROUP BY SALES_INVOICE) MAX_SD ON SD.SALES_INVOICE = MAX_SD.SALES_INVOICE AND SD.REV_NO = MAX_SD.MAX " +
+                                        "MASTER_PRODUCT MP " +
                                     "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID " +
                                     "GROUP BY SD.PRODUCT_ID " +
                                     "ORDER BY QTY DESC " +
@@ -129,8 +130,9 @@ namespace AlphaSoft
                     break;
                 case globalConstants.REPORT_TOPSALES_byDATE:
                     sqlCommandx = "SELECT MP.PRODUCT_NAME AS 'PRODUCT', SUM(SD.PRODUCT_QTY) AS 'QTY' " +
-                                    "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT MP " +
-                                    "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') <= '" + dateTo + "' " +
+                                        "FROM SALES_HEADER SH, MASTER_PRODUCT MP, " +
+                                        "SALES_DETAIL SD INNER JOIN (SELECT SALES_INVOICE, MAX(REV_NO) AS MAX FROM SALES_DETAIL GROUP BY SALES_INVOICE) MAX_SD ON SD.SALES_INVOICE = MAX_SD.SALES_INVOICE AND SD.REV_NO = MAX_SD.MAX " +
+                                        "WHERE SH.SALES_ACTIVE = 1 AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') <= '" + dateTo + "' " +
                                     "GROUP BY SD.PRODUCT_ID " +
                                     "ORDER BY QTY DESC " +
                                     "LIMIT " + LimitTextBox.Text;
@@ -141,7 +143,8 @@ namespace AlphaSoft
                     break;
                 case globalConstants.REPORT_TOPSALES_byTAGS:
                     sqlCommandx = "SELECT MC.CATEGORY_ID AS 'ID', MC.CATEGORY_NAME AS 'NAME', MP.PRODUCT_NAME AS 'PRODUCT', SUM(SD.PRODUCT_QTY) AS 'QTY' " +
-                                        "FROM SALES_DETAIL SD, MASTER_PRODUCT MP, PRODUCT_CATEGORY PC, MASTER_CATEGORY MC " +
+                                            "FROM SALES_DETAIL SD INNER JOIN (SELECT SALES_INVOICE, MAX(REV_NO) AS MAX FROM SALES_DETAIL GROUP BY SALES_INVOICE) MAX_SD ON SD.SALES_INVOICE = MAX_SD.SALES_INVOICE AND SD.REV_NO = MAX_SD.MAX " +
+                                            ", MASTER_PRODUCT MP, PRODUCT_CATEGORY PC, MASTER_CATEGORY MC " +
                                         "WHERE MC.CATEGORY_ID = PC.CATEGORY_ID AND MP.PRODUCT_ID = PC.PRODUCT_ID AND PC.PRODUCT_ID = SD.PRODUCT_ID AND MC.CATEGORY_ID = " + TagscomboBox.SelectedValue.ToString()  + " " +
                                         "GROUP BY PRODUCT,ID " +
                                         "ORDER BY PRODUCT " + "LIMIT " + LimitTextBox.Text;
@@ -152,8 +155,9 @@ namespace AlphaSoft
                     break;
                 case globalConstants.REPORT_TOPSALES_ByMARGIN:
                     sqlCommandx = "SELECT MP.PRODUCT_NAME AS 'PRODUCT', SUM(SD.PRODUCT_QTY) AS 'QTY', SUM(SD.SALES_SUBTOTAL-(SD.PRODUCT_QTY*MP.PRODUCT_BASE_PRICE)) AS 'LABA' " +
-                                        "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT MP " +
-                                        "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' " +
+                                            "FROM SALES_HEADER SH, MASTER_PRODUCT MP, " +
+                                            "SALES_DETAIL SD INNER JOIN (SELECT SALES_INVOICE, MAX(REV_NO) AS MAX FROM SALES_DETAIL GROUP BY SALES_INVOICE) MAX_SD ON SD.SALES_INVOICE = MAX_SD.SALES_INVOICE AND SD.REV_NO = MAX_SD.MAX " +
+                                            "WHERE SH.SALES_ACTIVE = 1 AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d') >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "' " +
                                         "GROUP BY SD.PRODUCT_ID " +
                                         "ORDER BY LABA DESC " +
                                         "LIMIT " + LimitTextBox.Text;

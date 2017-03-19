@@ -1,0 +1,26 @@
+[] [3/19/2017 09:13] [] USER = ADMIN IS ACTIVE
+[ADMIN] [3/19/2017 09:13] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [3/19/2017 09:13] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [3/19/2017 09:13] [] DISPLAY ADMIN FORM
+[ADMIN] [3/19/2017 09:13] [] adminForm Load
+[ADMIN] [3/19/2017 09:13] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[] [3/19/2017 09:19] [] USER = ADMIN IS ACTIVE
+[ADMIN] [3/19/2017 09:19] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [3/19/2017 09:19] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [3/19/2017 09:19] [] DISPLAY ADMIN FORM
+[ADMIN] [3/19/2017 09:19] [] adminForm Load
+[] [3/19/2017 09:20] [] USER = ADMIN IS ACTIVE
+[ADMIN] [3/19/2017 09:20] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [3/19/2017 09:20] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [3/19/2017 09:20] [] DISPLAY ADMIN FORM
+[ADMIN] [3/19/2017 09:20] [] adminForm Load
+[ADMIN] [3/19/2017 09:20] [PENERIMAAN BARANG] PENERIMAAN BARANG : detailGridView_CellValueChanged [productName]
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\3.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\6.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\7.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\8.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\9.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\10.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\21.jpg
+[ADMIN] [3/19/2017 09:20] [] [POS SEARCH PRODUCT] D:\Project\BintangTimur\_CODE_\BintangTimur\BintangTimur\bin\Debug\PRODUCT_PHOTO\24.jpg
+[ADMIN] [3/19/2017 09:20] [] USER ID = 1LOGOUT

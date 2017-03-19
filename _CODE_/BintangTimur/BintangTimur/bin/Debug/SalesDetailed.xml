@@ -1,0 +1,365 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" type="xs:unsignedInt" minOccurs="0" />
+                <xs:element name="DATE" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
+                <xs:element name="PRODUCT" type="xs:string" minOccurs="0" />
+                <xs:element name="QTY" type="xs:double" minOccurs="0" />
+                <xs:element name="PRICE" type="xs:double" minOccurs="0" />
+                <xs:element name="POTONGAN" type="xs:double" minOccurs="0" />
+                <xs:element name="SUBTOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="DISC" type="xs:double" minOccurs="0" />
+                <xs:element name="PAYMENT" type="xs:double" minOccurs="0" />
+                <xs:element name="CHANGE" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <ID>1</ID>
+    <DATE>2017-01-29T00:04:00+07:00</DATE>
+    <INVOICE>SLO001-1</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>11</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>22</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>22</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>2</ID>
+    <DATE>2017-01-29T00:08:00+07:00</DATE>
+    <INVOICE>SLO001-2</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>11</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>22</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>22</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>3</ID>
+    <DATE>2017-01-29T00:12:00+07:00</DATE>
+    <INVOICE>SLO001-3</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>11</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>22</SUBTOTAL>
+    <DISC>5</DISC>
+    <PAYMENT>22</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>7</ID>
+    <DATE>2017-01-29T18:14:00+07:00</DATE>
+    <INVOICE>SLO001-4</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>22</QTY>
+    <PRICE>3</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>66</SUBTOTAL>
+    <DISC>10</DISC>
+    <PAYMENT>242</PAYMENT>
+    <CHANGE>10</CHANGE>
+  </Table>
+  <Table>
+    <ID>7</ID>
+    <DATE>2017-01-29T18:31:00+07:00</DATE>
+    <INVOICE>SLO001-4</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>22</QTY>
+    <PRICE>3</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>66</SUBTOTAL>
+    <DISC>10</DISC>
+    <PAYMENT>1000</PAYMENT>
+    <CHANGE>768</CHANGE>
+  </Table>
+  <Table>
+    <ID>7</ID>
+    <DATE>2017-01-29T18:49:00+07:00</DATE>
+    <INVOICE>SLO001-4</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>22</QTY>
+    <PRICE>3</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>66</SUBTOTAL>
+    <DISC>10</DISC>
+    <PAYMENT>500</PAYMENT>
+    <CHANGE>444</CHANGE>
+  </Table>
+  <Table>
+    <ID>7</ID>
+    <DATE>2017-01-29T18:56:00+07:00</DATE>
+    <INVOICE>SLO001-4</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>22</QTY>
+    <PRICE>3</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>66</SUBTOTAL>
+    <DISC>10</DISC>
+    <PAYMENT>500</PAYMENT>
+    <CHANGE>444</CHANGE>
+  </Table>
+  <Table>
+    <ID>10</ID>
+    <DATE>2017-01-29T21:07:00+07:00</DATE>
+    <INVOICE>SLO001-5</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0.4</POTONGAN>
+    <SUBTOTAL>1.6</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>10</PAYMENT>
+    <CHANGE>0.4</CHANGE>
+  </Table>
+  <Table>
+    <ID>9</ID>
+    <DATE>2017-01-29T21:13:00+07:00</DATE>
+    <INVOICE>SLO001-6</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>12</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>2.4</POTONGAN>
+    <SUBTOTAL>9.6</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>100</PAYMENT>
+    <CHANGE>90.4</CHANGE>
+  </Table>
+  <Table>
+    <ID>10</ID>
+    <DATE>2017-01-29T21:14:00+07:00</DATE>
+    <INVOICE>SLO001-5</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0.4</POTONGAN>
+    <SUBTOTAL>1.6</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>1000</PAYMENT>
+    <CHANGE>998.4</CHANGE>
+  </Table>
+  <Table>
+    <ID>11</ID>
+    <DATE>2017-01-29T21:16:00+07:00</DATE>
+    <INVOICE>SLO001-7</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>1111111</QTY>
+    <PRICE>22</PRICE>
+    <POTONGAN>24444200</POTONGAN>
+    <SUBTOTAL>242</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>10000</PAYMENT>
+    <CHANGE>9758</CHANGE>
+  </Table>
+  <Table>
+    <ID>12</ID>
+    <DATE>2017-01-29T21:33:00+07:00</DATE>
+    <INVOICE>SLO001-8</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>2222</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>2222</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>5000</PAYMENT>
+    <CHANGE>2778</CHANGE>
+  </Table>
+  <Table>
+    <ID>13</ID>
+    <DATE>2017-01-31T12:28:00+07:00</DATE>
+    <INVOICE>SLO001-9</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>20</QTY>
+    <PRICE>2000</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>40000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>15</ID>
+    <DATE>2017-01-31T12:36:00+07:00</DATE>
+    <INVOICE>SLO001-10</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>15</QTY>
+    <PRICE>1000</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>15000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>15</ID>
+    <DATE>2017-01-31T13:08:00+07:00</DATE>
+    <INVOICE>SLO001-10</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>15</QTY>
+    <PRICE>1000</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>15000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>16</ID>
+    <DATE>2017-02-04T11:42:00+07:00</DATE>
+    <INVOICE>SLO001-11</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>20</QTY>
+    <PRICE>1000</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>20000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>17</ID>
+    <DATE>2017-02-04T11:42:00+07:00</DATE>
+    <INVOICE>SLO001-11</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 2</PRODUCT>
+    <QTY>10</QTY>
+    <PRICE>100</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>1000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>19</ID>
+    <DATE>2017-02-04T11:45:00+07:00</DATE>
+    <INVOICE>SLO001-12</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>10</QTY>
+    <PRICE>200</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>2000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>19</ID>
+    <DATE>2017-02-04T11:46:00+07:00</DATE>
+    <INVOICE>SLO001-12</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>10</QTY>
+    <PRICE>200</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>2000</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>20</ID>
+    <DATE>2017-02-04T12:36:00+07:00</DATE>
+    <INVOICE>SLO001-13</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>1</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>1</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>21</ID>
+    <DATE>2017-02-04T12:37:00+07:00</DATE>
+    <INVOICE>SLO001-14</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>1</QTY>
+    <PRICE>100</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>100</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>100</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>22</ID>
+    <DATE>2017-02-04T12:47:00+07:00</DATE>
+    <INVOICE>SLO001-15</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 1</PRODUCT>
+    <QTY>10</QTY>
+    <PRICE>20</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>200</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>0</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>24</ID>
+    <DATE>2017-03-19T09:58:00+07:00</DATE>
+    <INVOICE>SLO001-16</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 2</PRODUCT>
+    <QTY>20</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>20</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>20</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+  <Table>
+    <ID>24</ID>
+    <DATE>2017-03-19T09:59:00+07:00</DATE>
+    <INVOICE>SLO001-16</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <PRODUCT>BARANG 2</PRODUCT>
+    <QTY>20</QTY>
+    <PRICE>1</PRICE>
+    <POTONGAN>0</POTONGAN>
+    <SUBTOTAL>20</SUBTOTAL>
+    <DISC>0</DISC>
+    <PAYMENT>20</PAYMENT>
+    <CHANGE>0</CHANGE>
+  </Table>
+</NewDataSet>
