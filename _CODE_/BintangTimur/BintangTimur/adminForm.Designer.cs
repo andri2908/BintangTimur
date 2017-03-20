@@ -51,12 +51,11 @@
             this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripSeparator();
             this.MENU_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_gudang = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_produk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahProduk = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_pengaturanKategoriProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanHarga = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanLimitStok = new System.Windows.Forms.ToolStripMenuItem();
-            this.MENU_pengaturanKategoriProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pecahSatuanProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanNomorRak = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_kategori = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +71,7 @@
             this.MENU_mutasiBarang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahMutasiBarang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_cekPermintaanBarang = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_penerimaanBarang = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_pembelian = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_supplier = new System.Windows.Forms.ToolStripMenuItem();
@@ -417,16 +417,6 @@
             this.MAINMENU_gudang.DropDownClosed += new System.EventHandler(this.toolStripMenuItem1_DropDownClosed);
             this.MAINMENU_gudang.DropDownOpened += new System.EventHandler(this.toolStripMenuItem1_DropDownOpened);
             // 
-            // toolStripMenuItem13
-            // 
-            this.toolStripMenuItem13.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem13.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.ShowShortcutKeys = false;
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(254, 22);
-            this.toolStripMenuItem13.Text = "Pengaturan Lokasi";
-            this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
-            // 
             // MENU_produk
             // 
             this.MENU_produk.BackColor = System.Drawing.Color.SteelBlue;
@@ -451,6 +441,15 @@
             this.MENU_tambahProduk.Text = "Tambah / Hapus Produk";
             this.MENU_tambahProduk.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
+            // MENU_pengaturanKategoriProduk
+            // 
+            this.MENU_pengaturanKategoriProduk.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_pengaturanKategoriProduk.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_pengaturanKategoriProduk.Name = "MENU_pengaturanKategoriProduk";
+            this.MENU_pengaturanKategoriProduk.Size = new System.Drawing.Size(314, 22);
+            this.MENU_pengaturanKategoriProduk.Text = "Pengaturan Kategori Produk";
+            this.MENU_pengaturanKategoriProduk.Click += new System.EventHandler(this.toolStripMenuItem52_Click);
+            // 
             // MENU_pengaturanHarga
             // 
             this.MENU_pengaturanHarga.BackColor = System.Drawing.Color.SteelBlue;
@@ -468,15 +467,6 @@
             this.MENU_pengaturanLimitStok.Size = new System.Drawing.Size(314, 22);
             this.MENU_pengaturanLimitStok.Text = "Pengaturan Limit Stok";
             this.MENU_pengaturanLimitStok.Click += new System.EventHandler(this.toolStripMenuItem51_Click);
-            // 
-            // MENU_pengaturanKategoriProduk
-            // 
-            this.MENU_pengaturanKategoriProduk.BackColor = System.Drawing.Color.SteelBlue;
-            this.MENU_pengaturanKategoriProduk.ForeColor = System.Drawing.Color.FloralWhite;
-            this.MENU_pengaturanKategoriProduk.Name = "MENU_pengaturanKategoriProduk";
-            this.MENU_pengaturanKategoriProduk.Size = new System.Drawing.Size(314, 22);
-            this.MENU_pengaturanKategoriProduk.Text = "Pengaturan Kategori Produk";
-            this.MENU_pengaturanKategoriProduk.Click += new System.EventHandler(this.toolStripMenuItem52_Click);
             // 
             // MENU_pecahSatuanProduk
             // 
@@ -623,6 +613,16 @@
             this.MENU_cekPermintaanBarang.Size = new System.Drawing.Size(247, 22);
             this.MENU_cekPermintaanBarang.Text = "Cek Permintaan Barang";
             this.MENU_cekPermintaanBarang.Click += new System.EventHandler(this.toolStripMenuItem63_Click);
+            // 
+            // toolStripMenuItem13
+            // 
+            this.toolStripMenuItem13.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem13.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.ShowShortcutKeys = false;
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(254, 22);
+            this.toolStripMenuItem13.Text = "Pengaturan Lokasi";
+            this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
             // 
             // MENU_penerimaanBarang
             // 
@@ -1450,8 +1450,9 @@
             this.toolStripMenuItem25.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripMenuItem25.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem25.Name = "toolStripMenuItem25";
-            this.toolStripMenuItem25.Size = new System.Drawing.Size(58, 20);
-            this.toolStripMenuItem25.Text = "Tools";
+            this.toolStripMenuItem25.Size = new System.Drawing.Size(130, 20);
+            this.toolStripMenuItem25.Text = "Tools [HIDDEN]";
+            this.toolStripMenuItem25.Visible = false;
             this.toolStripMenuItem25.DropDownClosed += new System.EventHandler(this.toolStripMenuItem25_DropDownClosed);
             this.toolStripMenuItem25.DropDownOpened += new System.EventHandler(this.toolStripMenuItem25_DropDownOpened);
             // 

@@ -930,8 +930,16 @@ namespace AlphaSoft
 
             if (selectedPelangganID == 0)
             { 
-                if (DialogResult.No == MessageBox.Show("PELANGGAN KOSONG, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (originModuleID == globalConstants.SALES_QUOTATION)
+                {
+                    errorLabel.Text = "PELANGGAN KOSONG";
                     return false;
+                }
+                else
+                {
+                    if (DialogResult.No == MessageBox.Show("PELANGGAN KOSONG, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return false;
+                }
             }
             else if (creditRadioButton.Checked == true)
             {

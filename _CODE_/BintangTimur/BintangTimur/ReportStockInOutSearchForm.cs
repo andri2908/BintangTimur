@@ -333,7 +333,7 @@ namespace AlphaSoft
                         }
                         break;
                     default :
-                        produk = "AND PA.PRODUCT_ID";
+                        produk = "AND MP.PRODUCT_ID";
                         //switch (originModuleID)
                         //{
                         //    case globalConstants.REPORT_PURCHASE_RETURN:

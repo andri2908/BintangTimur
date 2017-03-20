@@ -119,7 +119,7 @@ namespace AlphaSoft
                 case globalConstants.REPORT_TOPSALES_GLOBAL:
                     sqlCommandx = "SELECT MP.PRODUCT_NAME AS 'PRODUCT', SUM(SD.PRODUCT_QTY) AS 'QTY' " +
                                         "FROM SALES_DETAIL SD INNER JOIN (SELECT SALES_INVOICE, MAX(REV_NO) AS MAX FROM SALES_DETAIL GROUP BY SALES_INVOICE) MAX_SD ON SD.SALES_INVOICE = MAX_SD.SALES_INVOICE AND SD.REV_NO = MAX_SD.MAX " +
-                                        "MASTER_PRODUCT MP " +
+                                        ", MASTER_PRODUCT MP " +
                                     "WHERE SD.PRODUCT_ID = MP.PRODUCT_ID " +
                                     "GROUP BY SD.PRODUCT_ID " +
                                     "ORDER BY QTY DESC " +

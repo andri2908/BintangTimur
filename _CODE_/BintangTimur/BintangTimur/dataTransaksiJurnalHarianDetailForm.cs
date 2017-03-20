@@ -112,9 +112,9 @@ namespace AlphaSoft
                 //selectedDJID = 0;
                 DateTime selectedDate = TanggalTransaksi.Value;
                 String pembayaran = carabayarcombobox.GetItemText(carabayarcombobox.SelectedItem);
-                String cabang = branchCombobox.GetItemText(branchCombobox.SelectedItem);
+                String cabang = "";// branchCombobox.GetItemText(branchCombobox.SelectedItem);
                 int pm_id = Int32.Parse(carabayarcombobox.SelectedValue.ToString());
-                int branch_id = Int32.Parse(branchCombobox.SelectedValue.ToString());
+                int branch_id = 0;// Int32.Parse(branchCombobox.SelectedValue.ToString());
                 
                 //tryparse
                 if ((NominalTextbox.Text.Length > 0) && Double.TryParse(gutil.allTrim(NominalTextbox.Text), out nominalakun))

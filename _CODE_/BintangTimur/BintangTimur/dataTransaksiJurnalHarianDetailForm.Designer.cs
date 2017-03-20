@@ -460,6 +460,7 @@
             this.branch_name.HeaderText = "CABANG";
             this.branch_name.Name = "branch_name";
             this.branch_name.ReadOnly = true;
+            this.branch_name.Visible = false;
             this.branch_name.Width = 101;
             // 
             // PaymentMethodID
