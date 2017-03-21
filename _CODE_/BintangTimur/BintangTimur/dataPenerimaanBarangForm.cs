@@ -20,6 +20,7 @@ namespace AlphaSoft
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
         private int supplierID = 0;
+        private bool allowViewHPP = false;
 
         public dataPenerimaanBarangForm()
         {
@@ -75,6 +76,12 @@ namespace AlphaSoft
             else
                 newButton.Visible = false;
 
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_VIEW_HPP_PRODUCT, gUtil.getUserGroupID());
+            if (userAccessOption == 1)
+                allowViewHPP = true;
+            else
+                allowViewHPP = false;
+            
             //arrButton[0] = displayButton;
             //arrButton[1] = newButton;
             //gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
@@ -99,16 +106,19 @@ namespace AlphaSoft
             selectedPOInvoice = selectedRow.Cells["PURCHASE_INVOICE"].Value.ToString();
             selectedPMInvoice = selectedRow.Cells["PM_INVOICE"].Value.ToString();
 
-            if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            if (allowViewHPP)
             {
-                smallPleaseWait pleaseWait = new smallPleaseWait();
-                pleaseWait.Show();
+                if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    smallPleaseWait pleaseWait = new smallPleaseWait();
+                    pleaseWait.Show();
 
-                //  ALlow main UI thread to properly display please wait form.
-                Application.DoEvents();
-                printReport(selectedPRInvoice, selectedPMInvoice, selectedPOInvoice);
+                    //  ALlow main UI thread to properly display please wait form.
+                    Application.DoEvents();
+                    printReport(selectedPRInvoice, selectedPMInvoice, selectedPOInvoice);
 
-                pleaseWait.Close();
+                    pleaseWait.Close();
+                }
             }
         }
 
@@ -159,16 +169,19 @@ namespace AlphaSoft
                 selectedPOInvoice = selectedRow.Cells["PURCHASE_INVOICE"].Value.ToString();
                 selectedPMInvoice = selectedRow.Cells["PM_INVOICE"].Value.ToString();
 
-                if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                {
-                    smallPleaseWait pleaseWait = new smallPleaseWait();
-                    pleaseWait.Show();
+                if (allowViewHPP)
+                { 
+                    if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        smallPleaseWait pleaseWait = new smallPleaseWait();
+                        pleaseWait.Show();
 
-                    //  ALlow main UI thread to properly display please wait form.
-                    Application.DoEvents();
-                    printReport(selectedPRInvoice, selectedPMInvoice, selectedPOInvoice);
+                        //  ALlow main UI thread to properly display please wait form.
+                        Application.DoEvents();
+                        printReport(selectedPRInvoice, selectedPMInvoice, selectedPOInvoice);
 
-                    pleaseWait.Close();
+                        pleaseWait.Close();
+                    }
                 }
             }
         }
@@ -243,14 +256,16 @@ namespace AlphaSoft
                     dataPenerimaanBarang.Columns["TOTAL"].Width = 200;
 
                     dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.FormatProvider = culture;
-                    dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.Format = "C2"; 
+                    dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
+                    if (!allowViewHPP)
+                        dataPenerimaanBarang.Columns["TOTAL"].Visible = false;
                 }
 
                 rdr.Close();
             }
         }
     
-
         private void displayButton_Click(object sender, EventArgs e)
         {
             loadPRData();

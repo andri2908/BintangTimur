@@ -25,6 +25,7 @@ namespace AlphaSoft
         double globalTotalValue = 0;
         bool isLoading = false;
         double POduration = 0;
+        bool allowViewHPP = false;
 
         private Hotkeys.GlobalHotkey ghk_F1;
         private Hotkeys.GlobalHotkey ghk_F2;
@@ -501,6 +502,7 @@ namespace AlphaSoft
                                 //detailHpp[detailGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
                                 //subtotalList[detailGridView.Rows.Count - 1] = rdr.GetString("PM_SUBTOTAL");
                             }
+
                         }
                     }
                     break;
@@ -609,11 +611,15 @@ namespace AlphaSoft
                 //subtotalList.Add("0");
             }
 
+            if (!allowViewHPP)
+                hpp_textBox.Visible = false;
             hpp_textBox.Name = "hpp";
             hpp_textBox.HeaderText = "HARGA POKOK";
             hpp_textBox.Width = 200;
             hpp_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailGridView.Columns.Add(hpp_textBox);
+
+
 
             qty_textBox.Name = "qtyReceived";
             qty_textBox.HeaderText = "QTY DITERIMA";
@@ -621,6 +627,8 @@ namespace AlphaSoft
             qty_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailGridView.Columns.Add(qty_textBox);
 
+            if (!allowViewHPP)
+                subtotal_textBox.Visible = false;
             subtotal_textBox.Name = "subtotal";
             subtotal_textBox.HeaderText = "SUBTOTAL";
             subtotal_textBox.ReadOnly = true;
@@ -633,6 +641,12 @@ namespace AlphaSoft
             errorLabel.Text = "";
             PRDtPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             int userAccessOption = 0;
+
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_VIEW_HPP_PRODUCT, gUtil.getUserGroupID());
+            if (userAccessOption == 1)
+                allowViewHPP = true;
+            else
+                allowViewHPP = false;
 
             locationID = gUtil.loadlocationID(2);
             if (locationID <= 0)
@@ -664,6 +678,11 @@ namespace AlphaSoft
             else
                 searchPOButton.Visible = false;
 
+            if (allowViewHPP)
+                reprintButton.Visible = true;
+            else
+                reprintButton.Visible = false;
+
             arrButton[0] = saveButton;
             arrButton[1] = reprintButton;
             arrButton[2] = resetButton;
@@ -679,6 +698,7 @@ namespace AlphaSoft
             prInvoiceTextBox.Text = gUtil.getAutoGenerateID("PRODUCTS_RECEIVED_HEADER", "PR", "-", "PR_INVOICE");
 
             prInvoiceTextBox.Select();
+
         }
 
         private double getHPPValue(string productID)
@@ -1385,12 +1405,14 @@ namespace AlphaSoft
 
         private void printReport(string invoiceNo)
         {
+            string productPrice = "--";
+
             string sqlCommandx = "";
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             {
-                sqlCommandx = "SELECT '1' AS TYPE, '"+noMutasiTextBox.Text+"' AS ORIGIN_INVOICE, DATE(PH.PR_DATE) AS 'TGL', PH.PR_INVOICE AS 'INVOICE', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_BASE_PRICE AS 'HARGA', PD.PRODUCT_ACTUAL_QTY AS 'QTY', PD.PR_SUBTOTAL AS 'SUBTOTAL' " +
-                                     "FROM PRODUCTS_RECEIVED_HEADER PH, PRODUCTS_RECEIVED_DETAIL PD, MASTER_PRODUCT MP " +
-                                     "WHERE PH.PR_INVOICE = '" + invoiceNo + "' AND PD.PR_INVOICE = PH.PR_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
+                    sqlCommandx = "SELECT '1' AS TYPE, '" + noMutasiTextBox.Text + "' AS ORIGIN_INVOICE, DATE(PH.PR_DATE) AS 'TGL', PH.PR_INVOICE AS 'INVOICE', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_BASE_PRICE AS 'HARGA', PD.PRODUCT_ACTUAL_QTY AS 'QTY', PD.PR_SUBTOTAL AS 'SUBTOTAL' " +
+                                         "FROM PRODUCTS_RECEIVED_HEADER PH, PRODUCTS_RECEIVED_DETAIL PD, MASTER_PRODUCT MP " +
+                                         "WHERE PH.PR_INVOICE = '" + invoiceNo + "' AND PD.PR_INVOICE = PH.PR_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
             }
             else if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_PO)
             {
@@ -1405,7 +1427,6 @@ namespace AlphaSoft
                                      "WHERE PH.PR_INVOICE = '" + invoiceNo + "' AND PD.PR_INVOICE = PH.PR_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
             }
 
- 
             DS.writeXML(sqlCommandx, globalConstants.penerimaanBarangXML);
             penerimaanBarangPrintOutForm displayForm = new penerimaanBarangPrintOutForm();
             displayForm.ShowDialog(this);
@@ -1434,20 +1455,27 @@ namespace AlphaSoft
                 else
                     gUtil.saveUserChangeLog(globalConstants.MENU_MUTASI_BARANG, globalConstants.CHANGE_LOG_INSERT, "PENERIMAAN BARANG [" + prInvoiceTextBox.Text + "] NO PO [" + selectedInvoice + "]");
 
-                if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                if (allowViewHPP)
                 {
-                    smallPleaseWait pleaseWait = new smallPleaseWait();
-                    pleaseWait.Show();
+                    if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        smallPleaseWait pleaseWait = new smallPleaseWait();
+                        pleaseWait.Show();
 
-                    //  ALlow main UI thread to properly display please wait form.
-                    Application.DoEvents();
-                    printReport(prInvoiceTextBox.Text);
+                        //  ALlow main UI thread to properly display please wait form.
+                        Application.DoEvents();
+                        printReport(prInvoiceTextBox.Text);
 
-                    pleaseWait.Close();
+                        pleaseWait.Close();
+                    }
                 }
 
                 saveButton.Visible = false;
-                reprintButton.Visible = true;
+
+                if (allowViewHPP)
+                    reprintButton.Visible = true;
+                else
+                    reprintButton.Visible = false;
 
                 gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
