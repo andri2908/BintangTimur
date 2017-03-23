@@ -1,0 +1,134 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
+                <xs:element name="DATE" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="BULAN" type="xs:int" minOccurs="0" />
+                <xs:element name="TOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="PAID" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <INVOICE>SLO001-10</INVOICE>
+    <DATE>2017-01-31T13:08:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>15000</TOTAL>
+    <PAID>BELUM LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-11</INVOICE>
+    <DATE>2017-02-04T11:42:00+07:00</DATE>
+    <BULAN>201702</BULAN>
+    <TOTAL>21000</TOTAL>
+    <PAID>BELUM LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-12</INVOICE>
+    <DATE>2017-02-04T11:46:00+07:00</DATE>
+    <BULAN>201702</BULAN>
+    <TOTAL>2000</TOTAL>
+    <PAID>BELUM LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-13</INVOICE>
+    <DATE>2017-02-04T12:36:00+07:00</DATE>
+    <BULAN>201702</BULAN>
+    <TOTAL>1</TOTAL>
+    <PAID>BELUM LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-15</INVOICE>
+    <DATE>2017-02-04T12:47:00+07:00</DATE>
+    <BULAN>201702</BULAN>
+    <TOTAL>200</TOTAL>
+    <PAID>BELUM LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-1</INVOICE>
+    <DATE>2017-01-29T00:04:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>22</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-2</INVOICE>
+    <DATE>2017-01-29T00:08:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>22</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-3</INVOICE>
+    <DATE>2017-01-29T00:12:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>22</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-4</INVOICE>
+    <DATE>2017-01-29T18:56:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>66</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-6</INVOICE>
+    <DATE>2017-01-29T21:13:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>9.6</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-5</INVOICE>
+    <DATE>2017-01-29T21:14:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>1.6</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-7</INVOICE>
+    <DATE>2017-01-29T21:16:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>242</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-8</INVOICE>
+    <DATE>2017-01-29T21:33:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>2222</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-9</INVOICE>
+    <DATE>2017-01-31T12:28:00+07:00</DATE>
+    <BULAN>201701</BULAN>
+    <TOTAL>40000</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-14</INVOICE>
+    <DATE>2017-02-04T12:37:00+07:00</DATE>
+    <BULAN>201702</BULAN>
+    <TOTAL>100</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-16</INVOICE>
+    <DATE>2017-03-19T09:59:00+07:00</DATE>
+    <BULAN>201703</BULAN>
+    <TOTAL>20</TOTAL>
+    <PAID>LUNAS</PAID>
+  </Table>
+</NewDataSet>

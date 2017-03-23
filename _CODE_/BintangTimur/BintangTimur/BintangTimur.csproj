@@ -749,6 +749,9 @@
     </Compile>
     <Compile Include="ReportMargin.cs">
       <SubType>Component</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportMargin.rpt</DependentUpon>
     </Compile>
     <Compile Include="ReportMarginForm.cs">
       <SubType>Form</SubType>
@@ -878,6 +881,9 @@
     </Compile>
     <Compile Include="ReportRequestReturn.cs">
       <SubType>Component</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportRequestReturn.rpt</DependentUpon>
     </Compile>
     <Compile Include="ReportRequestReturnForm.cs">
       <SubType>Form</SubType>
@@ -1550,6 +1556,10 @@
     <EmbeddedResource Include="ReportGroupUserForm.resx">
       <DependentUpon>ReportGroupUserForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportMargin.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportMargin.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportMarginForm.resx">
       <DependentUpon>ReportMarginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1621,6 +1631,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportPurchaseSummaryForm.resx">
       <DependentUpon>ReportPurchaseSummaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportRequestReturn.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportRequestReturn.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportRequestReturnForm.resx">
       <DependentUpon>ReportRequestReturnForm.cs</DependentUpon>

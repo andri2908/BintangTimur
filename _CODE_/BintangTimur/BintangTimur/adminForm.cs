@@ -295,10 +295,24 @@ namespace AlphaSoft
             }
         }
         
-        private void adminForm_Load(object sender, EventArgs e)
+        public void setWelcomeLabel()
         {
             int locationID = 0;
             string namaLocation = "PUSAT";
+
+            locationID = gutil.loadlocationID(2);
+
+            if (locationID > 0)
+            {
+                namaLocation = DS.getDataSingleValue("SELECT IFNULL(LOCATION_NAME, '') FROM MASTER_LOCATION WHERE ID = " + locationID).ToString();
+            }
+
+            welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString() + " | LOC [" + namaLocation + "]";
+
+        }
+
+        private void adminForm_Load(object sender, EventArgs e)
+        {
 
             gutil.saveSystemDebugLog(0, "adminForm Load");
 
@@ -311,14 +325,7 @@ namespace AlphaSoft
             //updateLabel();
             //timer1.Start();
 
-            locationID = gutil.loadlocationID(2);
-
-            if (locationID > 0)
-            {
-                namaLocation = DS.getDataSingleValue("SELECT IFNULL(LOCATION_NAME, '') FROM MASTER_LOCATION WHERE ID = " + locationID).ToString();
-            }
-
-            welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString() + " | LOC [" + namaLocation + "]";
+            setWelcomeLabel();
             menuStrip1.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 
@@ -1131,6 +1138,8 @@ namespace AlphaSoft
         {
             SetApplicationForm displayedForm = new SetApplicationForm();
             displayedForm.ShowDialog(this);
+
+            setWelcomeLabel();
         }
 
         private void backUpRestoreDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1476,6 +1485,12 @@ namespace AlphaSoft
         {
             dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.COPY_DELIVERY_ORDER);
             displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem10_Click_3(object sender, EventArgs e)
+        {
+            ReportFinanceSearchForm displayForm = new ReportFinanceSearchForm(globalConstants.REPORT_MONTHLY_BALANCE);
+            displayForm.ShowDialog(this);
         }
     }
 }

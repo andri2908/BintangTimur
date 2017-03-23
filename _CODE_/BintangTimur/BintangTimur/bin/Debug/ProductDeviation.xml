@@ -23,4 +23,103 @@
       </xs:complexType>
     </xs:element>
   </xs:schema>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>105</ID>
+    <NAMA_x0020_PRODUK>BARANG 1</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-9</STOK>
+    <SATUAN>BATANG</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>1</ID>
+    <NAMA_x0020_PRODUK>BESI BETON 8.0MMX12MTR</NAMA_x0020_PRODUK>
+    <DESKRIPSI>BESI BETON 8.0X12</DESKRIPSI>
+    <MERK>PSI</MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-8773</STOK>
+    <SATUAN>BATANG</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>105</ID>
+    <NAMA_x0020_PRODUK>BARANG 1</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-19</STOK>
+    <SATUAN>BATANG</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>107</ID>
+    <NAMA_x0020_PRODUK>BARANG 3</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-40</STOK>
+    <SATUAN>LEMBAR</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>1</ID>
+    <NAMA_x0020_PRODUK>BESI BETON 8.0MMX12MTR</NAMA_x0020_PRODUK>
+    <DESKRIPSI>BESI BETON 8.0X12</DESKRIPSI>
+    <MERK>PSI</MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-8773</STOK>
+    <SATUAN>BATANG</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>106</ID>
+    <NAMA_x0020_PRODUK>BARANG 2</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>-30</STOK>
+    <SATUAN>LEMBAR</SATUAN>
+    <DEVIASI>NEGATIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>105</ID>
+    <NAMA_x0020_PRODUK>BARANG 1</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>9</STOK>
+    <SATUAN>BATANG</SATUAN>
+    <DEVIASI>POSITIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>107</ID>
+    <NAMA_x0020_PRODUK>BARANG 3</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>40</STOK>
+    <SATUAN>LEMBAR</SATUAN>
+    <DEVIASI>POSITIVE</DEVIASI>
+  </Table>
+  <Table>
+    <DATE>2017-01-27T00:00:00+07:00</DATE>
+    <ID>106</ID>
+    <NAMA_x0020_PRODUK>BARANG 2</NAMA_x0020_PRODUK>
+    <DESKRIPSI xml:space="preserve"> </DESKRIPSI>
+    <MERK xml:space="preserve"> </MERK>
+    <NOMOR_x0020_RAK>--00</NOMOR_x0020_RAK>
+    <STOK>30</STOK>
+    <SATUAN>LEMBAR</SATUAN>
+    <DEVIASI>POSITIVE</DEVIASI>
+  </Table>
 </NewDataSet>

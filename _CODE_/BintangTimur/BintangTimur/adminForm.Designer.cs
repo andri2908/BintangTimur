@@ -190,6 +190,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -1282,7 +1283,8 @@
             this.MENU_laporanKeuangan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pengeluaranKasToolStripMenuItem,
             this.pemasukanKasToolStripMenuItem,
-            this.labaRugiHarianToolStripMenuItem});
+            this.labaRugiHarianToolStripMenuItem,
+            this.toolStripMenuItem10});
             this.MENU_laporanKeuangan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_laporanKeuangan.Name = "MENU_laporanKeuangan";
             this.MENU_laporanKeuangan.Size = new System.Drawing.Size(294, 22);
@@ -1819,6 +1821,15 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem10.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(275, 22);
+            this.toolStripMenuItem10.Text = "Laba/Rugi Bulanan";
+            this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click_3);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2017,6 +2028,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem MENU_preOrderSales;
         private System.Windows.Forms.ToolStripMenuItem MENU_copyDO;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
+                <xs:element name="TOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="JATUHTEMPO" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="TERLAMBAT" type="xs:long" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <INVOICE>PO-3</INVOICE>
+    <TOTAL>22000</TOTAL>
+    <JATUHTEMPO>2017-02-13T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>38</TERLAMBAT>
+  </Table>
+  <Table>
+    <INVOICE>PR-5</INVOICE>
+    <TOTAL>22</TOTAL>
+    <JATUHTEMPO>2017-03-19T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>4</TERLAMBAT>
+  </Table>
+  <Table>
+    <INVOICE>PR-6</INVOICE>
+    <TOTAL>2550000</TOTAL>
+    <JATUHTEMPO>2017-03-19T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>4</TERLAMBAT>
+  </Table>
+  <Table>
+    <INVOICE>PR-7</INVOICE>
+    <TOTAL>69500</TOTAL>
+    <JATUHTEMPO>2017-03-20T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>3</TERLAMBAT>
+  </Table>
+  <Table>
+    <INVOICE>PR-8</INVOICE>
+    <TOTAL>69500</TOTAL>
+    <JATUHTEMPO>2017-03-20T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>3</TERLAMBAT>
+  </Table>
+  <Table>
+    <INVOICE>PR-9</INVOICE>
+    <TOTAL>69500</TOTAL>
+    <JATUHTEMPO>2017-03-20T00:00:00+07:00</JATUHTEMPO>
+    <TERLAMBAT>3</TERLAMBAT>
+  </Table>
+</NewDataSet>
