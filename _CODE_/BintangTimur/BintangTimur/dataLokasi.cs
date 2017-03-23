@@ -35,11 +35,11 @@ namespace AlphaSoft
             DS.mySqlConnect();
             if (locationNonActiveOption.Checked)
             {
-                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI' FROM MASTER_LOCATION WHERE LOCATION_NAME LIKE '%" + locationName + "%'";
+                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI', LOCATION_TOTAL_QTY AS 'TOTAL QTY' FROM MASTER_LOCATION WHERE LOCATION_NAME LIKE '%" + locationName + "%'";
             }
             else
             {
-                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI' FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1 AND LOCATION_NAME LIKE '%" + locationName + "%'";
+                sqlCommand = "SELECT ID, LOCATION_NAME AS 'NAMA LOKASI', LOCATION_DESCRIPTION AS 'DESKRIPSI', LOCATION_TOTAL_QTY AS 'TOTAL QTY' FROM MASTER_LOCATION WHERE LOCATION_ACTIVE = 1 AND LOCATION_NAME LIKE '%" + locationName + "%'";
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -51,7 +51,7 @@ namespace AlphaSoft
 
                     dataCabangGridView.Columns["ID"].Visible = false;
                     dataCabangGridView.Columns["NAMA LOKASI"].Width = 200;
-                    dataCabangGridView.Columns["DESKRIPSI"].Width = 200;
+                    dataCabangGridView.Columns["DESKRIPSI"].Visible = false;
                 }
             }
         }

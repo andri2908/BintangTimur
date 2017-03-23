@@ -159,9 +159,17 @@ namespace AlphaSoft
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
+            int numRow = 0;
 
             double unitConversion = getConvertValue();
-            
+
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + selectedUnit1_ID + " AND CONVERT_UNIT_ID_2 = " + selectedUnit2_ID));
+
+            if (numRow > 0)
+                currentMode = EDIT_CONVERSION;
+            else
+                currentMode = NEW_CONVERSION;
+
             DS.beginTransaction();
 
             try
@@ -237,6 +245,7 @@ namespace AlphaSoft
                 //MessageBox.Show("SUCCESS");
                 gUtil.showSuccess(gUtil.UPD);
                 displayCurrentSavedConversion(selectedUnit1_ID);
+                currentMode = NEW_CONVERSION;
             }
         }
 

@@ -107,6 +107,10 @@ namespace AlphaSoft
         private void asalCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedAsalLocation = asalComboHidden.Items[asalCombo.SelectedIndex].ToString();
+            if (asalCombo.Text != "" && namaProdukTextBox.Text != "")
+            {
+                loadLocationData(namaProdukTextBox.Text, asalDataGrid, selectedAsalLocation);
+            }
         }
 
         private void tujuanCombo_SelectedIndexChanged(object sender, EventArgs e)
