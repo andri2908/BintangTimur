@@ -8,7 +8,8 @@
             <xs:complexType>
               <xs:sequence>
                 <xs:element name="USERID" type="xs:string" minOccurs="0" />
-                <xs:element name="LOGIN" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="LOGIN" type="xs:string" minOccurs="0" />
+                <xs:element name="DLOGIN" type="xs:dateTime" minOccurs="0" />
                 <xs:element name="LOGOUT" type="xs:dateTime" minOccurs="0" />
                 <xs:element name="START" type="xs:double" minOccurs="0" />
                 <xs:element name="END" type="xs:double" minOccurs="0" />
@@ -29,7 +30,8 @@
   </xs:schema>
   <Table>
     <USERID>ADMIN</USERID>
-    <LOGIN>2017-01-27T11:22:00+07:00</LOGIN>
+    <LOGIN>201701271122</LOGIN>
+    <DLOGIN>2017-01-27T11:22:00+07:00</DLOGIN>
     <LOGOUT>2017-01-27T11:23:00+07:00</LOGOUT>
     <START>10000</START>
     <END>10000</END>
