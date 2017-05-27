@@ -20,12 +20,4 @@
       </xs:complexType>
     </xs:element>
   </xs:schema>
-  <Table>
-    <SALES_INVOICE>SLO001-15</SALES_INVOICE>
-    <PRODUCT_NAME>BARANG 1</PRODUCT_NAME>
-    <PRODUCT_SALES_PRICE>20</PRODUCT_SALES_PRICE>
-    <PRODUCT_RETURN_QTY>2</PRODUCT_RETURN_QTY>
-    <RS_DESCRIPTION xml:space="preserve"> </RS_DESCRIPTION>
-    <RS_SUBTOTAL>40</RS_SUBTOTAL>
-  </Table>
 </NewDataSet>

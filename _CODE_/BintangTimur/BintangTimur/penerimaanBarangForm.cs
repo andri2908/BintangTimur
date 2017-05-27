@@ -1407,6 +1407,8 @@ namespace AlphaSoft
         {
             string productPrice = "--";
 
+            gUtil.setPaper(comboBox1.SelectedIndex + 1);
+
             string sqlCommandx = "";
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             {
@@ -1599,6 +1601,9 @@ namespace AlphaSoft
             labelTujuan.Visible = false;
             labelTujuan_1.Visible = false;
             branchToTextBox.Visible = false;
+
+            comboBox1.SelectedIndex = gUtil.getPaper() - 1;
+            comboBox1.Text = comboBox1.Items[comboBox1.SelectedIndex].ToString();
         }
 
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)

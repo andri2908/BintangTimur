@@ -77,17 +77,19 @@ namespace AlphaSoft
             nameCombo.Items.Clear();
             nameComboHidden.Items.Clear();
 
-            nameCombo.Items.Add("ALL");
-            nameComboHidden.Items.Add("0");
+            //nameCombo.Items.Add("ALL");
+            //nameComboHidden.Items.Add("0");
 
-            sqlCommand = "SELECT MU.ID, MU.USER_FULL_NAME FROM USER_ACCESS_MANAGEMENT UAM, MASTER_USER MU WHERE UAM.MODULE_ID = 52 AND UAM.USER_ACCESS_OPTION = 1 AND MU.GROUP_ID = UAM.GROUP_ID AND MU.USER_ACTIVE = 1";
+            //sqlCommand = "SELECT MU.ID, MU.USER_FULL_NAME FROM USER_ACCESS_MANAGEMENT UAM, MASTER_USER MU WHERE UAM.MODULE_ID = 52 AND UAM.USER_ACCESS_OPTION = 1 AND MU.GROUP_ID = UAM.GROUP_ID AND MU.USER_ACTIVE = 1";
+            sqlCommand = "SELECT ID, SALES_PERSON_NAME FROM MASTER_SALESPERSON WHERE SALES_PERSON_ACTIVE = 1";
+
             using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
                 {
                     while (rdr.Read())
                     {
-                        nameCombo.Items.Add(rdr.GetString("USER_FULL_NAME"));
+                        nameCombo.Items.Add(rdr.GetString("SALES_PERSON_NAME"));
                         nameComboHidden.Items.Add(rdr.GetString("ID"));
                     }
                 }
@@ -127,6 +129,47 @@ namespace AlphaSoft
             nameCombo.SelectedIndex = 0;
         }
 
+        private bool dateRangeExists()
+        {
+            bool result = true;
+            string sqlCommand = "";
+            string dateStartInput;
+            string dateEndInput;
+
+            string dateStartData;
+            string dateEndData;
+
+            MySqlDataReader rdr;
+
+            dateStartInput = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
+            dateEndInput = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
+
+            sqlCommand = "SELECT DATE_START, DATE_END FROM SALES_COMMISSION";
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read() && result == true)
+                    {
+                        dateStartData = String.Format(culture, "{0:yyyyMMdd}", rdr.GetDateTime("DATE_START"));
+                        dateEndData = String.Format(culture, "{0:yyyyMMdd}", rdr.GetDateTime("DATE_END"));
+
+                        if (Convert.ToDouble(dateStartInput) <= Convert.ToDouble(dateStartData) && Convert.ToDouble(dateEndInput) <= Convert.ToDouble(dateEndData) && Convert.ToDouble(dateEndInput) >= Convert.ToDouble(dateStartData))
+                            result = false;
+                        else if (Convert.ToDouble(dateStartInput) >= Convert.ToDouble(dateStartData) && Convert.ToDouble(dateStartInput) <= Convert.ToDouble(dateEndData) && Convert.ToDouble(dateEndInput) >= Convert.ToDouble(dateEndData))
+                            result = false;
+                        else if (Convert.ToDouble(dateStartInput) >= Convert.ToDouble(dateStartData) && Convert.ToDouble(dateStartInput) <= Convert.ToDouble(dateEndData) && Convert.ToDouble(dateEndInput) <= Convert.ToDouble(dateEndData) && Convert.ToDouble(dateEndInput) >= Convert.ToDouble(dateStartData))
+                            result = false;
+                        else if (Convert.ToDouble(dateStartInput) <= Convert.ToDouble(dateStartData) && Convert.ToDouble(dateEndInput) >= Convert.ToDouble(dateEndData))
+                            result = false;
+                    }
+                }
+            }
+            rdr.Close();
+
+            return result;
+        }
 
         private bool dataValidated()
         {
@@ -142,6 +185,12 @@ namespace AlphaSoft
                 return false;
             }
 
+            if (!dateRangeExists())
+            {
+                if (DialogResult.No == MessageBox.Show("PERIODE SUDAH PERNAH DIGENERATE, LANJUTKAN ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return false;
+            }
+
             return true;
         }
 
@@ -149,7 +198,6 @@ namespace AlphaSoft
         {
             string sqlCommand = "";
             double result = 0;
-
 
             if (originModule == globalConstants.MEMBERSHIP_POINT)
             { 
@@ -191,7 +239,7 @@ namespace AlphaSoft
                                                "(SELECT C.SALES_INVOICE, C.CREDIT_ID, MAX(PC.PAYMENT_CONFIRMED_DATE) AS LAST_PAYMENT " +
                                                 "FROM CREDIT C, PAYMENT_CREDIT PC " +
                                                 "WHERE C.CREDIT_PAID = 1 AND PC.CREDIT_ID = C.CREDIT_ID) TAB1 " +
-                                                "WHERE SH.SALES_ACTIVE = 1 AND SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
+                                                "WHERE SH.SALES_VOID = 0 AND SH.SALES_TOP = 0 AND SH.SALES_PAID = 1 AND SH.SALES_INVOICE = TAB1.SALES_INVOICE AND SH.SALES_VOID = 0 AND TAB1.LAST_PAYMENT <= SH.SALES_TOP_DATE " +
                                                 "AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " " +
                                                 "AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + endDate + "'";
             }
@@ -214,11 +262,37 @@ namespace AlphaSoft
             {
                 sqlCommand = "SELECT IFNULL(SUM(RS_TOTAL), 0) " +
                                        "FROM RETURN_SALES_HEADER RSH, SALES_HEADER SH, SALES_QUOTATION_HEADER SQH " +
-                                       "WHERE SH.SALES_ACTIVE = 1 AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " AND RSH.SALES_INVOICE = SH.SALES_INVOICE " +
+                                       "WHERE SH.SALES_VOID = 0 AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " AND RSH.SALES_INVOICE = SH.SALES_INVOICE " +
                                        "AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  <= '" + endDate + "'";
             }
 
             result = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            return result;
+        }
+
+        private double getTotalAdditionalTransaction(string customerID)
+        {
+            string sqlCommand = "";
+            double result = 0;
+            double totalTransaction = 0;
+            double totalRetur = 0;
+
+            sqlCommand = "SELECT IFNULL(SUM(SH.SALES_TOTAL - SH.SALES_DISCOUNT_FINAL), 0) " +
+                                    "FROM SALES_HEADER SH, SALES_QUOTATION_HEADER SQH " +
+                                    "WHERE SH.INCLUDE_IN_COMMISSION = 1 AND SH.SALES_VOID = 0 AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " " +
+                                    "AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + endDate + "'";
+
+            totalTransaction = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            sqlCommand = "SELECT IFNULL(SUM(RS_TOTAL), 0) " +
+                                   "FROM RETURN_SALES_HEADER RSH, SALES_HEADER SH, SALES_QUOTATION_HEADER SQH " +
+                                   "WHERE SH.INCLUDE_IN_COMMISSION = 1 AND SH.SALES_VOID = 0 AND SH.SQ_INVOICE = SQH.SQ_INVOICE AND SQH.SALESPERSON_ID = " + customerID + " AND RSH.SALES_INVOICE = SH.SALES_INVOICE " +
+                                   "AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  >= '" + startDate + "' AND DATE_FORMAT(RSH.RS_DATETIME, '%Y%m%d')  <= '" + endDate + "'";
+
+            totalRetur = Convert.ToDouble(DS.getDataSingleValue(sqlCommand));
+
+            result = totalTransaction - totalRetur;
 
             return result;
         }
@@ -229,6 +303,7 @@ namespace AlphaSoft
             double totalCashTransaction = 0;
             double totalReturTransaction = 0;
             double nettTransactionAmount = 0;
+            double totalAdditionalTransactionToInclude = 0;
             double pointsAmount = 0;
             string sqlCommand = "";
 
@@ -243,34 +318,35 @@ namespace AlphaSoft
 
                 if (originModule == globalConstants.SALES_COMMISSION)
                 {
-                    if (selectedID == "0") // ALL MEMBER
-                    {
-                        for (int i = 1; i < nameComboHidden.Items.Count; i++)
-                        {
-                            totalCashTransaction = getTotalCashTransaction(nameComboHidden.Items[i].ToString());
-                            totalPaidTransaction = getTotalPaidTransaction(nameComboHidden.Items[i].ToString());
-                            totalReturTransaction = getTotalReturTransaction(nameComboHidden.Items[i].ToString());
+                    //if (selectedID == "0") // ALL MEMBER
+                    //{
+                    //    for (int i = 1; i < nameComboHidden.Items.Count; i++)
+                    //    {
+                    //        totalCashTransaction = getTotalCashTransaction(nameComboHidden.Items[i].ToString());
+                    //        totalPaidTransaction = getTotalPaidTransaction(nameComboHidden.Items[i].ToString());
+                    //        totalReturTransaction = getTotalReturTransaction(nameComboHidden.Items[i].ToString());
 
-                            nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
-                            pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
+                    //        nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
+                    //        pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
-                            if (pointsAmount > 0)
-                            { 
-                                sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
-                                                    "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + nameComboHidden.Items[i].ToString() + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
+                    //        if (pointsAmount > 0)
+                    //        { 
+                    //            sqlCommand = "INSERT INTO SALES_COMMISSION (DATE_START, DATE_END, SALES_ID, SALES_PARAMETER, COMMISSION_AMOUNT) VALUES " +
+                    //                                "(STR_TO_DATE('" + startDateString + "', '%d-%m-%Y'), STR_TO_DATE('" + endDateString + "', '%d-%m-%Y')," + nameComboHidden.Items[i].ToString() + ", " + parameterInputTextBox.Text + ", " + pointsAmount + ")";
 
-                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                    throw internalEX;
-                            }
-                        }
-                    }
-                    else
+                    //            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    //                throw internalEX;
+                    //        }
+                    //    }
+                    //}
+                    //else
                     {
                         totalCashTransaction = getTotalCashTransaction(selectedID);
                         totalPaidTransaction = getTotalPaidTransaction(selectedID);
                         totalReturTransaction = getTotalReturTransaction(selectedID);
+                        totalAdditionalTransactionToInclude = getTotalAdditionalTransaction(selectedID);
 
-                        nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction;
+                        nettTransactionAmount = totalCashTransaction + totalPaidTransaction - totalReturTransaction + totalAdditionalTransactionToInclude;
                         pointsAmount = Math.Round(nettTransactionAmount * Convert.ToDouble(parameterInputTextBox.Text) / 100, 2);
 
                         if (pointsAmount > 0)
@@ -341,10 +417,15 @@ namespace AlphaSoft
             bool result = false;
 
             if (dataValidated())
-                if (!saveDataTransaction())
-                    MessageBox.Show("Failed");
-            else
-                    result = true;
+            {
+                if (originModule == globalConstants.SALES_COMMISSION)
+                { 
+                    salesOrderCommissionSelection displayForm = new salesOrderCommissionSelection(PODtPicker_1.Value, PODtPicker_2.Value, Convert.ToInt32(selectedID));
+                    displayForm.ShowDialog(this);
+                }
+
+                result = saveDataTransaction();
+            }
 
             return result;
         }
@@ -357,27 +438,30 @@ namespace AlphaSoft
 
             if (originModule == globalConstants.SALES_COMMISSION)
             {
-                if (nameCombo.SelectedIndex == 0)
-                {
-                    // PRINT OUT ALL SALES PERSON
-                    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_START, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.USER_FULL_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT " +
-                                             "FROM MASTER_USER MU, SALES_COMMISSION SC " +
-                                             "WHERE SC.SALES_ID = MU.ID AND MU.USER_ACTIVE = 1 " +
-                                             "AND DATE_FORMAT(SC.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(SC.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
-                                             "GROUP BY SC.DATE_START, SC.DATE_END, MU.ID";
+                //if (nameCombo.SelectedIndex == 0)
+                //{
+                //    // PRINT OUT ALL SALES PERSON
+                //    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_START, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.SALES_PERSON_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT " +
+                //                             "FROM MASTER_SALESPERSON MU, SALES_COMMISSION SC " +
+                //                             "WHERE SC.SALES_ID = MU.ID AND MU.SALES_PERSON_ACTIVE = 1 " +
+                //                             "AND DATE_FORMAT(SC.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(SC.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                //                             "GROUP BY SC.DATE_START, SC.DATE_END, MU.ID";
 
-                    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
-                    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
-                    displayForm.ShowDialog(this);
-                }
-                else
+                //    DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
+                //    salesCommissionAllPrintOutForm displayForm = new salesCommissionAllPrintOutForm();
+                //    displayForm.ShowDialog(this);
+                //}
+                //else
                 {
                     // PRINT OUT SPECIFIC SALES PERSON
                     // PRINT OUT ALL SALES PERSON
-                    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_END, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.USER_FULL_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT" +
-                                             "FROM MASTER_USER MU, SALES_COMMISSION SC " +
-                                             "WHERE SC.SALES_ID = MU.ID AND MU.USER_ACTIVE = 1 AND MU.ID = " + selectedID + " " +
+                    sqlCommandx = "SELECT '1' AS TYPE, MAX(SC.ID), DATE_FORMAT(SC.DATE_START, '%d-%M-%Y') as DATE_START, DATE_FORMAT(SC.DATE_END, '%d-%M-%Y') as DATE_END, MU.SALES_PERSON_NAME AS NAME, SC.COMMISSION_AMOUNT AS AMOUNT " +
+                                             "FROM MASTER_SALESPERSON MU, SALES_COMMISSION SC, " +
+                                             "(SELECT DATE_START, DATE_END, MAX(ID) AS ID FROM SALES_COMMISSION " +
+                                             "GROUP BY DATE_START, DATE_END) TAB1 " +
+                                             "WHERE SC.SALES_ID = MU.ID AND MU.SALES_PERSON_ACTIVE = 1 AND MU.ID = " + selectedID + " " +
                                              "AND DATE_FORMAT(SC.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(SC.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +
+                                             "AND SC.ID = TAB1.ID AND DATE_FORMAT(SC.DATE_START, '%Y%m%d') = DATE_FORMAT(TAB1.DATE_START, '%Y%m%d') AND DATE_FORMAT(SC.DATE_END, '%Y%m%d') = DATE_FORMAT(TAB1.DATE_END, '%Y%m%d') " +
                                              "GROUP BY SC.DATE_START, SC.DATE_END";
 
                     DS.writeXML(sqlCommandx, globalConstants.allSalesCommissionXML);
@@ -404,7 +488,7 @@ namespace AlphaSoft
                 {
                     // PRINT OUT SPECIFIC SALES PERSON
                     // PRINT OUT ALL SALES PERSON
-                    sqlCommandx = "SELECT '2' AS TYPE, MAX(MP.ID), DATE_FORMAT(MP.DATE_START, '%d-%M-%Y') as DATE_END, DATE_FORMAT(MP.DATE_END, '%d-%M-%Y') as DATE_END, MC.CUSTOMER_FULL_NAME AS NAME, MP.POINTS_AMOUNT AS AMOUNT" +
+                    sqlCommandx = "SELECT '2' AS TYPE, MAX(MP.ID), DATE_FORMAT(MP.DATE_START, '%d-%M-%Y') as DATE_END, DATE_FORMAT(MP.DATE_END, '%d-%M-%Y') as DATE_END, MC.CUSTOMER_FULL_NAME AS NAME, MP.POINTS_AMOUNT AS AMOUNT " +
                                              "FROM MASTER_CUSTOMER MC, MEMBERSHIP_POINT MP " +
                                              "WHERE MP.CUSTOMER_ID = MC.CUSTOMER_ID AND MC.CUSTOMER_ACTIVE = 1 AND MC.CUSTOMER_ID = " + selectedID + " " +
                                              "AND DATE_FORMAT(MP.DATE_START, '%Y%m%d')  = '" + dateFrom + "' AND DATE_FORMAT(MP.DATE_END, '%Y%m%d')  = '" + dateTo + "' " +

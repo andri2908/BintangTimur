@@ -304,7 +304,7 @@ namespace AlphaSoft
                 DS.mySqlConnect();
 
                 // INSERT DATA HEADER
-                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, REV_NO, DO_DATE) VALUES ('" + doInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', " + salesRevNo + ", STR_TO_DATE('" + DODateTime + "', '%d-%m-%Y'))";
+                sqlCommand = "INSERT INTO DELIVERY_ORDER_HEADER (DO_ID, SALES_INVOICE, REV_NO, DO_DATE, REF_NO_NOTA) VALUES ('" + doInvoiceTextBox.Text + "', '" + selectedSalesInvoice + "', " + salesRevNo + ", STR_TO_DATE('" + DODateTime + "', '%d-%m-%Y'), '"+refNoNotaTextBox.Text+"')";
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -394,6 +394,9 @@ namespace AlphaSoft
 
                     doInvoiceTextBox.ReadOnly = true;
                     DODtPicker.Enabled = false;
+
+                    comboBox1.SelectedIndex = gUtil.getPaper() - 1;
+                    comboBox1.Text = comboBox1.Items[comboBox1.SelectedIndex].ToString();
 
                     printOutDeliveryOrder(selectedSalesInvoice, salesRevNo);
                 }
@@ -535,6 +538,8 @@ namespace AlphaSoft
 
         private void printOutDeliveryOrder(string SONo, string revNo, string salesStatus = "1")
         {
+            gUtil.setPaper(comboBox1.SelectedIndex + 1);
+
             string sqlCommandx = "SELECT DH.DO_ID, '"+ salesStatus + "' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
                                         "FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD, SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , MASTER_PRODUCT MP " +
                                         "WHERE DH.DO_ID = '" + doInvoiceTextBox.Text + "' AND DH.SALES_INVOICE = '" + SONo + "' AND DD.DO_ID = DH.DO_ID AND DD.PRODUCT_ID = MP.PRODUCT_ID AND DH.REV_NO = '" + revNo + "' AND SH.SALES_INVOICE = '" + SONo + "' AND SH.REV_NO = '" + revNo + "'";

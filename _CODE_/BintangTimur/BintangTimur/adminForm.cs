@@ -1492,5 +1492,11 @@ namespace AlphaSoft
             ReportFinanceSearchForm displayForm = new ReportFinanceSearchForm(globalConstants.REPORT_MONTHLY_BALANCE);
             displayForm.ShowDialog(this);
         }
+
+        private void toolStripMenuItem11_Click_2(object sender, EventArgs e)
+        {
+            dataSalesPerson displayForm = new dataSalesPerson();
+            displayForm.ShowDialog(this);
+        }
     }
 }

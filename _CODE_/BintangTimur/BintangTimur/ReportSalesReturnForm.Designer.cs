@@ -44,6 +44,7 @@
             this.crystalReportViewer1.ShowCloseButton = false;
             this.crystalReportViewer1.ShowCopyButton = false;
             this.crystalReportViewer1.ShowGroupTreeButton = false;
+            this.crystalReportViewer1.ShowLogo = false;
             this.crystalReportViewer1.ShowParameterPanelButton = false;
             this.crystalReportViewer1.Size = new System.Drawing.Size(1075, 507);
             this.crystalReportViewer1.TabIndex = 0;
@@ -56,6 +57,7 @@
             this.ClientSize = new System.Drawing.Size(1075, 507);
             this.Controls.Add(this.crystalReportViewer1);
             this.Name = "ReportSalesReturnForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Laporan Retur Penjualan";
             this.Load += new System.EventHandler(this.ReportSalesReturnForm_Load);
             this.ResumeLayout(false);

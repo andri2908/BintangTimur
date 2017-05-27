@@ -95,6 +95,9 @@ namespace AlphaSoft
         public const int PRE_ORDER_SALES = 506;
         public const int PRE_ORDER_SALES_REVISION = 507;
         public const int DELETE_DJ = 508;
+        public const int NEW_SALESPERSON = 509;
+        public const int EDIT_SALESPERSON = 510;
+
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE

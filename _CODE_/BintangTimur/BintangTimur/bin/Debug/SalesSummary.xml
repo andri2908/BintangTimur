@@ -7,11 +7,13 @@
           <xs:element name="Table">
             <xs:complexType>
               <xs:sequence>
+                <xs:element name="SALES_TOP" type="xs:unsignedByte" minOccurs="0" />
                 <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
                 <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
                 <xs:element name="DATE" type="xs:string" minOccurs="0" />
                 <xs:element name="TOTAL" type="xs:double" minOccurs="0" />
                 <xs:element name="GROUP" type="xs:string" minOccurs="0" />
+                <xs:element name="PEMBAYARAN" type="xs:string" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -20,108 +22,165 @@
     </xs:element>
   </xs:schema>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-6</INVOICE>
     <CUSTOMER>PELANGGAN 1</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>9.6</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-5</INVOICE>
     <CUSTOMER>PELANGGAN 1</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>1.6</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
-    <INVOICE>SLO001-9</INVOICE>
-    <CUSTOMER>PELANGGAN 1</CUSTOMER>
-    <DATE>31-January-2017</DATE>
-    <TOTAL>40000</TOTAL>
-    <GROUP>RETAIL</GROUP>
-  </Table>
-  <Table>
-    <INVOICE>SLO001-10</INVOICE>
-    <CUSTOMER>PELANGGAN 1</CUSTOMER>
-    <DATE>31-January-2017</DATE>
-    <TOTAL>15000</TOTAL>
-    <GROUP>RETAIL</GROUP>
-  </Table>
-  <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-8</INVOICE>
     <CUSTOMER>AAAA</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>2222</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>0</SALES_TOP>
+    <INVOICE>SLO001-9</INVOICE>
+    <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <DATE>31-January-2017</DATE>
+    <TOTAL>40000</TOTAL>
+    <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
+  </Table>
+  <Table>
+    <SALES_TOP>0</SALES_TOP>
+    <INVOICE>SLO001-10</INVOICE>
+    <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <DATE>31-January-2017</DATE>
+    <TOTAL>15000</TOTAL>
+    <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
+  </Table>
+  <Table>
+    <SALES_TOP>0</SALES_TOP>
+    <INVOICE>SLO001-11</INVOICE>
+    <CUSTOMER>ANDRI</CUSTOMER>
+    <DATE>04-February-2017</DATE>
+    <TOTAL>21000</TOTAL>
+    <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
+  </Table>
+  <Table>
+    <SALES_TOP>0</SALES_TOP>
     <INVOICE>SLO001-12</INVOICE>
     <CUSTOMER>ANDRI</CUSTOMER>
     <DATE>04-February-2017</DATE>
     <TOTAL>2000</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>0</SALES_TOP>
     <INVOICE>SLO001-13</INVOICE>
     <CUSTOMER>ANDRI</CUSTOMER>
     <DATE>04-February-2017</DATE>
     <TOTAL>1</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-14</INVOICE>
     <CUSTOMER>ANDRI</CUSTOMER>
     <DATE>04-February-2017</DATE>
     <TOTAL>100</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
+    <INVOICE>SLO001-17</INVOICE>
+    <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <DATE>26-May-2017</DATE>
+    <TOTAL>200</TOTAL>
+    <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
+  </Table>
+  <Table>
+    <SALES_TOP>0</SALES_TOP>
+    <INVOICE>SLO001-18</INVOICE>
+    <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <DATE>26-May-2017</DATE>
+    <TOTAL>25000</TOTAL>
+    <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
+  </Table>
+  <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-1</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>22</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-2</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>22</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-3</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>22</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-4</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>66</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-7</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>29-January-2017</DATE>
     <TOTAL>242</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>0</SALES_TOP>
     <INVOICE>SLO001-15</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>04-February-2017</DATE>
     <TOTAL>200</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
   <Table>
+    <SALES_TOP>1</SALES_TOP>
     <INVOICE>SLO001-16</INVOICE>
     <CUSTOMER>P-UMUM</CUSTOMER>
     <DATE>19-March-2017</DATE>
     <TOTAL>20</TOTAL>
     <GROUP>RETAIL</GROUP>
+    <PEMBAYARAN>TUNAI</PEMBAYARAN>
   </Table>
 </NewDataSet>

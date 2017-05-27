@@ -75,7 +75,7 @@
             // nonactivecheckbox
             // 
             this.nonactivecheckbox.AutoSize = true;
-            this.nonactivecheckbox.Location = new System.Drawing.Point(417, 62);
+            this.nonactivecheckbox.Location = new System.Drawing.Point(546, 60);
             this.nonactivecheckbox.Name = "nonactivecheckbox";
             this.nonactivecheckbox.Size = new System.Drawing.Size(98, 22);
             this.nonactivecheckbox.TabIndex = 5;
@@ -99,7 +99,7 @@
             this.UserIDCombobox.FormattingEnabled = true;
             this.UserIDCombobox.Location = new System.Drawing.Point(204, 58);
             this.UserIDCombobox.Name = "UserIDCombobox";
-            this.UserIDCombobox.Size = new System.Drawing.Size(200, 26);
+            this.UserIDCombobox.Size = new System.Drawing.Size(336, 26);
             this.UserIDCombobox.TabIndex = 1;
             this.UserIDCombobox.Text = "P-UMUM";
             this.UserIDCombobox.Visible = false;

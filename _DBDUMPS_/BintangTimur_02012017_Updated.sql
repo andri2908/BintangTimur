@@ -274,6 +274,7 @@ CREATE TABLE `delivery_order_header` (
   `SALES_INVOICE` varchar(30) DEFAULT NULL,
   `REV_NO` tinyint(3) DEFAULT NULL,
   `DO_DATE` datetime DEFAULT NULL,
+  `REF_NO_NOTA` varchar(100) DEFAULT '',
   PRIMARY KEY (`DO_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -856,7 +857,7 @@ CREATE TABLE `payment_method` (
 
 LOCK TABLES `payment_method` WRITE;
 /*!40000 ALTER TABLE `payment_method` DISABLE KEYS */;
-INSERT INTO `payment_method` VALUES (1,'TUNAI','TUNAI'),(2,'KARTU KREDIT','KARTU KREDIT'),(3,'KARTU DEBIT','KARTU DEBIT'),(4,'TRANSFER','TRANSFER BANK'),(5,'BG','BILYET GIRO'),(6,'CEK','CEK');
+INSERT INTO `payment_method` VALUES (0,'TUNAI','TUNAI'),(1,'KARTU KREDIT','KARTU KREDIT'),(2,'KARTU DEBIT','KARTU DEBIT'),(3,'TRANSFER','TRANSFER BANK'),(4,'BG','BILYET GIRO'),(5,'CEK','CEK');
 /*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1488,6 +1489,7 @@ CREATE TABLE `sales_header` (
   `SALES_VOID` tinyint(3) DEFAULT '0',
   `SALES_ACTIVE` tinyint(3) DEFAULT '1',
   `IS_PREORDER` tinyint(3) DEFAULT '0',
+  `INCLUDE_IN_COMMISSION` tinyint(3) DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -174,6 +174,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dataReturPermintaanPrintOut.rpt</DependentUpon>
     </Compile>
+    <Compile Include="dataSalesPersonDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataSalesPersonDetail.Designer.cs">
+      <DependentUpon>dataSalesPersonDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataSalesPerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataSalesPerson.Designer.cs">
+      <DependentUpon>dataSalesPerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="deliveryOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,6 +386,7 @@
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="globalCryptographyMethod.cs" />
+    <Compile Include="globalPrinterUtility.cs" />
     <Compile Include="membershipPointForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1095,6 +1108,12 @@
     <Compile Include="salesCommissionAllPrintOutForm.Designer.cs">
       <DependentUpon>salesCommissionAllPrintOutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="salesOrderCommissionSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="salesOrderCommissionSelection.Designer.cs">
+      <DependentUpon>salesOrderCommissionSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="SalesReceipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1247,6 +1266,12 @@
     <EmbeddedResource Include="dataReturPermintaanPrintOut.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>dataReturPermintaanPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataSalesPersonDetail.resx">
+      <DependentUpon>dataSalesPersonDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataSalesPerson.resx">
+      <DependentUpon>dataSalesPerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="deliveryOrderForm.resx">
       <DependentUpon>deliveryOrderForm.cs</DependentUpon>
@@ -1755,6 +1780,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="salesCommissionAllPrintOutForm.resx">
       <DependentUpon>salesCommissionAllPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="salesOrderCommissionSelection.resx">
+      <DependentUpon>salesOrderCommissionSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesReceipt.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -431,6 +431,9 @@ namespace AlphaSoft
 
             cashRadioButton.Checked = true;
             creditRadioButton.Checked = false;
+
+            comboBox1.SelectedIndex = gutil.getPaper()-1;
+            comboBox1.Text = comboBox1.Items[comboBox1.SelectedIndex].ToString();
         }
 
         public int getBlockedStatus(int ID)
@@ -1036,6 +1039,11 @@ namespace AlphaSoft
             string salesDateValue = "";
             bool addToTaxTable = false;
 
+            int salesPersonID = 0;
+
+            if (salesPersonCombo.Items.Count > 0)
+                salesPersonID = Convert.ToInt32(salesPersonCombo.SelectedValue);
+
             int numRows = 0;
  
             SODateTime = gutil.getCustomStringFormatDate(DateTime.Now);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
@@ -1180,7 +1188,7 @@ namespace AlphaSoft
                     // SAVE HEADER TABLE
                     sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED, SALESPERSON_ID) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + gutil.getUserID() + ")";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + salesPersonID + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES QUOTATION HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1194,8 +1202,9 @@ namespace AlphaSoft
                                             "SQ_TOTAL = " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " +
                                             "SALES_DISCOUNT_FINAL = " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " +
                                             "SQ_TOP = " + salesTop + ", " +
-                                            "SQ_TOP_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y') " +
-                                            "WHERE SQ_INVOICE = '" + salesInvoice + "'"; 
+                                            "SQ_TOP_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " +
+                                            "SALESPERSON_ID = " + salesPersonID + " " +
+                                            "WHERE SQ_INVOICE = '" + salesInvoice + "'";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE SALES QUOTATION HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1454,7 +1463,7 @@ namespace AlphaSoft
 
                     gutil.showSuccess(gutil.INS);
 
-                    //clearUpScreen();
+                    clearUpScreen();
                 }
             }
         }
@@ -1858,7 +1867,6 @@ namespace AlphaSoft
             }
         }
 
-
         private void cashierForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             unregisterGlobalHotkey();
@@ -2026,6 +2034,29 @@ namespace AlphaSoft
             cashierDataGridView.BeginEdit(true);
         }
 
+        private void fillInSalesPersonCombo()
+        {
+            salesPersonCombo.DataSource = null;
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+            string sqlCommand = "";
+
+            DS.mySqlConnect();
+
+            sqlCommand = "SELECT ID, SALES_PERSON_NAME FROM MASTER_SALESPERSON WHERE SALES_PERSON_ACTIVE=1";
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    dt.Load(rdr);
+                    salesPersonCombo.DataSource = dt;
+                    salesPersonCombo.ValueMember = "ID";
+                    salesPersonCombo.DisplayMember = "SALES_PERSON_NAME";
+                }
+            }
+        }
+
         private void cashierForm_Load(object sender, EventArgs e)
         {
             int userAccessOption = 0;
@@ -2041,6 +2072,9 @@ namespace AlphaSoft
                 label13.Visible = false;
                 bayarTextBox.Visible = false;
                 uangKembaliTextBox.Visible = false;
+                salesPersonLabel.Visible = true;
+                salesPersonCombo.Visible = true;
+                fillInSalesPersonCombo();
             }
             else if (originModuleID == globalConstants.EDIT_SALES_QUOTATION)
             {
@@ -2063,6 +2097,9 @@ namespace AlphaSoft
                 label13.Visible = false;
                 bayarTextBox.Visible = false;
                 uangKembaliTextBox.Visible = false;
+                salesPersonLabel.Visible = true;
+                salesPersonCombo.Visible = true;
+                fillInSalesPersonCombo();
             }
             else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.PRE_ORDER_SALES_REVISION)
             {
@@ -2375,8 +2412,10 @@ namespace AlphaSoft
             //Font font = new Font("Courier New", 15);
 
             //cek paper mode
-            int papermode = gutil.getPaper();
+            //int papermode = gutil.getPaper();
             int paperLength = 0;
+            int papermode = comboBox1.SelectedIndex + 1; //gutil.getPaper();
+            gutil.setPaper(papermode);
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
@@ -3072,38 +3111,42 @@ namespace AlphaSoft
             SQApprovedDate = gutil.getCustomStringFormatDate(DateTime.Now); //String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
 
             originModuleID = 0;
-            saveAndPrintOutInvoice();
 
-            DS.beginTransaction();
+            if (dataValidated())
+            { 
+                saveAndPrintOutInvoice();
 
-            try
-            {
-                DS.mySqlConnect();
+                DS.beginTransaction();
 
-                // UPDATE SALES HEADER TABLE
-                sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
+                try
+                {
+                    DS.mySqlConnect();
 
-                // UPDATE SALES HEADER TAX TABLE
-                sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
+                    // UPDATE SALES HEADER TABLE
+                    sqlCommand = "UPDATE SALES_HEADER SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
 
-                // UPDATE SALES QUOTATION TABLE
-                sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
-                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                    throw internalEX;
+                    // UPDATE SALES HEADER TAX TABLE
+                    sqlCommand = "UPDATE SALES_HEADER_TAX SET SQ_INVOICE = '" + sqInvoice + "' WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
 
-                DS.commit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DS.mySqlClose();
+                    // UPDATE SALES QUOTATION TABLE
+                    sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET SQ_APPROVED = 1, SQ_APPROVED_DATE = STR_TO_DATE('" + SQApprovedDate + "', '%d-%m-%Y %H:%i') WHERE SQ_INVOICE = '" + sqInvoice + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    DS.commit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    DS.mySqlClose();
+                }
             }
         }
 
