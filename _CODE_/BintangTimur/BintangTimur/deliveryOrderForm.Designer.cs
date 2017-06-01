@@ -34,6 +34,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.refNoNotaTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,8 +53,6 @@
             this.detailGridView = new System.Windows.Forms.DataGridView();
             this.reprintButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detailGridView)).BeginInit();
@@ -112,6 +112,30 @@
             this.refNoNotaTextBox.Name = "refNoNotaTextBox";
             this.refNoNotaTextBox.Size = new System.Drawing.Size(346, 27);
             this.refNoNotaTextBox.TabIndex = 59;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label7.Location = new System.Drawing.Point(736, 122);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(160, 18);
+            this.label7.TabIndex = 66;
+            this.label7.Text = "UKURAN KERTAS";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "1/2 KUARTO",
+            "KUARTO"});
+            this.comboBox1.Location = new System.Drawing.Point(739, 146);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(183, 26);
+            this.comboBox1.TabIndex = 65;
+            this.comboBox1.Text = "1/2 KUARTO";
             // 
             // label2
             // 
@@ -313,37 +337,13 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(262, 612);
+            this.saveButton.Location = new System.Drawing.Point(288, 612);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(122, 37);
             this.saveButton.TabIndex = 61;
             this.saveButton.Text = "SAVE ";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(736, 122);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(160, 18);
-            this.label7.TabIndex = 66;
-            this.label7.Text = "UKURAN KERTAS";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "1/2 KUARTO",
-            "KUARTO"});
-            this.comboBox1.Location = new System.Drawing.Point(739, 146);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(183, 26);
-            this.comboBox1.TabIndex = 65;
-            this.comboBox1.Text = "1/2 KUARTO";
             // 
             // deliveryOrderForm
             // 

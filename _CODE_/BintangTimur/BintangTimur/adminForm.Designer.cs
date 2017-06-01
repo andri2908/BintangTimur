@@ -87,6 +87,7 @@
             this.MENU_tambahPelanggan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_transaksiPenjualan = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SORevision = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_deliveryOrder = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,7 +192,6 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -801,6 +801,15 @@
             this.MENU_transaksiPenjualan.Size = new System.Drawing.Size(221, 22);
             this.MENU_transaksiPenjualan.Text = "Transaksi Penjualan";
             // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem11.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(294, 22);
+            this.toolStripMenuItem11.Text = "Tambah / Hapus Sales Person";
+            this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click_2);
+            // 
             // MENU_SalesQuotation
             // 
             this.MENU_SalesQuotation.BackColor = System.Drawing.Color.SteelBlue;
@@ -1138,7 +1147,7 @@
             this.MENU_laporanHutangLewatJatuhTempo.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_laporanHutangLewatJatuhTempo.Name = "MENU_laporanHutangLewatJatuhTempo";
             this.MENU_laporanHutangLewatJatuhTempo.Size = new System.Drawing.Size(294, 22);
-            this.MENU_laporanHutangLewatJatuhTempo.Text = "Hutang Lewat Jatuh Tempo";
+            this.MENU_laporanHutangLewatJatuhTempo.Text = "Hutang Yang Jatuh Tempo";
             this.MENU_laporanHutangLewatJatuhTempo.Click += new System.EventHandler(this.hutangLewatJatuhTempoToolStripMenuItem_Click);
             // 
             // MENU_laporanPembayaranHutang
@@ -1831,15 +1840,6 @@
             this.timerMessage.Enabled = true;
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem11.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(294, 22);
-            this.toolStripMenuItem11.Text = "Tambah / Hapus Sales Person";
-            this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click_2);
             // 
             // adminForm
             // 

@@ -3326,5 +3326,25 @@ namespace AlphaSoft
             totalAfterDiscTextBox.Text = totalAfterDisc.ToString(currencyFormat, culture);
             totalLabel.Text = totalAfterDisc.ToString(currencyFormat, culture);
         }
+
+        private void cashierDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            bool tempIsLoading = isLoading;
+            int rowIndex = e.RowIndex;
+
+            if ((cashierDataGridView.Columns[e.ColumnIndex].Name == "productPrice" || cashierDataGridView.Columns[e.ColumnIndex].Name == "qty" || cashierDataGridView.Columns[e.ColumnIndex].Name == "discRP" || cashierDataGridView.Columns[e.ColumnIndex].Name == "jumlah")
+                && e.RowIndex != this.cashierDataGridView.NewRowIndex && null != e.Value)
+            {
+                isLoading = true;
+                double d;
+                if (double.TryParse(e.Value.ToString(), out d))
+                    e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
+                else
+                    errorLabel.Text = "INPUT PADA BARIS [" + rowIndex + "] TIDAK VALID";
+                isLoading = false;
+            }
+
+            isLoading = tempIsLoading;
+        }
     }
 }
