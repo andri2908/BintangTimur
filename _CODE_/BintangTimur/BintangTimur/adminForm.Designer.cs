@@ -58,6 +58,7 @@
             this.MENU_pengaturanLimitStok = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pecahSatuanProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanNomorRak = new System.Windows.Forms.ToolStripMenuItem();
+            this.productBarcodePrintTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_kategori = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahKategori = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_satuan = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,6 +147,7 @@
             this.MENU_laporanPiutangLewatJatuhTempo = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_laporanPembayaranPiutang = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
+            this.informasiProdukToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_laporanDeviasiStok = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_laporanStokDibawahLimit = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_laporanReturBarang = new System.Windows.Forms.ToolStripMenuItem();
@@ -192,6 +194,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.stokGlobaltoolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -428,7 +431,8 @@
             this.MENU_pengaturanHarga,
             this.MENU_pengaturanLimitStok,
             this.MENU_pecahSatuanProduk,
-            this.MENU_pengaturanNomorRak});
+            this.MENU_pengaturanNomorRak,
+            this.productBarcodePrintTemplateToolStripMenuItem});
             this.MENU_produk.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_produk.Name = "MENU_produk";
             this.MENU_produk.Size = new System.Drawing.Size(254, 22);
@@ -488,6 +492,15 @@
             this.MENU_pengaturanNomorRak.Text = "Pengaturan Nomor Rak [HIDDEN]";
             this.MENU_pengaturanNomorRak.Visible = false;
             this.MENU_pengaturanNomorRak.Click += new System.EventHandler(this.toolStripMenuItem54_Click);
+            // 
+            // productBarcodePrintTemplateToolStripMenuItem
+            // 
+            this.productBarcodePrintTemplateToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
+            this.productBarcodePrintTemplateToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
+            this.productBarcodePrintTemplateToolStripMenuItem.Name = "productBarcodePrintTemplateToolStripMenuItem";
+            this.productBarcodePrintTemplateToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.productBarcodePrintTemplateToolStripMenuItem.Text = "Product Barcode Print Template";
+            this.productBarcodePrintTemplateToolStripMenuItem.Click += new System.EventHandler(this.productBarcodePrintTemplateToolStripMenuItem_Click);
             // 
             // MENU_kategori
             // 
@@ -1075,8 +1088,10 @@
             this.MENU_laporanPiutangLewatJatuhTempo,
             this.MENU_laporanPembayaranPiutang,
             this.toolStripSeparator21,
+            this.informasiProdukToolStripMenuItem,
             this.MENU_laporanDeviasiStok,
             this.MENU_laporanStokDibawahLimit,
+            this.stokGlobaltoolStripMenuItem14,
             this.MENU_laporanReturBarang,
             this.toolStripSeparator24,
             this.MENU_laporanMutasiBarang,
@@ -1377,6 +1392,15 @@
             this.toolStripSeparator21.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripSeparator21.Name = "toolStripSeparator21";
             this.toolStripSeparator21.Size = new System.Drawing.Size(291, 6);
+            // 
+            // informasiProdukToolStripMenuItem
+            // 
+            this.informasiProdukToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
+            this.informasiProdukToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
+            this.informasiProdukToolStripMenuItem.Name = "informasiProdukToolStripMenuItem";
+            this.informasiProdukToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.informasiProdukToolStripMenuItem.Text = "Informasi Produk";
+            this.informasiProdukToolStripMenuItem.Click += new System.EventHandler(this.informasiProdukToolStripMenuItem_Click);
             // 
             // MENU_laporanDeviasiStok
             // 
@@ -1841,6 +1865,15 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // stokGlobaltoolStripMenuItem14
+            // 
+            this.stokGlobaltoolStripMenuItem14.BackColor = System.Drawing.Color.SteelBlue;
+            this.stokGlobaltoolStripMenuItem14.ForeColor = System.Drawing.Color.FloralWhite;
+            this.stokGlobaltoolStripMenuItem14.Name = "stokGlobaltoolStripMenuItem14";
+            this.stokGlobaltoolStripMenuItem14.Size = new System.Drawing.Size(294, 22);
+            this.stokGlobaltoolStripMenuItem14.Text = "Stok Global";
+            this.stokGlobaltoolStripMenuItem14.Click += new System.EventHandler(this.stokGlobaltoolStripMenuItem14_Click);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2041,6 +2074,9 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_copyDO;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
+        private System.Windows.Forms.ToolStripMenuItem stokGlobaltoolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem productBarcodePrintTemplateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem informasiProdukToolStripMenuItem;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

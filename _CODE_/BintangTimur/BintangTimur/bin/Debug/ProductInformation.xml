@@ -1,0 +1,778 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ID" type="xs:string" minOccurs="0" />
+                <xs:element name="NAME" type="xs:string" minOccurs="0" />
+                <xs:element name="RETAIL" type="xs:double" minOccurs="0" />
+                <xs:element name="GROSIR" type="xs:double" minOccurs="0" />
+                <xs:element name="PARTAI" type="xs:double" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <ID>108</ID>
+    <NAME>AAA</NAME>
+    <RETAIL>101</RETAIL>
+    <GROSIR>10</GROSIR>
+    <PARTAI>1011</PARTAI>
+  </Table>
+  <Table>
+    <ID>18</ID>
+    <NAME>ALUMUNIUM 0.5 (120 X 240)</NAME>
+    <RETAIL>139000</RETAIL>
+    <GROSIR>138000</GROSIR>
+    <PARTAI>138500</PARTAI>
+  </Table>
+  <Table>
+    <ID>19</ID>
+    <NAME>ALUMUNIUM 0.8 (120 X 240)</NAME>
+    <RETAIL>210000</RETAIL>
+    <GROSIR>209000</GROSIR>
+    <PARTAI>209500</PARTAI>
+  </Table>
+  <Table>
+    <ID>2</ID>
+    <NAME>ALUMUNIUM 1.4 KG</NAME>
+    <RETAIL>51000</RETAIL>
+    <GROSIR>50000</GROSIR>
+    <PARTAI>50500</PARTAI>
+  </Table>
+  <Table>
+    <ID>3</ID>
+    <NAME>ALUMUNIUM 1.65 KG</NAME>
+    <RETAIL>60000</RETAIL>
+    <GROSIR>59000</GROSIR>
+    <PARTAI>59500</PARTAI>
+  </Table>
+  <Table>
+    <ID>4</ID>
+    <NAME>ALUMUNIUM 1.85 KG</NAME>
+    <RETAIL>67000</RETAIL>
+    <GROSIR>66000</GROSIR>
+    <PARTAI>66500</PARTAI>
+  </Table>
+  <Table>
+    <ID>5</ID>
+    <NAME>ALUMUNIUM 1.95 KG</NAME>
+    <RETAIL>71000</RETAIL>
+    <GROSIR>70000</GROSIR>
+    <PARTAI>70500</PARTAI>
+  </Table>
+  <Table>
+    <ID>23</ID>
+    <NAME>ALUMUNIUM 15.2 KG (3 MM)</NAME>
+    <RETAIL>555000</RETAIL>
+    <GROSIR>554000</GROSIR>
+    <PARTAI>554500</PARTAI>
+  </Table>
+  <Table>
+    <ID>6</ID>
+    <NAME>ALUMUNIUM 2.0 KG</NAME>
+    <RETAIL>72000</RETAIL>
+    <GROSIR>71000</GROSIR>
+    <PARTAI>71500</PARTAI>
+  </Table>
+  <Table>
+    <ID>7</ID>
+    <NAME>ALUMUNIUM 2.35 KG</NAME>
+    <RETAIL>84000</RETAIL>
+    <GROSIR>83000</GROSIR>
+    <PARTAI>83500</PARTAI>
+  </Table>
+  <Table>
+    <ID>8</ID>
+    <NAME>ALUMUNIUM 2.6 KG</NAME>
+    <RETAIL>93000</RETAIL>
+    <GROSIR>92000</GROSIR>
+    <PARTAI>92500</PARTAI>
+  </Table>
+  <Table>
+    <ID>9</ID>
+    <NAME>ALUMUNIUM 2.8 KG</NAME>
+    <RETAIL>100000</RETAIL>
+    <GROSIR>99000</GROSIR>
+    <PARTAI>99500</PARTAI>
+  </Table>
+  <Table>
+    <ID>24</ID>
+    <NAME>ALUMUNIUM 21.5 KG (4 MM)</NAME>
+    <RETAIL>785000</RETAIL>
+    <GROSIR>784000</GROSIR>
+    <PARTAI>784500</PARTAI>
+  </Table>
+  <Table>
+    <ID>10</ID>
+    <NAME>ALUMUNIUM 3.0 KG</NAME>
+    <RETAIL>108000</RETAIL>
+    <GROSIR>107000</GROSIR>
+    <PARTAI>107500</PARTAI>
+  </Table>
+  <Table>
+    <ID>11</ID>
+    <NAME>ALUMUNIUM 3.3 KG</NAME>
+    <RETAIL>118000</RETAIL>
+    <GROSIR>117000</GROSIR>
+    <PARTAI>117500</PARTAI>
+  </Table>
+  <Table>
+    <ID>12</ID>
+    <NAME>ALUMUNIUM 3.6 KG</NAME>
+    <RETAIL>129000</RETAIL>
+    <GROSIR>128000</GROSIR>
+    <PARTAI>128500</PARTAI>
+  </Table>
+  <Table>
+    <ID>13</ID>
+    <NAME>ALUMUNIUM 3.85 KG</NAME>
+    <RETAIL>138000</RETAIL>
+    <GROSIR>137000</GROSIR>
+    <PARTAI>137500</PARTAI>
+  </Table>
+  <Table>
+    <ID>14</ID>
+    <NAME>ALUMUNIUM 4.1 KG</NAME>
+    <RETAIL>147000</RETAIL>
+    <GROSIR>146000</GROSIR>
+    <PARTAI>146500</PARTAI>
+  </Table>
+  <Table>
+    <ID>15</ID>
+    <NAME>ALUMUNIUM 4.3 KG</NAME>
+    <RETAIL>154000</RETAIL>
+    <GROSIR>153000</GROSIR>
+    <PARTAI>153500</PARTAI>
+  </Table>
+  <Table>
+    <ID>16</ID>
+    <NAME>ALUMUNIUM 4.6 KG</NAME>
+    <RETAIL>165000</RETAIL>
+    <GROSIR>164000</GROSIR>
+    <PARTAI>164500</PARTAI>
+  </Table>
+  <Table>
+    <ID>17</ID>
+    <NAME>ALUMUNIUM 5.2 KG</NAME>
+    <RETAIL>187000</RETAIL>
+    <GROSIR>186000</GROSIR>
+    <PARTAI>186500</PARTAI>
+  </Table>
+  <Table>
+    <ID>20</ID>
+    <NAME>ALUMUNIUM 6.4 KG (1.2 MM)</NAME>
+    <RETAIL>234000</RETAIL>
+    <GROSIR>233000</GROSIR>
+    <PARTAI>233500</PARTAI>
+  </Table>
+  <Table>
+    <ID>21</ID>
+    <NAME>ALUMUNIUM 7.6 KG (1.5 MM)</NAME>
+    <RETAIL>277500</RETAIL>
+    <GROSIR>276500</GROSIR>
+    <PARTAI>277000</PARTAI>
+  </Table>
+  <Table>
+    <ID>22</ID>
+    <NAME>ALUMUNIUM 9.8 KG (2 MM)</NAME>
+    <RETAIL>358000</RETAIL>
+    <GROSIR>357000</GROSIR>
+    <PARTAI>357500</PARTAI>
+  </Table>
+  <Table>
+    <ID>105</ID>
+    <NAME>BARANG 1</NAME>
+    <RETAIL>1</RETAIL>
+    <GROSIR>2</GROSIR>
+    <PARTAI>3</PARTAI>
+  </Table>
+  <Table>
+    <ID>106</ID>
+    <NAME>BARANG 2</NAME>
+    <RETAIL>1</RETAIL>
+    <GROSIR>1</GROSIR>
+    <PARTAI>1</PARTAI>
+  </Table>
+  <Table>
+    <ID>107</ID>
+    <NAME>BARANG 3</NAME>
+    <RETAIL>1</RETAIL>
+    <GROSIR>1</GROSIR>
+    <PARTAI>1</PARTAI>
+  </Table>
+  <Table>
+    <ID>103</ID>
+    <NAME>BENDRAT 21 KG</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>104</ID>
+    <NAME>BENDRAT 25 KG</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>1</ID>
+    <NAME>BESI BETON 8.0MMX12MTR</NAME>
+    <RETAIL>30000</RETAIL>
+    <GROSIR>28500</GROSIR>
+    <PARTAI>29000</PARTAI>
+  </Table>
+  <Table>
+    <ID>82</ID>
+    <NAME>BORDES 1.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>83</ID>
+    <NAME>BORDES 2.3 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>84</ID>
+    <NAME>BORDES 3.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>86</ID>
+    <NAME>CNP 100 X 50 X 2.0 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>87</ID>
+    <NAME>CNP 100 X 50 X 2.3 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>88</ID>
+    <NAME>CNP 125 X 50 X 2.0 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>89</ID>
+    <NAME>CNP 125 X 50 X 2.3 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>230</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>90</ID>
+    <NAME>CNP 125 X 50 X 2.8 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>91</ID>
+    <NAME>CNP 150 X 50 X 2.0 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>92</ID>
+    <NAME>CNP 150 X 50 X 2.3 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>93</ID>
+    <NAME>CNP 150 X 50 X 2.8 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>94</ID>
+    <NAME>CNP 200 X 70 X 2.3 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>95</ID>
+    <NAME>CNP 200 X 70 X 2.8 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>85</ID>
+    <NAME>CNP 75 X 35 X 2.0 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>44</ID>
+    <NAME>PLAT SS 201 0.4 MM (120 X 240)</NAME>
+    <RETAIL>250000</RETAIL>
+    <GROSIR>249000</GROSIR>
+    <PARTAI>249500</PARTAI>
+  </Table>
+  <Table>
+    <ID>45</ID>
+    <NAME>PLAT SS 201 0.5 MM (120 X 240)</NAME>
+    <RETAIL>310000</RETAIL>
+    <GROSIR>309000</GROSIR>
+    <PARTAI>309500</PARTAI>
+  </Table>
+  <Table>
+    <ID>46</ID>
+    <NAME>PLAT SS 201 0.6 MM (120 X 240)</NAME>
+    <RETAIL>370000</RETAIL>
+    <GROSIR>369000</GROSIR>
+    <PARTAI>369500</PARTAI>
+  </Table>
+  <Table>
+    <ID>47</ID>
+    <NAME>PLAT SS 201 0.8 MM (120 X 240)</NAME>
+    <RETAIL>491000</RETAIL>
+    <GROSIR>490000</GROSIR>
+    <PARTAI>490500</PARTAI>
+  </Table>
+  <Table>
+    <ID>48</ID>
+    <NAME>PLAT SS 201 1.0 MM (120 X 240)</NAME>
+    <RETAIL>614000</RETAIL>
+    <GROSIR>613000</GROSIR>
+    <PARTAI>613500</PARTAI>
+  </Table>
+  <Table>
+    <ID>49</ID>
+    <NAME>PLAT SS 201 1.2 MM (120 X 240)</NAME>
+    <RETAIL>736500</RETAIL>
+    <GROSIR>735500</GROSIR>
+    <PARTAI>736000</PARTAI>
+  </Table>
+  <Table>
+    <ID>50</ID>
+    <NAME>PLAT SS 201 1.5 MM (120 X 240)</NAME>
+    <RETAIL>920500</RETAIL>
+    <GROSIR>919500</GROSIR>
+    <PARTAI>920000</PARTAI>
+  </Table>
+  <Table>
+    <ID>51</ID>
+    <NAME>PLAT SS 201 2.0 MM (120 X 240)</NAME>
+    <RETAIL>1227500</RETAIL>
+    <GROSIR>1226500</GROSIR>
+    <PARTAI>1227000</PARTAI>
+  </Table>
+  <Table>
+    <ID>52</ID>
+    <NAME>PLAT SS 201 3.0 MM (120 X 240)</NAME>
+    <RETAIL>1841000</RETAIL>
+    <GROSIR>1840000</GROSIR>
+    <PARTAI>1840500</PARTAI>
+  </Table>
+  <Table>
+    <ID>53</ID>
+    <NAME>PLAT SS 201 4.0 MM (120 X 240)</NAME>
+    <RETAIL>2454500</RETAIL>
+    <GROSIR>2453500</GROSIR>
+    <PARTAI>2454000</PARTAI>
+  </Table>
+  <Table>
+    <ID>54</ID>
+    <NAME>PLAT SS 201 5.0 MM (120 X 240)</NAME>
+    <RETAIL>3068000</RETAIL>
+    <GROSIR>3067000</GROSIR>
+    <PARTAI>3067500</PARTAI>
+  </Table>
+  <Table>
+    <ID>55</ID>
+    <NAME>PLAT SS 201 6.0 MM (120 X 240)</NAME>
+    <RETAIL>3682000</RETAIL>
+    <GROSIR>3681000</GROSIR>
+    <PARTAI>3681500</PARTAI>
+  </Table>
+  <Table>
+    <ID>56</ID>
+    <NAME>PLAT SS 304 0.6 MM (120 X 240)</NAME>
+    <RETAIL>550000</RETAIL>
+    <GROSIR>549000</GROSIR>
+    <PARTAI>549500</PARTAI>
+  </Table>
+  <Table>
+    <ID>57</ID>
+    <NAME>PLAT SS 304 0.8 MM (120 X 240)</NAME>
+    <RETAIL>717500</RETAIL>
+    <GROSIR>716500</GROSIR>
+    <PARTAI>717000</PARTAI>
+  </Table>
+  <Table>
+    <ID>58</ID>
+    <NAME>PLAT SS 304 1.0 MM (120 X 240)</NAME>
+    <RETAIL>899000</RETAIL>
+    <GROSIR>898000</GROSIR>
+    <PARTAI>898500</PARTAI>
+  </Table>
+  <Table>
+    <ID>59</ID>
+    <NAME>PLAT SS 304 1.2 MM (120 X 240)</NAME>
+    <RETAIL>1076500</RETAIL>
+    <GROSIR>1075500</GROSIR>
+    <PARTAI>1076000</PARTAI>
+  </Table>
+  <Table>
+    <ID>60</ID>
+    <NAME>PLAT SS 304 1.5 MM (120 X 240)</NAME>
+    <RETAIL>1345500</RETAIL>
+    <GROSIR>1344500</GROSIR>
+    <PARTAI>1345000</PARTAI>
+  </Table>
+  <Table>
+    <ID>61</ID>
+    <NAME>PLAT SS 304 2.0 MM (120 X 240)</NAME>
+    <RETAIL>1794000</RETAIL>
+    <GROSIR>1793000</GROSIR>
+    <PARTAI>1793500</PARTAI>
+  </Table>
+  <Table>
+    <ID>62</ID>
+    <NAME>PLAT SS 304 3.0 MM (120 X 240)</NAME>
+    <RETAIL>2690500</RETAIL>
+    <GROSIR>2680500</GROSIR>
+    <PARTAI>2690000</PARTAI>
+  </Table>
+  <Table>
+    <ID>63</ID>
+    <NAME>PLAT SS 304 4.0 MM (120 X 240)</NAME>
+    <RETAIL>3587500</RETAIL>
+    <GROSIR>3586500</GROSIR>
+    <PARTAI>3587000</PARTAI>
+  </Table>
+  <Table>
+    <ID>64</ID>
+    <NAME>PLAT SS 304 5.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>65</ID>
+    <NAME>PLAT SS 304 6.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>25</ID>
+    <NAME>PLAT SS 430 0.3 MM</NAME>
+    <RETAIL>105000</RETAIL>
+    <GROSIR>104000</GROSIR>
+    <PARTAI>104500</PARTAI>
+  </Table>
+  <Table>
+    <ID>26</ID>
+    <NAME>PLAT SS 430 0.4 MM</NAME>
+    <RETAIL>129000</RETAIL>
+    <GROSIR>128000</GROSIR>
+    <PARTAI>128500</PARTAI>
+  </Table>
+  <Table>
+    <ID>36</ID>
+    <NAME>PLAT SS 430 0.4 MM (120 X 240)</NAME>
+    <RETAIL>230000</RETAIL>
+    <GROSIR>229000</GROSIR>
+    <PARTAI>229500</PARTAI>
+  </Table>
+  <Table>
+    <ID>27</ID>
+    <NAME>PLAT SS 430 0.4 MM TEBAL</NAME>
+    <RETAIL>135000</RETAIL>
+    <GROSIR>134000</GROSIR>
+    <PARTAI>134500</PARTAI>
+  </Table>
+  <Table>
+    <ID>28</ID>
+    <NAME>PLAT SS 430 0.5 MM</NAME>
+    <RETAIL>184000</RETAIL>
+    <GROSIR>183000</GROSIR>
+    <PARTAI>183500</PARTAI>
+  </Table>
+  <Table>
+    <ID>37</ID>
+    <NAME>PLAT SS 430 0.5 MM (120 X 240)</NAME>
+    <RETAIL>320000</RETAIL>
+    <GROSIR>319000</GROSIR>
+    <PARTAI>319500</PARTAI>
+  </Table>
+  <Table>
+    <ID>29</ID>
+    <NAME>PLAT SS 430 0.6 MM</NAME>
+    <RETAIL>222000</RETAIL>
+    <GROSIR>221000</GROSIR>
+    <PARTAI>221500</PARTAI>
+  </Table>
+  <Table>
+    <ID>30</ID>
+    <NAME>PLAT SS 430 0.7 MM</NAME>
+    <RETAIL>270000</RETAIL>
+    <GROSIR>269000</GROSIR>
+    <PARTAI>269500</PARTAI>
+  </Table>
+  <Table>
+    <ID>38</ID>
+    <NAME>PLAT SS 430 0.7 MM (120 X 240)</NAME>
+    <RETAIL>340000</RETAIL>
+    <GROSIR>339000</GROSIR>
+    <PARTAI>339500</PARTAI>
+  </Table>
+  <Table>
+    <ID>31</ID>
+    <NAME>PLAT SS 430 0.8 MM</NAME>
+    <RETAIL>301500</RETAIL>
+    <GROSIR>300500</GROSIR>
+    <PARTAI>301000</PARTAI>
+  </Table>
+  <Table>
+    <ID>39</ID>
+    <NAME>PLAT SS 430 0.8 MM (120 X 240)</NAME>
+    <RETAIL>450000</RETAIL>
+    <GROSIR>449000</GROSIR>
+    <PARTAI>449500</PARTAI>
+  </Table>
+  <Table>
+    <ID>32</ID>
+    <NAME>PLAT SS 430 1.0 MM</NAME>
+    <RETAIL>377000</RETAIL>
+    <GROSIR>376000</GROSIR>
+    <PARTAI>376500</PARTAI>
+  </Table>
+  <Table>
+    <ID>40</ID>
+    <NAME>PLAT SS 430 1.0 MM (120 X 240)</NAME>
+    <RETAIL>566500</RETAIL>
+    <GROSIR>565500</GROSIR>
+    <PARTAI>566000</PARTAI>
+  </Table>
+  <Table>
+    <ID>33</ID>
+    <NAME>PLAT SS 430 1.2 MM</NAME>
+    <RETAIL>452500</RETAIL>
+    <GROSIR>451500</GROSIR>
+    <PARTAI>452000</PARTAI>
+  </Table>
+  <Table>
+    <ID>41</ID>
+    <NAME>PLAT SS 430 1.2 MM (120 X 240)</NAME>
+    <RETAIL>680000</RETAIL>
+    <GROSIR>679000</GROSIR>
+    <PARTAI>679500</PARTAI>
+  </Table>
+  <Table>
+    <ID>34</ID>
+    <NAME>PLAT SS 430 1.5 MM</NAME>
+    <RETAIL>565500</RETAIL>
+    <GROSIR>564500</GROSIR>
+    <PARTAI>565000</PARTAI>
+  </Table>
+  <Table>
+    <ID>42</ID>
+    <NAME>PLAT SS 430 1.5 MM (120 X 240)</NAME>
+    <RETAIL>850000</RETAIL>
+    <GROSIR>849000</GROSIR>
+    <PARTAI>849500</PARTAI>
+  </Table>
+  <Table>
+    <ID>35</ID>
+    <NAME>PLAT SS 430 2.0 MM</NAME>
+    <RETAIL>754000</RETAIL>
+    <GROSIR>753000</GROSIR>
+    <PARTAI>753500</PARTAI>
+  </Table>
+  <Table>
+    <ID>43</ID>
+    <NAME>PLAT SS 430 2.0 MM (120 X 240)</NAME>
+    <RETAIL>1133000</RETAIL>
+    <GROSIR>1132000</GROSIR>
+    <PARTAI>1132500</PARTAI>
+  </Table>
+  <Table>
+    <ID>66</ID>
+    <NAME>PLATESER 0.6 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>67</ID>
+    <NAME>PLATESER 0.9 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>68</ID>
+    <NAME>PLATESER 1.2 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>69</ID>
+    <NAME>PLATESER 1.4 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>70</ID>
+    <NAME>PLATESER 1.6 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>71</ID>
+    <NAME>PLATESER 1.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>79</ID>
+    <NAME>PLATESER 10.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>80</ID>
+    <NAME>PLATESER 12.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>81</ID>
+    <NAME>PLATESER 16.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>72</ID>
+    <NAME>PLATESER 2.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>4</PARTAI>
+  </Table>
+  <Table>
+    <ID>73</ID>
+    <NAME>PLATESER 2.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>74</ID>
+    <NAME>PLATESER 3.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>75</ID>
+    <NAME>PLATESER 3.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>76</ID>
+    <NAME>PLATESER 4.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>77</ID>
+    <NAME>PLATESER 5.8 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>78</ID>
+    <NAME>PLATESER 8.0 MM (120 X 240)</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>99</ID>
+    <NAME>UNP 100 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>100</ID>
+    <NAME>UNP 120 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>101</ID>
+    <NAME>UNP 150 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>102</ID>
+    <NAME>UNP 200 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>96</ID>
+    <NAME>UNP 50 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>97</ID>
+    <NAME>UNP 65 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+  <Table>
+    <ID>98</ID>
+    <NAME>UNP 80 MM</NAME>
+    <RETAIL>30</RETAIL>
+    <GROSIR>20</GROSIR>
+    <PARTAI>40</PARTAI>
+  </Table>
+</NewDataSet>
