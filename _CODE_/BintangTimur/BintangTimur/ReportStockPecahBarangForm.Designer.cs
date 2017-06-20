@@ -1,6 +1,6 @@
 ﻿namespace AlphaSoft
 {
-    partial class PrintBarcodeForm
+    partial class ReportStockPecahBarangForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.ReportStockValue1 = new AlphaSoft.ReportStockValue();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.PrintBarcode1 = new AlphaSoft.PrintBarcode();
+            this.ReportStockPecahBarang1 = new AlphaSoft.ReportStockPecahBarang();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -40,32 +41,34 @@
             this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.PrintBarcode1;
+            this.crystalReportViewer1.ReportSource = this.ReportStockPecahBarang1;
             this.crystalReportViewer1.ShowCloseButton = false;
             this.crystalReportViewer1.ShowCopyButton = false;
             this.crystalReportViewer1.ShowGroupTreeButton = false;
             this.crystalReportViewer1.ShowLogo = false;
             this.crystalReportViewer1.ShowParameterPanelButton = false;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(1170, 605);
-            this.crystalReportViewer1.TabIndex = 0;
+            this.crystalReportViewer1.Size = new System.Drawing.Size(967, 731);
+            this.crystalReportViewer1.TabIndex = 2;
             this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
             // 
-            // PrintBarcodeForm
+            // ReportStockPecahBarangForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 605);
+            this.ClientSize = new System.Drawing.Size(967, 731);
             this.Controls.Add(this.crystalReportViewer1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "PrintBarcodeForm";
-            this.Text = "PrintBarcodeForm";
+            this.Name = "ReportStockPecahBarangForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Report Stock Pecah Barang ";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private ReportStockValue ReportStockValue1;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private PrintBarcode PrintBarcode1;
+        private ReportStockPecahBarang ReportStockPecahBarang1;
     }
 }

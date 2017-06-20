@@ -17,8 +17,8 @@
                 <xs:element name="PRICE" type="xs:double" minOccurs="0" />
                 <xs:element name="POTONGAN" type="xs:double" minOccurs="0" />
                 <xs:element name="SUBTOTAL" type="xs:double" minOccurs="0" />
-                <xs:element name="PAYMENT" type="xs:long" minOccurs="0" />
-                <xs:element name="CHANGE" type="xs:long" minOccurs="0" />
+                <xs:element name="PAYMENT" type="xs:double" minOccurs="0" />
+                <xs:element name="CHANGE" type="xs:double" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -28,16 +28,16 @@
   </xs:schema>
   <Table>
     <SALES_DISCOUNT_FINAL>0</SALES_DISCOUNT_FINAL>
-    <ID>7</ID>
-    <DATE>2017-05-27T11:39:00+07:00</DATE>
-    <INVOICE>SQ-7</INVOICE>
-    <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <ID>27</ID>
+    <DATE>2017-06-20T12:09:00+07:00</DATE>
+    <INVOICE>SLO001-19</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
     <PRODUCT>ALUMUNIUM 1.4 KG</PRODUCT>
     <QTY>1</QTY>
     <PRICE>51000</PRICE>
-    <POTONGAN>0</POTONGAN>
-    <SUBTOTAL>51000</SUBTOTAL>
-    <PAYMENT>0</PAYMENT>
-    <CHANGE>0</CHANGE>
+    <POTONGAN>5610</POTONGAN>
+    <SUBTOTAL>45390</SUBTOTAL>
+    <PAYMENT>222222</PAYMENT>
+    <CHANGE>176832</CHANGE>
   </Table>
 </NewDataSet>

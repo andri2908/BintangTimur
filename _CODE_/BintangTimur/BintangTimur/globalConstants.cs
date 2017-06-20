@@ -196,7 +196,12 @@ namespace AlphaSoft
         public const int MENU_LAPORAN_RETUR_BARANG = 815;
         public const int MENU_LAPORAN_MUTASI_BARANG = 816;
         public const int MENU_LAPORAN_PEMBAYARAN_MUTASI = 817;
-        
+
+        public const int MENU_LAPORAN_PENGELUARAN_KAS = 818;
+        public const int MENU_LAPORAN_PEMASUKAN_KAS_NON_SALES = 819;
+        public const int MENU_LAPORAN_LABA_RUGI_HARIAN = 820;
+        public const int MENU_LAPORAN_LABA_RUGI_BULANAN = 821;
+
 
 
         // CONSTANTS FOR USER CHANGE LOG
@@ -242,6 +247,8 @@ namespace AlphaSoft
         public const int REPORT_FINANCE_OUT = 742;
         public const int REPORT_MARGIN = 743;
         public const int REPORT_MONTHLY_BALANCE = 744;
+        public const int REPORT_STOCK_PECAH_BARANG = 745;
+
 
         public const int VIEW_SUPPLIER = 800;
 
@@ -312,6 +319,7 @@ namespace AlphaSoft
 
         public const string StockValueXML = "StockValue.xml";
         public const string ProductInformationXML = "ProductInformation.xml";
+        public const string stockPecahBarangXML = "stockPecahBarang.xml";
         public const string ProductBarcodeXML = "ProductBarcode.xml";
     }
 }
